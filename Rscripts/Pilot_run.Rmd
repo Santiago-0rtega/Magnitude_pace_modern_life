@@ -1,0 +1,266 @@
+---
+title: "Pilot run"
+output: html_notebook
+---
+
+```{r}
+# Load libraries
+library(tidyverse)
+library(orchaRd)
+library(janitor)
+library(here)
+library(brms)
+```
+
+
+```{r}
+#| label: read-data
+#| message: false
+#| warning: false
+
+dat_raw <- readr::read_csv(
+  here::here("data", "PROCEEDv6.2_RatesDB.csv"),
+  show_col_types = FALSE
+) %>%
+  janitor::clean_names()
+
+glimpse(dat_raw)
+```
+```{r}
+dat_raw$climate_change
+```
+
+
+
+
+```{r}
+#| label: prep-synchronic-data
+#| message: false
+#| warning: false
+
+dat_syn <- dat_raw |>
+  filter(
+    design == "Synchronic",
+    !is.na(generations),
+    generations <= 300
+  ) |>
+  filter(
+    !is.na(mean1), !is.na(mean2),
+    !is.na(sd1), !is.na(sd2),
+    !is.na(n1), !is.na(n2),
+    !is.na(years), years > 0
+  ) |>
+  mutate(
+    n_total = n1 + n2,
+    ref_id = factor(ref_id),
+    sys_id = factor(sys_id),
+    sp_ncbi = factor(sp_ncbi),
+    genphen = factor(genphen),
+    disturbance = factor(disturbance),
+    trait_type = factor(trait_type),
+    log10_years = log10(years)
+  ) |>
+  droplevels()
+
+dat_syn |>
+  summarise(
+    k = n(),
+    n_studies = n_distinct(ref_id),
+    n_systems = n_distinct(sys_id),
+    n_species = n_distinct(sp_ncbi),
+    min_generations = min(generations, na.rm = TRUE),
+    max_generations = max(generations, na.rm = TRUE),
+    min_n_total = min(n_total, na.rm = TRUE),
+    median_n_total = median(n_total, na.rm = TRUE)
+  )
+```
+
+
+
+
+
+
+```{r}
+#| label: safe-lnm-function
+#| message: false
+#| warning: false
+
+get_lnM_safe <- function(m1, m2, s1, s2, n1, n2,
+                         min_kept = 100000,
+                         chunk_init = 5000,
+                         seed = 123) {
+
+  out <- orchaRd:::.safe_lnM_indep(
+    x1bar = m1, x2bar = m2,
+    sd1 = s1, sd2 = s2,
+    n1 = n1, n2 = n2,
+    min_kept = min_kept,
+    chunk_init = chunk_init,
+    seed = seed
+  )
+
+  tibble::tibble(
+    yi_lnM_safe = out$lnM_SAFE,
+    vi_lnM_safe = out$var_lnM_SAFE,
+    draws_kept  = out$kept,
+    draws_total = out$total,
+    attempts    = out$attempts,
+    status      = out$status
+  )
+}
+```
+
+
+
+
+```{r}
+#| label: compute-lnm-synchronic
+#| message: false
+#| warning: false
+
+dat_syn_es <- dat_syn |>
+  mutate(
+    safe = purrr::pmap(
+      list(mean1, mean2, sd1, sd2, n1, n2),
+      ~ get_lnM_safe(..1, ..2, ..3, ..4, ..5, ..6,
+                     min_kept = 100000,
+                     chunk_init = 5000,
+                     seed = 123)
+    )
+  ) |>
+  tidyr::unnest(safe) |>
+  filter(
+    is.finite(yi_lnM_safe),
+    is.finite(vi_lnM_safe),
+    vi_lnM_safe > 0
+  ) |>
+  mutate(
+    es_id = factor(seq_len(n()))
+  )
+
+dat_syn_es |>
+  summarise(
+    k = n(),
+    min_yi = min(yi_lnM_safe, na.rm = TRUE),
+    max_yi = max(yi_lnM_safe, na.rm = TRUE),
+    min_vi = min(vi_lnM_safe, na.rm = TRUE),
+    max_vi = max(vi_lnM_safe, na.rm = TRUE),
+    n_failed = sum(status != "ok", na.rm = TRUE)
+  )
+```
+
+
+```{r}
+#| label: build-vcv-synchronic
+#| message: false
+#| warning: false
+
+vcv_syn <- diag(dat_syn_es$vi_lnM_safe)
+rownames(vcv_syn) <- dat_syn_es$es_id
+colnames(vcv_syn) <- dat_syn_es$es_id
+
+dim(vcv_syn)
+```
+```{r}
+#| label: formula-synchronic
+#| message: false
+#| warning: false
+
+form_syn_ma <- bf(
+  yi_lnM_safe ~ 1 +
+     log10_years +
+    (1 | ref_id) +
+    (1 | sys_id) +
+    (1 | sp_ncbi) +
+    (1 | gr(es_id, cov = vcv_syn)),
+  sigma ~ 1 +
+    log10_years +
+    (1 | ref_id)
+)
+
+```
+
+
+
+
+```{r}
+#| label: priors-synchronic
+#| message: false
+#| warning: false
+
+prior_syn_ma <- default_prior(
+  form_syn_ma,
+  data = dat_syn_es,
+  data2 = list(vcv_syn = vcv_syn),
+  family = gaussian()
+)
+
+prior_syn_ma$prior[
+  prior_syn_ma$class == "sd" &
+  prior_syn_ma$group == "es_id"
+] <- "constant(1)"
+
+prior_syn_ma
+```
+
+
+
+```{r}
+#| label: fit-brms-synchronic
+#| message: false
+#| warning: false
+
+fit_syn_ma <- brm(
+  formula = form_syn_ma,
+  data = dat_syn_es,
+  data2 = list(vcv_syn = vcv_syn),
+  family = gaussian(),
+  prior = prior_syn_ma,
+  chains = 2,
+  cores = 2,
+  iter = 3000,
+  warmup = 1500,
+  seed = 123,
+  backend = "cmdstanr",
+  control = list(
+    adapt_delta = 0.95,
+    max_treedepth = 15
+  )
+)
+
+summary(fit_syn_ma)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
