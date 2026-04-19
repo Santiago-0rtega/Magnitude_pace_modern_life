@@ -26,21 +26,19 @@ dat_raw <- readr::read_csv(
 
 glimpse(dat_raw)
 ```
-```{r}
-dat_raw$climate_change
-```
+
 
 
 
 
 ```{r}
-#| label: prep-synchronic-data
+#| label: prep-allochronic-data
 #| message: false
 #| warning: false
 
 dat_syn <- dat_raw |>
   filter(
-    design == "Synchronic",
+    design == "Allochronic",
     !is.na(generations),
     generations <= 300
   ) |>
@@ -76,6 +74,134 @@ dat_syn |>
 ```
 
 
+```{r}
+#| label: check-grouping-redundancy
+#| message: false
+#| warning: false
+
+# ------------------------------------------------------------
+# Diagnostic for overlap / nesting among grouping variables
+# This is more useful than "correlation" for random effects.
+#
+# IMPORTANT:
+# - es_id_db keeps the original PROCEED es_ID
+# - later, for brms, you can still create a new sequential es_id
+#   for gr(es_id, cov = vcv_syn), but keep es_id_db for diagnostics
+# ------------------------------------------------------------
+
+dat_re_diag <- dat_syn |>
+  transmute(
+    es_id_db = factor(es_id),   # original PROCEED es_ID
+    ref_id   = factor(ref_id),
+    sys_id   = factor(sys_id),
+    sp_ncbi  = factor(sp_ncbi)
+  ) |>
+  tidyr::drop_na(es_id_db, ref_id, sys_id, sp_ncbi) |>
+  droplevels()
+
+# helper: does factor A map uniquely into factor B?
+check_nesting <- function(data, a, b) {
+  tmp <- data |>
+    dplyr::count(.data[[a]], .data[[b]], name = "n") |>
+    dplyr::count(.data[[a]], name = "n_unique_b")
+
+  tibble::tibble(
+    factor_a = a,
+    factor_b = b,
+    n_levels_a = dplyr::n_distinct(data[[a]]),
+    n_levels_b = dplyr::n_distinct(data[[b]]),
+    min_unique_b_per_a    = min(tmp$n_unique_b),
+    median_unique_b_per_a = stats::median(tmp$n_unique_b),
+    mean_unique_b_per_a   = mean(tmp$n_unique_b),
+    max_unique_b_per_a    = max(tmp$n_unique_b),
+    prop_a_single_b       = mean(tmp$n_unique_b == 1),
+    a_nested_in_b         = all(tmp$n_unique_b == 1)
+  )
+}
+
+group_vars <- c("es_id_db", "ref_id", "sys_id", "sp_ncbi")
+
+nesting_tbl <- purrr::map_dfr(group_vars, function(a) {
+  purrr::map_dfr(setdiff(group_vars, a), function(b) {
+    check_nesting(dat_re_diag, a, b)
+  })
+}) |>
+  dplyr::arrange(dplyr::desc(a_nested_in_b), factor_a, factor_b)
+
+nesting_tbl
+
+# ------------------------------------------------------------
+# Quick matrix view: maximum number of B levels within each A
+# If max_unique_b_per_a == 1, then A is fully nested in B
+# ------------------------------------------------------------
+
+nesting_matrix <- nesting_tbl |>
+  dplyr::select(factor_a, factor_b, max_unique_b_per_a) |>
+  tidyr::pivot_wider(
+    names_from  = factor_b,
+    values_from = max_unique_b_per_a
+  )
+
+nesting_matrix
+
+# ------------------------------------------------------------
+# Support diagnostics for the hierarchical structure
+# These matter for whether a higher-level RE is estimable
+# once a lower-level RE is already in the model
+# ------------------------------------------------------------
+
+species_support <- dat_re_diag |>
+  dplyr::count(sp_ncbi, sys_id, name = "n_rows") |>
+  dplyr::count(sp_ncbi, name = "n_sys_per_species") |>
+  dplyr::summarise(
+    n_species                    = dplyr::n(),
+    prop_species_with_1_system   = mean(n_sys_per_species == 1),
+    median_systems_per_species   = stats::median(n_sys_per_species),
+    max_systems_per_species      = max(n_sys_per_species)
+  )
+
+species_support
+
+ref_support <- dat_re_diag |>
+  dplyr::count(ref_id, sys_id, name = "n_rows") |>
+  dplyr::count(ref_id, name = "n_sys_per_ref") |>
+  dplyr::summarise(
+    n_refs                    = dplyr::n(),
+    prop_refs_with_1_system   = mean(n_sys_per_ref == 1),
+    median_systems_per_ref    = stats::median(n_sys_per_ref),
+    max_systems_per_ref       = max(n_sys_per_ref)
+  )
+
+ref_support
+
+# ------------------------------------------------------------
+# Show the problematic exceptions explicitly
+# ------------------------------------------------------------
+
+sys_multiple_species <- dat_re_diag |>
+  dplyr::count(sys_id, sp_ncbi, name = "n_rows") |>
+  dplyr::count(sys_id, name = "n_species_in_sys") |>
+  dplyr::filter(n_species_in_sys > 1) |>
+  dplyr::arrange(dplyr::desc(n_species_in_sys))
+
+sys_multiple_species
+
+sys_multiple_refs <- dat_re_diag |>
+  dplyr::count(sys_id, ref_id, name = "n_rows") |>
+  dplyr::count(sys_id, name = "n_refs_in_sys") |>
+  dplyr::filter(n_refs_in_sys > 1) |>
+  dplyr::arrange(dplyr::desc(n_refs_in_sys))
+
+sys_multiple_refs
+
+species_multiple_refs <- dat_re_diag |>
+  dplyr::count(sp_ncbi, ref_id, name = "n_rows") |>
+  dplyr::count(sp_ncbi, name = "n_refs_in_species") |>
+  dplyr::filter(n_refs_in_species > 1) |>
+  dplyr::arrange(dplyr::desc(n_refs_in_species))
+
+species_multiple_refs
+```
 
 
 
@@ -114,7 +240,7 @@ get_lnM_safe <- function(m1, m2, s1, s2, n1, n2,
 
 
 ```{r}
-#| label: compute-lnm-synchronic
+#| label: compute-lnm-allochronic
 #| message: false
 #| warning: false
 
@@ -162,20 +288,17 @@ colnames(vcv_syn) <- dat_syn_es$es_id
 dim(vcv_syn)
 ```
 ```{r}
-#| label: formula-synchronic
+#| label: formula-allochronic
 #| message: false
 #| warning: false
 
 form_syn_ma <- bf(
-  yi_lnM_safe ~ 1 +
-     log10_years +
+  yi_lnM_safe ~ 1  +
     (1 | ref_id) +
     (1 | sys_id) +
     (1 | sp_ncbi) +
     (1 | gr(es_id, cov = vcv_syn)),
-  sigma ~ 1 +
-    log10_years +
-    (1 | ref_id)
+  sigma ~ 1 
 )
 
 ```
@@ -184,7 +307,7 @@ form_syn_ma <- bf(
 
 
 ```{r}
-#| label: priors-synchronic
+#| label: priors-allochronic
 #| message: false
 #| warning: false
 
@@ -206,7 +329,7 @@ prior_syn_ma
 
 
 ```{r}
-#| label: fit-brms-synchronic
+#| label: fit-brms-allochronic
 #| message: false
 #| warning: false
 
@@ -235,7 +358,70 @@ summary(fit_syn_ma)
 
 
 
+```{r}
+#| label: formula-allochronic_simplified
+#| message: false
+#| warning: false
 
+form_syn_ma2 <- bf(
+  yi_lnM_safe ~ 1 +
+    (1 | ref_id) +
+    (1 | gr(es_id, cov = vcv_syn)),
+  sigma ~ 1  
+)
+
+```
+
+
+
+
+```{r}
+#| label: priors-allochronic_simplified
+#| message: false
+#| warning: false
+
+prior_syn_ma2 <- default_prior(
+  form_syn_ma2,
+  data = dat_syn_es,
+  data2 = list(vcv_syn = vcv_syn),
+  family = gaussian()
+)
+
+prior_syn_ma2$prior[
+  prior_syn_ma2$class == "sd" &
+  prior_syn_ma2$group == "es_id"
+] <- "constant(1)"
+
+prior_syn_ma2
+```
+
+
+
+```{r}
+#| label: fit-brms-allochronic2
+#| message: false
+#| warning: false
+
+fit_syn_ma2 <- brm(
+  formula = form_syn_ma2,
+  data = dat_syn_es,
+  data2 = list(vcv_syn = vcv_syn),
+  family = gaussian(),
+  prior = prior_syn_ma2,
+  chains = 2,
+  cores = 2,
+  iter = 3000,
+  warmup = 1500,
+  seed = 123,
+  backend = "cmdstanr",
+  control = list(
+    adapt_delta = 0.95,
+    max_treedepth = 15
+  )
+)
+
+summary(fit_syn_ma2)
+```
 
 
 
