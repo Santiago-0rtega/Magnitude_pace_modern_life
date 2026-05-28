@@ -1,0 +1,112 @@
+---
+title: "Data preparation"
+---
+
+```{r setup}
+source(here::here("R", "00_packages.R"))
+source(here::here("R", "01_paths.R"))
+source(here::here("R", "02_read_clean_data.R"))
+source(here::here("R", "03_filters.R"))
+```
+
+## Read and inspect the raw data
+
+```{r read-raw}
+dat_raw <- read_proceed()
+
+cat("Rows:", nrow(dat_raw), "\n")
+cat("Columns:", ncol(dat_raw), "\n")
+```
+
+### Column names
+
+```{r column-names}
+names(dat_raw)
+```
+
+### Quick look at key variables
+
+```{r glimpse}
+dplyr::glimpse(dat_raw)
+```
+
+## Initial cleaning
+
+Convert grouping and categorical variables to factors.
+
+```{r clean}
+dat_clean <- clean_proceed(dat_raw)
+```
+
+## Inclusion criteria
+
+### Require lnM input variables
+
+Each contrast must have valid means, standard deviations, and sample sizes in both groups.
+
+```{r require-lnm}
+n_before <- nrow(dat_clean)
+dat_filtered <- require_lnm_vars(dat_clean)
+n_after  <- nrow(dat_filtered)
+
+cat("Excluded (missing lnM inputs):", n_before - n_after, "\n")
+cat("Retained:", n_after, "\n")
+```
+
+### Generation filter
+
+The primary analysis applies a **generations ≤ 300** filter where generation-time information is available. Contrasts with missing generation time are retained.
+
+```{r gen-filter}
+n_before <- nrow(dat_filtered)
+dat_filtered <- filter_generations(dat_filtered, max_gen = 300)
+n_after  <- nrow(dat_filtered)
+
+cat("Excluded (generations > 300):", n_before - n_after, "\n")
+cat("Retained:", n_after, "\n")
+```
+
+### Design coverage
+
+The analysis includes both allochronic (before–after) and synchronic (disturbed–reference) contrasts unless a specific chapter restricts to one design. The `design` variable is retained as a moderator.
+
+```{r design-counts}
+dat_filtered |>
+  dplyr::count(design, sort = TRUE)
+```
+
+## Derived variables
+
+```{r derived}
+dat_lnm_input <- add_derived_vars(dat_filtered)
+
+dplyr::glimpse(
+  dplyr::select(dat_lnm_input, n_total, log10_years, log10_generations)
+)
+```
+
+## Quick dataset summary
+
+```{r summary}
+dat_lnm_input |>
+  dplyr::summarise(
+    k              = dplyr::n(),
+    n_studies      = dplyr::n_distinct(ref_id),
+    n_systems      = dplyr::n_distinct(sys_id),
+    n_species      = dplyr::n_distinct(sp_ncbi),
+    n_allochronic  = sum(design == "Allochronic",  na.rm = TRUE),
+    n_synchronic   = sum(design == "Synchronic",   na.rm = TRUE),
+    pct_has_gen    = round(100 * mean(!is.na(generations)), 1),
+    pct_has_years  = round(100 * mean(!is.na(years) & years > 0), 1)
+  )
+```
+
+## Save cleaned dataset
+
+```{r save}
+saveRDS(
+  dat_lnm_input,
+  here::here("outputs", "data_clean", "proceed_clean_filtered.rds")
+)
+cat("Saved: outputs/data_clean/proceed_clean_filtered.rds\n")
+```

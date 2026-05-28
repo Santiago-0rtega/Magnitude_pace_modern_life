@@ -1,0 +1,35 @@
+project:
+  type: book
+
+book:
+  title: "Supplementary analyses: Human disturbance and the magnitude of phenotypic divergence"
+  author: "TBA"
+  date: today
+  chapters:
+    - index.qmd
+    - 01_data_preparation.qmd
+    - 02_lnm_effect_sizes.qmd
+    - 03_descriptive_summaries.qmd
+    - 04_dependency_structure.qmd
+    - 05_location_scale_model_grid.qmd
+    - 06_location_scale_results_by_moderator.qmd
+    - 07_sensitivity_analyses.qmd
+    - 08_publication_figures.qmd
+    - 09_reproducibility.qmd
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-fold: true
+    code-tools: true
+    number-sections: true
+    df-print: paged
+    fig-width: 9
+    fig-height: 6
+
+execute:
+  warning: false
+  message: false
+  freeze: auto

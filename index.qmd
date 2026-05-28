@@ -1,0 +1,55 @@
+---
+title: "Introduction"
+---
+
+## About this supplement
+
+This computational supplement accompanies the manuscript:
+
+> **Human disturbance and the magnitude of phenotypic divergence: a Bayesian meta-regression of lnM across the PROCEED database.**
+
+It documents every analytical step, from data import to final figures, in a reproducible Quarto book. All code is written in R and all models are fitted with **brms** using the **cmdstanr** backend.
+
+## The PROCEED database
+
+The analyses use the **PROCEED v6.2** database of rates of evolutionary and phenotypic change. Each row represents one contrast between two populations or time points, with the raw summary statistics (means, standard deviations, sample sizes) needed to compute an effect size.
+
+## The effect size: lnM
+
+The central effect size is $\ln M$ — the log ratio of the geometric mean absolute deviation from the trait mean. For independent-groups contrasts, $\ln M$ is estimated using the **SAFE** (Simulation-based Adjusted For Estimation error) procedure implemented in `orchaRd:::.safe_lnM_indep()`. The SAFE estimator uses Monte Carlo sampling to propagate uncertainty from small samples and avoids the bias of naive estimators when sample sizes are small.
+
+A positive $\ln M$ indicates that the later or disturbed population shows greater phenotypic dispersion than the reference population. A value of zero indicates equal dispersion.
+
+## Location–scale meta-regression
+
+The central statistical framework is **location–scale meta-regression** implemented in `brms`. Each model has the conceptual form:
+
+```r
+bf(
+  yi_lnM_safe ~ moderator + random_effects,
+  sigma ~ moderator
+)
+```
+
+The **location submodel** asks whether a moderator predicts the *average* magnitude of phenotypic divergence ($\overline{\ln M}$). The **scale submodel** asks whether the same moderator predicts the *residual variation* — the degree to which divergence is consistent (low $\sigma$) or heterogeneous (high $\sigma$) after accounting for the location effect.
+
+**One independent model per moderator.** No large multi-moderator model is fitted. This ensures that each moderator's effect is estimated from all data available for that moderator, and that no moderator's influence is masked by collinearity with others.
+
+## Random effects
+
+Every main model includes:
+
+- `(1 | ref_id)` — non-independence among contrasts from the same reference.
+- `(1 | gr(sp_ncbi, cov = A))` — phylogenetic relatedness among species.
+- `(1 | gr(es_id_model, cov = V))` — known sampling variance (SAFE estimates), using the brms known-variance trick with a `constant(1)` prior on the corresponding SD.
+
+`sys_id` (study system) is reserved for sensitivity analyses because it is highly associated with `ref_id` and `sp_ncbi` and can make variance components hard to identify.
+
+## Caching and reproducibility
+
+Heavy computations are cached as `.rds` files in `outputs/`. The book reads cached files by default. To recompute:
+
+- **Effect sizes:** set `recompute_effect_sizes <- TRUE` in `02_lnm_effect_sizes.qmd`.
+- **Models:** set `refit_models <- TRUE` in `05_location_scale_model_grid.qmd`.
+
+Package versions, CmdStan version, and a git commit hash are recorded in @sec-reproducibility.

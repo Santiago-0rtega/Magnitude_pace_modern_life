@@ -1,0 +1,249 @@
+---
+title: "Dependency structure"
+---
+
+```{r setup}
+source(here::here("R", "00_packages.R"))
+source(here::here("R", "01_paths.R"))
+```
+
+## Load data
+
+```{r load}
+dat_es <- readRDS(here::here("outputs", "effect_sizes", "proceed_lnm_safe.rds"))
+```
+
+## Why dependency matters
+
+Multiple contrasts in a meta-analysis often share a reference (same paper), a study system (same population or location), or a species. Ignoring this non-independence inflates effective sample size and narrows credible intervals inappropriately. Random effects in the location–scale model account for three sources of dependency:
+
+1. **Reference (`ref_id`)** — contrasts from the same paper share design choices, sampling effort, and measurement protocol.
+2. **Phylogenetic relatedness (`sp_ncbi`, via A)** — species that share evolutionary history have correlated trait values.
+3. **Sampling variance (`es_id_model`, via V)** — each contrast has a known estimation error (from SAFE) that is treated as a fixed component rather than estimated.
+
+`sys_id` (study system) is correlated with both `ref_id` and `sp_ncbi` in these data, which makes it hard to identify a separate system-level variance component. It is therefore reserved for sensitivity analyses.
+
+## Nesting diagnostic helper
+
+```{r nesting-fun}
+check_nesting <- function(data, a, b) {
+  tmp <- data |>
+    dplyr::count(.data[[a]], .data[[b]], name = "n") |>
+    dplyr::count(.data[[a]], name = "n_unique_b")
+
+  tibble::tibble(
+    factor_a              = a,
+    factor_b              = b,
+    n_levels_a            = dplyr::n_distinct(data[[a]]),
+    n_levels_b            = dplyr::n_distinct(data[[b]]),
+    min_unique_b_per_a    = min(tmp$n_unique_b),
+    median_unique_b_per_a = stats::median(tmp$n_unique_b),
+    max_unique_b_per_a    = max(tmp$n_unique_b),
+    prop_a_single_b       = mean(tmp$n_unique_b == 1),
+    a_nested_in_b         = all(tmp$n_unique_b == 1)
+  )
+}
+```
+
+## Build diagnostic dataset
+
+```{r diag-data}
+dat_re_diag <- dat_es |>
+  dplyr::transmute(
+    es_id_db = factor(es_id_db),
+    ref_id   = factor(ref_id),
+    sys_id   = factor(sys_id),
+    sp_ncbi  = factor(sp_ncbi)
+  ) |>
+  tidyr::drop_na() |>
+  droplevels()
+
+cat("Rows in diagnostic dataset:", nrow(dat_re_diag), "\n")
+```
+
+## Nesting table
+
+If `a_nested_in_b == TRUE`, every level of A belongs to exactly one level of B — A is fully nested within B. If `prop_a_single_b` is high, most levels of A belong to a single level of B.
+
+```{r nesting-table}
+group_vars <- c("es_id_db", "ref_id", "sys_id", "sp_ncbi")
+
+nesting_tbl <- purrr::map_dfr(group_vars, function(a) {
+  purrr::map_dfr(setdiff(group_vars, a), function(b) {
+    check_nesting(dat_re_diag, a, b)
+  })
+}) |>
+  dplyr::arrange(dplyr::desc(a_nested_in_b), factor_a, factor_b)
+
+nesting_tbl
+```
+
+## Nesting matrix (max unique B per A level)
+
+A value of 1 means A is fully nested in B.
+
+```{r nesting-matrix}
+nesting_tbl |>
+  dplyr::select(factor_a, factor_b, max_unique_b_per_a) |>
+  tidyr::pivot_wider(names_from = factor_b, values_from = max_unique_b_per_a)
+```
+
+## Support summaries
+
+### Systems per species
+
+```{r sp-sys}
+species_support <- dat_re_diag |>
+  dplyr::count(sp_ncbi, sys_id) |>
+  dplyr::count(sp_ncbi, name = "n_sys_per_species") |>
+  dplyr::summarise(
+    n_species                  = dplyr::n(),
+    prop_species_with_1_system = mean(n_sys_per_species == 1),
+    median_systems_per_species = stats::median(n_sys_per_species),
+    max_systems_per_species    = max(n_sys_per_species)
+  )
+
+species_support
+```
+
+### Systems per reference
+
+```{r ref-sys}
+ref_support <- dat_re_diag |>
+  dplyr::count(ref_id, sys_id) |>
+  dplyr::count(ref_id, name = "n_sys_per_ref") |>
+  dplyr::summarise(
+    n_refs                  = dplyr::n(),
+    prop_refs_with_1_system = mean(n_sys_per_ref == 1),
+    median_systems_per_ref  = stats::median(n_sys_per_ref),
+    max_systems_per_ref     = max(n_sys_per_ref)
+  )
+
+ref_support
+```
+
+### Systems with multiple species
+
+```{r sys-multi-sp}
+dat_re_diag |>
+  dplyr::count(sys_id, sp_ncbi) |>
+  dplyr::count(sys_id, name = "n_species_in_sys") |>
+  dplyr::filter(n_species_in_sys > 1) |>
+  dplyr::arrange(dplyr::desc(n_species_in_sys))
+```
+
+### Systems with multiple references
+
+```{r sys-multi-ref}
+dat_re_diag |>
+  dplyr::count(sys_id, ref_id) |>
+  dplyr::count(sys_id, name = "n_refs_in_sys") |>
+  dplyr::filter(n_refs_in_sys > 1) |>
+  dplyr::arrange(dplyr::desc(n_refs_in_sys))
+```
+
+## Support summary table
+
+```{r support-table}
+make_link_summary <- function(data, grouping_factor, linked_factor, relationship_label) {
+  data |>
+    dplyr::distinct(.data[[grouping_factor]], .data[[linked_factor]]) |>
+    dplyr::count(.data[[grouping_factor]], name = "n_matches") |>
+    dplyr::summarise(
+      Group                      = grouping_factor,
+      Relationship               = relationship_label,
+      `Groups with only 1 match` = sum(n_matches == 1),
+      `Total groups`             = dplyr::n(),
+      `Only 1 match (%)`         = round(100 * mean(n_matches == 1), 1)
+    )
+}
+
+support_table <- dplyr::bind_rows(
+  make_link_summary(dat_re_diag, "sp_ncbi", "sys_id",  "systems per species"),
+  make_link_summary(dat_re_diag, "sys_id",  "sp_ncbi", "species per system"),
+  make_link_summary(dat_re_diag, "ref_id",  "sys_id",  "systems per reference"),
+  make_link_summary(dat_re_diag, "sys_id",  "ref_id",  "references per system")
+)
+
+support_table
+```
+
+## Species coverage for phylogenetic random effect
+
+Before fitting any model it is useful to know how many rows will be affected by the phylogenetic alignment step. Two sources of row loss are distinguished:
+
+1. **`sp_ncbi` is `NA` or blank** — the contrast has no species information at all. These rows are always excluded from any species-level random effect.
+2. **Valid `sp_ncbi` not matched in the Open Tree of Life** — the species name exists in the data but `rotl` could not retrieve it during tree construction. Under the default `fill_unmatched = TRUE` behaviour these species are retained in the model and assigned zero phylogenetic correlation with all other species (a "star" contribution). They are **not** silently dropped.
+
+```{r phylo-coverage}
+source(here::here("R", "05_phylogeny.R"))
+
+A_full   <- tryCatch(readRDS(here::here("outputs", "phylogeny", "proceed_A_matrix.rds")),
+                     error = function(e) NULL)
+name_map <- tryCatch(readRDS(here::here("outputs", "phylogeny", "proceed_name_map.rds")),
+                     error = function(e) NULL)
+
+if (!is.null(A_full) && !is.null(name_map)) {
+  dat_coverage <- apply_phylo_name_map(dat_es, name_map)
+
+  sp_raw       <- as.character(dat_es$sp_ncbi)
+  sp_canonical <- as.character(dat_coverage$sp_ncbi_canonical)
+
+  n_na_raw       <- sum(is.na(sp_raw) | sp_raw == "")
+  n_named        <- sum(!is.na(sp_raw) & nzchar(sp_raw))
+  n_resolved     <- sum(!is.na(sp_canonical) & nzchar(sp_canonical))
+  n_unresolved   <- n_named - n_resolved
+
+  sp_uniq_can    <- unique(sp_canonical[!is.na(sp_canonical) & nzchar(sp_canonical)])
+  sp_in_tree     <- sp_uniq_can[sp_uniq_can %in% rownames(A_full)]
+  sp_star        <- setdiff(sp_uniq_can, rownames(A_full))
+
+  tibble::tibble(
+    Category = c(
+      "Total contrasts",
+      "sp_ncbi is NA / blank (no species info)",
+      "Named species — resolved to canonical name",
+      "Named species — unresolved after 4-stage cascade",
+      "Unique canonical species in phylogenetic tree",
+      "Unique canonical species assigned star (zero) correlation"
+    ),
+    N = c(
+      nrow(dat_es),
+      n_na_raw,
+      n_resolved,
+      n_unresolved,
+      length(sp_in_tree),
+      length(sp_star)
+    )
+  )
+} else {
+  cat("Phylogeny / name map not yet built. Run chapter 05 first.\n")
+}
+```
+
+## Random-effects rationale
+
+The nesting diagnostics above reveal:
+
+- `es_id_db` is the finest-grained identifier (one row per contrast) and is nested within all higher-level groupings.
+- Most studies (`ref_id`) contribute data from one system, but a meaningful fraction contribute from multiple systems.
+- Most species (`sp_ncbi`) appear in one system, but some span multiple systems and references.
+- Systems can span multiple references and species, creating a crossed (not purely hierarchical) structure.
+
+This crossed structure means that `ref_id` and `sp_ncbi` (via phylogeny) can both be estimated in the same model. Adding `sys_id` as a *third* group-level predictor in this crossed design risks near-collinearity with `ref_id` and `sp_ncbi`, making variance components weakly identified. For this reason, `sys_id` is included in sensitivity analyses only.
+
+## Save dependency tables
+
+```{r save}
+readr::write_csv(
+  nesting_tbl,
+  here::here("outputs", "tables", "dependency_nesting_table.csv")
+)
+
+readr::write_csv(
+  support_table,
+  here::here("outputs", "tables", "dependency_support_summary.csv")
+)
+
+cat("Dependency tables saved.\n")
+```

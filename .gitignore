@@ -2,3 +2,18 @@
 .Rhistory
 .RData
 .Ruserdata
+
+# Quarto render artefacts
+/_book/
+/.quarto/
+
+# Large cached outputs (too big for git)
+outputs/models/*.rds
+outputs/models/sensitivity/*.rds
+outputs/effect_sizes/*.rds
+outputs/phylogeny/*.rds
+
+# Keep directory stubs and CSV/figure outputs in git
+!outputs/models/.gitkeep
+!outputs/effect_sizes/.gitkeep
+!outputs/phylogeny/.gitkeep

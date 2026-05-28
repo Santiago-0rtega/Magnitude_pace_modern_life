@@ -1,0 +1,160 @@
+---
+title: "Alluvial plot"
+output: html_document
+date: "2026-04-20"
+---
+
+
+```{r}
+# Load libraries
+library(tidyverse)
+library(orchaRd)
+library(janitor)
+library(here)
+library(alluvial)
+library(ggalluvial)
+```
+
+
+```{r}
+#| label: read-data
+#| message: false
+#| warning: false
+
+dat_raw <- readr::read_csv(
+  here::here("data", "PROCEEDv6.2_RatesDB.csv"),
+  show_col_types = FALSE
+) %>%
+  janitor::clean_names()
+
+glimpse(dat_raw)
+```
+
+
+
+
+
+```{r}
+#| label: prep-id-data-full
+#| message: false
+#| warning: false
+
+# Full dataset, only the grouping variables of interest
+# Set keep_missing = TRUE if you want missing IDs treated as levels
+keep_missing <- FALSE
+
+dat_ids <- dat_raw |>
+  transmute(
+    ref_id  = ref_id,
+    sys_id  = sys_id,
+    sp_ncbi = sp_ncbi
+  )
+
+if (keep_missing) {
+  dat_ids <- dat_ids |>
+    mutate(
+      across(
+        everything(),
+        ~ dplyr::coalesce(na_if(.x, ""), "Missing")
+      )
+    )
+} else {
+  dat_ids <- dat_ids |>
+    filter(
+      !is.na(ref_id),  ref_id  != "",
+      !is.na(sys_id),  sys_id  != "",
+      !is.na(sp_ncbi), sp_ncbi != ""
+    )
+}
+
+dat_ids <- dat_ids |>
+  mutate(
+    ref_id  = factor(ref_id),
+    sys_id  = factor(sys_id),
+    sp_ncbi = factor(sp_ncbi)
+  ) |>
+  droplevels()
+
+dat_ids |>
+  summarise(
+    k_rows     = n(),
+    n_ref_id   = n_distinct(ref_id),
+    n_sys_id   = n_distinct(sys_id),
+    n_sp_ncbi  = n_distinct(sp_ncbi)
+  )
+```
+
+
+
+
+
+
+
+
+```{r}
+#| label: compact-support-table-final
+#| message: false
+#| warning: false
+
+make_link_summary <- function(data, grouping_factor, linked_factor, relationship_label) {
+  data |>
+    distinct(.data[[grouping_factor]], .data[[linked_factor]]) |>
+    count(.data[[grouping_factor]], name = "n_matches") |>
+    summarise(
+      Group = grouping_factor,
+      Relationship = relationship_label,
+      `Groups with only one match` = sum(n_matches == 1),
+      `Total groups` = n(),
+      `Only one match (%)` = round(100 * mean(n_matches == 1), 1)
+    )
+}
+
+support_table <- bind_rows(
+  make_link_summary(
+    dat_ids,
+    grouping_factor = "sp_ncbi",
+    linked_factor = "sys_id",
+    relationship_label = "systems per species"
+  ),
+  make_link_summary(
+    dat_ids,
+    grouping_factor = "sys_id",
+    linked_factor = "sp_ncbi",
+    relationship_label = "species per system"
+  ),
+  make_link_summary(
+    dat_ids,
+    grouping_factor = "ref_id",
+    linked_factor = "sys_id",
+    relationship_label = "systems per reference"
+  ),
+  make_link_summary(
+    dat_ids,
+    grouping_factor = "sys_id",
+    linked_factor = "ref_id",
+    relationship_label = "references per system"
+  )
+) |>
+  mutate(
+    Group = dplyr::recode(
+      Group,
+      sp_ncbi = "Species",
+      sys_id  = "System",
+      ref_id  = "Reference"
+    )
+  )
+
+support_table
+```
+
+
+
+
+
+
+
+
+
+
+
+

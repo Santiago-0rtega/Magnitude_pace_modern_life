@@ -1,0 +1,5 @@
+Group,Relationship,Groups with only 1 match,Total groups,Only 1 match (%)
+sp_ncbi,systems per species,225,281,80.1
+sys_id,species per system,1588,1588,100
+ref_id,systems per reference,225,268,84
+sys_id,references per system,1546,1588,97.4

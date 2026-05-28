@@ -1,0 +1,13 @@
+factor_a,factor_b,n_levels_a,n_levels_b,min_unique_b_per_a,median_unique_b_per_a,max_unique_b_per_a,prop_a_single_b,a_nested_in_b
+es_id_db,ref_id,7511,268,1,1,1,1,TRUE
+es_id_db,sp_ncbi,7511,281,1,1,1,1,TRUE
+es_id_db,sys_id,7511,1588,1,1,1,1,TRUE
+sys_id,sp_ncbi,1588,281,1,1,1,1,TRUE
+ref_id,es_id_db,268,7511,1,8,1320,0.08955223880597014,FALSE
+ref_id,sp_ncbi,268,281,1,1,65,0.9067164179104478,FALSE
+ref_id,sys_id,268,1588,1,1,1189,0.8395522388059702,FALSE
+sp_ncbi,es_id_db,281,7511,1,5,1192,0.25622775800711745,FALSE
+sp_ncbi,ref_id,281,268,1,1,13,0.797153024911032,FALSE
+sp_ncbi,sys_id,281,1588,1,1,385,0.800711743772242,FALSE
+sys_id,es_id_db,1588,7511,1,1,1156,0.7556675062972292,FALSE
+sys_id,ref_id,1588,268,1,1,10,0.9735516372795969,FALSE

@@ -1,0 +1,112 @@
+---
+title: "Results by moderator"
+---
+
+```{r setup}
+source(here::here("R", "00_packages.R"))
+source(here::here("R", "01_paths.R"))
+source(here::here("R", "06_model_registry.R"))
+```
+
+This chapter presents the results of each location–scale model. No models are fitted here. All tables are read from `outputs/tables/`.
+
+## Interpretation guide
+
+**Location effects** are estimated on the $\ln M$ scale. A positive estimate means the moderator level is associated with a *larger* average magnitude of phenotypic divergence. A negative estimate means smaller average divergence. The reference (baseline) level is shown in the model intercept.
+
+**Scale effects** are estimated on the $\log(\sigma)$ scale. A positive estimate means the moderator level is associated with *greater residual heterogeneity* in lnM — divergence is more unpredictable or variable across contrasts of that type. A negative estimate means *lower residual heterogeneity* — divergence is more consistent and predictable.
+
+**Avoid binary significance language.** The credible intervals quantify uncertainty; the biological question is whether the estimate and its interval are practically meaningful.
+
+## Load result tables
+
+```{r load-tables}
+status_file <- here::here("outputs", "tables", "model_grid_status.csv")
+loc_file    <- here::here("outputs", "tables", "location_effects_all_moderators.csv")
+scl_file    <- here::here("outputs", "tables", "scale_effects_all_moderators.csv")
+diag_file   <- here::here("outputs", "tables", "model_diagnostics_all_moderators.csv")
+
+if (file.exists(status_file)) {
+  model_status <- readr::read_csv(status_file, show_col_types = FALSE)
+} else {
+  stop("model_grid_status.csv not found. Run chapter 05 first.")
+}
+
+loc_effects  <- if (file.exists(loc_file))  readr::read_csv(loc_file,  show_col_types = FALSE) else NULL
+scl_effects  <- if (file.exists(scl_file))  readr::read_csv(scl_file,  show_col_types = FALSE) else NULL
+diag_all     <- if (file.exists(diag_file)) readr::read_csv(diag_file, show_col_types = FALSE) else NULL
+```
+
+## Model grid status
+
+```{r status}
+model_status |>
+  dplyr::select(model_id, moderator, label, type, n_rows, status, max_rhat, n_divergent)
+```
+
+## Results loop
+
+```{r results-loop, results='asis'}
+for (i in seq_len(nrow(moderator_grid))) {
+  row       <- moderator_grid[i, ]
+  mod_id    <- row$model_id
+  moderator <- row$moderator
+  label     <- row$label
+
+  cat("\n\n### ", mod_id, " — ", label, " {.unnumbered}\n\n", sep = "")
+
+  # Status
+  st <- model_status[model_status$model_id == mod_id, ]
+  if (nrow(st) == 0) {
+    cat("*Status: no information available.*\n\n")
+    next
+  }
+
+  cat("**Status:** ", st$status, "\n\n")
+  cat("**N contrasts:** ", st$n_rows, "  |  ",
+      "**N excluded (missing):** ", st$n_missing_excluded, "\n\n")
+
+  if (st$status != "fitted") {
+    cat("*Model was not fitted. Reason: ", st$notes, "*\n\n")
+    next
+  }
+
+  # Diagnostics
+  if (!is.null(diag_all)) {
+    d <- diag_all[diag_all$model_id == mod_id, ]
+    if (nrow(d) > 0) {
+      cat("**Diagnostics:** max Rhat =", round(d$max_rhat, 4),
+          "| min bulk ESS =", round(d$min_bulk_ess),
+          "| divergent transitions =", d$n_divergent, "\n\n")
+    }
+  }
+
+  # Location effects
+  if (!is.null(loc_effects)) {
+    lfe <- loc_effects[loc_effects$model_id == mod_id, ]
+    if (nrow(lfe) > 0) {
+      cat("**Location effects (mean lnM):**\n\n")
+      print(knitr::kable(
+        dplyr::select(lfe, term, estimate, est_error, q2_5, q97_5) |>
+          dplyr::mutate(dplyr::across(where(is.numeric), ~ round(.x, 3))),
+        format = "markdown"
+      ))
+      cat("\n\n")
+    }
+  }
+
+  # Scale effects
+  if (!is.null(scl_effects)) {
+    sfe <- scl_effects[scl_effects$model_id == mod_id, ]
+    if (nrow(sfe) > 0) {
+      cat("**Scale effects (residual heterogeneity, log sigma):**\n\n")
+      print(knitr::kable(
+        dplyr::select(sfe, term, estimate, est_error, q2_5, q97_5) |>
+          dplyr::mutate(dplyr::across(where(is.numeric), ~ round(.x, 3))),
+        format = "markdown"
+      ))
+      cat("\n\n")
+    }
+  }
+}
+```

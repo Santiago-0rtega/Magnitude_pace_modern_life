@@ -1,0 +1,99 @@
+---
+title: "lnM effect sizes (SAFE)"
+---
+
+```{r setup}
+source(here::here("R", "00_packages.R"))
+source(here::here("R", "01_paths.R"))
+source(here::here("R", "04_lnm_safe.R"))
+
+# Set to TRUE to recompute (slow; ~hours for large datasets)
+recompute_effect_sizes <- FALSE
+```
+
+## Load cleaned data
+
+```{r load-clean}
+dat_lnm_input <- readRDS(
+  here::here("outputs", "data_clean", "proceed_clean_filtered.rds")
+)
+
+cat("Contrasts available for lnM:", nrow(dat_lnm_input), "\n")
+```
+
+## SAFE lnM estimator
+
+The SAFE estimator (`orchaRd:::.safe_lnM_indep()`) uses Monte Carlo sampling to compute a bias-corrected estimate of $\ln M$ and its sampling variance for each independent-groups contrast. For each contrast, a large number of draws are taken from the posterior predictive distribution of the two group means, standard deviations, and sample sizes; the estimator retains only draws that satisfy validity constraints (e.g., positive standard deviations) and computes $\ln M$ for each.
+
+This is computationally intensive but avoids the negative-bias that affects naive $\ln M$ estimates from small samples.
+
+## Compute or read SAFE lnM estimates
+
+```{r compute-lnm}
+dat_es <- compute_or_read_lnm_safe(
+  dat_lnm_input,
+  out_path   = here::here("outputs", "effect_sizes", "proceed_lnm_safe.rds"),
+  diag_path  = here::here("outputs", "tables", "safe_lnm_diagnostics.csv"),
+  recompute  = recompute_effect_sizes
+)
+
+cat("Effect sizes retained:", nrow(dat_es), "\n")
+```
+
+## Effect-size summary
+
+```{r es-summary}
+dat_es |>
+  dplyr::summarise(
+    k           = dplyr::n(),
+    min_yi      = round(min(yi_lnM_safe), 3),
+    median_yi   = round(median(yi_lnM_safe), 3),
+    max_yi      = round(max(yi_lnM_safe), 3),
+    min_vi      = round(min(vi_lnM_safe), 6),
+    median_vi   = round(median(vi_lnM_safe), 6),
+    max_vi      = round(max(vi_lnM_safe), 6),
+    n_status_ok = sum(status == "ok", na.rm = TRUE),
+    n_failed    = sum(status != "ok", na.rm = TRUE)
+  )
+```
+
+## SAFE diagnostics
+
+Check the Monte Carlo convergence (draws kept vs. total).
+
+```{r safe-diag}
+safe_diag <- readr::read_csv(
+  here::here("outputs", "tables", "safe_lnm_diagnostics.csv"),
+  show_col_types = FALSE
+)
+
+safe_diag |>
+  dplyr::summarise(
+    n_ok           = sum(status == "ok"),
+    n_not_ok       = sum(status != "ok"),
+    min_pct_kept   = round(min(draws_kept / draws_total * 100), 1),
+    median_pct_kept = round(median(draws_kept / draws_total * 100), 1),
+    max_attempts   = max(attempts)
+  )
+```
+
+## Identifier management
+
+The dataset preserves two IDs:
+
+- **`es_id_db`**: the original PROCEED effect-size identifier (for tracing back to the database).
+- **`es_id_model`**: a sequential integer factor created *after* filtering to finite, positive $v_i$, used as the row/column index of the sampling-variance matrix $V$.
+
+```{r id-check}
+dat_es |>
+  dplyr::select(es_id_db, es_id_model) |>
+  head(6)
+```
+
+## Sampling-variance matrix
+
+The diagonal covariance matrix $V$ is used in the brms model via `(1 | gr(es_id_model, cov = V))`. The corresponding standard deviation prior is set to `constant(1)`.
+
+```{r vcv-dims}
+cat("Effect-size rows (= dim of V):", nrow(dat_es), "\n")
+```

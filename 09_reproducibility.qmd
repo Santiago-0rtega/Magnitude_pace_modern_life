@@ -1,0 +1,131 @@
+---
+title: "Reproducibility"
+---
+
+## Computational environment {#sec-reproducibility}
+
+```{r setup}
+source(here::here("R", "00_packages.R"))
+```
+
+### R and package versions
+
+```{r session-info}
+sessioninfo::session_info()
+```
+
+### CmdStan version
+
+```{r cmdstan-version}
+tryCatch(
+  cat("CmdStan version:", cmdstanr::cmdstan_version(), "\n"),
+  error = function(e) cat("CmdStan not available:", conditionMessage(e), "\n")
+)
+```
+
+### prepR4pcm version
+
+```{r prepR4pcm-version}
+tryCatch(
+  cat("prepR4pcm version:",
+      as.character(utils::packageVersion("prepR4pcm")), "\n"),
+  error = function(e) cat("prepR4pcm not installed:", conditionMessage(e), "\n")
+)
+```
+
+### Phylogeny reconciliation summary
+
+```{r phylo-recon-summary}
+name_map_path <- here::here("outputs", "phylogeny", "proceed_name_map.rds")
+if (file.exists(name_map_path)) {
+  nm <- readRDS(name_map_path)
+  cat("Name-map entries:", nrow(nm), "\n")
+  cat("Resolved        :", sum(!is.na(nm$sp_ncbi_canonical)), "\n")
+  cat("Unresolved      :", sum( is.na(nm$sp_ncbi_canonical)), "\n")
+} else {
+  cat("Name map not found — phylogeny not yet built.\n")
+}
+```
+
+### Git information
+
+```{r git-info}
+git_hash <- tryCatch(
+  system("git rev-parse HEAD", intern = TRUE),
+  error   = function(e) "git not available"
+)
+
+git_status <- tryCatch(
+  system("git status --short", intern = TRUE),
+  error   = function(e) character(0)
+)
+
+cat("Commit hash:", git_hash, "\n\n")
+if (length(git_status) > 0) {
+  cat("Uncommitted changes:\n")
+  cat(paste(git_status, collapse = "\n"), "\n")
+} else {
+  cat("Working tree clean.\n")
+}
+```
+
+### Random seeds
+
+All SAFE lnM computations use `seed = 123`. All brms model fits use `seed = 123`. These seeds are set in `R/04_lnm_safe.R` and `R/08_fit_or_read_model.R` respectively.
+
+### Path conventions
+
+All paths are constructed with `here::here()` relative to the project root. The project root is determined by the presence of `_quarto.yml` and `Magnitude_pace_modern_life.Rproj`.
+
+```{r here-root}
+cat("Project root:", here::here(), "\n")
+```
+
+### Model cache inventory
+
+```{r model-cache}
+model_files <- list.files(
+  here::here("outputs", "models"),
+  pattern = "\\.rds$",
+  recursive = TRUE,
+  full.names = TRUE
+)
+
+if (length(model_files) > 0) {
+  tibble::tibble(
+    path     = model_files,
+    filename = basename(model_files),
+    size_mb  = round(file.size(model_files) / 1024^2, 2),
+    modified = file.mtime(model_files)
+  ) |>
+    dplyr::arrange(modified)
+} else {
+  cat("No cached model files found in outputs/models/.\n")
+}
+```
+
+### Effect-size cache
+
+```{r es-cache}
+es_path <- here::here("outputs", "effect_sizes", "proceed_lnm_safe.rds")
+if (file.exists(es_path)) {
+  cat("Effect-size cache:", es_path, "\n")
+  cat("Size:", round(file.size(es_path) / 1024^2, 2), "MB\n")
+  cat("Modified:", format(file.mtime(es_path)), "\n")
+} else {
+  cat("Effect-size cache not found. Run chapter 02.\n")
+}
+```
+
+### How to render
+
+```r
+# Default: reads all caches
+quarto::quarto_render()
+
+# Recompute effect sizes (set in 02_lnm_effect_sizes.qmd)
+# recompute_effect_sizes <- TRUE
+
+# Refit all models (set in 05_location_scale_model_grid.qmd)
+# refit_models <- TRUE
+```
