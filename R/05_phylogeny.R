@@ -125,6 +125,14 @@ build_or_read_phylogeny <- function(
     ))
   }
 
+  # Read-only book render: never rebuild the phylogeny (network calls) on the fly.
+  if (isTRUE(getOption("pace.read_only", FALSE)) && !recompute) {
+    stop("[read-only render] Phylogeny cache not found (",
+         A_path, " / ", name_map_path,
+         ").\nThe book will not rebuild the tree. Sync the .rds files, or set recompute = TRUE deliberately.",
+         call. = FALSE)
+  }
+
   message("Building phylogenetic scaffold via prepR4pcm ...")
 
   # ── 1. Collect unique, non-empty species names ──────────────────────────────

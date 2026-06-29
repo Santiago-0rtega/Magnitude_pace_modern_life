@@ -17,3 +17,6 @@ outputs/phylogeny/*.rds
 !outputs/models/.gitkeep
 !outputs/effect_sizes/.gitkeep
 !outputs/phylogeny/.gitkeep
+
+**/*.quarto_ipynb
+*.rds

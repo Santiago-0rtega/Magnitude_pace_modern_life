@@ -35,6 +35,13 @@ compute_or_read_lnm_safe <- function(dat_lnm_input,
     return(readRDS(out_path))
   }
 
+  # Read-only book render: never recompute effect sizes on the fly.
+  if (isTRUE(getOption("pace.read_only", FALSE)) && !recompute) {
+    stop("[read-only render] SAFE lnM cache not found: ", out_path,
+         "\nThe book will not recompute effect sizes. Sync the .rds, or set recompute = TRUE deliberately.",
+         call. = FALSE)
+  }
+
   message("Computing SAFE lnM for ", nrow(dat_lnm_input), " contrasts ...")
 
   dat_es <- dat_lnm_input |>

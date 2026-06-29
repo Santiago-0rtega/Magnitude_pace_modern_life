@@ -11,6 +11,13 @@ fit_or_read_model <- function(model_name,
     return(readRDS(model_path))
   }
 
+  # Read-only book render: never fit on the fly — stop with a clear message.
+  if (isTRUE(getOption("pace.read_only", FALSE)) && !refit) {
+    stop("[read-only render] Model cache not found: ", model_path,
+         "\nThe book will not fit models. Sync the .rds, or set refit = TRUE to fit deliberately.",
+         call. = FALSE)
+  }
+
   message("Fitting model: ", model_name)
   fit <- fit_fun()
 

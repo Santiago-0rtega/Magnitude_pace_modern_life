@@ -6,6 +6,7 @@ title: "lnM effect sizes (SAFE)"
 source(here::here("R", "00_packages.R"))
 source(here::here("R", "01_paths.R"))
 source(here::here("R", "04_lnm_safe.R"))
+source(here::here("R", "15_render_guard.R"))   # read-only: never recompute
 
 # Set to TRUE to recompute (slow; ~hours for large datasets)
 recompute_effect_sizes <- FALSE

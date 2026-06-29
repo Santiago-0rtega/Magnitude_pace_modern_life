@@ -1,25 +1,59 @@
 project:
   type: book
+  output-dir: docs
 
 book:
   title: "Supplementary analyses: Human disturbance and the magnitude of phenotypic divergence"
   author: "TBA"
   date: today
+  repo-url: https://github.com/
+  downloads: [pdf]
+  search: true
+  sidebar:
+    style: floating
+    collapse-level: 2
   chapters:
     - index.qmd
-    - 01_data_preparation.qmd
-    - 02_lnm_effect_sizes.qmd
-    - 03_descriptive_summaries.qmd
-    - 04_dependency_structure.qmd
-    - 05_location_scale_model_grid.qmd
-    - 06_location_scale_results_by_moderator.qmd
-    - 07_sensitivity_analyses.qmd
-    - 08_publication_figures.qmd
-    - 09_reproducibility.qmd
+    - part: "Data & Effect Sizes"
+      chapters:
+        - 01_data_preparation.qmd
+        - 02_lnm_effect_sizes.qmd
+        - 03_descriptive_summaries.qmd
+    - part: "Non-independence"
+      chapters:
+        - 04_dependency_structure.qmd
+    - part: "Location–Scale Models"
+      chapters:
+        - 05_location_scale_model_grid.qmd
+    - part: "Results — one chapter per model"
+      chapters:
+        - models/m00.qmd
+        - models/m01.qmd
+        - models/m02.qmd
+        - models/m03.qmd
+        - models/m04.qmd
+        - models/m05.qmd
+        - models/m06.qmd
+        - models/m07.qmd
+        - models/m08.qmd
+        - models/m09.qmd
+        - models/m10.qmd
+        - models/m11.qmd
+        - models/m12.qmd
+        - models/m13.qmd
+    - part: "Robustness"
+      chapters:
+        - 07_sensitivity_analyses.qmd
+    - part: "Figures & Reproducibility"
+      chapters:
+        - 08_publication_figures.qmd
+        - 09_reproducibility.qmd
 
 format:
   html:
-    theme: cosmo
+    theme:
+      light: cosmo
+      dark: darkly
     toc: true
     toc-depth: 3
     code-fold: true
@@ -28,8 +62,17 @@ format:
     df-print: paged
     fig-width: 9
     fig-height: 6
+    fig-dpi: 150
+    link-external-icon: true
+    smooth-scroll: true
+
+crossref:
+  fig-prefix: "Fig."
+  tbl-prefix: "Table"
+  eq-prefix: "Eq."
 
 execute:
   warning: false
   message: false
   freeze: auto
+  cache: true

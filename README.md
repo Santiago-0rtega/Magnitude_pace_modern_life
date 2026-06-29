@@ -94,6 +94,62 @@ cmdstanr::install_cmdstan()
 
 ---
 
+## Interpretation of lnM
+
+### What lnM measures
+
+lnM is the **log magnitude of phenotypic divergence** between a focal and a reference population (or time point). Formally:
+
+$$\text{lnM} = \ln\!\left(\frac{|\bar{x}_\text{focal} - \bar{x}_\text{ref}|}{SD_\text{pooled}}\right)$$
+
+- **Focal population**: the population that has experienced environmental change, disturbance, or the condition of interest (e.g., post-disturbance, synchronic comparison, longer elapsed time).
+- **Reference population**: the ancestral state, control, or comparator (e.g., pre-disturbance, allochronic baseline, shorter elapsed time).
+
+Because lnM is the log of an *absolute* magnitude, it can take negative values (when the raw divergence is < 1 SD) and positive values (when divergence > 1 SD). The natural null is lnM = 0, i.e., divergence of exactly 1 pooled SD.
+
+### Location submodel
+
+The location submodel estimates the **mean lnM** for each moderator level (posterior mean of the fixed effect). Interpretation:
+
+- **Intercept**: mean lnM for the reference category of the moderator, after accounting for study (ref_id), phylogeny (sp_ncbi), and sampling variance (es_id_model).
+- **Coefficient for level k**: difference in mean lnM between level k and the reference. Positive = focal groups at level k show greater divergence; negative = less divergence.
+- **Overall baseline (m00 intercept ≈ −0.06, 95% CrI [−0.97, 0.84])**: on average across all contexts, the magnitude of phenotypic divergence is indistinguishable from zero on the log scale (i.e., M ≈ 1 SD). There is no consistent directional signal of accelerated or decelerated divergence.
+
+### Scale submodel
+
+The scale submodel estimates **log residual SD (log σ)** — the within-group heterogeneity in lnM after accounting for the location fixed effects and random effects. Interpretation:
+
+- **sigma_Intercept**: log residual SD for the reference category.
+- **Coefficient for level k**: difference in log SD between level k and the reference. Positive = more heterogeneous responses (studies within that level disagree more); negative = more consistent responses.
+- **Overall baseline (m00 sigma_Intercept ≈ −1.09, 95% CrI [−1.11, −1.06])**: residual SD ≈ exp(−1.09) ≈ 0.34 lnM units — substantial unexplained variance remains after accounting for study and phylogeny.
+
+The scale submodel is often more informative than the location: even when the mean lnM does not differ between groups, the *consistency* of divergence may differ substantially.
+
+---
+
+## Model decisions
+
+| Model | Moderator | Type | Decision / notes |
+|---|---|---|---|
+| **m00** | — | Intercept-only | Baseline model. Overall mean lnM ≈ 0 (inconclusive); sigma_Intercept ≈ −1.09 (credibly negative). Study and phylogeny random effects both ~0.8 SD. |
+| **m01** | `disturbance` | Categorical | All 7 original categories retained. Reference = Climate change. |
+| **m02** | `design` | Categorical | Allochronic (same population, time series) vs Synchronic (diverged populations). Reference = Allochronic. |
+| **m03** | `log10_years` | Continuous | Elapsed time in log₁₀ years. Strong positive location slope (+0.31) and negative scale slope (−0.16): longer studies find larger but more consistent divergence. |
+| **m04** | `log10_generations` | Continuous | Elapsed time in log₁₀ generations. Same pattern as m03 (slope +0.29, scale −0.15). |
+| **m05** | `trait_type` | Categorical | All 8 original types retained. Reference = Behaviour. |
+| **m06** | `taxa` | Categorical | **Replaced by m06b.** Original 9-level model failed: only 2/4 chains completed, Rhat up to 1.05, ESS as low as 59 for sigma parameters. Root cause: Amphibian (reference, n=23) had near-zero within-group variance, causing sigma to collapse to −∞ and creating an unidentifiable funnel geometry. |
+| **m06b** | `taxa_v2` | Categorical | Collapsed to 6 groups using `v5_taxa_fine`: **Fish** (Actinopterygii, n=3,120), **Plant** (Streptophyta, n=1,772), **Insect** (Insecta, n=1,036), **Bird** (Aves, n=847), **Mammal** (Mammalia, n=567), **Reptile** (Reptilia, n=92). Dropped Crustacea (29), Amphibia (23), Gastropoda (13), Mollusca (12) — 77 obs (~1% of data) — as insufficiently powered for the sigma submodel. Reference = Bird. |
+| **m07** | `genphen` | Categorical | Genetic (common garden / QG) vs Phenotypic (wild-measured). Reference = Genetic. |
+| **m08** | `env_change` | Categorical | Novel (defined start point) vs Ongoing (measured within). Reference = Novel. |
+| **m09** | `data_type` | Categorical | **Replaced by m09b.** Original 12-level model had low ESS for all sigma parameters (~350 Bulk) and a problematic reference (ad_ratio, n=83, wide sigma CI). index (n=14) and temperature (n=19) too sparse for sigma submodel (same geometry as m06 failure). |
+| **m09b** | `data_type_v2` | Categorical | Dropped index (n=14) and temperature (n=19). Reference changed to **linear** (n=4,148). 10 levels retained: linear, cube (3D), count, proportion, rate, time, other, date, ad_ratio, area (2D). |
+| **m10** | `transf_data` | Categorical | **Collapsed to 2 levels (m10b); sensitivity analysis only.** Original 7-level model failed (OOM). Collapsed to **Untransformed** (raw, n=7,134) vs **Transformed** (n=354). Extreme imbalance (~95% raw) leaves the sigma posterior for Transformed poorly anchored (Bulk ESS ~230). Not included as a main result. |
+| **m11** | `data_scale` | Categorical | Ratio scale (true zero) vs Interval scale (arbitrary zero). Reference = Interval. |
+| **m12** | `log10_years × disturbance` | Interaction | Calendar-time slope allowed to vary by disturbance type (location + scale). All 7 disturbance levels retained. Note: Climate change (n=240, log₁₀ year range=1.29) and Response to introductions (n=296, range=1.18) have narrow year coverage — slopes for these levels will be less precise. If convergence fails, simplified version (collapsed disturbance) moved to sensitivity analysis. Reference = Climate change. |
+| **m13** | `log10_generations × disturbance` | Interaction | Evolutionary-time slope allowed to vary by disturbance type (location + scale). Same structure as m12 but in generational time. All 7 disturbance levels retained with same caveats. Reference = Climate change. |
+
+---
+
 ## R scripts
 
 All reusable functions live in `R/`:

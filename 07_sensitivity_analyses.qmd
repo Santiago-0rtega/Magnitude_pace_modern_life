@@ -10,6 +10,7 @@ source(here::here("R", "07_model_formulas.R"))
 source(here::here("R", "08_fit_or_read_model.R"))
 source(here::here("R", "09_model_summaries.R"))
 source(here::here("R", "10_model_diagnostics.R"))
+source(here::here("R", "15_render_guard.R"))   # read-only: never refit sensitivity models
 
 refit_sensitivity <- FALSE
 

@@ -1,0 +1,1293 @@
+
+
+========================================
+m00 -- SKIPPED (RDS not found)
+========================================
+
+
+========================================
+m01 ( m01_ls_disturbance )
+========================================
+Chains: 4 | Max Rhat: 1.005
+
+--- brms summary ---
+ Family: gaussian 
+  Links: mu = identity; sigma = log 
+Formula: yi_lnM_safe ~ disturbance + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)) 
+         sigma ~ disturbance
+   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7455) 
+  Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
+         total post-warmup draws = 8000
+
+Multilevel Hyperparameters:
+~es_id_model (Number of levels: 7455) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     1.00      0.00     1.00     1.00   NA       NA       NA
+
+~ref_id (Number of levels: 266) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.76      0.04     0.68     0.84 1.00     2811     4441
+
+~sp_ncbi (Number of levels: 265) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.63      0.17     0.30     0.99 1.00     1033     1650
+
+Regression Coefficients:
+                                         Estimate Est.Error l-95% CI u-95% CI
+Intercept                                   -0.50      0.40    -1.28     0.32
+sigma_Intercept                             -0.69      0.09    -0.87    -0.52
+disturbanceHunt_harv                        -0.26      0.18    -0.62     0.09
+disturbanceIntroduction                      0.01      0.20    -0.40     0.40
+disturbanceLandscapechange                   0.25      0.23    -0.21     0.71
+disturbanceOther                            -0.27      0.18    -0.62     0.07
+disturbancePollution                         0.07      0.29    -0.51     0.63
+disturbanceResponsetointroductions           0.02      0.28    -0.54     0.58
+sigma_disturbanceHunt_harv                   0.36      0.09     0.18     0.55
+sigma_disturbanceIntroduction                0.01      0.09    -0.16     0.19
+sigma_disturbanceLandscapechange            -0.32      0.13    -0.58    -0.06
+sigma_disturbanceOther                       0.13      0.09    -0.04     0.32
+sigma_disturbancePollution                  -0.05      0.13    -0.31     0.21
+sigma_disturbanceResponsetointroductions     0.15      0.11    -0.06     0.36
+                                         Rhat Bulk_ESS Tail_ESS
+Intercept                                1.00     3912     4468
+sigma_Intercept                          1.00     2019     3426
+disturbanceHunt_harv                     1.00     2825     4520
+disturbanceIntroduction                  1.00     2467     3722
+disturbanceLandscapechange               1.00     2782     3932
+disturbanceOther                         1.00     2778     4428
+disturbancePollution                     1.00     2535     4029
+disturbanceResponsetointroductions       1.00     2833     4040
+sigma_disturbanceHunt_harv               1.00     2234     3448
+sigma_disturbanceIntroduction            1.00     2051     3359
+sigma_disturbanceLandscapechange         1.00     1422     2906
+sigma_disturbanceOther                   1.00     2192     3252
+sigma_disturbancePollution               1.00     2331     4107
+sigma_disturbanceResponsetointroductions 1.00     2524     3834
+
+Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).
+
+--- Fixed effects (location + scale) ---
+                                         Estimate Est.Error    Q2.5   Q97.5
+Intercept                                 -0.4953    0.4020 -1.2811  0.3154
+sigma_Intercept                           -0.6873    0.0874 -0.8665 -0.5234
+disturbanceHunt_harv                      -0.2598    0.1796 -0.6203  0.0890
+disturbanceIntroduction                    0.0073    0.2022 -0.3963  0.3957
+disturbanceLandscapechange                 0.2489    0.2340 -0.2080  0.7076
+disturbanceOther                          -0.2717    0.1751 -0.6217  0.0724
+disturbancePollution                       0.0688    0.2882 -0.5109  0.6292
+disturbanceResponsetointroductions         0.0188    0.2812 -0.5383  0.5800
+sigma_disturbanceHunt_harv                 0.3646    0.0928  0.1823  0.5530
+sigma_disturbanceIntroduction              0.0110    0.0892 -0.1605  0.1932
+sigma_disturbanceLandscapechange          -0.3154    0.1315 -0.5807 -0.0599
+sigma_disturbanceOther                     0.1326    0.0915 -0.0431  0.3175
+sigma_disturbancePollution                -0.0504    0.1336 -0.3119  0.2086
+sigma_disturbanceResponsetointroductions   0.1474    0.1080 -0.0593  0.3634
+
+--- Random effects ---
+$es_id_model
+$es_id_model$sd
+          Estimate Est.Error Q2.5 Q97.5
+Intercept        1         0    1     1
+
+
+$ref_id
+$ref_id$sd
+           Estimate  Est.Error      Q2.5     Q97.5
+Intercept 0.7573355 0.04110856 0.6790957 0.8400166
+
+
+$sp_ncbi
+$sp_ncbi$sd
+           Estimate Est.Error    Q2.5     Q97.5
+Intercept 0.6296817 0.1715015 0.30461 0.9863899
+
+
+
+Location intercept: mean=-0.4953, 95% CrI [-1.2811, 0.3154], P(>0)=0.108
+
+--- Location: marginal means (emmeans) ---
+ disturbance               emmean lower.HPD upper.HPD
+ Climate change            -0.501     -1.27    0.3172
+ Hunt_harv                 -0.760     -1.48   -0.0124
+ Introduction              -0.485     -1.21    0.2483
+ Landscape change          -0.249     -1.03    0.4895
+ Other                     -0.771     -1.50   -0.0348
+ Pollution                 -0.425     -1.25    0.3642
+ Response to introductions -0.478     -1.33    0.2602
+
+Point estimate displayed: median 
+HPD interval probability: 0.95 
+
+--- Location: pairwise contrasts ---
+ contrast                                     estimate lower.HPD upper.HPD
+ Climate change - Hunt_harv                    0.25907   -0.0852    0.6237
+ Climate change - Introduction                -0.00937   -0.3979    0.3903
+ Climate change - Landscape change            -0.24608   -0.7149    0.1972
+ Climate change - Other                        0.26917   -0.0672    0.6246
+ Climate change - Pollution                   -0.07415   -0.6486    0.4855
+ Climate change - Response to introductions   -0.01585   -0.5854    0.5248
+ Hunt_harv - Introduction                     -0.26742   -0.5222   -0.0112
+ Hunt_harv - Landscape change                 -0.50842   -0.8385   -0.1766
+ Hunt_harv - Other                             0.01193   -0.0678    0.0930
+ Hunt_harv - Pollution                        -0.33238   -0.7677    0.1602
+ Hunt_harv - Response to introductions        -0.27748   -0.7337    0.1840
+ Introduction - Landscape change              -0.24063   -0.5803    0.0511
+ Introduction - Other                          0.27892    0.0291    0.5247
+ Introduction - Pollution                     -0.06366   -0.4930    0.3628
+ Introduction - Response to introductions     -0.01066   -0.4152    0.4221
+ Landscape change - Other                      0.52199    0.1766    0.8229
+ Landscape change - Pollution                  0.17766   -0.2708    0.6768
+ Landscape change - Response to introductions  0.23341   -0.2394    0.7223
+ Other - Pollution                            -0.34177   -0.7925    0.1232
+ Other - Response to introductions            -0.28957   -0.7662    0.1423
+ Pollution - Response to introductions         0.04849   -0.4840    0.6162
+
+Point estimate displayed: median 
+HPD interval probability: 0.95 
+
+--- Scale (sigma): marginal means from posterior draws ---
+(all values on log-sigma scale; exp() gives residual SD per group)
+           level     emmean  lower.HPD  upper.HPD
+1 Climate change -0.6873326 -0.8643070 -0.5214540
+2   Introduction -0.6763585 -0.7128402 -0.6402086
+3          Other -0.5546879 -0.6113470 -0.4974550
+4      Pollution -0.7376865 -0.9316530 -0.5403730
+5      Hunt_harv -0.3227826 -0.3822020 -0.2600430
+
+--- Scale (sigma): pairwise contrasts ---
+                        contrast    estimate  lower.HPD  upper.HPD p_nonzero
+1  Climate change - Introduction -0.01097413 -0.1955110  0.1578350  0.459500
+2         Climate change - Other -0.13264474 -0.3168310  0.0436597  0.068625
+3     Climate change - Pollution  0.05035383 -0.2034020  0.3154540  0.645750
+4     Climate change - Hunt_harv -0.36455008 -0.5464460 -0.1783300  0.000000
+5           Introduction - Other -0.12167062 -0.1868664 -0.0519263  0.000250
+6       Introduction - Pollution  0.06132795 -0.1346521  0.2627508  0.724875
+7       Introduction - Hunt_harv -0.35357596 -0.4269530 -0.2852440  0.000000
+8              Other - Pollution  0.18299857 -0.0263690  0.3869076  0.959750
+9              Other - Hunt_harv -0.23190534 -0.3157795 -0.1509480  0.000000
+10         Pollution - Hunt_harv -0.41490391 -0.6161690 -0.2040500  0.000000
+
+
+========================================
+m02 ( m02_ls_design )
+========================================
+Chains: 4 | Max Rhat: 1.005
+
+--- brms summary ---
+ Family: gaussian 
+  Links: mu = identity; sigma = log 
+Formula: yi_lnM_safe ~ design + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)) 
+         sigma ~ design
+   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7455) 
+  Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
+         total post-warmup draws = 8000
+
+Multilevel Hyperparameters:
+~es_id_model (Number of levels: 7455) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     1.00      0.00     1.00     1.00   NA       NA       NA
+
+~ref_id (Number of levels: 266) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.76      0.04     0.68     0.84 1.00     2269     3999
+
+~sp_ncbi (Number of levels: 265) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.61      0.17     0.29     0.96 1.00      756     1044
+
+Regression Coefficients:
+                       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
+Intercept                 -0.69      0.36    -1.41     0.01 1.00     4950
+sigma_Intercept           -0.47      0.02    -0.50    -0.43 1.00     5663
+designSynchronic           0.25      0.09     0.08     0.42 1.00     5555
+sigma_designSynchronic    -0.21      0.03    -0.26    -0.16 1.00     4609
+                       Tail_ESS
+Intercept                  3958
+sigma_Intercept            6462
+designSynchronic           5163
+sigma_designSynchronic     5513
+
+Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).
+
+--- Fixed effects (location + scale) ---
+                       Estimate Est.Error    Q2.5   Q97.5
+Intercept               -0.6929    0.3571 -1.4061  0.0075
+sigma_Intercept         -0.4659    0.0200 -0.5045 -0.4261
+designSynchronic         0.2526    0.0860  0.0836  0.4205
+sigma_designSynchronic  -0.2107    0.0263 -0.2622 -0.1585
+
+--- Random effects ---
+$es_id_model
+$es_id_model$sd
+          Estimate Est.Error Q2.5 Q97.5
+Intercept        1         0    1     1
+
+
+$ref_id
+$ref_id$sd
+           Estimate  Est.Error      Q2.5     Q97.5
+Intercept 0.7561636 0.04220159 0.6766327 0.8419868
+
+
+$sp_ncbi
+$sp_ncbi$sd
+           Estimate Est.Error      Q2.5    Q97.5
+Intercept 0.6131766 0.1711575 0.2862596 0.960962
+
+
+
+Location intercept: mean=-0.6929, 95% CrI [-1.4061, 0.0075], P(>0)=0.027
+
+--- Location: marginal means (emmeans) ---
+ design      emmean lower.HPD upper.HPD
+ Allochronic -0.700     -1.40    0.0135
+ Synchronic  -0.443     -1.12    0.2901
+
+Point estimate displayed: median 
+HPD interval probability: 0.95 
+
+--- Location: pairwise contrasts ---
+ contrast                 estimate lower.HPD upper.HPD
+ Allochronic - Synchronic   -0.252    -0.418   -0.0811
+
+Point estimate displayed: median 
+HPD interval probability: 0.95 
+
+--- Scale (sigma): marginal means from posterior draws ---
+(all values on log-sigma scale; exp() gives residual SD per group)
+        level     emmean lower.HPD upper.HPD
+1 Allochronic -0.4658781 -0.506355 -0.428122
+2  Synchronic -0.6765569 -0.709040 -0.642543
+
+--- Scale (sigma): pairwise contrasts ---
+                  contrast  estimate lower.HPD upper.HPD p_nonzero
+1 Allochronic - Synchronic 0.2106788  0.160278  0.263013         1
+
+
+========================================
+m03 ( m03_ls_log10_years )
+========================================
+Chains: 4 | Max Rhat: 1.005
+
+--- brms summary ---
+ Family: gaussian 
+  Links: mu = identity; sigma = log 
+Formula: yi_lnM_safe ~ log10_years + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)) 
+         sigma ~ log10_years
+   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7455) 
+  Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
+         total post-warmup draws = 8000
+
+Multilevel Hyperparameters:
+~es_id_model (Number of levels: 7455) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     1.00      0.00     1.00     1.00   NA       NA       NA
+
+~ref_id (Number of levels: 266) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.76      0.04     0.68     0.84 1.00     2650     4348
+
+~sp_ncbi (Number of levels: 265) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.70      0.16     0.42     1.03 1.00     1228     2638
+
+Regression Coefficients:
+                  Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept            -1.02      0.39    -1.82    -0.23 1.00     4104     4539
+sigma_Intercept      -0.36      0.04    -0.43    -0.28 1.00     4512     5818
+log10_years           0.31      0.04     0.24     0.38 1.00     7449     6486
+sigma_log10_years    -0.16      0.02    -0.21    -0.11 1.00     3843     5583
+
+Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).
+
+--- Fixed effects (location + scale) ---
+                  Estimate Est.Error    Q2.5   Q97.5
+Intercept          -1.0173    0.3946 -1.8168 -0.2253
+sigma_Intercept    -0.3583    0.0380 -0.4337 -0.2844
+log10_years         0.3135    0.0362  0.2418  0.3850
+sigma_log10_years  -0.1633    0.0248 -0.2110 -0.1149
+
+--- Random effects ---
+$es_id_model
+$es_id_model$sd
+          Estimate Est.Error Q2.5 Q97.5
+Intercept        1         0    1     1
+
+
+$ref_id
+$ref_id$sd
+           Estimate  Est.Error      Q2.5     Q97.5
+Intercept 0.7599113 0.04136982 0.6820999 0.8435373
+
+
+$sp_ncbi
+$sp_ncbi$sd
+           Estimate Est.Error     Q2.5   Q97.5
+Intercept 0.7034584 0.1555517 0.418686 1.03497
+
+
+
+Location intercept: mean=-1.0173, 95% CrI [-1.8168, -0.2253], P(>0)=0.008
+
+location slope: mean=0.3135, 95% CrI [0.2418, 0.3850], P(>0)=1.000
+
+sigma slope: mean=-0.1633, 95% CrI [-0.2110, -0.1149], P(>0)=0.000
+
+
+========================================
+m04 ( m04_ls_log10_generations )
+========================================
+Chains: 4 | Max Rhat: 1.004
+
+--- brms summary ---
+ Family: gaussian 
+  Links: mu = identity; sigma = log 
+Formula: yi_lnM_safe ~ log10_generations + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)) 
+         sigma ~ log10_generations
+   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7186) 
+  Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
+         total post-warmup draws = 8000
+
+Multilevel Hyperparameters:
+~es_id_model (Number of levels: 7186) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     1.00      0.00     1.00     1.00   NA       NA       NA
+
+~ref_id (Number of levels: 254) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.74      0.04     0.66     0.83 1.00     1776     3184
+
+~sp_ncbi (Number of levels: 253) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.83      0.17     0.52     1.21 1.00      940     1770
+
+Regression Coefficients:
+                        Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
+Intercept                  -0.93      0.46    -1.85    -0.03 1.00     2505
+sigma_Intercept            -0.40      0.03    -0.45    -0.35 1.00     4514
+log10_generations           0.29      0.04     0.22     0.36 1.00     4584
+sigma_log10_generations    -0.15      0.02    -0.18    -0.12 1.00     3321
+                        Tail_ESS
+Intercept                   3763
+sigma_Intercept             5838
+log10_generations           5587
+sigma_log10_generations     5060
+
+Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).
+
+--- Fixed effects (location + scale) ---
+                        Estimate Est.Error    Q2.5   Q97.5
+Intercept                -0.9281    0.4559 -1.8462 -0.0291
+sigma_Intercept          -0.4014    0.0255 -0.4515 -0.3510
+log10_generations         0.2862    0.0372  0.2152  0.3610
+sigma_log10_generations  -0.1480    0.0165 -0.1817 -0.1155
+
+--- Random effects ---
+$es_id_model
+$es_id_model$sd
+          Estimate Est.Error Q2.5 Q97.5
+Intercept        1         0    1     1
+
+
+$ref_id
+$ref_id$sd
+           Estimate  Est.Error      Q2.5     Q97.5
+Intercept 0.7433581 0.04353873 0.6614579 0.8328085
+
+
+$sp_ncbi
+$sp_ncbi$sd
+          Estimate Est.Error      Q2.5    Q97.5
+Intercept    0.833 0.1746312 0.5184715 1.206098
+
+
+
+Location intercept: mean=-0.9281, 95% CrI [-1.8462, -0.0291], P(>0)=0.021
+
+location slope: mean=0.2862, 95% CrI [0.2152, 0.3610], P(>0)=1.000
+
+sigma slope: mean=-0.1480, 95% CrI [-0.1817, -0.1155], P(>0)=0.000
+
+
+========================================
+m05 ( m05_ls_trait_type )
+========================================
+Chains: 4 | Max Rhat: 1.005
+
+--- brms summary ---
+ Family: gaussian 
+  Links: mu = identity; sigma = log 
+Formula: yi_lnM_safe ~ trait_type + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)) 
+         sigma ~ trait_type
+   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7455) 
+  Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
+         total post-warmup draws = 8000
+
+Multilevel Hyperparameters:
+~es_id_model (Number of levels: 7455) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     1.00      0.00     1.00     1.00   NA       NA       NA
+
+~ref_id (Number of levels: 266) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.75      0.04     0.68     0.84 1.00     1512     2813
+
+~sp_ncbi (Number of levels: 265) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.78      0.16     0.49     1.10 1.00     1056     2155
+
+Regression Coefficients:
+                                Estimate Est.Error l-95% CI u-95% CI Rhat
+Intercept                          -1.31      0.57    -2.43    -0.16 1.00
+sigma_Intercept                    -0.37      0.25    -0.84     0.13 1.00
+trait_typegrowth                    0.82      0.40     0.01     1.57 1.00
+trait_typeotherLH                   0.91      0.39     0.11     1.65 1.00
+trait_typeothermorphology           0.78      0.39    -0.03     1.52 1.00
+trait_typephenology                 0.81      0.42    -0.05     1.61 1.00
+trait_typephysio                    0.70      0.39    -0.11     1.44 1.00
+trait_typeresponse                  0.88      0.41     0.06     1.66 1.00
+trait_typesize                      0.84      0.39     0.04     1.57 1.00
+sigma_trait_typegrowth             -0.94      0.29    -1.53    -0.38 1.00
+sigma_trait_typeotherLH            -0.18      0.25    -0.69     0.29 1.00
+sigma_trait_typeothermorphology    -0.52      0.25    -1.02    -0.05 1.00
+sigma_trait_typephenology          -0.38      0.28    -0.95     0.15 1.00
+sigma_trait_typephysio             -0.58      0.26    -1.11    -0.09 1.00
+sigma_trait_typeresponse           -0.26      0.31    -0.89     0.32 1.00
+sigma_trait_typesize               -0.04      0.25    -0.54     0.43 1.00
+                                Bulk_ESS Tail_ESS
+Intercept                           1604     2825
+sigma_Intercept                     1113     2086
+trait_typegrowth                    1114     1579
+trait_typeotherLH                   1082     1561
+trait_typeothermorphology           1097     1628
+trait_typephenology                 1178     1772
+trait_typephysio                    1105     1609
+trait_typeresponse                  1218     1812
+trait_typesize                      1095     1622
+sigma_trait_typegrowth               909     1715
+sigma_trait_typeotherLH             1126     2024
+sigma_trait_typeothermorphology     1122     2166
+sigma_trait_typephenology           1204     2071
+sigma_trait_typephysio              1108     2020
+sigma_trait_typeresponse            1218     2193
+sigma_trait_typesize                1122     2007
+
+Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).
+
+--- Fixed effects (location + scale) ---
+                                Estimate Est.Error    Q2.5   Q97.5
+Intercept                        -1.3144    0.5719 -2.4306 -0.1638
+sigma_Intercept                  -0.3735    0.2455 -0.8378  0.1292
+trait_typegrowth                  0.8243    0.3981  0.0083  1.5713
+trait_typeotherLH                 0.9107    0.3944  0.1120  1.6513
+trait_typeothermorphology         0.7786    0.3930 -0.0258  1.5194
+trait_typephenology               0.8098    0.4210 -0.0453  1.6091
+trait_typephysio                  0.6974    0.3949 -0.1077  1.4437
+trait_typeresponse                0.8793    0.4135  0.0579  1.6629
+trait_typesize                    0.8371    0.3932  0.0397  1.5721
+sigma_trait_typegrowth           -0.9388    0.2917 -1.5284 -0.3820
+sigma_trait_typeotherLH          -0.1805    0.2478 -0.6854  0.2911
+sigma_trait_typeothermorphology  -0.5152    0.2470 -1.0200 -0.0450
+sigma_trait_typephenology        -0.3833    0.2800 -0.9458  0.1546
+sigma_trait_typephysio           -0.5808    0.2596 -1.1145 -0.0875
+sigma_trait_typeresponse         -0.2552    0.3083 -0.8949  0.3194
+sigma_trait_typesize             -0.0407    0.2464 -0.5440  0.4264
+
+--- Random effects ---
+$es_id_model
+$es_id_model$sd
+          Estimate Est.Error Q2.5 Q97.5
+Intercept        1         0    1     1
+
+
+$ref_id
+$ref_id$sd
+           Estimate  Est.Error      Q2.5     Q97.5
+Intercept 0.7532009 0.04164193 0.6762803 0.8381278
+
+
+$sp_ncbi
+$sp_ncbi$sd
+           Estimate Est.Error      Q2.5    Q97.5
+Intercept 0.7782894  0.155011 0.4949883 1.103135
+
+
+
+Location intercept: mean=-1.3144, 95% CrI [-2.4306, -0.1638], P(>0)=0.014
+
+--- Location: marginal means (emmeans) ---
+ trait_type      emmean lower.HPD upper.HPD
+ behaviour       -1.320     -2.50    -0.245
+ growth          -0.491     -1.34     0.332
+ otherLH         -0.401     -1.25     0.428
+ othermorphology -0.535     -1.37     0.300
+ phenology       -0.507     -1.31     0.415
+ physio          -0.616     -1.44     0.230
+ response        -0.435     -1.30     0.456
+ size            -0.476     -1.32     0.339
+
+Point estimate displayed: median 
+HPD interval probability: 0.95 
+
+--- Location: pairwise contrasts ---
+ contrast                    estimate lower.HPD upper.HPD
+ behaviour - growth           -0.8321  -1.60002   -0.0557
+ behaviour - otherLH          -0.9253  -1.66321   -0.1295
+ behaviour - othermorphology  -0.7903  -1.54157   -0.0259
+ behaviour - phenology        -0.8179  -1.59840    0.0483
+ behaviour - physio           -0.7079  -1.48321    0.0553
+ behaviour - response         -0.8873  -1.69276   -0.0973
+ behaviour - size             -0.8504  -1.61800   -0.0892
+ growth - otherLH             -0.0853  -0.20829    0.0298
+ growth - othermorphology      0.0468  -0.08764    0.1709
+ growth - phenology            0.0121  -0.28391    0.3308
+ growth - physio               0.1272  -0.00818    0.2721
+ growth - response            -0.0576  -0.33627    0.2444
+ growth - size                -0.0111  -0.13316    0.1038
+ otherLH - othermorphology     0.1317   0.03828    0.2196
+ otherLH - phenology           0.0999  -0.18022    0.3909
+ otherLH - physio              0.2139   0.10848    0.3219
+ otherLH - response            0.0281  -0.24425    0.2967
+ otherLH - size                0.0732   0.00696    0.1393
+ othermorphology - phenology  -0.0331  -0.33331    0.2430
+ othermorphology - physio      0.0810  -0.03027    0.1893
+ othermorphology - response   -0.1031  -0.37781    0.1720
+ othermorphology - size       -0.0585  -0.14210    0.0253
+ phenology - physio            0.1149  -0.19620    0.4075
+ phenology - response         -0.0673  -0.45935    0.3290
+ phenology - size             -0.0235  -0.32561    0.2561
+ physio - response            -0.1849  -0.45919    0.0989
+ physio - size                -0.1398  -0.24517   -0.0316
+ response - size               0.0449  -0.22504    0.3120
+
+Point estimate displayed: median 
+HPD interval probability: 0.95 
+
+--- Scale (sigma): marginal means from posterior draws ---
+(all values on log-sigma scale; exp() gives residual SD per group)
+            level     emmean lower.HPD  upper.HPD
+1       behaviour -0.3735343 -0.854688  0.1089780
+2 othermorphology -0.8887170 -0.943671 -0.8335050
+3            size -0.4142050 -0.450399 -0.3772145
+4         otherLH -0.5540613 -0.618030 -0.4938051
+5          growth -1.3123432 -1.634487 -1.0132370
+6       phenology -0.7567942 -1.028045 -0.4937770
+7          physio -0.9542990 -1.116892 -0.7919950
+8        response -0.6287186 -0.994883 -0.2809510
+
+--- Scale (sigma): pairwise contrasts ---
+                      contrast    estimate  lower.HPD  upper.HPD p_nonzero
+1  behaviour - othermorphology  0.51518261  0.0236350  0.9926030  0.985375
+2             behaviour - size  0.04067063 -0.4282060  0.5408940  0.559625
+3          behaviour - otherLH  0.18052695 -0.2760940  0.6972690  0.765750
+4           behaviour - growth  0.93880881  0.3778660  1.5245600  0.999500
+5        behaviour - phenology  0.38325986 -0.1589670  0.9419600  0.917000
+6           behaviour - physio  0.58076464  0.0775840  1.1021600  0.991625
+7         behaviour - response  0.25518424 -0.3349670  0.8653650  0.797500
+8       othermorphology - size -0.47451198 -0.5371530 -0.4036750  0.000000
+9    othermorphology - otherLH -0.33465566 -0.4217410 -0.2547120  0.000000
+10    othermorphology - growth  0.42362620  0.1107830  0.7474660  0.998875
+11 othermorphology - phenology -0.13192275 -0.3996680  0.1484230  0.170625
+12    othermorphology - physio  0.06558203 -0.1074970  0.2375370  0.767500
+13  othermorphology - response -0.25999837 -0.6138200  0.1047020  0.081625
+14              size - otherLH  0.13985631  0.0681020  0.2123358  1.000000
+15               size - growth  0.89813818  0.6052460  1.2348022  1.000000
+16            size - phenology  0.34258922  0.0672057  0.6111614  0.994500
+17               size - physio  0.54009400  0.3749000  0.7077640  1.000000
+18             size - response  0.21451361 -0.1353517  0.5778600  0.886250
+19            otherLH - growth  0.75828186  0.4582968  1.0938560  1.000000
+20         otherLH - phenology  0.20273291 -0.0709494  0.4775440  0.928500
+21            otherLH - physio  0.40023769  0.2293530  0.5759220  1.000000
+22          otherLH - response  0.07465730 -0.2738430  0.4496970  0.650375
+23          growth - phenology -0.55554895 -0.9835530 -0.1520140  0.003125
+24             growth - physio -0.35804418 -0.7296500 -0.0253880  0.014625
+25           growth - response -0.68362457 -1.1929370 -0.2341700  0.002000
+26          phenology - physio  0.19750478 -0.1137300  0.5170110  0.894375
+27        phenology - response -0.12807561 -0.5835230  0.3160730  0.288625
+28           physio - response -0.32558039 -0.7169460  0.0776610  0.057125
+
+
+========================================
+m06 ( m06_ls_taxa )
+========================================
+Chains: 2 | Max Rhat: 1.046
+  ** CONVERGENCE WARNING: Rhat > 1.01 **
+
+--- brms summary ---
+ Family: gaussian 
+  Links: mu = identity; sigma = log 
+Formula: yi_lnM_safe ~ taxa + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)) 
+         sigma ~ taxa
+   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7455) 
+  Draws: 2 chains, each with iter = 4000; warmup = 2000; thin = 1;
+         total post-warmup draws = 4000
+
+Multilevel Hyperparameters:
+~es_id_model (Number of levels: 7455) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     1.00      0.00     1.00     1.00   NA       NA       NA
+
+~ref_id (Number of levels: 266) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.73      0.04     0.66     0.81 1.00     1083     1863
+
+~sp_ncbi (Number of levels: 265) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.91      0.17     0.59     1.28 1.00      417      903
+
+Regression Coefficients:
+                    Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept              -0.01      0.98    -1.96     1.91 1.00     1219     1572
+sigma_Intercept        -3.20      1.20    -5.05    -0.89 1.05       59      203
+taxaArthropod          -0.68      1.14    -2.84     1.58 1.00     1300     1906
+taxaBird               -0.79      0.90    -2.67     0.97 1.00     1223     1626
+taxaFish               -0.64      1.07    -2.76     1.46 1.00     1402     1819
+taxaMammal             -0.48      0.95    -2.29     1.38 1.00     1560     2119
+taxaMollusc             0.34      1.21    -1.89     2.70 1.00     1358     2204
+taxaPlant              -0.43      1.27    -2.88     1.99 1.00     1347     1863
+taxaReptile            -0.12      0.99    -2.16     1.82 1.00     1260     1566
+sigma_taxaArthropod     2.41      1.20     0.10     4.27 1.05       59      220
+sigma_taxaBird          2.18      1.21    -0.14     4.04 1.04       60      224
+sigma_taxaFish          2.80      1.20     0.49     4.65 1.05       59      221
+sigma_taxaMammal        2.32      1.20     0.00     4.18 1.05       59      221
+sigma_taxaMollusc       2.44      1.22     0.07     4.38 1.04       61      245
+sigma_taxaPlant         2.43      1.20     0.12     4.28 1.05       59      209
+sigma_taxaReptile       2.24      1.22    -0.09     4.12 1.04       62      279
+
+Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).
+
+--- Fixed effects (location + scale) ---
+                    Estimate Est.Error    Q2.5   Q97.5
+Intercept            -0.0135    0.9844 -1.9615  1.9054
+sigma_Intercept      -3.1994    1.2025 -5.0498 -0.8936
+taxaArthropod        -0.6831    1.1357 -2.8445  1.5834
+taxaBird             -0.7859    0.8965 -2.6703  0.9667
+taxaFish             -0.6398    1.0705 -2.7609  1.4619
+taxaMammal           -0.4764    0.9488 -2.2941  1.3780
+taxaMollusc           0.3352    1.2065 -1.8940  2.6962
+taxaPlant            -0.4307    1.2696 -2.8816  1.9890
+taxaReptile          -0.1224    0.9889 -2.1552  1.8240
+sigma_taxaArthropod   2.4116    1.2034  0.0955  4.2664
+sigma_taxaBird        2.1810    1.2057 -0.1437  4.0416
+sigma_taxaFish        2.7962    1.2028  0.4883  4.6517
+sigma_taxaMammal      2.3194    1.2043  0.0003  4.1847
+sigma_taxaMollusc     2.4397    1.2235  0.0669  4.3800
+sigma_taxaPlant       2.4258    1.2035  0.1170  4.2787
+sigma_taxaReptile     2.2434    1.2150 -0.0914  4.1219
+
+--- Random effects ---
+$es_id_model
+$es_id_model$sd
+          Estimate Est.Error Q2.5 Q97.5
+Intercept        1         0    1     1
+
+
+$ref_id
+$ref_id$sd
+           Estimate  Est.Error      Q2.5     Q97.5
+Intercept 0.7338742 0.03996264 0.6570985 0.8139804
+
+
+$sp_ncbi
+$sp_ncbi$sd
+           Estimate Est.Error      Q2.5    Q97.5
+Intercept 0.9109383 0.1734067 0.5901746 1.276561
+
+
+
+Location intercept: mean=-0.0135, 95% CrI [-1.9615, 1.9054], P(>0)=0.501
+
+--- Location: marginal means (emmeans) ---
+ taxa        emmean lower.HPD upper.HPD
+ Amphibian  0.00189     -1.80     2.069
+ Arthropod -0.68180     -2.58     1.112
+ Bird      -0.75930     -2.38     0.934
+ Fish      -0.64570     -2.29     1.133
+ Mammal    -0.46161     -2.27     1.151
+ Mollusc    0.33082     -1.76     2.222
+ Plant     -0.44619     -2.05     1.178
+ Reptile   -0.11720     -1.95     1.742
+
+Point estimate displayed: median 
+HPD interval probability: 0.95 
+
+--- Location: pairwise contrasts ---
+ contrast              estimate lower.HPD upper.HPD
+ Amphibian - Arthropod   0.6865     -1.68    2.7050
+ Amphibian - Bird        0.7780     -1.02    2.5622
+ Amphibian - Fish        0.6376     -1.46    2.7618
+ Amphibian - Mammal      0.4704     -1.44    2.2178
+ Amphibian - Mollusc    -0.3276     -2.67    1.9138
+ Amphibian - Plant       0.4360     -1.93    2.9197
+ Amphibian - Reptile     0.0984     -1.89    2.0269
+ Arthropod - Bird        0.1022     -1.71    2.3180
+ Arthropod - Fish       -0.0374     -2.17    2.0430
+ Arthropod - Mammal     -0.2028     -2.28    1.8762
+ Arthropod - Mollusc    -1.0183     -2.07    0.0273
+ Arthropod - Plant      -0.2411     -2.63    2.1695
+ Arthropod - Reptile    -0.5632     -2.63    1.5851
+ Bird - Fish            -0.1174     -1.90    1.6786
+ Bird - Mammal          -0.2970     -1.82    1.1874
+ Bird - Mollusc         -1.0981     -3.31    0.9730
+ Bird - Plant           -0.3557     -2.56    2.0430
+ Bird - Reptile         -0.6720     -1.85    0.5021
+ Fish - Mammal          -0.1867     -2.22    1.7004
+ Fish - Mollusc         -0.9865     -3.36    1.1818
+ Fish - Plant           -0.2044     -2.46    2.0604
+ Fish - Reptile         -0.5207     -2.40    1.6063
+ Mammal - Mollusc       -0.8058     -3.03    1.4008
+ Mammal - Plant         -0.0239     -2.49    2.2482
+ Mammal - Reptile       -0.3556     -2.03    1.3420
+ Mollusc - Plant         0.7836     -1.68    3.3534
+ Mollusc - Reptile       0.4497     -1.72    2.8606
+ Plant - Reptile        -0.3207     -2.80    2.1413
+
+Point estimate displayed: median 
+HPD interval probability: 0.95 
+
+--- Scale (sigma): marginal means from posterior draws ---
+(all values on log-sigma scale; exp() gives residual SD per group)
+      level     emmean lower.HPD upper.HPD
+1 Amphibian -3.1993805 -5.073840 -0.931161
+2      Bird -1.0184017 -1.127630 -0.912430
+3 Arthropod -0.7877936 -0.862880 -0.715670
+4      Fish -0.4031676 -0.437520 -0.367870
+5   Reptile -0.9559687 -1.310312 -0.640190
+6   Mollusc -0.7597077 -1.159470 -0.370860
+7    Mammal -0.8799666 -0.996680 -0.760130
+8     Plant -0.7735767 -0.833440 -0.705350
+
+--- Scale (sigma): pairwise contrasts ---
+                contrast    estimate lower.HPD   upper.HPD p_nonzero
+1       Amphibian - Bird -2.18097876 -4.131340  0.02470530   0.04000
+2  Amphibian - Arthropod -2.41158689 -4.331570 -0.18373800   0.01950
+3       Amphibian - Fish -2.79621283 -4.693660 -0.55469000   0.00225
+4    Amphibian - Reptile -2.24341182 -4.202050  0.00407267   0.03450
+5    Amphibian - Mollusc -2.43967278 -4.417050 -0.11161600   0.01825
+6     Amphibian - Mammal -2.31941390 -4.198450 -0.02149850   0.02500
+7      Amphibian - Plant -2.42580375 -4.337910 -0.19390300   0.01775
+8       Bird - Arthropod -0.23060813 -0.367810 -0.10524000   0.00125
+9            Bird - Fish -0.61523407 -0.730720 -0.50539000   0.00000
+10        Bird - Reptile -0.06243305 -0.422050  0.28388700   0.35450
+11        Bird - Mollusc -0.25869401 -0.668460  0.15776000   0.10775
+12         Bird - Mammal -0.13843514 -0.314480  0.01296000   0.04900
+13          Bird - Plant -0.24482499 -0.367620 -0.12221000   0.00000
+14      Arthropod - Fish -0.38462594 -0.466970 -0.30420000   0.00000
+15   Arthropod - Reptile  0.16817507 -0.153910  0.52363000   0.83400
+16   Arthropod - Mollusc -0.02808588 -0.454580  0.34778000   0.45450
+17    Arthropod - Mammal  0.09217299 -0.047440  0.23567010   0.89450
+18     Arthropod - Plant -0.01421686 -0.122900  0.07959000   0.39175
+19        Fish - Reptile  0.55280102  0.222190  0.89954800   1.00000
+20        Fish - Mollusc  0.35654006 -0.034420  0.75951000   0.95600
+21         Fish - Mammal  0.47679893  0.350460  0.59527500   1.00000
+22          Fish - Plant  0.37040908  0.300060  0.44283000   1.00000
+23     Reptile - Mollusc -0.19626096 -0.721460  0.30422600   0.23850
+24      Reptile - Mammal -0.07600209 -0.443857  0.26193000   0.34475
+25       Reptile - Plant -0.18239193 -0.542240  0.14792000   0.14525
+26      Mollusc - Mammal  0.12025887 -0.278160  0.53408200   0.71325
+27       Mollusc - Plant  0.01386903 -0.389040  0.41534300   0.52300
+28        Mammal - Plant -0.10638985 -0.245730  0.02260100   0.05925
+
+
+========================================
+m07 ( m07_ls_genphen )
+========================================
+Chains: 4 | Max Rhat: 1.005
+
+--- brms summary ---
+ Family: gaussian 
+  Links: mu = identity; sigma = log 
+Formula: yi_lnM_safe ~ genphen + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)) 
+         sigma ~ genphen
+   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7455) 
+  Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
+         total post-warmup draws = 8000
+
+Multilevel Hyperparameters:
+~es_id_model (Number of levels: 7455) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     1.00      0.00     1.00     1.00   NA       NA       NA
+
+~ref_id (Number of levels: 266) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.75      0.04     0.68     0.84 1.00     1700     2630
+
+~sp_ncbi (Number of levels: 265) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.64      0.16     0.34     0.98 1.00      860     1847
+
+Regression Coefficients:
+                        Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
+Intercept                  -0.43      0.38    -1.19     0.32 1.00     3229
+sigma_Intercept            -0.84      0.03    -0.89    -0.79 1.00     2078
+genphenPhenotypic          -0.17      0.07    -0.31    -0.03 1.00     3883
+sigma_genphenPhenotypic     0.34      0.03     0.28     0.40 1.00     2288
+                        Tail_ESS
+Intercept                   3900
+sigma_Intercept             4050
+genphenPhenotypic           5536
+sigma_genphenPhenotypic     4648
+
+Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).
+
+--- Fixed effects (location + scale) ---
+                        Estimate Est.Error    Q2.5   Q97.5
+Intercept                -0.4259    0.3754 -1.1914  0.3236
+sigma_Intercept          -0.8392    0.0262 -0.8919 -0.7891
+genphenPhenotypic        -0.1745    0.0715 -0.3148 -0.0340
+sigma_genphenPhenotypic   0.3411    0.0302  0.2834  0.3998
+
+--- Random effects ---
+$es_id_model
+$es_id_model$sd
+          Estimate Est.Error Q2.5 Q97.5
+Intercept        1         0    1     1
+
+
+$ref_id
+$ref_id$sd
+           Estimate  Est.Error      Q2.5    Q97.5
+Intercept 0.7537767 0.04098819 0.6777377 0.838623
+
+
+$sp_ncbi
+$sp_ncbi$sd
+           Estimate Est.Error      Q2.5   Q97.5
+Intercept 0.6410098 0.1623285 0.3419863 0.97914
+
+
+
+Location intercept: mean=-0.4259, 95% CrI [-1.1914, 0.3236], P(>0)=0.118
+
+--- Location: marginal means (emmeans) ---
+ genphen    emmean lower.HPD upper.HPD
+ Genetic    -0.425     -1.21     0.300
+ Phenotypic -0.598     -1.36     0.135
+
+Point estimate displayed: median 
+HPD interval probability: 0.95 
+
+--- Location: pairwise contrasts ---
+ contrast             estimate lower.HPD upper.HPD
+ Genetic - Phenotypic    0.176    0.0295     0.309
+
+Point estimate displayed: median 
+HPD interval probability: 0.95 
+
+--- Scale (sigma): marginal means from posterior draws ---
+(all values on log-sigma scale; exp() gives residual SD per group)
+       level     emmean lower.HPD upper.HPD
+1    Genetic -0.8391795 -0.890379 -0.788117
+2 Phenotypic -0.4980866 -0.528354 -0.469437
+
+--- Scale (sigma): pairwise contrasts ---
+              contrast   estimate lower.HPD upper.HPD p_nonzero
+1 Genetic - Phenotypic -0.3410929 -0.399697 -0.283316         0
+
+
+========================================
+m08 ( m08_ls_env_change )
+========================================
+Chains: 4 | Max Rhat: 1.007
+
+--- brms summary ---
+ Family: gaussian 
+  Links: mu = identity; sigma = log 
+Formula: yi_lnM_safe ~ env_change + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)) 
+         sigma ~ env_change
+   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7455) 
+  Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
+         total post-warmup draws = 8000
+
+Multilevel Hyperparameters:
+~es_id_model (Number of levels: 7455) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     1.00      0.00     1.00     1.00   NA       NA       NA
+
+~ref_id (Number of levels: 266) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.75      0.04     0.67     0.84 1.00     2079     3818
+
+~sp_ncbi (Number of levels: 265) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.63      0.17     0.31     0.98 1.01      847     1794
+
+Regression Coefficients:
+                        Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
+Intercept                  -0.54      0.36    -1.27     0.19 1.00     3882
+sigma_Intercept            -0.67      0.02    -0.70    -0.64 1.00     3538
+env_changeongoing           0.06      0.10    -0.13     0.25 1.00     5397
+sigma_env_changeongoing     0.22      0.03     0.16     0.27 1.00     4531
+                        Tail_ESS
+Intercept                   4025
+sigma_Intercept             5624
+env_changeongoing           6335
+sigma_env_changeongoing     5830
+
+Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).
+
+--- Fixed effects (location + scale) ---
+                        Estimate Est.Error    Q2.5   Q97.5
+Intercept                -0.5384    0.3614 -1.2700  0.1949
+sigma_Intercept          -0.6731    0.0163 -0.7044 -0.6414
+env_changeongoing         0.0576    0.0963 -0.1329  0.2483
+sigma_env_changeongoing   0.2167    0.0269  0.1636  0.2692
+
+--- Random effects ---
+$es_id_model
+$es_id_model$sd
+          Estimate Est.Error Q2.5 Q97.5
+Intercept        1         0    1     1
+
+
+$ref_id
+$ref_id$sd
+           Estimate  Est.Error      Q2.5     Q97.5
+Intercept 0.7519403 0.04179032 0.6725489 0.8381753
+
+
+$sp_ncbi
+$sp_ncbi$sd
+          Estimate Est.Error      Q2.5     Q97.5
+Intercept 0.627149 0.1707248 0.3096242 0.9829352
+
+
+
+Location intercept: mean=-0.5384, 95% CrI [-1.2700, 0.1949], P(>0)=0.068
+
+--- Location: marginal means (emmeans) ---
+ env_change emmean lower.HPD upper.HPD
+ novel      -0.545     -1.28     0.183
+ ongoing    -0.487     -1.19     0.302
+
+Point estimate displayed: median 
+HPD interval probability: 0.95 
+
+--- Location: pairwise contrasts ---
+ contrast        estimate lower.HPD upper.HPD
+ novel - ongoing  -0.0575    -0.249     0.131
+
+Point estimate displayed: median 
+HPD interval probability: 0.95 
+
+--- Scale (sigma): marginal means from posterior draws ---
+(all values on log-sigma scale; exp() gives residual SD per group)
+    level     emmean lower.HPD upper.HPD
+1   novel -0.6731107 -0.704485 -0.641632
+2 ongoing -0.4563955 -0.499086 -0.415805
+
+--- Scale (sigma): pairwise contrasts ---
+         contrast   estimate lower.HPD upper.HPD p_nonzero
+1 novel - ongoing -0.2167152 -0.272451 -0.167387         0
+
+
+========================================
+m09 ( m09_ls_data_type )
+========================================
+Chains: 4 | Max Rhat: 1.041
+  ** CONVERGENCE WARNING: Rhat > 1.01 **
+
+--- brms summary ---
+ Family: gaussian 
+  Links: mu = identity; sigma = log 
+Formula: yi_lnM_safe ~ data_type + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)) 
+         sigma ~ data_type
+   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7455) 
+  Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
+         total post-warmup draws = 8000
+
+Multilevel Hyperparameters:
+~es_id_model (Number of levels: 7455) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     1.00      0.00     1.00     1.00   NA       NA       NA
+
+~ref_id (Number of levels: 266) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.76      0.04     0.68     0.84 1.00     1664     2933
+
+~sp_ncbi (Number of levels: 265) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.69      0.17     0.39     1.05 1.01      689     1437
+
+Regression Coefficients:
+                           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
+Intercept                     -0.46      0.40    -1.26     0.33 1.01     1896
+sigma_Intercept               -1.33      0.31    -2.05    -0.86 1.01      357
+data_typearea2D                0.20      0.13    -0.05     0.44 1.00     1382
+data_typecount                 0.11      0.09    -0.07     0.29 1.00     1021
+data_typecube3D               -0.08      0.09    -0.25     0.09 1.00      971
+data_typedate                  0.20      0.20    -0.20     0.59 1.00     1738
+data_typeindex                -0.12      0.21    -0.56     0.26 1.00     1045
+data_typelinear               -0.09      0.09    -0.27     0.09 1.00      969
+data_typeother                -0.12      0.12    -0.35     0.11 1.00     1506
+data_typeproportion           -0.04      0.09    -0.23     0.14 1.00     1049
+data_typerate                 -0.19      0.10    -0.38     0.01 1.00     1019
+data_typetemperature          -0.23      0.25    -0.74     0.23 1.00     1654
+data_typetime                 -0.05      0.10    -0.25     0.15 1.00     1044
+sigma_data_typearea2D          0.57      0.35    -0.02     1.36 1.01      400
+sigma_data_typecount           0.78      0.32     0.30     1.49 1.01      362
+sigma_data_typecube3D          0.62      0.31     0.15     1.35 1.01      362
+sigma_data_typedate            0.57      0.34    -0.01     1.32 1.01      403
+sigma_data_typeindex          -0.14      1.12    -3.28     1.27 1.04      133
+sigma_data_typelinear          0.80      0.31     0.33     1.52 1.01      358
+sigma_data_typeother           0.88      0.32     0.36     1.62 1.01      392
+sigma_data_typeproportion      0.61      0.32     0.11     1.35 1.01      358
+sigma_data_typerate            0.10      0.35    -0.48     0.89 1.01      385
+sigma_data_typetemperature     0.38      0.63    -1.13     1.46 1.01      432
+sigma_data_typetime            0.44      0.33    -0.07     1.18 1.01      376
+                           Tail_ESS
+Intercept                      2949
+sigma_Intercept                 363
+data_typearea2D                2833
+data_typecount                 2234
+data_typecube3D                2091
+data_typedate                  3399
+data_typeindex                 3409
+data_typelinear                2018
+data_typeother                 3021
+data_typeproportion            2097
+data_typerate                  1992
+data_typetemperature           3465
+data_typetime                  2121
+sigma_data_typearea2D           384
+sigma_data_typecount            368
+sigma_data_typecube3D           364
+sigma_data_typedate             412
+sigma_data_typeindex             69
+sigma_data_typelinear           357
+sigma_data_typeother            381
+sigma_data_typeproportion       347
+sigma_data_typerate             398
+sigma_data_typetemperature      440
+sigma_data_typetime             347
+
+Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).
+
+--- Fixed effects (location + scale) ---
+                           Estimate Est.Error    Q2.5   Q97.5
+Intercept                   -0.4645    0.3974 -1.2637  0.3258
+sigma_Intercept             -1.3329    0.3124 -2.0506 -0.8614
+data_typearea2D              0.1973    0.1258 -0.0539  0.4385
+data_typecount               0.1110    0.0908 -0.0657  0.2919
+data_typecube3D             -0.0836    0.0869 -0.2515  0.0913
+data_typedate                0.1955    0.1995 -0.2021  0.5872
+data_typeindex              -0.1155    0.2087 -0.5552  0.2558
+data_typelinear             -0.0922    0.0911 -0.2678  0.0908
+data_typeother              -0.1233    0.1166 -0.3512  0.1063
+data_typeproportion         -0.0449    0.0941 -0.2262  0.1411
+data_typerate               -0.1877    0.0988 -0.3780  0.0066
+data_typetemperature        -0.2334    0.2452 -0.7359  0.2251
+data_typetime               -0.0523    0.1018 -0.2528  0.1529
+sigma_data_typearea2D        0.5656    0.3523 -0.0233  1.3563
+sigma_data_typecount         0.7770    0.3151  0.2959  1.4949
+sigma_data_typecube3D        0.6237    0.3137  0.1513  1.3471
+sigma_data_typedate          0.5749    0.3448 -0.0059  1.3222
+sigma_data_typeindex        -0.1366    1.1228 -3.2803  1.2709
+sigma_data_typelinear        0.8015    0.3128  0.3252  1.5205
+sigma_data_typeother         0.8772    0.3250  0.3600  1.6243
+sigma_data_typeproportion    0.6078    0.3217  0.1087  1.3492
+sigma_data_typerate          0.0995    0.3512 -0.4823  0.8915
+sigma_data_typetemperature   0.3845    0.6349 -1.1313  1.4619
+sigma_data_typetime          0.4408    0.3257 -0.0690  1.1803
+
+--- Random effects ---
+$es_id_model
+$es_id_model$sd
+          Estimate Est.Error Q2.5 Q97.5
+Intercept        1         0    1     1
+
+
+$ref_id
+$ref_id$sd
+          Estimate  Est.Error     Q2.5     Q97.5
+Intercept 0.756406 0.04115858 0.679973 0.8418744
+
+
+$sp_ncbi
+$sp_ncbi$sd
+           Estimate Est.Error      Q2.5    Q97.5
+Intercept 0.6930166 0.1669549 0.3887603 1.048185
+
+
+
+Location intercept: mean=-0.4645, 95% CrI [-1.2637, 0.3258], P(>0)=0.117
+
+--- Location: marginal means (emmeans) ---
+ data_type   emmean lower.HPD upper.HPD
+ ad_ratio    -0.465     -1.25     0.337
+ area (2D)   -0.269     -1.04     0.542
+ count       -0.355     -1.12     0.430
+ cube (3D)   -0.550     -1.30     0.262
+ date        -0.272     -1.07     0.621
+ index       -0.570     -1.49     0.254
+ linear      -0.560     -1.36     0.197
+ other       -0.584     -1.35     0.239
+ proportion  -0.510     -1.27     0.273
+ rate        -0.653     -1.45     0.111
+ temperature -0.698     -1.59     0.180
+ time        -0.514     -1.30     0.263
+
+Point estimate displayed: median 
+HPD interval probability: 0.95 
+
+--- Location: pairwise contrasts ---
+ contrast                 estimate lower.HPD upper.HPD
+ ad_ratio - area (2D)     -0.19712  -0.43986   0.05241
+ ad_ratio - count         -0.10963  -0.27564   0.07982
+ ad_ratio - cube (3D)      0.08514  -0.09422   0.24513
+ ad_ratio - date          -0.19685  -0.59035   0.19721
+ ad_ratio - index          0.10430  -0.27034   0.53539
+ ad_ratio - linear         0.09444  -0.08874   0.26945
+ ad_ratio - other          0.12241  -0.09799   0.35826
+ ad_ratio - proportion     0.04607  -0.13950   0.22730
+ ad_ratio - rate           0.18760  -0.00520   0.37877
+ ad_ratio - temperature    0.22637  -0.24679   0.70724
+ ad_ratio - time           0.05305  -0.14567   0.25665
+ area (2D) - count         0.08669  -0.10130   0.28847
+ area (2D) - cube (3D)     0.28414   0.09509   0.47458
+ area (2D) - date          0.00160  -0.37426   0.39958
+ area (2D) - index         0.30302  -0.08305   0.72316
+ area (2D) - linear        0.29044   0.11233   0.49610
+ area (2D) - other         0.32123   0.06533   0.55748
+ area (2D) - proportion    0.24202   0.04570   0.42956
+ area (2D) - rate          0.38629   0.17202   0.59098
+ area (2D) - temperature   0.42295  -0.03702   0.93104
+ area (2D) - time          0.25080   0.03228   0.45966
+ count - cube (3D)         0.19509   0.12116   0.27343
+ count - date             -0.08579  -0.43165   0.28308
+ count - index             0.21431  -0.12742   0.61986
+ count - linear            0.20343   0.12206   0.28838
+ count - other             0.23471   0.05207   0.41575
+ count - proportion        0.15604   0.04944   0.27072
+ count - rate              0.29873   0.18117   0.42549
+ count - temperature       0.33832  -0.10888   0.79279
+ count - time              0.16319   0.04059   0.29119
+ cube (3D) - date         -0.27942  -0.64288   0.07556
+ cube (3D) - index         0.01990  -0.33997   0.40668
+ cube (3D) - linear        0.00808  -0.06116   0.07953
+ cube (3D) - other         0.03941  -0.13146   0.22103
+ cube (3D) - proportion   -0.03857  -0.14569   0.06384
+ cube (3D) - rate          0.10352  -0.01039   0.21252
+ cube (3D) - temperature   0.14154  -0.31645   0.57766
+ cube (3D) - time         -0.03131  -0.14446   0.08410
+ date - index              0.30388  -0.21329   0.81350
+ date - linear             0.29024  -0.07153   0.64075
+ date - other              0.31989  -0.06649   0.71052
+ date - proportion         0.24281  -0.13637   0.58987
+ date - rate               0.38320   0.00457   0.74356
+ date - temperature        0.42611  -0.12412   1.01330
+ date - time               0.24788  -0.12154   0.61918
+ index - linear           -0.00973  -0.39872   0.34739
+ index - other             0.02133  -0.42320   0.39917
+ index - proportion       -0.05436  -0.45250   0.29420
+ index - rate              0.08371  -0.33044   0.44567
+ index - temperature       0.11998  -0.47650   0.68091
+ index - time             -0.05063  -0.47292   0.30255
+ linear - other            0.03103  -0.14337   0.20594
+ linear - proportion      -0.04699  -0.15367   0.06432
+ linear - rate             0.09578  -0.02485   0.20964
+ linear - temperature      0.13545  -0.30455   0.59271
+ linear - time            -0.03948  -0.15343   0.08011
+ other - proportion       -0.07773  -0.26971   0.10606
+ other - rate              0.06667  -0.13100   0.26031
+ other - temperature       0.10517  -0.36611   0.59191
+ other - time             -0.07076  -0.27180   0.12276
+ proportion - rate         0.14129   0.00637   0.27735
+ proportion - temperature  0.18099  -0.25504   0.64684
+ proportion - time         0.00635  -0.12961   0.14913
+ rate - temperature        0.03878  -0.39702   0.47764
+ rate - time              -0.13584  -0.26238   0.00139
+ temperature - time       -0.17194  -0.66477   0.24308
+
+Point estimate displayed: median 
+HPD interval probability: 0.95 
+
+--- Scale (sigma): marginal means from posterior draws ---
+(all values on log-sigma scale; exp() gives residual SD per group)
+         level     emmean lower.HPD upper.HPD
+1     ad_ratio -1.3328565 -1.927580 -0.774413
+2       linear -0.5313178 -0.562774 -0.499710
+3         time -0.8920909 -1.068142 -0.710958
+4         rate -1.2333566 -1.531800 -0.965399
+5        count -0.5558495 -0.637118 -0.468406
+6        index -1.4694302 -4.524720 -0.151569
+7        other -0.4556111 -0.622890 -0.290020
+8   proportion -0.7250173 -0.854776 -0.594688
+9         date -0.7579190 -1.058016 -0.474497
+10 temperature -0.9483910 -1.981004 -0.039030
+
+--- Scale (sigma): pairwise contrasts ---
+                   contrast    estimate  lower.HPD  upper.HPD p_nonzero
+1         ad_ratio - linear -0.80153869 -1.4078700 -0.2538970  0.000000
+2           ad_ratio - time -0.44076560 -1.0751400  0.1283540  0.049375
+3           ad_ratio - rate -0.09949991 -0.7882250  0.5543810  0.420375
+4          ad_ratio - count -0.77700705 -1.3795200 -0.2250900  0.000125
+5          ad_ratio - index  0.13657368 -1.3745600  3.1291100  0.415875
+6          ad_ratio - other -0.87724547 -1.5290000 -0.3146010  0.000000
+7     ad_ratio - proportion -0.60783921 -1.2493900 -0.0668963  0.005875
+8           ad_ratio - date -0.57493752 -1.2708300  0.0421041  0.026125
+9    ad_ratio - temperature -0.38446553 -1.6351900  0.8613210  0.206750
+10            linear - time  0.36077309  0.1791060  0.5453210  1.000000
+11            linear - rate  0.70203878  0.4292464  0.9999380  1.000000
+12           linear - count  0.02453164 -0.0622200  0.1183800  0.698500
+13           linear - index  0.93811237 -0.3794510  3.9869690  0.886750
+14           linear - other -0.07570678 -0.2460790  0.0986740  0.196500
+15      linear - proportion  0.19369948  0.0560030  0.3263290  0.998500
+16            linear - date  0.22660118 -0.0707270  0.5168960  0.941625
+17     linear - temperature  0.41707316 -0.4817020  1.4570050  0.811000
+18              time - rate  0.34126569  0.0228280  0.6983240  0.980625
+19             time - count -0.33624145 -0.5363110 -0.1358140  0.000125
+20             time - index  0.57733928 -0.7858120  3.6458770  0.657875
+21             time - other -0.43647987 -0.6800270 -0.1862550  0.000375
+22        time - proportion -0.16707362 -0.3906369  0.0569030  0.069875
+23              time - date -0.13417192 -0.4910480  0.2032790  0.222375
+24       time - temperature  0.05630007 -0.8519840  1.1448200  0.467125
+25             rate - count -0.67750714 -0.9663990 -0.3703990  0.000000
+26             rate - index  0.23607359 -1.3018010  3.1630990  0.432625
+27             rate - other -0.77774556 -1.0983185 -0.4338550  0.000000
+28        rate - proportion -0.50833930 -0.8373900 -0.2068030  0.000250
+29              rate - date -0.47543760 -0.9080330 -0.0887600  0.011000
+30       rate - temperature -0.28496562 -1.2163710  0.8079240  0.222375
+31            count - index  0.91358073 -0.4563370  3.9244770  0.875625
+32            count - other -0.10023842 -0.2937750  0.0831900  0.151375
+33       count - proportion  0.16916784  0.0109500  0.3233234  0.984875
+34             count - date  0.20206954 -0.0943780  0.5114968  0.910000
+35      count - temperature  0.39254152 -0.4939930  1.4588340  0.792125
+36            index - other -1.01381915 -4.0474400  0.3464310  0.083875
+37       index - proportion -0.74441290 -3.7883930  0.5977760  0.228625
+38             index - date -0.71151120 -3.7348010  0.6564560  0.253750
+39      index - temperature -0.52103921 -3.8876800  1.4395630  0.361875
+40       other - proportion  0.26940625  0.0431440  0.4704430  0.992375
+41             other - date  0.30230795 -0.0353070  0.6426200  0.963125
+42      other - temperature  0.49277994 -0.4226800  1.5592800  0.861375
+43        proportion - date  0.03290170 -0.3043450  0.3477770  0.573750
+44 proportion - temperature  0.22337369 -0.6925560  1.2860690  0.632125
+45       date - temperature  0.19047199 -0.7969560  1.2461330  0.598750
+
+
+========================================
+m10 -- SKIPPED (RDS not found)
+========================================
+
+
+========================================
+m11 -- SKIPPED (RDS not found)
+========================================

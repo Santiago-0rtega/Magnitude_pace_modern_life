@@ -1,0 +1,27 @@
+---
+title: "m10 — Transformation status"
+---
+
+```{r setup, include=FALSE}
+source(here::here("R", "14_epred_cache.R"))
+cache_dir <- here::here("outputs", "epred_draws")
+cache     <- read_epred_cache("m10", cache_dir)
+```
+
+Whether the underlying data were transformed (refit m10b, reference reset).
+
+## Model summary
+
+`summary()` is read from the pre-computed cache (`outputs/epred_draws/m10.rds`) — the full `brms` fit is never loaded at render.
+
+```{r summary}
+print_cache_summary(cache)
+```
+
+## Posterior predictions
+
+The location panel shows predicted mean lnM; the scale panel shows predicted residual sigma. Draws were pre-computed once with `re_formula = NA`; restyle the figure by editing the plot helpers in `R/14_epred_cache.R` — no epreds re-run.
+
+```{r figure, fig.width=8, fig.height=9}
+plot_cache(cache)
+```

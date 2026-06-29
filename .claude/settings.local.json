@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir \"D:\\\\OneDrive\\\\Github repos\\\\Magnitude_pace_modern_life\")",
+      "Bash(grep -n \"n_excl_phylo\\\\|phylo\\\\$\" \"D:\\\\OneDrive\\\\Github repos\\\\Magnitude_pace_modern_life\\\\05_location_scale_model_grid.qmd\")",
+      "WebFetch(domain:itchyshin.github.io)"
+    ]
+  }
+}
