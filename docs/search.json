@@ -140,18 +140,40 @@
     "href": "02_lnm_effect_sizes.html",
     "title": "3  lnM effect sizes (SAFE)",
     "section": "",
-    "text": "3.1 Load cleaned data\nCode\ndat_lnm_input &lt;- readRDS(\n  here::here(\"outputs\", \"data_clean\", \"proceed_clean_filtered.rds\")\n)\n\ncat(\"Contrasts available for lnM:\", nrow(dat_lnm_input), \"\\n\")\n\n\nContrasts available for lnM: 7524",
+    "text": "3.1 What lnM measures\nThis chapter computes the effect size used throughout the book: \\(\\ln M\\), the log magnitude of separation between two groups. The key idea is to measure how far apart two group means are without retaining the sign of the difference. This is useful here because human disturbance can push traits in different directions across systems, but the biological question is often about the magnitude of phenotypic divergence.\nFor a two-group comparison, \\(\\ln M\\) is defined as:\n\\[\n\\ln M = \\ln\\left(\\frac{s_B}{s_W}\\right),\n\\]\nwhere \\(s_B\\) is the between-group separation component and \\(s_W\\) is the pooled within-group standard deviation. The sign of \\(\\ln M\\) is therefore not the direction of trait change. Instead:\nThis differs from taking an absolute value of a signed effect size such as \\(|d|\\) or \\(|\\ln RR|\\). Absolute-value transformations fold sampling error around zero, which can inflate small and noisy effects. The lnM paper develops \\(\\ln M\\) so that magnitude can be analysed directly with standard meta-analytic and meta-regression tools.",
     "crumbs": [
       "Data & Effect Sizes",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>lnM effect sizes (SAFE)</span>"
     ]
   },
   {
-    "objectID": "02_lnm_effect_sizes.html#safe-lnm-estimator",
-    "href": "02_lnm_effect_sizes.html#safe-lnm-estimator",
+    "objectID": "02_lnm_effect_sizes.html#what-lnm-measures",
+    "href": "02_lnm_effect_sizes.html#what-lnm-measures",
     "title": "3  lnM effect sizes (SAFE)",
-    "section": "3.2 SAFE lnM estimator",
-    "text": "3.2 SAFE lnM estimator\nThe SAFE estimator (orchaRd:::.safe_lnM_indep()) uses Monte Carlo sampling to compute a bias-corrected estimate of \\(\\ln M\\) and its sampling variance for each independent-groups contrast. For each contrast, a large number of draws are taken from the posterior predictive distribution of the two group means, standard deviations, and sample sizes; the estimator retains only draws that satisfy validity constraints (e.g., positive standard deviations) and computes \\(\\ln M\\) for each.\nThis is computationally intensive but avoids the negative-bias that affects naive \\(\\ln M\\) estimates from small samples.",
+    "section": "",
+    "text": "\\(\\ln M &gt; 0\\) means the separation between group means is larger than the typical within-group standard deviation.\n\\(\\ln M = 0\\) means the between-group separation is about equal to the within-group standard deviation.\n\\(\\ln M &lt; 0\\) means the groups differ, if at all, by less than the typical within-group variation.",
+    "crumbs": [
+      "Data & Effect Sizes",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>lnM effect sizes (SAFE)</span>"
+    ]
+  },
+  {
+    "objectID": "02_lnm_effect_sizes.html#why-safe-is-used-here",
+    "href": "02_lnm_effect_sizes.html#why-safe-is-used-here",
+    "title": "3  lnM effect sizes (SAFE)",
+    "section": "3.2 Why SAFE is used here",
+    "text": "3.2 Why SAFE is used here\nAnalytic \\(\\ln M\\) is built from ANOVA mean-square components. That construction is intuitive, but it has two practical problems for large ecological databases:\n\nSampling variance can become very large when the between-group mean square is close to the within-group mean square.\nThe plug-in estimate is undefined when the observed between-group component is not positive.\n\nThe SAFE estimator used below follows the paper’s simulation-based approach. For each contrast, it repeatedly draws plausible values of the group means and standard deviations from their finite-sample distributions, transforms each valid draw to \\(\\ln M\\), and then summarizes the resulting distribution. This gives a finite bias-adjusted estimate and sampling variance for contrasts that would otherwise be unstable or undefined.\nThe book uses the cached SAFE results by default. Recomputing all contrasts is intentionally opt-in because the Monte Carlo step is slow.",
+    "crumbs": [
+      "Data & Effect Sizes",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>lnM effect sizes (SAFE)</span>"
+    ]
+  },
+  {
+    "objectID": "02_lnm_effect_sizes.html#load-cleaned-data",
+    "href": "02_lnm_effect_sizes.html#load-cleaned-data",
+    "title": "3  lnM effect sizes (SAFE)",
+    "section": "3.3 Load cleaned data",
+    "text": "3.3 Load cleaned data\n\n\nCode\ndat_lnm_input &lt;- readRDS(\n  here::here(\"outputs\", \"data_clean\", \"proceed_clean_filtered.rds\")\n)\n\ncat(\"Contrasts available for lnM:\", nrow(dat_lnm_input), \"\\n\")\n\n\nContrasts available for lnM: 7524",
     "crumbs": [
       "Data & Effect Sizes",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>lnM effect sizes (SAFE)</span>"
@@ -161,8 +183,8 @@
     "objectID": "02_lnm_effect_sizes.html#compute-or-read-safe-lnm-estimates",
     "href": "02_lnm_effect_sizes.html#compute-or-read-safe-lnm-estimates",
     "title": "3  lnM effect sizes (SAFE)",
-    "section": "3.3 Compute or read SAFE lnM estimates",
-    "text": "3.3 Compute or read SAFE lnM estimates\n\n\nCode\ndat_es &lt;- compute_or_read_lnm_safe(\n  dat_lnm_input,\n  out_path   = here::here(\"outputs\", \"effect_sizes\", \"proceed_lnm_safe.rds\"),\n  diag_path  = here::here(\"outputs\", \"tables\", \"safe_lnm_diagnostics.csv\"),\n  recompute  = recompute_effect_sizes\n)\n\ncat(\"Effect sizes retained:\", nrow(dat_es), \"\\n\")\n\n\nEffect sizes retained: 7511",
+    "section": "3.4 Compute or read SAFE lnM estimates",
+    "text": "3.4 Compute or read SAFE lnM estimates\n\n\nCode\ndat_es &lt;- compute_or_read_lnm_safe(\n  dat_lnm_input,\n  out_path   = here::here(\"outputs\", \"effect_sizes\", \"proceed_lnm_safe.rds\"),\n  diag_path  = here::here(\"outputs\", \"tables\", \"safe_lnm_diagnostics.csv\"),\n  recompute  = recompute_effect_sizes\n)\n\ncat(\"Effect sizes retained:\", nrow(dat_es), \"\\n\")\n\n\nEffect sizes retained: 7511 \n\n\nThe resulting dataset carries the SAFE point estimate (yi_lnM_safe) and its sampling variance (vi_lnM_safe). These two columns become the response and known sampling-error input for the location-scale meta-regression chapters.",
     "crumbs": [
       "Data & Effect Sizes",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>lnM effect sizes (SAFE)</span>"
@@ -172,8 +194,8 @@
     "objectID": "02_lnm_effect_sizes.html#effect-size-summary",
     "href": "02_lnm_effect_sizes.html#effect-size-summary",
     "title": "3  lnM effect sizes (SAFE)",
-    "section": "3.4 Effect-size summary",
-    "text": "3.4 Effect-size summary\n\n\nCode\ndat_es |&gt;\n  dplyr::summarise(\n    k           = dplyr::n(),\n    min_yi      = round(min(yi_lnM_safe), 3),\n    median_yi   = round(median(yi_lnM_safe), 3),\n    max_yi      = round(max(yi_lnM_safe), 3),\n    min_vi      = round(min(vi_lnM_safe), 6),\n    median_vi   = round(median(vi_lnM_safe), 6),\n    max_vi      = round(max(vi_lnM_safe), 6),\n    n_status_ok = sum(status == \"ok\", na.rm = TRUE),\n    n_failed    = sum(status != \"ok\", na.rm = TRUE)\n  )",
+    "section": "3.5 Effect-size summary",
+    "text": "3.5 Effect-size summary\n\n\nCode\ndat_es |&gt;\n  dplyr::summarise(\n    k           = dplyr::n(),\n    min_yi      = round(min(yi_lnM_safe), 3),\n    median_yi   = round(median(yi_lnM_safe), 3),\n    max_yi      = round(max(yi_lnM_safe), 3),\n    min_vi      = round(min(vi_lnM_safe), 6),\n    median_vi   = round(median(vi_lnM_safe), 6),\n    max_vi      = round(max(vi_lnM_safe), 6),\n    n_status_ok = sum(status == \"ok\", na.rm = TRUE),\n    n_failed    = sum(status != \"ok\", na.rm = TRUE)\n  )\n\n\n\n  \n\n\n\nThis table is a quick range check, not an inferential result. The median and range of yi_lnM_safe describe observed magnitudes on the log scale; the variance columns describe how precisely each contrast estimates its own magnitude.",
     "crumbs": [
       "Data & Effect Sizes",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>lnM effect sizes (SAFE)</span>"
@@ -183,8 +205,8 @@
     "objectID": "02_lnm_effect_sizes.html#safe-diagnostics",
     "href": "02_lnm_effect_sizes.html#safe-diagnostics",
     "title": "3  lnM effect sizes (SAFE)",
-    "section": "3.5 SAFE diagnostics",
-    "text": "3.5 SAFE diagnostics\nCheck the Monte Carlo convergence (draws kept vs. total).\n\n\nCode\nsafe_diag &lt;- readr::read_csv(\n  here::here(\"outputs\", \"tables\", \"safe_lnm_diagnostics.csv\"),\n  show_col_types = FALSE\n)\n\nsafe_diag |&gt;\n  dplyr::summarise(\n    n_ok           = sum(status == \"ok\"),\n    n_not_ok       = sum(status != \"ok\"),\n    min_pct_kept   = round(min(draws_kept / draws_total * 100), 1),\n    median_pct_kept = round(median(draws_kept / draws_total * 100), 1),\n    max_attempts   = max(attempts)\n  )",
+    "section": "3.6 SAFE diagnostics",
+    "text": "3.6 SAFE diagnostics\nSAFE only summarizes valid simulation draws, so the retained-draw diagnostics are important. A low retained percentage means many simulated draws landed in the region where the between-group component was non-positive; those contrasts are still usable, but their uncertainty should be interpreted with care.\n\n\nCode\nsafe_diag &lt;- readr::read_csv(\n  here::here(\"outputs\", \"tables\", \"safe_lnm_diagnostics.csv\"),\n  show_col_types = FALSE\n)\n\nsafe_diag |&gt;\n  dplyr::summarise(\n    n_ok           = sum(status == \"ok\"),\n    n_not_ok       = sum(status != \"ok\"),\n    min_pct_kept   = round(min(draws_kept / draws_total * 100), 1),\n    median_pct_kept = round(median(draws_kept / draws_total * 100), 1),\n    max_attempts   = max(attempts)\n  )",
     "crumbs": [
       "Data & Effect Sizes",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>lnM effect sizes (SAFE)</span>"
@@ -194,8 +216,8 @@
     "objectID": "02_lnm_effect_sizes.html#identifier-management",
     "href": "02_lnm_effect_sizes.html#identifier-management",
     "title": "3  lnM effect sizes (SAFE)",
-    "section": "3.6 Identifier management",
-    "text": "3.6 Identifier management\nThe dataset preserves two IDs:\n\nes_id_db: the original PROCEED effect-size identifier (for tracing back to the database).\nes_id_model: a sequential integer factor created after filtering to finite, positive \\(v_i\\), used as the row/column index of the sampling-variance matrix \\(V\\).\n\n\n\nCode\ndat_es |&gt;\n  dplyr::select(es_id_db, es_id_model) |&gt;\n  head(6)",
+    "section": "3.7 Identifier management",
+    "text": "3.7 Identifier management\nThe dataset preserves two IDs:\n\nes_id_db: the original PROCEED effect-size identifier, kept for tracing estimates back to the database.\nes_id_model: a sequential factor created after filtering to finite, positive \\(v_i\\), used as the row/column index of the sampling-variance matrix \\(V\\).\n\n\n\nCode\ndat_es |&gt;\n  dplyr::select(es_id_db, es_id_model) |&gt;\n  head(6)",
     "crumbs": [
       "Data & Effect Sizes",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>lnM effect sizes (SAFE)</span>"
@@ -205,8 +227,8 @@
     "objectID": "02_lnm_effect_sizes.html#sampling-variance-matrix",
     "href": "02_lnm_effect_sizes.html#sampling-variance-matrix",
     "title": "3  lnM effect sizes (SAFE)",
-    "section": "3.7 Sampling-variance matrix",
-    "text": "3.7 Sampling-variance matrix\nThe diagonal covariance matrix \\(V\\) is used in the brms model via (1 | gr(es_id_model, cov = V)). The corresponding standard deviation prior is set to constant(1).\n\n\nCode\ncat(\"Effect-size rows (= dim of V):\", nrow(dat_es), \"\\n\")\n\n\nEffect-size rows (= dim of V): 7511",
+    "section": "3.8 Sampling-variance matrix",
+    "text": "3.8 Sampling-variance matrix\nThe diagonal covariance matrix \\(V\\) carries the known SAFE sampling variances into brms via (1 | gr(es_id_model, cov = V)). The corresponding standard deviation prior is fixed with constant(1), so this term contributes known measurement error rather than estimating a new variance component.\n\n\nCode\ncat(\"Effect-size rows (= dim of V):\", nrow(dat_es), \"\\n\")\n\n\nEffect-size rows (= dim of V): 7511",
     "crumbs": [
       "Data & Effect Sizes",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>lnM effect sizes (SAFE)</span>"
@@ -239,7 +261,18 @@
     "href": "03_descriptive_summaries.html#counts-by-moderator",
     "title": "4  Descriptive summaries",
     "section": "4.3 Counts by moderator",
-    "text": "4.3 Counts by moderator\n\n\nCode\ndat_es |&gt; dplyr::count(disturbance, sort = TRUE)\n\n\n\n  \n\n\n\n\n\nCode\ndat_es |&gt; dplyr::count(design, sort = TRUE)\n\n\n\n  \n\n\n\n\n\nCode\ndat_es |&gt; dplyr::count(trait_type, sort = TRUE)\n\n\n\n  \n\n\n\n\n\nCode\ndat_es |&gt; dplyr::count(taxa, sort = TRUE)\n\n\n\n  \n\n\n\n\n\nCode\ndat_es |&gt; dplyr::count(genphen, sort = TRUE)\n\n\n\n  \n\n\n\n\n\nCode\ndat_es |&gt; dplyr::count(env_change, sort = TRUE)\n\n\n\n  \n\n\n\n\n\nCode\ndat_es |&gt; dplyr::count(data_type, sort = TRUE)\n\n\n\n  \n\n\n\n\n\nCode\ndat_es |&gt; dplyr::count(transf_data, sort = TRUE)\n\n\n\n  \n\n\n\n\n\nCode\ndat_es |&gt; dplyr::count(data_scale, sort = TRUE)",
+    "text": "4.3 Counts by moderator\nThe following tables keep the exact counts visible. The donut plots below them provide a faster visual read of the main design and moderator composition.\n\n\nCode\ndat_es |&gt; dplyr::count(disturbance, sort = TRUE)\n\n\n\n  \n\n\n\n\n\nCode\ndat_es |&gt; dplyr::count(design, sort = TRUE)\n\n\n\n  \n\n\n\n\n\nCode\ndat_es |&gt; dplyr::count(trait_type, sort = TRUE)\n\n\n\n  \n\n\n\n\n\nCode\ndat_es |&gt; dplyr::count(taxa, sort = TRUE)\n\n\n\n  \n\n\n\n\n\nCode\ndat_es |&gt; dplyr::count(genphen, sort = TRUE)\n\n\n\n  \n\n\n\n\n\nCode\ndat_es |&gt; dplyr::count(env_change, sort = TRUE)\n\n\n\n  \n\n\n\n\n\nCode\ndat_es |&gt; dplyr::count(data_type, sort = TRUE)\n\n\n\n  \n\n\n\n\n\nCode\ndat_es |&gt; dplyr::count(transf_data, sort = TRUE)\n\n\n\n  \n\n\n\n\n\nCode\ndat_es |&gt; dplyr::count(data_scale, sort = TRUE)",
+    "crumbs": [
+      "Data & Effect Sizes",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Descriptive summaries</span>"
+    ]
+  },
+  {
+    "objectID": "03_descriptive_summaries.html#donut-summaries",
+    "href": "03_descriptive_summaries.html#donut-summaries",
+    "title": "4  Descriptive summaries",
+    "section": "4.4 Donut summaries",
+    "text": "4.4 Donut summaries\n\n\nCode\nplot_count_donut(dat_es, \"design\", \"Comparison design\") +\n  plot_count_donut(dat_es, \"disturbance\", \"Disturbance context\") +\n  patchwork::plot_layout(guides = \"keep\") &\n  ggplot2::theme(legend.position = \"bottom\", legend.text = ggplot2::element_text(size = 8))\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_count_donut(dat_es, \"trait_type\", \"Trait type\") +\n  plot_count_donut(dat_es, \"taxa\", \"Taxonomic group\") +\n  patchwork::plot_layout(guides = \"keep\") &\n  ggplot2::theme(legend.position = \"bottom\", legend.text = ggplot2::element_text(size = 8))\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_count_donut(dat_es, \"genphen\", \"Phenotypic vs genetic data\") +\n  plot_count_donut(dat_es, \"data_scale\", \"Measurement scale\") +\n  patchwork::plot_layout(guides = \"keep\") &\n  ggplot2::theme(legend.position = \"bottom\", legend.text = ggplot2::element_text(size = 8))",
     "crumbs": [
       "Data & Effect Sizes",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Descriptive summaries</span>"
@@ -249,8 +282,8 @@
     "objectID": "03_descriptive_summaries.html#distributions",
     "href": "03_descriptive_summaries.html#distributions",
     "title": "4  Descriptive summaries",
-    "section": "4.4 Distributions",
-    "text": "4.4 Distributions\n\n4.4.1 lnM estimates\n\n\nCode\nggplot2::ggplot(dat_es, ggplot2::aes(x = yi_lnM_safe)) +\n  ggplot2::geom_histogram(bins = 50, fill = \"steelblue\", colour = \"white\") +\n  ggplot2::geom_vline(xintercept = 0, linetype = \"dashed\") +\n  ggplot2::labs(x = \"lnM (SAFE)\", y = \"Count\",\n                title = \"Distribution of lnM effect sizes\") +\n  ggplot2::theme_classic()\n\n\n\n\n\n\n\n\n\n\n\n4.4.2 Sampling variances\n\n\nCode\nggplot2::ggplot(dat_es, ggplot2::aes(x = (vi_lnM_safe))) +\n  ggplot2::geom_histogram(bins = 50, fill = \"coral\", colour = \"white\") +\n  ggplot2::labs(x = \"sampling variance\", y = \"Count\",\n                title = \"Distribution of sampling variances\") +\n  ggplot2::theme_classic()\n\n\n\n\n\n\n\n\n\n\n\n4.4.3 Elapsed years\n\n\nCode\ndat_es |&gt;\n  dplyr::filter(!is.na(log10_years)) |&gt;\n  ggplot2::ggplot(ggplot2::aes(x = log10_years)) +\n  ggplot2::geom_histogram(bins = 40, fill = \"seagreen\", colour = \"white\") +\n  ggplot2::labs(x = \"log10(years)\", y = \"Count\",\n                title = \"Distribution of elapsed time (years)\") +\n  ggplot2::theme_classic()\n\n\n\n\n\n\n\n\n\n\n\n4.4.4 Elapsed generations\n\n\nCode\ndat_es |&gt;\n  dplyr::filter(!is.na(log10_generations)) |&gt;\n  ggplot2::ggplot(ggplot2::aes(x = log10_generations)) +\n  ggplot2::geom_histogram(bins = 40, fill = \"mediumpurple\", colour = \"white\") +\n  ggplot2::labs(x = \"log10(generations)\", y = \"Count\",\n                title = \"Distribution of elapsed time (generations)\") +\n  ggplot2::theme_classic()\n\n\n\n\n\n\n\n\n\n\n\n4.4.5 Sample sizes\n\n\nCode\ndat_es |&gt;\n  dplyr::filter(!is.na(n_total)) |&gt;\n  ggplot2::ggplot(ggplot2::aes(x = n_total)) +\n  ggplot2::geom_histogram(bins = 50, fill = \"goldenrod\", colour = \"white\") +\n  ggplot2::scale_x_log10() +\n  ggplot2::labs(x = \"Total N (log10 scale)\", y = \"Count\",\n                title = \"Distribution of total sample sizes\") +\n  ggplot2::theme_classic()",
+    "section": "4.5 Distributions",
+    "text": "4.5 Distributions\n\n4.5.1 lnM estimates\n\n\nCode\nggplot2::ggplot(dat_es, ggplot2::aes(x = yi_lnM_safe)) +\n  ggplot2::geom_histogram(bins = 50, fill = \"steelblue\", colour = \"white\") +\n  ggplot2::geom_vline(xintercept = 0, linetype = \"dashed\") +\n  ggplot2::labs(x = \"lnM (SAFE)\", y = \"Count\",\n                title = \"Distribution of lnM effect sizes\") +\n  ggplot2::theme_classic()\n\n\n\n\n\n\n\n\n\n\n\n4.5.2 Sampling variances\n\n\nCode\nggplot2::ggplot(dat_es, ggplot2::aes(x = (vi_lnM_safe))) +\n  ggplot2::geom_histogram(bins = 50, fill = \"coral\", colour = \"white\") +\n  ggplot2::labs(x = \"sampling variance\", y = \"Count\",\n                title = \"Distribution of sampling variances\") +\n  ggplot2::theme_classic()\n\n\n\n\n\n\n\n\n\n\n\n4.5.3 Elapsed years\n\n\nCode\ndat_es |&gt;\n  dplyr::filter(!is.na(log10_years)) |&gt;\n  ggplot2::ggplot(ggplot2::aes(x = log10_years)) +\n  ggplot2::geom_histogram(bins = 40, fill = \"seagreen\", colour = \"white\") +\n  ggplot2::labs(x = \"log10(years)\", y = \"Count\",\n                title = \"Distribution of elapsed time (years)\") +\n  ggplot2::theme_classic()\n\n\n\n\n\n\n\n\n\n\n\n4.5.4 Elapsed generations\n\n\nCode\ndat_es |&gt;\n  dplyr::filter(!is.na(log10_generations)) |&gt;\n  ggplot2::ggplot(ggplot2::aes(x = log10_generations)) +\n  ggplot2::geom_histogram(bins = 40, fill = \"mediumpurple\", colour = \"white\") +\n  ggplot2::labs(x = \"log10(generations)\", y = \"Count\",\n                title = \"Distribution of elapsed time (generations)\") +\n  ggplot2::theme_classic()\n\n\n\n\n\n\n\n\n\n\n\n4.5.5 Sample sizes\n\n\nCode\ndat_es |&gt;\n  dplyr::filter(!is.na(n_total)) |&gt;\n  ggplot2::ggplot(ggplot2::aes(x = n_total)) +\n  ggplot2::geom_histogram(bins = 50, fill = \"goldenrod\", colour = \"white\") +\n  ggplot2::scale_x_log10() +\n  ggplot2::labs(x = \"Total N (log10 scale)\", y = \"Count\",\n                title = \"Distribution of total sample sizes\") +\n  ggplot2::theme_classic()",
     "crumbs": [
       "Data & Effect Sizes",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Descriptive summaries</span>"
@@ -260,8 +293,8 @@
     "objectID": "03_descriptive_summaries.html#save-descriptive-tables",
     "href": "03_descriptive_summaries.html#save-descriptive-tables",
     "title": "4  Descriptive summaries",
-    "section": "4.5 Save descriptive tables",
-    "text": "4.5 Save descriptive tables\n\n\nCode\ntab_overview &lt;- dat_es |&gt;\n  dplyr::summarise(\n    k_contrasts   = dplyr::n(),\n    n_studies     = dplyr::n_distinct(ref_id),\n    n_systems     = dplyr::n_distinct(sys_id),\n    n_species     = dplyr::n_distinct(sp_ncbi),\n    n_allochronic = sum(design == \"Allochronic\", na.rm = TRUE),\n    n_synchronic  = sum(design == \"Synchronic\",  na.rm = TRUE)\n  )\n\nreadr::write_csv(tab_overview,\n                 here::here(\"outputs\", \"tables\", \"descriptive_overview.csv\"))\n\nfor (var in c(\"disturbance\", \"design\", \"trait_type\", \"taxa\",\n               \"genphen\", \"env_change\", \"data_type\", \"transf_data\", \"data_scale\")) {\n  tbl &lt;- dat_es |&gt; dplyr::count(.data[[var]], sort = TRUE)\n  readr::write_csv(\n    tbl,\n    here::here(\"outputs\", \"tables\", paste0(\"counts_by_\", var, \".csv\"))\n  )\n}\n\ncat(\"Descriptive tables saved to outputs/tables/\\n\")\n\n\nDescriptive tables saved to outputs/tables/",
+    "section": "4.6 Save descriptive tables",
+    "text": "4.6 Save descriptive tables\n\n\nCode\ntab_overview &lt;- dat_es |&gt;\n  dplyr::summarise(\n    k_contrasts   = dplyr::n(),\n    n_studies     = dplyr::n_distinct(ref_id),\n    n_systems     = dplyr::n_distinct(sys_id),\n    n_species     = dplyr::n_distinct(sp_ncbi),\n    n_allochronic = sum(design == \"Allochronic\", na.rm = TRUE),\n    n_synchronic  = sum(design == \"Synchronic\",  na.rm = TRUE)\n  )\n\nreadr::write_csv(tab_overview,\n                 here::here(\"outputs\", \"tables\", \"descriptive_overview.csv\"))\n\nfor (var in c(\"disturbance\", \"design\", \"trait_type\", \"taxa\",\n               \"genphen\", \"env_change\", \"data_type\", \"transf_data\", \"data_scale\")) {\n  tbl &lt;- dat_es |&gt; dplyr::count(.data[[var]], sort = TRUE)\n  readr::write_csv(\n    tbl,\n    here::here(\"outputs\", \"tables\", paste0(\"counts_by_\", var, \".csv\"))\n  )\n}\n\ncat(\"Descriptive tables saved to outputs/tables/\\n\")\n\n\nDescriptive tables saved to outputs/tables/",
     "crumbs": [
       "Data & Effect Sizes",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Descriptive summaries</span>"
@@ -477,11 +510,11 @@
     ]
   },
   {
-    "objectID": "models/m00.html#posterior-predictions",
-    "href": "models/m00.html#posterior-predictions",
+    "objectID": "models/m00.html#orchard-like-model-figure",
+    "href": "models/m00.html#orchard-like-model-figure",
     "title": "7  m00 — Intercept-only baseline",
-    "section": "7.2 Posterior predictions",
-    "text": "7.2 Posterior predictions\nThe location panel shows predicted mean lnM; the scale panel shows predicted residual sigma. Draws were pre-computed once with re_formula = NA; restyle the figure by editing the plot helpers in R/14_epred_cache.R — no epreds re-run.\n\n\nCode\nplot_cache(cache)",
+    "section": "7.2 Orchard-like model figure",
+    "text": "7.2 Orchard-like model figure\nThe orchard-style figure is read from outputs/figures/publication/orchard/. The full figure-generation code is kept in R/16_plot_orchard_style_v2.R.\n\n\nCode\nknitr::include_graphics(\n  here::here(\"outputs\", \"figures\", \"publication\", \"orchard\", \"m00_orchard_combined.png\")\n)\n\n\n\n\n\n\n\n\n\n\n7.2.1 Regenerate this figure\n\n\nCode\nSys.setenv(ORCHARD_MODEL_IDS = \"m00\")\nsource(here::here(\"R\", \"16_plot_orchard_style_v2.R\"))",
     "crumbs": [
       "Results — one chapter per model",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>m00 — Intercept-only baseline</span>"
@@ -499,11 +532,11 @@
     ]
   },
   {
-    "objectID": "models/m01.html#posterior-predictions",
-    "href": "models/m01.html#posterior-predictions",
+    "objectID": "models/m01.html#orchard-like-model-figure",
+    "href": "models/m01.html#orchard-like-model-figure",
     "title": "8  m01 — Disturbance context",
-    "section": "8.2 Posterior predictions",
-    "text": "8.2 Posterior predictions\nThe location panel shows predicted mean lnM; the scale panel shows predicted residual sigma. Draws were pre-computed once with re_formula = NA; restyle the figure by editing the plot helpers in R/14_epred_cache.R — no epreds re-run.\n\n\nCode\nplot_cache(cache)",
+    "section": "8.2 Orchard-like model figure",
+    "text": "8.2 Orchard-like model figure\nThe orchard-style figure is read from outputs/figures/publication/orchard/. The full figure-generation code is kept in R/16_plot_orchard_style_v2.R.\n\n\nCode\nknitr::include_graphics(\n  here::here(\"outputs\", \"figures\", \"publication\", \"orchard\", \"m01_orchard_combined.png\")\n)\n\n\n\n\n\n\n\n\n\n\n8.2.1 Regenerate this figure\n\n\nCode\nSys.setenv(ORCHARD_MODEL_IDS = \"m01\")\nsource(here::here(\"R\", \"16_plot_orchard_style_v2.R\"))",
     "crumbs": [
       "Results — one chapter per model",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>m01 — Disturbance context</span>"
@@ -521,11 +554,11 @@
     ]
   },
   {
-    "objectID": "models/m02.html#posterior-predictions",
-    "href": "models/m02.html#posterior-predictions",
+    "objectID": "models/m02.html#orchard-like-model-figure",
+    "href": "models/m02.html#orchard-like-model-figure",
     "title": "9  m02 — Comparison design",
-    "section": "9.2 Posterior predictions",
-    "text": "9.2 Posterior predictions\nThe location panel shows predicted mean lnM; the scale panel shows predicted residual sigma. Draws were pre-computed once with re_formula = NA; restyle the figure by editing the plot helpers in R/14_epred_cache.R — no epreds re-run.\n\n\nCode\nplot_cache(cache)",
+    "section": "9.2 Orchard-like model figure",
+    "text": "9.2 Orchard-like model figure\nThe orchard-style figure is read from outputs/figures/publication/orchard/. The full figure-generation code is kept in R/16_plot_orchard_style_v2.R.\n\n\nCode\nknitr::include_graphics(\n  here::here(\"outputs\", \"figures\", \"publication\", \"orchard\", \"m02_orchard_combined.png\")\n)\n\n\n\n\n\n\n\n\n\n\n9.2.1 Regenerate this figure\n\n\nCode\nSys.setenv(ORCHARD_MODEL_IDS = \"m02\")\nsource(here::here(\"R\", \"16_plot_orchard_style_v2.R\"))",
     "crumbs": [
       "Results — one chapter per model",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>m02 — Comparison design</span>"
@@ -543,11 +576,11 @@
     ]
   },
   {
-    "objectID": "models/m03.html#posterior-predictions",
-    "href": "models/m03.html#posterior-predictions",
+    "objectID": "models/m03.html#orchard-like-model-figure",
+    "href": "models/m03.html#orchard-like-model-figure",
     "title": "10  m03 — Elapsed time (log₁₀ years)",
-    "section": "10.2 Posterior predictions",
-    "text": "10.2 Posterior predictions\nThe location panel shows predicted mean lnM; the scale panel shows predicted residual sigma. Draws were pre-computed once with re_formula = NA; restyle the figure by editing the plot helpers in R/14_epred_cache.R — no epreds re-run.\n\n\nCode\nplot_cache(cache)",
+    "section": "10.2 Orchard-like model figure",
+    "text": "10.2 Orchard-like model figure\nThe orchard-style figure is read from outputs/figures/publication/orchard/. The full figure-generation code is kept in R/16_plot_orchard_style_v2.R.\n\n\nCode\nknitr::include_graphics(\n  here::here(\"outputs\", \"figures\", \"publication\", \"orchard\", \"m03_orchard_combined.png\")\n)\n\n\n\n\n\n\n\n\n\n\n10.2.1 Regenerate this figure\n\n\nCode\nSys.setenv(ORCHARD_MODEL_IDS = \"m03\")\nsource(here::here(\"R\", \"16_plot_orchard_style_v2.R\"))",
     "crumbs": [
       "Results — one chapter per model",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>m03 — Elapsed time (log₁₀ years)</span>"
@@ -565,11 +598,11 @@
     ]
   },
   {
-    "objectID": "models/m04.html#posterior-predictions",
-    "href": "models/m04.html#posterior-predictions",
+    "objectID": "models/m04.html#orchard-like-model-figure",
+    "href": "models/m04.html#orchard-like-model-figure",
     "title": "11  m04 — Elapsed time (log₁₀ generations)",
-    "section": "11.2 Posterior predictions",
-    "text": "11.2 Posterior predictions\nThe location panel shows predicted mean lnM; the scale panel shows predicted residual sigma. Draws were pre-computed once with re_formula = NA; restyle the figure by editing the plot helpers in R/14_epred_cache.R — no epreds re-run.\n\n\nCode\nplot_cache(cache)",
+    "section": "11.2 Orchard-like model figure",
+    "text": "11.2 Orchard-like model figure\nThe orchard-style figure is read from outputs/figures/publication/orchard/. The full figure-generation code is kept in R/16_plot_orchard_style_v2.R.\n\n\nCode\nknitr::include_graphics(\n  here::here(\"outputs\", \"figures\", \"publication\", \"orchard\", \"m04_orchard_combined.png\")\n)\n\n\n\n\n\n\n\n\n\n\n11.2.1 Regenerate this figure\n\n\nCode\nSys.setenv(ORCHARD_MODEL_IDS = \"m04\")\nsource(here::here(\"R\", \"16_plot_orchard_style_v2.R\"))",
     "crumbs": [
       "Results — one chapter per model",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>m04 — Elapsed time (log₁₀ generations)</span>"
@@ -587,11 +620,11 @@
     ]
   },
   {
-    "objectID": "models/m05.html#posterior-predictions",
-    "href": "models/m05.html#posterior-predictions",
+    "objectID": "models/m05.html#orchard-like-model-figure",
+    "href": "models/m05.html#orchard-like-model-figure",
     "title": "12  m05 — Trait type",
-    "section": "12.2 Posterior predictions",
-    "text": "12.2 Posterior predictions\nThe location panel shows predicted mean lnM; the scale panel shows predicted residual sigma. Draws were pre-computed once with re_formula = NA; restyle the figure by editing the plot helpers in R/14_epred_cache.R — no epreds re-run.\n\n\nCode\nplot_cache(cache)",
+    "section": "12.2 Orchard-like model figure",
+    "text": "12.2 Orchard-like model figure\nThe orchard-style figure is read from outputs/figures/publication/orchard/. The full figure-generation code is kept in R/16_plot_orchard_style_v2.R.\n\n\nCode\nknitr::include_graphics(\n  here::here(\"outputs\", \"figures\", \"publication\", \"orchard\", \"m05_orchard_combined.png\")\n)\n\n\n\n\n\n\n\n\n\n\n12.2.1 Regenerate this figure\n\n\nCode\nSys.setenv(ORCHARD_MODEL_IDS = \"m05\")\nsource(here::here(\"R\", \"16_plot_orchard_style_v2.R\"))",
     "crumbs": [
       "Results — one chapter per model",
       "<span class='chapter-number'>12</span>  <span class='chapter-title'>m05 — Trait type</span>"
@@ -609,11 +642,11 @@
     ]
   },
   {
-    "objectID": "models/m06.html#posterior-predictions",
-    "href": "models/m06.html#posterior-predictions",
+    "objectID": "models/m06.html#orchard-like-model-figure",
+    "href": "models/m06.html#orchard-like-model-figure",
     "title": "13  m06 — Taxonomic group",
-    "section": "13.2 Posterior predictions",
-    "text": "13.2 Posterior predictions\nThe location panel shows predicted mean lnM; the scale panel shows predicted residual sigma. Draws were pre-computed once with re_formula = NA; restyle the figure by editing the plot helpers in R/14_epred_cache.R — no epreds re-run.\n\n\nCode\nplot_cache(cache)",
+    "section": "13.2 Orchard-like model figure",
+    "text": "13.2 Orchard-like model figure\nThe orchard-style figure is read from outputs/figures/publication/orchard/. The full figure-generation code is kept in R/16_plot_orchard_style_v2.R.\n\n\nCode\nknitr::include_graphics(\n  here::here(\"outputs\", \"figures\", \"publication\", \"orchard\", \"m06_orchard_combined.png\")\n)\n\n\n\n\n\n\n\n\n\n\n13.2.1 Regenerate this figure\n\n\nCode\nSys.setenv(ORCHARD_MODEL_IDS = \"m06\")\nsource(here::here(\"R\", \"16_plot_orchard_style_v2.R\"))",
     "crumbs": [
       "Results — one chapter per model",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>m06 — Taxonomic group</span>"
@@ -631,11 +664,11 @@
     ]
   },
   {
-    "objectID": "models/m07.html#posterior-predictions",
-    "href": "models/m07.html#posterior-predictions",
+    "objectID": "models/m07.html#orchard-like-model-figure",
+    "href": "models/m07.html#orchard-like-model-figure",
     "title": "14  m07 — Phenotypic vs genetic study",
-    "section": "14.2 Posterior predictions",
-    "text": "14.2 Posterior predictions\nThe location panel shows predicted mean lnM; the scale panel shows predicted residual sigma. Draws were pre-computed once with re_formula = NA; restyle the figure by editing the plot helpers in R/14_epred_cache.R — no epreds re-run.\n\n\nCode\nplot_cache(cache)",
+    "section": "14.2 Orchard-like model figure",
+    "text": "14.2 Orchard-like model figure\nThe orchard-style figure is read from outputs/figures/publication/orchard/. The full figure-generation code is kept in R/16_plot_orchard_style_v2.R.\n\n\nCode\nknitr::include_graphics(\n  here::here(\"outputs\", \"figures\", \"publication\", \"orchard\", \"m07_orchard_combined.png\")\n)\n\n\n\n\n\n\n\n\n\n\n14.2.1 Regenerate this figure\n\n\nCode\nSys.setenv(ORCHARD_MODEL_IDS = \"m07\")\nsource(here::here(\"R\", \"16_plot_orchard_style_v2.R\"))",
     "crumbs": [
       "Results — one chapter per model",
       "<span class='chapter-number'>14</span>  <span class='chapter-title'>m07 — Phenotypic vs genetic study</span>"
@@ -653,11 +686,11 @@
     ]
   },
   {
-    "objectID": "models/m08.html#posterior-predictions",
-    "href": "models/m08.html#posterior-predictions",
+    "objectID": "models/m08.html#orchard-like-model-figure",
+    "href": "models/m08.html#orchard-like-model-figure",
     "title": "15  m08 — Environmental-change context",
-    "section": "15.2 Posterior predictions",
-    "text": "15.2 Posterior predictions\nThe location panel shows predicted mean lnM; the scale panel shows predicted residual sigma. Draws were pre-computed once with re_formula = NA; restyle the figure by editing the plot helpers in R/14_epred_cache.R — no epreds re-run.\n\n\nCode\nplot_cache(cache)",
+    "section": "15.2 Orchard-like model figure",
+    "text": "15.2 Orchard-like model figure\nThe orchard-style figure is read from outputs/figures/publication/orchard/. The full figure-generation code is kept in R/16_plot_orchard_style_v2.R.\n\n\nCode\nknitr::include_graphics(\n  here::here(\"outputs\", \"figures\", \"publication\", \"orchard\", \"m08_orchard_combined.png\")\n)\n\n\n\n\n\n\n\n\n\n\n15.2.1 Regenerate this figure\n\n\nCode\nSys.setenv(ORCHARD_MODEL_IDS = \"m08\")\nsource(here::here(\"R\", \"16_plot_orchard_style_v2.R\"))",
     "crumbs": [
       "Results — one chapter per model",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>m08 — Environmental-change context</span>"
@@ -675,11 +708,11 @@
     ]
   },
   {
-    "objectID": "models/m09.html#posterior-predictions",
-    "href": "models/m09.html#posterior-predictions",
+    "objectID": "models/m09.html#orchard-like-model-figure",
+    "href": "models/m09.html#orchard-like-model-figure",
     "title": "16  m09 — Data type",
-    "section": "16.2 Posterior predictions",
-    "text": "16.2 Posterior predictions\nThe location panel shows predicted mean lnM; the scale panel shows predicted residual sigma. Draws were pre-computed once with re_formula = NA; restyle the figure by editing the plot helpers in R/14_epred_cache.R — no epreds re-run.\n\n\nCode\nplot_cache(cache)",
+    "section": "16.2 Orchard-like model figure",
+    "text": "16.2 Orchard-like model figure\nThe orchard-style figure is read from outputs/figures/publication/orchard/. The full figure-generation code is kept in R/16_plot_orchard_style_v2.R.\n\n\nCode\nknitr::include_graphics(\n  here::here(\"outputs\", \"figures\", \"publication\", \"orchard\", \"m09_orchard_combined.png\")\n)\n\n\n\n\n\n\n\n\n\n\n16.2.1 Regenerate this figure\n\n\nCode\nSys.setenv(ORCHARD_MODEL_IDS = \"m09\")\nsource(here::here(\"R\", \"16_plot_orchard_style_v2.R\"))",
     "crumbs": [
       "Results — one chapter per model",
       "<span class='chapter-number'>16</span>  <span class='chapter-title'>m09 — Data type</span>"
@@ -697,11 +730,11 @@
     ]
   },
   {
-    "objectID": "models/m10.html#posterior-predictions",
-    "href": "models/m10.html#posterior-predictions",
+    "objectID": "models/m10.html#orchard-like-model-figure",
+    "href": "models/m10.html#orchard-like-model-figure",
     "title": "17  m10 — Transformation status",
-    "section": "17.2 Posterior predictions",
-    "text": "17.2 Posterior predictions\nThe location panel shows predicted mean lnM; the scale panel shows predicted residual sigma. Draws were pre-computed once with re_formula = NA; restyle the figure by editing the plot helpers in R/14_epred_cache.R — no epreds re-run.\n\n\nCode\nplot_cache(cache)",
+    "section": "17.2 Orchard-like model figure",
+    "text": "17.2 Orchard-like model figure\nThe orchard-style figure is read from outputs/figures/publication/orchard/. The full figure-generation code is kept in R/16_plot_orchard_style_v2.R.\n\n\nCode\nknitr::include_graphics(\n  here::here(\"outputs\", \"figures\", \"publication\", \"orchard\", \"m10_orchard_combined.png\")\n)\n\n\n\n\n\n\n\n\n\n\n17.2.1 Regenerate this figure\n\n\nCode\nSys.setenv(ORCHARD_MODEL_IDS = \"m10\")\nsource(here::here(\"R\", \"16_plot_orchard_style_v2.R\"))",
     "crumbs": [
       "Results — one chapter per model",
       "<span class='chapter-number'>17</span>  <span class='chapter-title'>m10 — Transformation status</span>"
@@ -719,11 +752,11 @@
     ]
   },
   {
-    "objectID": "models/m11.html#posterior-predictions",
-    "href": "models/m11.html#posterior-predictions",
+    "objectID": "models/m11.html#orchard-like-model-figure",
+    "href": "models/m11.html#orchard-like-model-figure",
     "title": "18  m11 — Measurement scale",
-    "section": "18.2 Posterior predictions",
-    "text": "18.2 Posterior predictions\nThe location panel shows predicted mean lnM; the scale panel shows predicted residual sigma. Draws were pre-computed once with re_formula = NA; restyle the figure by editing the plot helpers in R/14_epred_cache.R — no epreds re-run.\n\n\nCode\nplot_cache(cache)",
+    "section": "18.2 Orchard-like model figure",
+    "text": "18.2 Orchard-like model figure\nThe orchard-style figure is read from outputs/figures/publication/orchard/. The full figure-generation code is kept in R/16_plot_orchard_style_v2.R.\n\n\nCode\nknitr::include_graphics(\n  here::here(\"outputs\", \"figures\", \"publication\", \"orchard\", \"m11_orchard_combined.png\")\n)\n\n\n\n\n\n\n\n\n\n\n18.2.1 Regenerate this figure\n\n\nCode\nSys.setenv(ORCHARD_MODEL_IDS = \"m11\")\nsource(here::here(\"R\", \"16_plot_orchard_style_v2.R\"))",
     "crumbs": [
       "Results — one chapter per model",
       "<span class='chapter-number'>18</span>  <span class='chapter-title'>m11 — Measurement scale</span>"

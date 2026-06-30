@@ -18,10 +18,18 @@ Built from the cleaned refit (m09b: index n=14 and temperature n=19 dropped, ref
 print_cache_summary(cache)
 ```
 
-## Posterior predictions
+## Orchard-like model figure
 
-The location panel shows predicted mean lnM; the scale panel shows predicted residual sigma. Draws were pre-computed once with `re_formula = NA`; restyle the figure by editing the plot helpers in `R/14_epred_cache.R` — no epreds re-run.
+The orchard-style figure is read from `outputs/figures/publication/orchard/`. The full figure-generation code is kept in `R/16_plot_orchard_style_v2.R`.
 
 ```{r figure, fig.width=8, fig.height=9}
-plot_cache(cache)
+knitr::include_graphics(
+  here::here("outputs", "figures", "publication", "orchard", "m09_orchard_combined.png")
+)
+```
+### Regenerate this figure
+
+```{r regenerate-orchard-m09, eval=FALSE}
+Sys.setenv(ORCHARD_MODEL_IDS = "m09")
+source(here::here("R", "16_plot_orchard_style_v2.R"))
 ```

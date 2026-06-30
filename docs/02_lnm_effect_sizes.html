@@ -564,13 +564,14 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#load-cleaned-data" id="toc-load-cleaned-data" class="nav-link active" data-scroll-target="#load-cleaned-data"><span class="header-section-number">3.1</span> Load cleaned data</a></li>
-  <li><a href="#safe-lnm-estimator" id="toc-safe-lnm-estimator" class="nav-link" data-scroll-target="#safe-lnm-estimator"><span class="header-section-number">3.2</span> SAFE lnM estimator</a></li>
-  <li><a href="#compute-or-read-safe-lnm-estimates" id="toc-compute-or-read-safe-lnm-estimates" class="nav-link" data-scroll-target="#compute-or-read-safe-lnm-estimates"><span class="header-section-number">3.3</span> Compute or read SAFE lnM estimates</a></li>
-  <li><a href="#effect-size-summary" id="toc-effect-size-summary" class="nav-link" data-scroll-target="#effect-size-summary"><span class="header-section-number">3.4</span> Effect-size summary</a></li>
-  <li><a href="#safe-diagnostics" id="toc-safe-diagnostics" class="nav-link" data-scroll-target="#safe-diagnostics"><span class="header-section-number">3.5</span> SAFE diagnostics</a></li>
-  <li><a href="#identifier-management" id="toc-identifier-management" class="nav-link" data-scroll-target="#identifier-management"><span class="header-section-number">3.6</span> Identifier management</a></li>
-  <li><a href="#sampling-variance-matrix" id="toc-sampling-variance-matrix" class="nav-link" data-scroll-target="#sampling-variance-matrix"><span class="header-section-number">3.7</span> Sampling-variance matrix</a></li>
+  <li><a href="#what-lnm-measures" id="toc-what-lnm-measures" class="nav-link active" data-scroll-target="#what-lnm-measures"><span class="header-section-number">3.1</span> What lnM measures</a></li>
+  <li><a href="#why-safe-is-used-here" id="toc-why-safe-is-used-here" class="nav-link" data-scroll-target="#why-safe-is-used-here"><span class="header-section-number">3.2</span> Why SAFE is used here</a></li>
+  <li><a href="#load-cleaned-data" id="toc-load-cleaned-data" class="nav-link" data-scroll-target="#load-cleaned-data"><span class="header-section-number">3.3</span> Load cleaned data</a></li>
+  <li><a href="#compute-or-read-safe-lnm-estimates" id="toc-compute-or-read-safe-lnm-estimates" class="nav-link" data-scroll-target="#compute-or-read-safe-lnm-estimates"><span class="header-section-number">3.4</span> Compute or read SAFE lnM estimates</a></li>
+  <li><a href="#effect-size-summary" id="toc-effect-size-summary" class="nav-link" data-scroll-target="#effect-size-summary"><span class="header-section-number">3.5</span> Effect-size summary</a></li>
+  <li><a href="#safe-diagnostics" id="toc-safe-diagnostics" class="nav-link" data-scroll-target="#safe-diagnostics"><span class="header-section-number">3.6</span> SAFE diagnostics</a></li>
+  <li><a href="#identifier-management" id="toc-identifier-management" class="nav-link" data-scroll-target="#identifier-management"><span class="header-section-number">3.7</span> Identifier management</a></li>
+  <li><a href="#sampling-variance-matrix" id="toc-sampling-variance-matrix" class="nav-link" data-scroll-target="#sampling-variance-matrix"><span class="header-section-number">3.8</span> Sampling-variance matrix</a></li>
   </ul>
 </nav>
     </div>
@@ -609,8 +610,33 @@ window.Quarto = {
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>recompute_effect_sizes <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<section id="load-cleaned-data" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="load-cleaned-data"><span class="header-section-number">3.1</span> Load cleaned data</h2>
+<section id="what-lnm-measures" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="what-lnm-measures"><span class="header-section-number">3.1</span> What lnM measures</h2>
+<p>This chapter computes the effect size used throughout the book: <span class="math inline">\(\ln M\)</span>, the log magnitude of separation between two groups. The key idea is to measure how far apart two group means are without retaining the sign of the difference. This is useful here because human disturbance can push traits in different directions across systems, but the biological question is often about the magnitude of phenotypic divergence.</p>
+<p>For a two-group comparison, <span class="math inline">\(\ln M\)</span> is defined as:</p>
+<p><span class="math display">\[
+\ln M = \ln\left(\frac{s_B}{s_W}\right),
+\]</span></p>
+<p>where <span class="math inline">\(s_B\)</span> is the between-group separation component and <span class="math inline">\(s_W\)</span> is the pooled within-group standard deviation. The sign of <span class="math inline">\(\ln M\)</span> is therefore not the direction of trait change. Instead:</p>
+<ul>
+<li><span class="math inline">\(\ln M &gt; 0\)</span> means the separation between group means is larger than the typical within-group standard deviation.</li>
+<li><span class="math inline">\(\ln M = 0\)</span> means the between-group separation is about equal to the within-group standard deviation.</li>
+<li><span class="math inline">\(\ln M &lt; 0\)</span> means the groups differ, if at all, by less than the typical within-group variation.</li>
+</ul>
+<p>This differs from taking an absolute value of a signed effect size such as <span class="math inline">\(|d|\)</span> or <span class="math inline">\(|\ln RR|\)</span>. Absolute-value transformations fold sampling error around zero, which can inflate small and noisy effects. The lnM paper develops <span class="math inline">\(\ln M\)</span> so that magnitude can be analysed directly with standard meta-analytic and meta-regression tools.</p>
+</section>
+<section id="why-safe-is-used-here" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="why-safe-is-used-here"><span class="header-section-number">3.2</span> Why SAFE is used here</h2>
+<p>Analytic <span class="math inline">\(\ln M\)</span> is built from ANOVA mean-square components. That construction is intuitive, but it has two practical problems for large ecological databases:</p>
+<ul>
+<li>Sampling variance can become very large when the between-group mean square is close to the within-group mean square.</li>
+<li>The plug-in estimate is undefined when the observed between-group component is not positive.</li>
+</ul>
+<p>The SAFE estimator used below follows the paper’s simulation-based approach. For each contrast, it repeatedly draws plausible values of the group means and standard deviations from their finite-sample distributions, transforms each valid draw to <span class="math inline">\(\ln M\)</span>, and then summarizes the resulting distribution. This gives a finite bias-adjusted estimate and sampling variance for contrasts that would otherwise be unstable or undefined.</p>
+<p>The book uses the cached SAFE results by default. Recomputing all contrasts is intentionally opt-in because the Monte Carlo step is slow.</p>
+</section>
+<section id="load-cleaned-data" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="load-cleaned-data"><span class="header-section-number">3.3</span> Load cleaned data</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -625,13 +651,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="safe-lnm-estimator" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="safe-lnm-estimator"><span class="header-section-number">3.2</span> SAFE lnM estimator</h2>
-<p>The SAFE estimator (<code>orchaRd:::.safe_lnM_indep()</code>) uses Monte Carlo sampling to compute a bias-corrected estimate of <span class="math inline">\(\ln M\)</span> and its sampling variance for each independent-groups contrast. For each contrast, a large number of draws are taken from the posterior predictive distribution of the two group means, standard deviations, and sample sizes; the estimator retains only draws that satisfy validity constraints (e.g., positive standard deviations) and computes <span class="math inline">\(\ln M\)</span> for each.</p>
-<p>This is computationally intensive but avoids the negative-bias that affects naive <span class="math inline">\(\ln M\)</span> estimates from small samples.</p>
-</section>
-<section id="compute-or-read-safe-lnm-estimates" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="compute-or-read-safe-lnm-estimates"><span class="header-section-number">3.3</span> Compute or read SAFE lnM estimates</h2>
+<section id="compute-or-read-safe-lnm-estimates" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="compute-or-read-safe-lnm-estimates"><span class="header-section-number">3.4</span> Compute or read SAFE lnM estimates</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -648,9 +669,10 @@ window.Quarto = {
 <pre><code>Effect sizes retained: 7511 </code></pre>
 </div>
 </div>
+<p>The resulting dataset carries the SAFE point estimate (<code>yi_lnM_safe</code>) and its sampling variance (<code>vi_lnM_safe</code>). These two columns become the response and known sampling-error input for the location-scale meta-regression chapters.</p>
 </section>
-<section id="effect-size-summary" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="effect-size-summary"><span class="header-section-number">3.4</span> Effect-size summary</h2>
+<section id="effect-size-summary" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="effect-size-summary"><span class="header-section-number">3.5</span> Effect-size summary</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -675,10 +697,11 @@ window.Quarto = {
 </div>
 </div>
 </div>
+<p>This table is a quick range check, not an inferential result. The median and range of <code>yi_lnM_safe</code> describe observed magnitudes on the log scale; the variance columns describe how precisely each contrast estimates its own magnitude.</p>
 </section>
-<section id="safe-diagnostics" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="safe-diagnostics"><span class="header-section-number">3.5</span> SAFE diagnostics</h2>
-<p>Check the Monte Carlo convergence (draws kept vs.&nbsp;total).</p>
+<section id="safe-diagnostics" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="safe-diagnostics"><span class="header-section-number">3.6</span> SAFE diagnostics</h2>
+<p>SAFE only summarizes valid simulation draws, so the retained-draw diagnostics are important. A low retained percentage means many simulated draws landed in the region where the between-group component was non-positive; those contrasts are still usable, but their uncertainty should be interpreted with care.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -705,12 +728,12 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="identifier-management" class="level2" data-number="3.6">
-<h2 data-number="3.6" class="anchored" data-anchor-id="identifier-management"><span class="header-section-number">3.6</span> Identifier management</h2>
+<section id="identifier-management" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="identifier-management"><span class="header-section-number">3.7</span> Identifier management</h2>
 <p>The dataset preserves two IDs:</p>
 <ul>
-<li><strong><code>es_id_db</code></strong>: the original PROCEED effect-size identifier (for tracing back to the database).</li>
-<li><strong><code>es_id_model</code></strong>: a sequential integer factor created <em>after</em> filtering to finite, positive <span class="math inline">\(v_i\)</span>, used as the row/column index of the sampling-variance matrix <span class="math inline">\(V\)</span>.</li>
+<li><code>es_id_db</code>: the original PROCEED effect-size identifier, kept for tracing estimates back to the database.</li>
+<li><code>es_id_model</code>: a sequential factor created after filtering to finite, positive <span class="math inline">\(v_i\)</span>, used as the row/column index of the sampling-variance matrix <span class="math inline">\(V\)</span>.</li>
 </ul>
 <div class="cell">
 <details class="code-fold">
@@ -728,9 +751,9 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="sampling-variance-matrix" class="level2" data-number="3.7">
-<h2 data-number="3.7" class="anchored" data-anchor-id="sampling-variance-matrix"><span class="header-section-number">3.7</span> Sampling-variance matrix</h2>
-<p>The diagonal covariance matrix <span class="math inline">\(V\)</span> is used in the brms model via <code>(1 | gr(es_id_model, cov = V))</code>. The corresponding standard deviation prior is set to <code>constant(1)</code>.</p>
+<section id="sampling-variance-matrix" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="sampling-variance-matrix"><span class="header-section-number">3.8</span> Sampling-variance matrix</h2>
+<p>The diagonal covariance matrix <span class="math inline">\(V\)</span> carries the known SAFE sampling variances into <code>brms</code> via <code>(1 | gr(es_id_model, cov = V))</code>. The corresponding standard deviation prior is fixed with <code>constant(1)</code>, so this term contributes known measurement error rather than estimating a new variance component.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1239,92 +1262,119 @@ window.Quarto = {
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>recompute_effect_sizes <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load cleaned data</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="fu">## What lnM measures</span></span>
 <span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="in">```{r load-clean}</span></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>dat_lnm_input <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>  here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"outputs"</span>, <span class="st">"data_clean"</span>, <span class="st">"proceed_clean_filtered.rds"</span>)</span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Contrasts available for lnM:"</span>, <span class="fu">nrow</span>(dat_lnm_input), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>This chapter computes the effect size used throughout the book: $\ln M$, the log magnitude of separation between two groups. The key idea is to measure how far apart two group means are without retaining the sign of the difference. This is useful here because human disturbance can push traits in different directions across systems, but the biological question is often about the magnitude of phenotypic divergence.</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>For a two-group comparison, $\ln M$ is defined as:</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>\ln M = \ln\left(\frac{s_B}{s_W}\right),</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="fu">## SAFE lnM estimator</span></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>where $s_B$ is the between-group separation component and $s_W$ is the pooled within-group standard deviation. The sign of $\ln M$ is therefore not the direction of trait change. Instead:</span>
 <span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>The SAFE estimator (<span class="in">`orchaRd:::.safe_lnM_indep()`</span>) uses Monte Carlo sampling to compute a bias-corrected estimate of $\ln M$ and its sampling variance for each independent-groups contrast. For each contrast, a large number of draws are taken from the posterior predictive distribution of the two group means, standard deviations, and sample sizes; the estimator retains only draws that satisfy validity constraints (e.g., positive standard deviations) and computes $\ln M$ for each.</span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>This is computationally intensive but avoids the negative-bias that affects naive $\ln M$ estimates from small samples.</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\ln M &gt; 0$ means the separation between group means is larger than the typical within-group standard deviation.</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\ln M = 0$ means the between-group separation is about equal to the within-group standard deviation.</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\ln M &lt; 0$ means the groups differ, if at all, by less than the typical within-group variation.</span>
 <span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## Compute or read SAFE lnM estimates</span></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>This differs from taking an absolute value of a signed effect size such as $|d|$ or $|\ln RR|$. Absolute-value transformations fold sampling error around zero, which can inflate small and noisy effects. The lnM paper develops $\ln M$ so that magnitude can be analysed directly with standard meta-analytic and meta-regression tools.</span>
 <span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a><span class="in">```{r compute-lnm}</span></span>
-<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>dat_es <span class="ot">&lt;-</span> <span class="fu">compute_or_read_lnm_safe</span>(</span>
-<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>  dat_lnm_input,</span>
-<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">out_path   =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"outputs"</span>, <span class="st">"effect_sizes"</span>, <span class="st">"proceed_lnm_safe.rds"</span>),</span>
-<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>  <span class="at">diag_path  =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"outputs"</span>, <span class="st">"tables"</span>, <span class="st">"safe_lnm_diagnostics.csv"</span>),</span>
-<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>  <span class="at">recompute  =</span> recompute_effect_sizes</span>
-<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Effect sizes retained:"</span>, <span class="fu">nrow</span>(dat_es), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why SAFE is used here</span></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>Analytic $\ln M$ is built from ANOVA mean-square components. That construction is intuitive, but it has two practical problems for large ecological databases:</span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sampling variance can become very large when the between-group mean square is close to the within-group mean square.</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The plug-in estimate is undefined when the observed between-group component is not positive.</span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>The SAFE estimator used below follows the paper's simulation-based approach. For each contrast, it repeatedly draws plausible values of the group means and standard deviations from their finite-sample distributions, transforms each valid draw to $\ln M$, and then summarizes the resulting distribution. This gives a finite bias-adjusted estimate and sampling variance for contrasts that would otherwise be unstable or undefined.</span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>The book uses the cached SAFE results by default. Recomputing all contrasts is intentionally opt-in because the Monte Carlo step is slow.</span>
 <span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a><span class="fu">## Effect-size summary</span></span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load cleaned data</span></span>
 <span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a><span class="in">```{r es-summary}</span></span>
-<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>dat_es <span class="sc">|&gt;</span></span>
-<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
-<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">k           =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(),</span>
-<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_yi      =</span> <span class="fu">round</span>(<span class="fu">min</span>(yi_lnM_safe), <span class="dv">3</span>),</span>
-<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_yi   =</span> <span class="fu">round</span>(<span class="fu">median</span>(yi_lnM_safe), <span class="dv">3</span>),</span>
-<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_yi      =</span> <span class="fu">round</span>(<span class="fu">max</span>(yi_lnM_safe), <span class="dv">3</span>),</span>
-<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_vi      =</span> <span class="fu">round</span>(<span class="fu">min</span>(vi_lnM_safe), <span class="dv">6</span>),</span>
-<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_vi   =</span> <span class="fu">round</span>(<span class="fu">median</span>(vi_lnM_safe), <span class="dv">6</span>),</span>
-<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_vi      =</span> <span class="fu">round</span>(<span class="fu">max</span>(vi_lnM_safe), <span class="dv">6</span>),</span>
-<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_status_ok =</span> <span class="fu">sum</span>(status <span class="sc">==</span> <span class="st">"ok"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_failed    =</span> <span class="fu">sum</span>(status <span class="sc">!=</span> <span class="st">"ok"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a><span class="fu">## SAFE diagnostics</span></span>
-<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a>Check the Monte Carlo convergence (draws kept vs. total).</span>
-<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a><span class="in">```{r safe-diag}</span></span>
-<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a>safe_diag <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
-<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a>  here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"outputs"</span>, <span class="st">"tables"</span>, <span class="st">"safe_lnm_diagnostics.csv"</span>),</span>
-<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
-<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a><span class="in">```{r load-clean}</span></span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>dat_lnm_input <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(</span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>  here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"outputs"</span>, <span class="st">"data_clean"</span>, <span class="st">"proceed_clean_filtered.rds"</span>)</span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Contrasts available for lnM:"</span>, <span class="fu">nrow</span>(dat_lnm_input), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## Compute or read SAFE lnM estimates</span></span>
+<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a><span class="in">```{r compute-lnm}</span></span>
+<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>dat_es <span class="ot">&lt;-</span> <span class="fu">compute_or_read_lnm_safe</span>(</span>
+<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>  dat_lnm_input,</span>
+<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a>  <span class="at">out_path   =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"outputs"</span>, <span class="st">"effect_sizes"</span>, <span class="st">"proceed_lnm_safe.rds"</span>),</span>
+<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a>  <span class="at">diag_path  =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"outputs"</span>, <span class="st">"tables"</span>, <span class="st">"safe_lnm_diagnostics.csv"</span>),</span>
+<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a>  <span class="at">recompute  =</span> recompute_effect_sizes</span>
+<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Effect sizes retained:"</span>, <span class="fu">nrow</span>(dat_es), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a>The resulting dataset carries the SAFE point estimate (<span class="in">`yi_lnM_safe`</span>) and its sampling variance (<span class="in">`vi_lnM_safe`</span>). These two columns become the response and known sampling-error input for the location-scale meta-regression chapters.</span>
+<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a><span class="fu">## Effect-size summary</span></span>
 <span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a>safe_diag <span class="sc">|&gt;</span></span>
-<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
-<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_ok           =</span> <span class="fu">sum</span>(status <span class="sc">==</span> <span class="st">"ok"</span>),</span>
-<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_not_ok       =</span> <span class="fu">sum</span>(status <span class="sc">!=</span> <span class="st">"ok"</span>),</span>
-<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_pct_kept   =</span> <span class="fu">round</span>(<span class="fu">min</span>(draws_kept <span class="sc">/</span> draws_total <span class="sc">*</span> <span class="dv">100</span>), <span class="dv">1</span>),</span>
-<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_pct_kept =</span> <span class="fu">round</span>(<span class="fu">median</span>(draws_kept <span class="sc">/</span> draws_total <span class="sc">*</span> <span class="dv">100</span>), <span class="dv">1</span>),</span>
-<span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_attempts   =</span> <span class="fu">max</span>(attempts)</span>
-<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb11-79"><a href="#cb11-79" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-80"><a href="#cb11-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-81"><a href="#cb11-81" aria-hidden="true" tabindex="-1"></a><span class="fu">## Identifier management</span></span>
-<span id="cb11-82"><a href="#cb11-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-83"><a href="#cb11-83" aria-hidden="true" tabindex="-1"></a>The dataset preserves two IDs:</span>
-<span id="cb11-84"><a href="#cb11-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-85"><a href="#cb11-85" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**`es_id_db`**: the original PROCEED effect-size identifier (for tracing back to the database).</span>
-<span id="cb11-86"><a href="#cb11-86" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**`es_id_model`**: a sequential integer factor created *after* filtering to finite, positive $v_i$, used as the row/column index of the sampling-variance matrix $V$.</span>
+<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a><span class="in">```{r es-summary}</span></span>
+<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a>dat_es <span class="sc">|&gt;</span></span>
+<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
+<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a>    <span class="at">k           =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(),</span>
+<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_yi      =</span> <span class="fu">round</span>(<span class="fu">min</span>(yi_lnM_safe), <span class="dv">3</span>),</span>
+<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_yi   =</span> <span class="fu">round</span>(<span class="fu">median</span>(yi_lnM_safe), <span class="dv">3</span>),</span>
+<span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_yi      =</span> <span class="fu">round</span>(<span class="fu">max</span>(yi_lnM_safe), <span class="dv">3</span>),</span>
+<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_vi      =</span> <span class="fu">round</span>(<span class="fu">min</span>(vi_lnM_safe), <span class="dv">6</span>),</span>
+<span id="cb11-79"><a href="#cb11-79" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_vi   =</span> <span class="fu">round</span>(<span class="fu">median</span>(vi_lnM_safe), <span class="dv">6</span>),</span>
+<span id="cb11-80"><a href="#cb11-80" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_vi      =</span> <span class="fu">round</span>(<span class="fu">max</span>(vi_lnM_safe), <span class="dv">6</span>),</span>
+<span id="cb11-81"><a href="#cb11-81" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_status_ok =</span> <span class="fu">sum</span>(status <span class="sc">==</span> <span class="st">"ok"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb11-82"><a href="#cb11-82" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_failed    =</span> <span class="fu">sum</span>(status <span class="sc">!=</span> <span class="st">"ok"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-83"><a href="#cb11-83" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-84"><a href="#cb11-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-85"><a href="#cb11-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-86"><a href="#cb11-86" aria-hidden="true" tabindex="-1"></a>This table is a quick range check, not an inferential result. The median and range of <span class="in">`yi_lnM_safe`</span> describe observed magnitudes on the log scale; the variance columns describe how precisely each contrast estimates its own magnitude.</span>
 <span id="cb11-87"><a href="#cb11-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-88"><a href="#cb11-88" aria-hidden="true" tabindex="-1"></a><span class="in">```{r id-check}</span></span>
-<span id="cb11-89"><a href="#cb11-89" aria-hidden="true" tabindex="-1"></a>dat_es <span class="sc">|&gt;</span></span>
-<span id="cb11-90"><a href="#cb11-90" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(es_id_db, es_id_model) <span class="sc">|&gt;</span></span>
-<span id="cb11-91"><a href="#cb11-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">6</span>)</span>
-<span id="cb11-92"><a href="#cb11-92" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-93"><a href="#cb11-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-94"><a href="#cb11-94" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sampling-variance matrix</span></span>
-<span id="cb11-95"><a href="#cb11-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-96"><a href="#cb11-96" aria-hidden="true" tabindex="-1"></a>The diagonal covariance matrix $V$ is used in the brms model via <span class="in">`(1 | gr(es_id_model, cov = V))`</span>. The corresponding standard deviation prior is set to <span class="in">`constant(1)`</span>.</span>
+<span id="cb11-88"><a href="#cb11-88" aria-hidden="true" tabindex="-1"></a><span class="fu">## SAFE diagnostics</span></span>
+<span id="cb11-89"><a href="#cb11-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-90"><a href="#cb11-90" aria-hidden="true" tabindex="-1"></a>SAFE only summarizes valid simulation draws, so the retained-draw diagnostics are important. A low retained percentage means many simulated draws landed in the region where the between-group component was non-positive; those contrasts are still usable, but their uncertainty should be interpreted with care.</span>
+<span id="cb11-91"><a href="#cb11-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-92"><a href="#cb11-92" aria-hidden="true" tabindex="-1"></a><span class="in">```{r safe-diag}</span></span>
+<span id="cb11-93"><a href="#cb11-93" aria-hidden="true" tabindex="-1"></a>safe_diag <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb11-94"><a href="#cb11-94" aria-hidden="true" tabindex="-1"></a>  here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"outputs"</span>, <span class="st">"tables"</span>, <span class="st">"safe_lnm_diagnostics.csv"</span>),</span>
+<span id="cb11-95"><a href="#cb11-95" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb11-96"><a href="#cb11-96" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb11-97"><a href="#cb11-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-98"><a href="#cb11-98" aria-hidden="true" tabindex="-1"></a><span class="in">```{r vcv-dims}</span></span>
-<span id="cb11-99"><a href="#cb11-99" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Effect-size rows (= dim of V):"</span>, <span class="fu">nrow</span>(dat_es), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb11-100"><a href="#cb11-100" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb11-98"><a href="#cb11-98" aria-hidden="true" tabindex="-1"></a>safe_diag <span class="sc">|&gt;</span></span>
+<span id="cb11-99"><a href="#cb11-99" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
+<span id="cb11-100"><a href="#cb11-100" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_ok           =</span> <span class="fu">sum</span>(status <span class="sc">==</span> <span class="st">"ok"</span>),</span>
+<span id="cb11-101"><a href="#cb11-101" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_not_ok       =</span> <span class="fu">sum</span>(status <span class="sc">!=</span> <span class="st">"ok"</span>),</span>
+<span id="cb11-102"><a href="#cb11-102" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_pct_kept   =</span> <span class="fu">round</span>(<span class="fu">min</span>(draws_kept <span class="sc">/</span> draws_total <span class="sc">*</span> <span class="dv">100</span>), <span class="dv">1</span>),</span>
+<span id="cb11-103"><a href="#cb11-103" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_pct_kept =</span> <span class="fu">round</span>(<span class="fu">median</span>(draws_kept <span class="sc">/</span> draws_total <span class="sc">*</span> <span class="dv">100</span>), <span class="dv">1</span>),</span>
+<span id="cb11-104"><a href="#cb11-104" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_attempts   =</span> <span class="fu">max</span>(attempts)</span>
+<span id="cb11-105"><a href="#cb11-105" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-106"><a href="#cb11-106" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-107"><a href="#cb11-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-108"><a href="#cb11-108" aria-hidden="true" tabindex="-1"></a><span class="fu">## Identifier management</span></span>
+<span id="cb11-109"><a href="#cb11-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-110"><a href="#cb11-110" aria-hidden="true" tabindex="-1"></a>The dataset preserves two IDs:</span>
+<span id="cb11-111"><a href="#cb11-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-112"><a href="#cb11-112" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`es_id_db`</span>: the original PROCEED effect-size identifier, kept for tracing estimates back to the database.</span>
+<span id="cb11-113"><a href="#cb11-113" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`es_id_model`</span>: a sequential factor created after filtering to finite, positive $v_i$, used as the row/column index of the sampling-variance matrix $V$.</span>
+<span id="cb11-114"><a href="#cb11-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-115"><a href="#cb11-115" aria-hidden="true" tabindex="-1"></a><span class="in">```{r id-check}</span></span>
+<span id="cb11-116"><a href="#cb11-116" aria-hidden="true" tabindex="-1"></a>dat_es <span class="sc">|&gt;</span></span>
+<span id="cb11-117"><a href="#cb11-117" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(es_id_db, es_id_model) <span class="sc">|&gt;</span></span>
+<span id="cb11-118"><a href="#cb11-118" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">6</span>)</span>
+<span id="cb11-119"><a href="#cb11-119" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-120"><a href="#cb11-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-121"><a href="#cb11-121" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sampling-variance matrix</span></span>
+<span id="cb11-122"><a href="#cb11-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-123"><a href="#cb11-123" aria-hidden="true" tabindex="-1"></a>The diagonal covariance matrix $V$ carries the known SAFE sampling variances into <span class="in">`brms`</span> via <span class="in">`(1 | gr(es_id_model, cov = V))`</span>. The corresponding standard deviation prior is fixed with <span class="in">`constant(1)`</span>, so this term contributes known measurement error rather than estimating a new variance component.</span>
+<span id="cb11-124"><a href="#cb11-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-125"><a href="#cb11-125" aria-hidden="true" tabindex="-1"></a><span class="in">```{r vcv-dims}</span></span>
+<span id="cb11-126"><a href="#cb11-126" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Effect-size rows (= dim of V):"</span>, <span class="fu">nrow</span>(dat_es), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb11-127"><a href="#cb11-127" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

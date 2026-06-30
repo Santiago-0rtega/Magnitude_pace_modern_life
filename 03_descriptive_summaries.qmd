@@ -5,6 +5,50 @@ title: "Descriptive summaries"
 ```{r setup}
 source(here::here("R", "00_packages.R"))
 source(here::here("R", "01_paths.R"))
+
+theme_descriptive <- function() {
+  ggplot2::theme_classic(base_size = 12) +
+    ggplot2::theme(
+      plot.title = ggplot2::element_text(face = "bold", hjust = 0.5),
+      axis.line = ggplot2::element_blank(),
+      axis.ticks = ggplot2::element_blank(),
+      axis.text = ggplot2::element_blank(),
+      axis.title = ggplot2::element_blank(),
+      legend.title = ggplot2::element_blank()
+    )
+}
+
+plot_count_donut <- function(dat, var, title, palette = NULL) {
+  count_dat <- dat |>
+    dplyr::filter(!is.na(.data[[var]])) |>
+    dplyr::count(.data[[var]], name = "n", sort = TRUE) |>
+    dplyr::mutate(
+      prop = n / sum(n),
+      label = stringr::str_wrap(paste0(.data[[var]], " (", n, ")"), width = 24),
+      ypos = cumsum(prop) - 0.5 * prop
+    )
+
+  if (is.null(palette)) {
+    palette <- scales::hue_pal(l = 58, c = 70)(nrow(count_dat))
+  }
+
+  ggplot2::ggplot(count_dat, ggplot2::aes(x = 2, y = prop, fill = label)) +
+    ggplot2::geom_col(width = 1, colour = "white", linewidth = 0.5) +
+    ggplot2::coord_polar(theta = "y") +
+    ggplot2::xlim(0.5, 2.5) +
+    ggplot2::scale_fill_manual(values = palette) +
+    ggplot2::labs(title = title, fill = NULL) +
+    ggplot2::annotate(
+      "text",
+      x = 0.5,
+      y = 0,
+      label = paste0("k = ", sum(count_dat$n)),
+      fontface = "bold",
+      size = 4
+    ) +
+    ggplot2::guides(fill = ggplot2::guide_legend(ncol = 2, byrow = TRUE)) +
+    theme_descriptive()
+}
 ```
 
 ## Load effect-size dataset
@@ -29,6 +73,8 @@ dat_es |>
 ```
 
 ## Counts by moderator
+
+The following tables keep the exact counts visible. The donut plots below them provide a faster visual read of the main design and moderator composition.
 
 ```{r by-disturbance}
 dat_es |> dplyr::count(disturbance, sort = TRUE)
@@ -64,6 +110,29 @@ dat_es |> dplyr::count(transf_data, sort = TRUE)
 
 ```{r by-data-scale}
 dat_es |> dplyr::count(data_scale, sort = TRUE)
+```
+
+## Donut summaries
+
+```{r donut-design-disturbance, fig.width=10, fig.height=5}
+plot_count_donut(dat_es, "design", "Comparison design") +
+  plot_count_donut(dat_es, "disturbance", "Disturbance context") +
+  patchwork::plot_layout(guides = "keep") &
+  ggplot2::theme(legend.position = "bottom", legend.text = ggplot2::element_text(size = 8))
+```
+
+```{r donut-trait-taxa, fig.width=10, fig.height=5}
+plot_count_donut(dat_es, "trait_type", "Trait type") +
+  plot_count_donut(dat_es, "taxa", "Taxonomic group") +
+  patchwork::plot_layout(guides = "keep") &
+  ggplot2::theme(legend.position = "bottom", legend.text = ggplot2::element_text(size = 8))
+```
+
+```{r donut-data, fig.width=10, fig.height=5}
+plot_count_donut(dat_es, "genphen", "Phenotypic vs genetic data") +
+  plot_count_donut(dat_es, "data_scale", "Measurement scale") +
+  patchwork::plot_layout(guides = "keep") &
+  ggplot2::theme(legend.position = "bottom", legend.text = ggplot2::element_text(size = 8))
 ```
 
 ## Distributions
