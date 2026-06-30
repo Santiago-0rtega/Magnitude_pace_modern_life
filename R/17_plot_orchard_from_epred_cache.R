@@ -57,6 +57,11 @@ COL_LOCATION_LIGHT <- "#88CCEE"
 COL_SCALE <- "#D55E00"
 COL_SCALE_LIGHT <- "#E69F00"
 COL_SCALE_RIBBON <- "#F2B27E"
+PRECISION_LABEL <- "Effect-size precision (1/SE)"
+CATEGORY_COLS <- c(
+  "#0072B2", "#D55E00", "#009E73", "#CC79A7", "#E69F00",
+  "#56B4E9", "#6A3D9A", "#999999", "#000000"
+)
 
 theme_orchard <- function() {
   ggplot2::theme_classic(base_size = 13) +
@@ -114,11 +119,13 @@ plot_intercept <- function(cache) {
       groupOnX = FALSE
     ) +
     ggplot2::geom_linerange(ggplot2::aes(y = 1, xmin = int_lo, xmax = int_hi),
-                            linewidth = 1.5, colour = COL_LOCATION) +
+                            linewidth = 3.2, colour = "white") +
+    ggplot2::geom_linerange(ggplot2::aes(y = 1, xmin = int_lo, xmax = int_hi),
+                            linewidth = 1.8, colour = COL_LOCATION) +
     ggplot2::geom_point(ggplot2::aes(x = int_est, y = 1),
-                        size = 5, shape = 21, fill = "white",
-                        colour = COL_LOCATION, stroke = 1.2) +
-    ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.3, 4)) +
+                        size = 5.6, shape = 23, fill = "white",
+                        colour = COL_LOCATION, stroke = 1.4) +
+    ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.3, 4)) +
     ggplot2::scale_y_continuous(breaks = NULL) +
     ggplot2::labs(x = "Location effect (lnM)", y = NULL,
                   title = "Location -- Overall baseline (m00)") +
@@ -126,7 +133,6 @@ plot_intercept <- function(cache) {
 
   raw_sig <- raw |> dplyr::mutate(abs_resid = abs(yi_lnM_safe - int_est))
   p_scl <- ggplot2::ggplot() +
-    ggplot2::geom_vline(xintercept = 0, linetype = "dashed", colour = "grey50") +
     ggbeeswarm::geom_quasirandom(
       data = raw_sig,
       ggplot2::aes(x = abs_resid, y = 1, size = precision),
@@ -134,19 +140,21 @@ plot_intercept <- function(cache) {
       groupOnX = FALSE
     ) +
     ggplot2::geom_linerange(ggplot2::aes(y = 1, xmin = sig_lo, xmax = sig_hi),
-                            linewidth = 1.5, colour = COL_SCALE) +
+                            linewidth = 3.2, colour = "white") +
+    ggplot2::geom_linerange(ggplot2::aes(y = 1, xmin = sig_lo, xmax = sig_hi),
+                            linewidth = 1.8, colour = COL_SCALE) +
     ggplot2::geom_point(ggplot2::aes(x = sig_est, y = 1),
-                        size = 5, shape = 21, fill = "white",
-                        colour = COL_SCALE, stroke = 1.2) +
-    ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.3, 4)) +
+                        size = 5.6, shape = 23, fill = "white",
+                        colour = COL_SCALE, stroke = 1.4) +
+    ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.3, 4)) +
     ggplot2::scale_y_continuous(breaks = NULL) +
     ggplot2::labs(x = "residual lnM (SD)", y = NULL,
-                  title = "Scale -- Overall baseline (m00)",
-                  caption = "Bubbles: absolute residual lnM, sized by precision. Trunk = predicted residual SD (sigma).") +
+                  title = "Scale -- Overall baseline (m00)") +
     theme_orchard()
 
   list(location = p_loc, scale = p_scl,
-       combined = patchwork::wrap_plots(p_loc, p_scl, ncol = 1),
+       combined = patchwork::wrap_plots(p_loc, p_scl, ncol = 1, guides = "collect") &
+         ggplot2::theme(legend.position = "bottom"),
        width = 9, height = 4, combined_height = 8)
 }
 
@@ -177,7 +185,7 @@ plot_continuous <- function(cache) {
       ggplot2::aes(x = .data[[mod]], y = estimate),
       linewidth = 1.1, colour = COL_LOCATION
     ) +
-    ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.3, 4)) +
+    ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.3, 4)) +
     ggplot2::labs(x = lab, y = "lnM", title = paste("Location --", lab)) +
     theme_orchard()
 
@@ -197,14 +205,14 @@ plot_continuous <- function(cache) {
       ggplot2::aes(x = .data[[mod]], y = estimate),
       linewidth = 1.1, colour = COL_SCALE
     ) +
-    ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.3, 4)) +
+    ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.3, 4)) +
     ggplot2::labs(x = lab, y = "residual lnM (SD)",
-                  title = paste("Scale --", lab),
-                  caption = "Bubbles: absolute residual lnM, sized by precision. Line/ribbon: predicted residual SD (sigma).") +
+                  title = paste("Scale --", lab)) +
     theme_orchard()
 
   list(location = p_loc, scale = p_scl,
-       combined = patchwork::wrap_plots(p_loc, p_scl, ncol = 1),
+       combined = patchwork::wrap_plots(p_loc, p_scl, ncol = 1, guides = "collect") &
+         ggplot2::theme(legend.position = "bottom"),
        width = 8, height = 5, combined_height = 9)
 }
 
@@ -233,26 +241,35 @@ plot_categorical <- function(cache) {
   sig_ests$level <- factor(sig_ests$level, levels = lev_order)
   if (!is.null(raw)) raw$level <- factor(raw$level, levels = lev_order)
   n_levels <- length(lev_order)
+  level_cols <- CATEGORY_COLS[seq_len(n_levels)]
+  names(level_cols) <- lev_order
 
   p_loc <- ggplot2::ggplot() +
     ggplot2::geom_vline(xintercept = 0, linetype = "dashed", colour = "grey50") +
     { if (!is.null(raw)) ggbeeswarm::geom_quasirandom(
       data = raw,
-      ggplot2::aes(x = yi_lnM_safe, y = level, size = precision),
-      alpha = 0.30, shape = 21, fill = COL_LOCATION_LIGHT,
-      colour = COL_LOCATION, groupOnX = FALSE
+      ggplot2::aes(x = yi_lnM_safe, y = level,
+                   size = precision, colour = level, fill = level),
+      alpha = 0.30, shape = 21, groupOnX = FALSE
     ) } +
     ggplot2::geom_linerange(
       data = ests,
       ggplot2::aes(y = level, xmin = lowerCL, xmax = upperCL),
-      linewidth = 1.5, colour = COL_LOCATION
+      linewidth = 3.4, colour = "white"
+    ) +
+    ggplot2::geom_linerange(
+      data = ests,
+      ggplot2::aes(y = level, xmin = lowerCL, xmax = upperCL, colour = level),
+      linewidth = 1.8
     ) +
     ggplot2::geom_point(
       data = ests,
-      ggplot2::aes(x = estimate, y = level),
-      size = 4, shape = 21, fill = "white", colour = COL_LOCATION, stroke = 1.2
+      ggplot2::aes(x = estimate, y = level, colour = level),
+      size = 5.2, shape = 23, fill = "white", stroke = 1.4
     ) +
-    ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.4, 4)) +
+    ggplot2::scale_colour_manual(values = level_cols, guide = "none") +
+    ggplot2::scale_fill_manual(values = level_cols, guide = "none") +
+    ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.4, 4)) +
     ggplot2::labs(x = "Location effect (lnM)", y = NULL,
                   title = paste("Location --", lab)) +
     theme_orchard()
@@ -266,32 +283,38 @@ plot_categorical <- function(cache) {
   }
 
   p_scl <- ggplot2::ggplot() +
-    ggplot2::geom_vline(xintercept = 0, linetype = "dashed", colour = "grey50") +
     { if (!is.null(raw_sig)) ggbeeswarm::geom_quasirandom(
       data = raw_sig,
-      ggplot2::aes(x = abs_resid, y = level, size = precision),
-      alpha = 0.30, shape = 21, fill = COL_SCALE_LIGHT,
-      colour = COL_SCALE, groupOnX = FALSE
+      ggplot2::aes(x = abs_resid, y = level,
+                   size = precision, colour = level, fill = level),
+      alpha = 0.30, shape = 21, groupOnX = FALSE
     ) } +
     ggplot2::geom_linerange(
       data = sig_ests,
       ggplot2::aes(y = level, xmin = lowerCL, xmax = upperCL),
-      linewidth = 1.5, colour = COL_SCALE
+      linewidth = 3.4, colour = "white"
+    ) +
+    ggplot2::geom_linerange(
+      data = sig_ests,
+      ggplot2::aes(y = level, xmin = lowerCL, xmax = upperCL, colour = level),
+      linewidth = 1.8
     ) +
     ggplot2::geom_point(
       data = sig_ests,
-      ggplot2::aes(x = estimate, y = level),
-      size = 4, shape = 21, fill = "white", colour = COL_SCALE, stroke = 1.2
+      ggplot2::aes(x = estimate, y = level, colour = level),
+      size = 5.2, shape = 23, fill = "white", stroke = 1.4
     ) +
-    ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.4, 4)) +
+    ggplot2::scale_colour_manual(values = level_cols, guide = "none") +
+    ggplot2::scale_fill_manual(values = level_cols, guide = "none") +
+    ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.4, 4)) +
     ggplot2::labs(x = "residual lnM (SD)", y = NULL,
-                  title = paste("Scale --", lab),
-                  caption = "Bubbles: absolute residual lnM, sized by precision. Trunk = predicted residual SD (sigma).") +
+                  title = paste("Scale --", lab)) +
     theme_orchard()
 
   height_single <- max(2.5 + n_levels * 0.55, 5)
   list(location = p_loc, scale = p_scl,
-       combined = patchwork::wrap_plots(p_loc, p_scl, ncol = 1),
+       combined = patchwork::wrap_plots(p_loc, p_scl, ncol = 1, guides = "collect") &
+         ggplot2::theme(legend.position = "bottom"),
        width = 9, height = height_single,
        combined_height = max(height_single * 1.9, 10))
 }
