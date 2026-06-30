@@ -119,12 +119,10 @@ plot_intercept <- function(cache) {
       groupOnX = FALSE
     ) +
     ggplot2::geom_linerange(ggplot2::aes(y = 1, xmin = int_lo, xmax = int_hi),
-                            linewidth = 3.2, colour = "white") +
-    ggplot2::geom_linerange(ggplot2::aes(y = 1, xmin = int_lo, xmax = int_hi),
-                            linewidth = 1.8, colour = COL_LOCATION) +
+                            linewidth = 2.1, colour = COL_LOCATION) +
     ggplot2::geom_point(ggplot2::aes(x = int_est, y = 1),
-                        size = 5.6, shape = 23, fill = "white",
-                        colour = COL_LOCATION, stroke = 1.4) +
+                        size = 4.8, shape = 4,
+                        colour = COL_LOCATION, stroke = 1.5) +
     ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.3, 4)) +
     ggplot2::scale_y_continuous(breaks = NULL) +
     ggplot2::labs(x = "Location effect (lnM)", y = NULL,
@@ -140,12 +138,10 @@ plot_intercept <- function(cache) {
       groupOnX = FALSE
     ) +
     ggplot2::geom_linerange(ggplot2::aes(y = 1, xmin = sig_lo, xmax = sig_hi),
-                            linewidth = 3.2, colour = "white") +
-    ggplot2::geom_linerange(ggplot2::aes(y = 1, xmin = sig_lo, xmax = sig_hi),
-                            linewidth = 1.8, colour = COL_SCALE) +
+                            linewidth = 2.1, colour = COL_SCALE) +
     ggplot2::geom_point(ggplot2::aes(x = sig_est, y = 1),
-                        size = 5.6, shape = 23, fill = "white",
-                        colour = COL_SCALE, stroke = 1.4) +
+                        size = 4.8, shape = 4,
+                        colour = COL_SCALE, stroke = 1.5) +
     ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.3, 4)) +
     ggplot2::scale_y_continuous(breaks = NULL) +
     ggplot2::labs(x = "residual lnM (SD)", y = NULL,
@@ -255,17 +251,12 @@ plot_categorical <- function(cache) {
     ggplot2::geom_linerange(
       data = ests,
       ggplot2::aes(y = level, xmin = lowerCL, xmax = upperCL),
-      linewidth = 3.4, colour = "white"
-    ) +
-    ggplot2::geom_linerange(
-      data = ests,
-      ggplot2::aes(y = level, xmin = lowerCL, xmax = upperCL, colour = level),
-      linewidth = 1.8
+      linewidth = 1.45, colour = "grey10"
     ) +
     ggplot2::geom_point(
       data = ests,
       ggplot2::aes(x = estimate, y = level, colour = level),
-      size = 5.2, shape = 23, fill = "white", stroke = 1.4
+      size = 4.8, shape = 4, stroke = 1.5
     ) +
     ggplot2::scale_colour_manual(values = level_cols, guide = "none") +
     ggplot2::scale_fill_manual(values = level_cols, guide = "none") +
@@ -292,17 +283,12 @@ plot_categorical <- function(cache) {
     ggplot2::geom_linerange(
       data = sig_ests,
       ggplot2::aes(y = level, xmin = lowerCL, xmax = upperCL),
-      linewidth = 3.4, colour = "white"
-    ) +
-    ggplot2::geom_linerange(
-      data = sig_ests,
-      ggplot2::aes(y = level, xmin = lowerCL, xmax = upperCL, colour = level),
-      linewidth = 1.8
+      linewidth = 1.45, colour = "grey10"
     ) +
     ggplot2::geom_point(
       data = sig_ests,
       ggplot2::aes(x = estimate, y = level, colour = level),
-      size = 5.2, shape = 23, fill = "white", stroke = 1.4
+      size = 4.8, shape = 4, stroke = 1.5
     ) +
     ggplot2::scale_colour_manual(values = level_cols, guide = "none") +
     ggplot2::scale_fill_manual(values = level_cols, guide = "none") +
