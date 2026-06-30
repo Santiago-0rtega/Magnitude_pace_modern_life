@@ -121,8 +121,8 @@ plot_intercept <- function(cache) {
     ggplot2::geom_linerange(ggplot2::aes(y = 1, xmin = int_lo, xmax = int_hi),
                             linewidth = 2.1, colour = COL_LOCATION) +
     ggplot2::geom_point(ggplot2::aes(x = int_est, y = 1),
-                        size = 4.8, shape = 4,
-                        colour = COL_LOCATION, stroke = 1.5) +
+                        size = 3.4, shape = 23,
+                        fill = "white", colour = COL_LOCATION, stroke = 1.1) +
     ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.3, 4)) +
     ggplot2::scale_y_continuous(breaks = NULL) +
     ggplot2::labs(x = "Location effect (lnM)", y = NULL,
@@ -140,8 +140,8 @@ plot_intercept <- function(cache) {
     ggplot2::geom_linerange(ggplot2::aes(y = 1, xmin = sig_lo, xmax = sig_hi),
                             linewidth = 2.1, colour = COL_SCALE) +
     ggplot2::geom_point(ggplot2::aes(x = sig_est, y = 1),
-                        size = 4.8, shape = 4,
-                        colour = COL_SCALE, stroke = 1.5) +
+                        size = 3.4, shape = 23,
+                        fill = "white", colour = COL_SCALE, stroke = 1.1) +
     ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.3, 4)) +
     ggplot2::scale_y_continuous(breaks = NULL) +
     ggplot2::labs(x = "residual lnM (SD)", y = NULL,
@@ -239,28 +239,46 @@ plot_categorical <- function(cache) {
   n_levels <- length(lev_order)
   level_cols <- CATEGORY_COLS[seq_len(n_levels)]
   names(level_cols) <- lev_order
+  y_breaks <- seq_len(n_levels)
+  ests <- ests |> dplyr::mutate(y_index = as.numeric(level))
+  sig_ests <- sig_ests |> dplyr::mutate(y_index = as.numeric(level))
+  if (!is.null(raw)) raw <- raw |> dplyr::mutate(y_index = as.numeric(level))
+  cap_half_height <- 0.12
 
   p_loc <- ggplot2::ggplot() +
     ggplot2::geom_vline(xintercept = 0, linetype = "dashed", colour = "grey50") +
     { if (!is.null(raw)) ggbeeswarm::geom_quasirandom(
       data = raw,
-      ggplot2::aes(x = yi_lnM_safe, y = level,
+      ggplot2::aes(x = yi_lnM_safe, y = y_index,
                    size = precision, colour = level, fill = level),
       alpha = 0.30, shape = 21, groupOnX = FALSE
     ) } +
-    ggplot2::geom_linerange(
+    ggplot2::geom_segment(
       data = ests,
-      ggplot2::aes(y = level, xmin = lowerCL, xmax = upperCL),
+      ggplot2::aes(x = lowerCL, xend = upperCL, y = y_index, yend = y_index),
+      linewidth = 1.25, colour = "grey10"
+    ) +
+    ggplot2::geom_segment(
+      data = ests,
+      ggplot2::aes(x = lowerCL, xend = lowerCL,
+                   y = y_index - cap_half_height, yend = y_index + cap_half_height),
+      linewidth = 1.25, colour = "grey10"
+    ) +
+    ggplot2::geom_segment(
+      data = ests,
+      ggplot2::aes(x = upperCL, xend = upperCL,
+                   y = y_index - cap_half_height, yend = y_index + cap_half_height),
       linewidth = 1.45, colour = "grey10"
     ) +
     ggplot2::geom_point(
       data = ests,
-      ggplot2::aes(x = estimate, y = level, colour = level),
-      size = 4.8, shape = 4, stroke = 1.5
+      ggplot2::aes(x = estimate, y = y_index),
+      size = 3.4, shape = 23, fill = "white", colour = "grey10", stroke = 1.1
     ) +
     ggplot2::scale_colour_manual(values = level_cols, guide = "none") +
     ggplot2::scale_fill_manual(values = level_cols, guide = "none") +
     ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.4, 4)) +
+    ggplot2::scale_y_continuous(breaks = y_breaks, labels = lev_order) +
     ggplot2::labs(x = "Location effect (lnM)", y = NULL,
                   title = paste("Location --", lab)) +
     theme_orchard()
@@ -276,23 +294,36 @@ plot_categorical <- function(cache) {
   p_scl <- ggplot2::ggplot() +
     { if (!is.null(raw_sig)) ggbeeswarm::geom_quasirandom(
       data = raw_sig,
-      ggplot2::aes(x = abs_resid, y = level,
+      ggplot2::aes(x = abs_resid, y = y_index,
                    size = precision, colour = level, fill = level),
       alpha = 0.30, shape = 21, groupOnX = FALSE
     ) } +
-    ggplot2::geom_linerange(
+    ggplot2::geom_segment(
       data = sig_ests,
-      ggplot2::aes(y = level, xmin = lowerCL, xmax = upperCL),
+      ggplot2::aes(x = lowerCL, xend = upperCL, y = y_index, yend = y_index),
+      linewidth = 1.25, colour = "grey10"
+    ) +
+    ggplot2::geom_segment(
+      data = sig_ests,
+      ggplot2::aes(x = lowerCL, xend = lowerCL,
+                   y = y_index - cap_half_height, yend = y_index + cap_half_height),
+      linewidth = 1.25, colour = "grey10"
+    ) +
+    ggplot2::geom_segment(
+      data = sig_ests,
+      ggplot2::aes(x = upperCL, xend = upperCL,
+                   y = y_index - cap_half_height, yend = y_index + cap_half_height),
       linewidth = 1.45, colour = "grey10"
     ) +
     ggplot2::geom_point(
       data = sig_ests,
-      ggplot2::aes(x = estimate, y = level, colour = level),
-      size = 4.8, shape = 4, stroke = 1.5
+      ggplot2::aes(x = estimate, y = y_index),
+      size = 3.4, shape = 23, fill = "white", colour = "grey10", stroke = 1.1
     ) +
     ggplot2::scale_colour_manual(values = level_cols, guide = "none") +
     ggplot2::scale_fill_manual(values = level_cols, guide = "none") +
     ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.4, 4)) +
+    ggplot2::scale_y_continuous(breaks = y_breaks, labels = lev_order) +
     ggplot2::labs(x = "residual lnM (SD)", y = NULL,
                   title = paste("Scale --", lab)) +
     theme_orchard()
