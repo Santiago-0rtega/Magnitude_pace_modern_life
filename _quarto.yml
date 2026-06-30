@@ -1,12 +1,14 @@
 project:
   type: book
   output-dir: docs
+  resources:
+    - .nojekyll   # disable GitHub Pages Jekyll processing of the rendered site
 
 book:
   title: "Supplementary analyses: Human disturbance and the magnitude of phenotypic divergence"
   author: "TBA"
   date: today
-  repo-url: https://github.com/
+  repo-url: https://github.com/Santiago-0rtega/Magnitude_pace_modern_life
   downloads: [pdf]
   search: true
   sidebar:

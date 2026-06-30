@@ -14,6 +14,10 @@ source(here::here("R", "15_render_guard.R"))   # read-only: never refit sensitiv
 
 refit_sensitivity <- FALSE
 
+# The sensitivity models are NOT fit at render. Set TRUE only on a compute server
+# to fit + cache them; normal renders read the cached CSVs (or show "pending").
+rebuild_sensitivity <- FALSE
+
 # Priority moderators for sensitivity analyses
 priority_mods <- c("disturbance", "design", "log10_years",
                     "log10_generations", "trait_type", "taxa")
@@ -45,7 +49,7 @@ if (!is.null(name_map)) {
 
 Restricts to contrasts where $n_1 + n_2 \geq 40$. Checks whether conclusions about the priority moderators change when poorly replicated contrasts are excluded.
 
-```{r sens-n40}
+```{r sens-n40, eval=rebuild_sensitivity}
 dat_n40 <- dat_es |> dplyr::filter(n_total >= 40)
 cat("Contrasts with N >= 40:", nrow(dat_n40), "\n")
 
@@ -106,14 +110,17 @@ for (moderator in priority_mods) {
 ### N ≥ 40 results
 
 ```{r sens1-summary}
-if (length(sens1_results) > 0) {
+csv1 <- here::here("outputs", "tables", "sensitivity", "sens1_n40_location.csv")
+if (exists("sens1_results") && length(sens1_results) > 0) {
   sens1_loc <- purrr::map_dfr(sens1_results, ~ .x$fe |> dplyr::filter(submodel == "location"))
   sens1_scl <- purrr::map_dfr(sens1_results, ~ .x$fe |> dplyr::filter(submodel == "scale"))
-  readr::write_csv(sens1_loc, here::here("outputs", "tables", "sensitivity", "sens1_n40_location.csv"))
+  readr::write_csv(sens1_loc, csv1)
   readr::write_csv(sens1_scl, here::here("outputs", "tables", "sensitivity", "sens1_n40_scale.csv"))
   sens1_loc
+} else if (file.exists(csv1)) {
+  readr::read_csv(csv1, show_col_types = FALSE)
 } else {
-  cat("No N>=40 sensitivity models available yet.\n")
+  cat("Sensitivity (N ≥ 40) not yet fitted — fit on the server, then re-render.\n")
 }
 ```
 
@@ -121,7 +128,7 @@ if (length(sens1_results) > 0) {
 
 Repeats priority moderator models without the `(1 | gr(sp_ncbi, cov = A))` term. Checks whether conclusions depend strongly on the phylogenetic scaffold.
 
-```{r sens-no-phylo}
+```{r sens-no-phylo, eval=rebuild_sensitivity}
 sens2_results <- list()
 for (moderator in priority_mods) {
   if (!moderator %in% names(dat_es)) next
@@ -172,14 +179,17 @@ for (moderator in priority_mods) {
 ### No-phylogeny results
 
 ```{r sens2-summary}
-if (length(sens2_results) > 0) {
+csv2 <- here::here("outputs", "tables", "sensitivity", "sens2_nophylo_location.csv")
+if (exists("sens2_results") && length(sens2_results) > 0) {
   sens2_loc <- purrr::map_dfr(sens2_results, ~ .x$fe |> dplyr::filter(submodel == "location"))
   sens2_scl <- purrr::map_dfr(sens2_results, ~ .x$fe |> dplyr::filter(submodel == "scale"))
-  readr::write_csv(sens2_loc, here::here("outputs", "tables", "sensitivity", "sens2_nophylo_location.csv"))
+  readr::write_csv(sens2_loc, csv2)
   readr::write_csv(sens2_scl, here::here("outputs", "tables", "sensitivity", "sens2_nophylo_scale.csv"))
   sens2_loc
+} else if (file.exists(csv2)) {
+  readr::read_csv(csv2, show_col_types = FALSE)
 } else {
-  cat("No no-phylogeny sensitivity models available yet.\n")
+  cat("No-phylogeny sensitivity not yet fitted — fit on the server, then re-render.\n")
 }
 ```
 
@@ -187,7 +197,7 @@ if (length(sens2_results) > 0) {
 
 Adds `(1 | sys_id)` to the location submodel for priority moderators. This sensitivity analysis checks whether study-system clustering explains residual heterogeneity after accounting for reference and phylogeny. If `sys_id` is nearly collinear with `ref_id` and `sp_ncbi`, this model may be weakly identifiable — that outcome is reported explicitly.
 
-```{r sens-sysid}
+```{r sens-sysid, eval=rebuild_sensitivity}
 sens3_results <- list()
 for (moderator in priority_mods) {
   if (!moderator %in% names(dat_es)) next
@@ -255,11 +265,14 @@ for (moderator in priority_mods) {
 ### sys_id results
 
 ```{r sens3-summary}
-if (length(sens3_results) > 0) {
+csv3 <- here::here("outputs", "tables", "sensitivity", "sens3_sysid_location.csv")
+if (exists("sens3_results") && length(sens3_results) > 0) {
   sens3_loc <- purrr::map_dfr(sens3_results, ~ .x$fe |> dplyr::filter(submodel == "location"))
-  readr::write_csv(sens3_loc, here::here("outputs", "tables", "sensitivity", "sens3_sysid_location.csv"))
+  readr::write_csv(sens3_loc, csv3)
   sens3_loc
+} else if (file.exists(csv3)) {
+  readr::read_csv(csv3, show_col_types = FALSE)
 } else {
-  cat("No sys_id sensitivity models available yet.\n")
+  cat("sys_id sensitivity not yet fitted — fit on the server, then re-render.\n")
 }
 ```

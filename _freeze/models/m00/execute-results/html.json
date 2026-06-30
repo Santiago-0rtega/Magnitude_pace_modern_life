@@ -1,0 +1,19 @@
+{
+  "hash": "6bc4e91961fcd545a40fdd2ecae5307e",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"m00 — Intercept-only baseline\"\n---\n\n\n\nThe intercept-only model estimates the overall mean lnM and the baseline residual heterogeneity (sigma), with no moderators — the reference against which every moderator model is compared.\n\n## Model summary\n\n`summary()` is read from the pre-computed cache (`outputs/epred_draws/m00.rds`) — the full `brms` fit is never loaded at render.\n\n\n::: {.cell}\n\n```{.r .cell-code}\nprint_cache_summary(cache)\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n Family: gaussian \n  Links: mu = identity; sigma = log \nFormula: yi_lnM_safe ~ 1 + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)) \n         sigma ~ 1\n   Data: structure(list(es_id = c(\"es0313\", \"es0314\", \"es03 (Number of observations: 7455) \n  Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;\n         total post-warmup draws = 8000\n\nMultilevel Hyperparameters:\n~es_id_model (Number of levels: 7455) \n              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\nsd(Intercept)     1.00      0.00     1.00     1.00   NA       NA       NA\n\n~ref_id (Number of levels: 266) \n              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\nsd(Intercept)     0.80      0.04     0.72     0.89 1.00     2658     4890\n\n~sp_ncbi (Number of levels: 265) \n              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\nsd(Intercept)     0.83      0.12     0.61     1.09 1.00     1724     3418\n\nRegression Coefficients:\n                Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\nIntercept          -0.06      0.45    -0.97     0.84 1.00     3775     4776\nsigma_Intercept    -1.09      0.01    -1.11    -1.06 1.00     3456     5374\n\nDraws were sampled using sample(hmc). For each parameter, Bulk_ESS\nand Tail_ESS are effective sample size measures, and Rhat is the potential\nscale reduction factor on split chains (at convergence, Rhat = 1).\n```\n\n\n:::\n:::\n\n\n## Posterior predictions\n\nThe location panel shows predicted mean lnM; the scale panel shows predicted residual sigma. Draws were pre-computed once with `re_formula = NA`; restyle the figure by editing the plot helpers in `R/14_epred_cache.R` — no epreds re-run.\n\n\n::: {.cell}\n\n```{.r .cell-code}\nplot_cache(cache)\n```\n\n::: {.cell-output-display}\n![](m00_files/figure-html/figure-1.png){width=1200}\n:::\n:::\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-in-header": [
+        "<link href=\"../site_libs/pagedtable-1.1/css/pagedtable.css\" rel=\"stylesheet\" />\n<script src=\"../site_libs/pagedtable-1.1/js/pagedtable.js\"></script>\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

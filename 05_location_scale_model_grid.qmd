@@ -15,6 +15,11 @@ source(here::here("R", "15_render_guard.R"))   # read-only: never refit / rebuil
 
 # Change to TRUE only when you want to refit all models from scratch
 refit_models <- FALSE
+
+# The grid status + combined effect tables are pre-computed (precompute_grid_summaries.R)
+# into outputs/tables/grid_summary_cache.rds so the book never loads a 400 MB model.
+# Set TRUE only to regenerate them by loading every model (slow).
+rebuild_grid <- FALSE
 ```
 
 ## Overview
@@ -114,7 +119,9 @@ The loop below iterates over every row of the registry. For each moderator it:
 6. Calls `fit_or_read_model()`, which reads the cached `.rds` if it exists.
 7. Extracts summaries and diagnostics.
 
-```{r fit-grid, results='hide'}
+```{r fit-grid, eval=rebuild_grid, results='hide'}
+# Heavy path (rebuild_grid = TRUE only): load every model and extract summaries.
+# Normal renders skip this and read the precomputed cache below.
 all_fe    <- list()
 all_diag  <- list()
 status_rows <- list()
@@ -295,31 +302,33 @@ for (i in seq_len(nrow(moderator_grid))) {
 }
 ```
 
+## Assemble grid summaries
+
+```{r grid-assemble}
+grid_cache <- here::here("outputs", "tables", "grid_summary_cache.rds")
+
+if (rebuild_grid) {
+  # Persist what the loop above produced (also refreshes the CSVs + cache).
+  model_status <- dplyr::bind_rows(status_rows)
+  readr::write_csv(model_status, here::here("outputs", "tables", "model_grid_status.csv"))
+  summ     <- save_combined_summaries(all_fe,  tables_dir = here::here("outputs", "tables"))
+  diag_tbl <- save_combined_diagnostics(all_diag, tables_dir = here::here("outputs", "tables"))
+  loc_effects <- summ$location; scl_effects <- summ$scale
+  saveRDS(list(status = model_status, location = loc_effects,
+               scale = scl_effects, diagnostics = diag_tbl), grid_cache)
+} else {
+  # Normal render: read the small precomputed cache — no 400 MB model is loaded.
+  pace_need(grid_cache, "model grid summary cache")
+  g <- readRDS(grid_cache)
+  model_status <- g$status; loc_effects <- g$location
+  scl_effects  <- g$scale;  diag_tbl    <- g$diagnostics
+}
+```
+
 ## Model status table
 
 ```{r status-table}
-model_status <- dplyr::bind_rows(status_rows)
-
-readr::write_csv(
-  model_status,
-  here::here("outputs", "tables", "model_grid_status.csv")
-)
-
 model_status
-```
-
-## Save combined effect summaries
-
-```{r save-summaries}
-if (length(all_fe) > 0) {
-  save_combined_summaries(all_fe, tables_dir = here::here("outputs", "tables"))
-  cat("Location and scale summary tables saved.\n")
-}
-
-if (length(all_diag) > 0) {
-  save_combined_diagnostics(all_diag, tables_dir = here::here("outputs", "tables"))
-  cat("Diagnostics table saved.\n")
-}
 ```
 
 ## Convergence overview
