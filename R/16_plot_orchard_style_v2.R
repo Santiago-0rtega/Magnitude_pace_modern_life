@@ -59,25 +59,26 @@ get_level_estimates <- function(fit, moderator) {
   out
 }
 
-get_sig_estimates <- function(fit, moderator) {
-  fe  <- brms::fixef(fit)
-  ref <- levels(factor(fit$data[[moderator]]))[1]
-  sig_int    <- fe["sigma_Intercept", "Estimate"]
-  sig_int_lo <- fe["sigma_Intercept", "Q2.5"]
-  sig_int_hi <- fe["sigma_Intercept", "Q97.5"]
-  out <- tibble::tibble(level = ref, estimate = sig_int,
-                        lowerCL = sig_int_lo, upperCL = sig_int_hi)
-  sig_rows <- grep(paste0("^sigma_", moderator), rownames(fe))
-  for (r in sig_rows) {
-    nm  <- rownames(fe)[r]
-    lvl <- sub(paste0("sigma_", moderator), "", nm)
-    out <- dplyr::bind_rows(out, tibble::tibble(
-      level    = lvl,
-      estimate = sig_int + fe[nm, "Estimate"],
-      lowerCL  = sig_int + fe[nm, "Q2.5"],
-      upperCL  = sig_int + fe[nm, "Q97.5"]))
+get_sig_estimates <- function(fit, moderator, levels_vec = NULL) {
+  if (is.null(levels_vec)) {
+    levels_vec <- levels(factor(fit$data[[moderator]]))
   }
-  out
+
+  nd <- data.frame(x = levels_vec, stringsAsFactors = FALSE)
+  names(nd)[1] <- moderator
+  nd[["es_id_model"]] <- NA; nd[["ref_id"]] <- NA; nd[["sp_ncbi"]] <- NA
+
+  tidybayes::epred_draws(
+    fit, newdata = nd, re_formula = NA, dpar = TRUE, ndraws = 1000
+  ) |>
+    dplyr::group_by(.data[[moderator]]) |>
+    dplyr::summarise(
+      estimate = median(sigma),
+      lowerCL  = quantile(sigma, 0.025),
+      upperCL  = quantile(sigma, 0.975),
+      .groups = "drop"
+    ) |>
+    dplyr::rename(level = dplyr::all_of(moderator))
 }
 
 get_pred_interval <- function(fit, moderator, levels_vec) {
@@ -208,7 +209,7 @@ if (file.exists(m00_path) &&
   int_est   <- fe00["Intercept",    "Estimate"]
   int_lo    <- fe00["Intercept",    "Q2.5"]
   int_hi    <- fe00["Intercept",    "Q97.5"]
-  sig_est   <- fe00["sigma_Intercept", "Estimate"]
+  sig_est   <- exp(fe00["sigma_Intercept", "Estimate"])
 
   vc <- brms::VarCorr(fit00)
   cap <- sprintf("n = %d effect sizes | study SD = %.2f | phylogeny SD = %.2f",
@@ -237,16 +238,16 @@ if (file.exists(m00_path) &&
     theme_orchard()
 
   # Scale panel: within-overall residuals vs sigma intercept
-  sig_lo  <- fe00["sigma_Intercept", "Q2.5"]
-  sig_hi  <- fe00["sigma_Intercept", "Q97.5"]
+  sig_lo  <- exp(fe00["sigma_Intercept", "Q2.5"])
+  sig_hi  <- exp(fe00["sigma_Intercept", "Q97.5"])
 
   raw00_sig <- raw00 |>
-    dplyr::mutate(log_abs_resid = log(abs(yi_lnM_safe - int_est) + 1e-6))
+    dplyr::mutate(abs_resid = abs(yi_lnM_safe - int_est))
 
   p_m00_scl <- ggplot2::ggplot() +
     ggplot2::geom_vline(xintercept = 0, linetype = "dashed", colour = "grey50") +
     ggbeeswarm::geom_quasirandom(data = raw00_sig,
-      ggplot2::aes(x = log_abs_resid, y = 1, size = precision),
+      ggplot2::aes(x = abs_resid, y = 1, size = precision),
       alpha = 0.20, shape = 21, fill = "#88CCEE", colour = "#0072B2",
       groupOnX = FALSE) +
     ggplot2::geom_linerange(
@@ -260,11 +261,11 @@ if (file.exists(m00_path) &&
       size = 5, shape = 21, fill = "white", colour = "grey10", stroke = 1.2) +
     ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.3, 4)) +
     ggplot2::scale_y_continuous(breaks = NULL) +
-    ggplot2::labs(x = "Residual lnM",
+    ggplot2::labs(x = "residual lnM (SD)",
                   y = NULL,
                   title = "Scale -- Overall baseline (m00)",
-                  caption = sprintf("sigma_Intercept = %.3f [%.3f, %.3f]  |  exp(sigma) = %.3f",
-                                    sig_est, sig_lo, sig_hi, exp(sig_est))) +
+                  caption = sprintf("residual SD = %.3f [%.3f, %.3f]",
+                                    sig_est, sig_lo, sig_hi)) +
     theme_orchard()
 
   p_m00_comb <- patchwork::wrap_plots(p_m00_loc, p_m00_scl, ncol = 1)
@@ -302,7 +303,7 @@ for (m in all_models) {
 
   if (m$type == "categorical") {
     ests     <- get_level_estimates(fit, m$moderator)
-    sig_ests <- get_sig_estimates(fit, m$moderator)
+    sig_ests <- get_sig_estimates(fit, m$moderator, unique(raw$level))
     pi_df    <- get_pred_interval(fit, m$moderator, unique(raw$level))
 
     if (!is.null(pi_df)) {
@@ -353,20 +354,19 @@ for (m in all_models) {
       theme_orchard()
 
     # ---- Scale plot with within-group residuals --------------------------------
-    # x = log(|yi - location_mean_for_level|): puts individual residuals in the
-    # same log-SD space as sigma, so bubbles spread naturally around the trunk.
+    # x = |yi - location_mean_for_level|, on the same residual-SD scale as sigma.
     raw_sig <- raw |>
       dplyr::left_join(
         dplyr::select(ests, level, loc_est = estimate),
         by = "level") |>
       dplyr::mutate(
-        log_abs_resid = log(abs(yi_lnM_safe - loc_est) + 1e-6)
+        abs_resid = abs(yi_lnM_safe - loc_est)
       )
 
     p_scl <- ggplot2::ggplot() +
       ggplot2::geom_vline(xintercept = 0, linetype = "dashed", colour = "grey50") +
       ggbeeswarm::geom_quasirandom(data = raw_sig,
-        ggplot2::aes(x = log_abs_resid, y = level,
+        ggplot2::aes(x = abs_resid, y = level,
                      size = precision, colour = level, fill = level),
         alpha = 0.30, shape = 21, groupOnX = FALSE) +
       ggplot2::geom_linerange(data = sig_ests,
@@ -381,9 +381,9 @@ for (m in all_models) {
       ggplot2::scale_colour_manual(values = colors, guide = "none") +
       ggplot2::scale_fill_manual(values = colors, guide = "none") +
       ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.4, 4)) +
-      ggplot2::labs(x = "Residual lnM", y = NULL,
+      ggplot2::labs(x = "residual lnM (SD)", y = NULL,
                     title = paste("Scale --", m$label),
-                    caption = "Bubbles: log|yi - group mean|, sized by precision. Trunk = predicted log-SD (sigma). Positive = greater heterogeneity.") +
+                    caption = "Bubbles: absolute residual lnM, sized by precision. Trunk = predicted residual SD (sigma).") +
       theme_orchard()
 
     p_comb <- patchwork::wrap_plots(p_loc, p_scl, ncol = 1)
@@ -406,18 +406,18 @@ for (m in all_models) {
                        lowerCL  = quantile(.epred, 0.025),
                        upperCL  = quantile(.epred, 0.975), .groups = "drop")
 
-    pred_sig <- tidybayes::add_epred_draws(nd, fit, dpar = "sigma",
-                                           re_formula = NA, ndraws = 500) |>
+    pred_sig <- tidybayes::epred_draws(fit, newdata = nd, dpar = TRUE,
+                                       re_formula = NA, ndraws = 500) |>
       dplyr::group_by(.data[[m$moderator]]) |>
-      dplyr::summarise(estimate = median(.epred),
-                       lowerCL  = quantile(.epred, 0.025),
-                       upperCL  = quantile(.epred, 0.975), .groups = "drop")
+      dplyr::summarise(estimate = median(sigma),
+                       lowerCL  = quantile(sigma, 0.025),
+                       upperCL  = quantile(sigma, 0.975), .groups = "drop")
 
     # Residuals from the predicted location line for scatter on scale plot
     raw_pred_loc <- approx(pred[[m$moderator]], pred$estimate,
                            xout = raw[[m$moderator]], rule = 2)$y
     raw_cont_sig <- raw |>
-      dplyr::mutate(log_abs_resid = log(abs(yi_lnM_safe - raw_pred_loc) + 1e-6))
+      dplyr::mutate(abs_resid = abs(yi_lnM_safe - raw_pred_loc))
 
     p_loc <- ggplot2::ggplot() +
       ggplot2::geom_hline(yintercept = 0, linetype = "dashed", colour = "grey50") +
@@ -437,7 +437,7 @@ for (m in all_models) {
 
     p_scl <- ggplot2::ggplot() +
       ggplot2::geom_point(data = raw_cont_sig,
-        ggplot2::aes(x = .data[[m$moderator]], y = log_abs_resid, size = precision),
+        ggplot2::aes(x = .data[[m$moderator]], y = abs_resid, size = precision),
         alpha = 0.20, shape = 21, fill = "#88CCEE", colour = "#0072B2") +
       ggplot2::geom_ribbon(data = pred_sig,
         ggplot2::aes(x = .data[[m$moderator]], ymin = lowerCL, ymax = upperCL),
@@ -446,9 +446,9 @@ for (m in all_models) {
         ggplot2::aes(x = .data[[m$moderator]], y = estimate),
         linewidth = 1.1, colour = "grey15") +
       ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.3, 4)) +
-      ggplot2::labs(x = m$label, y = "Residual lnM",
+      ggplot2::labs(x = m$label, y = "residual lnM (SD)",
                     title = paste("Scale --", m$label),
-                    caption = "Higher sigma = greater residual heterogeneity.") +
+                    caption = "Bubbles: absolute residual lnM, sized by precision. Line/ribbon: predicted residual SD (sigma).") +
       theme_orchard()
 
     p_comb <- patchwork::wrap_plots(p_loc, p_scl, ncol = 1)

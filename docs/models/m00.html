@@ -671,9 +671,9 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>int_est <span class="ot">&lt;-</span> fe[<span class="st">"Intercept"</span>, <span class="st">"Estimate"</span>]</span>
 <span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>int_lo  <span class="ot">&lt;-</span> fe[<span class="st">"Intercept"</span>, <span class="st">"Q2.5"</span>]</span>
 <span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>int_hi  <span class="ot">&lt;-</span> fe[<span class="st">"Intercept"</span>, <span class="st">"Q97.5"</span>]</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>sig_est <span class="ot">&lt;-</span> fe[<span class="st">"sigma_Intercept"</span>, <span class="st">"Estimate"</span>]</span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>sig_lo  <span class="ot">&lt;-</span> fe[<span class="st">"sigma_Intercept"</span>, <span class="st">"Q2.5"</span>]</span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>sig_hi  <span class="ot">&lt;-</span> fe[<span class="st">"sigma_Intercept"</span>, <span class="st">"Q97.5"</span>]</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>sig_est <span class="ot">&lt;-</span> <span class="fu">exp</span>(fe[<span class="st">"sigma_Intercept"</span>, <span class="st">"Estimate"</span>])</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>sig_lo  <span class="ot">&lt;-</span> <span class="fu">exp</span>(fe[<span class="st">"sigma_Intercept"</span>, <span class="st">"Q2.5"</span>])</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>sig_hi  <span class="ot">&lt;-</span> <span class="fu">exp</span>(fe[<span class="st">"sigma_Intercept"</span>, <span class="st">"Q97.5"</span>])</span>
 <span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>vc <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">VarCorr</span>(fit)</span>
 <span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>caption_txt <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(</span>
@@ -709,13 +709,13 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_orchard</span>()</span>
 <span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>raw_sig <span class="ot">&lt;-</span> raw <span class="sc">|&gt;</span></span>
-<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">log_abs_resid =</span> <span class="fu">log</span>(<span class="fu">abs</span>(yi_lnM_safe <span class="sc">-</span> int_est) <span class="sc">+</span> <span class="fl">1e-6</span>))</span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">abs_resid =</span> <span class="fu">abs</span>(yi_lnM_safe <span class="sc">-</span> int_est))</span>
 <span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>p_scl <span class="ot">&lt;-</span> ggplot2<span class="sc">::</span><span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">colour =</span> <span class="st">"grey50"</span>) <span class="sc">+</span></span>
 <span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>  ggbeeswarm<span class="sc">::</span><span class="fu">geom_quasirandom</span>(</span>
 <span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> raw_sig,</span>
-<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> log_abs_resid, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">size =</span> precision),</span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> abs_resid, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">size =</span> precision),</span>
 <span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.20</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"#88CCEE"</span>, <span class="at">colour =</span> <span class="st">"#0072B2"</span>,</span>
 <span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a>    <span class="at">groupOnX =</span> <span class="cn">FALSE</span></span>
 <span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
@@ -734,12 +734,12 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">scale_size_continuous</span>(<span class="at">name =</span> <span class="st">"Precision (1/SE)"</span>, <span class="at">range =</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="dv">4</span>)) <span class="sc">+</span></span>
 <span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
 <span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(</span>
-<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Residual lnM"</span>,</span>
+<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"residual lnM (SD)"</span>,</span>
 <span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span>,</span>
 <span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Scale -- Overall baseline (m00)"</span>,</span>
 <span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="fu">sprintf</span>(</span>
-<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a>      <span class="st">"sigma_Intercept = %.3f [%.3f, %.3f] | exp(sigma) = %.3f"</span>,</span>
-<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a>      sig_est, sig_lo, sig_hi, <span class="fu">exp</span>(sig_est)</span>
+<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a>      <span class="st">"residual SD = %.3f [%.3f, %.3f]"</span>,</span>
+<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a>      sig_est, sig_lo, sig_hi</span>
 <span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb4-111"><a href="#cb4-111" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb4-112"><a href="#cb4-112" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_orchard</span>()</span>
@@ -1310,9 +1310,9 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>int_est <span class="ot">&lt;-</span> fe[<span class="st">"Intercept"</span>, <span class="st">"Estimate"</span>]</span>
 <span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>int_lo  <span class="ot">&lt;-</span> fe[<span class="st">"Intercept"</span>, <span class="st">"Q2.5"</span>]</span>
 <span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>int_hi  <span class="ot">&lt;-</span> fe[<span class="st">"Intercept"</span>, <span class="st">"Q97.5"</span>]</span>
-<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>sig_est <span class="ot">&lt;-</span> fe[<span class="st">"sigma_Intercept"</span>, <span class="st">"Estimate"</span>]</span>
-<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>sig_lo  <span class="ot">&lt;-</span> fe[<span class="st">"sigma_Intercept"</span>, <span class="st">"Q2.5"</span>]</span>
-<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>sig_hi  <span class="ot">&lt;-</span> fe[<span class="st">"sigma_Intercept"</span>, <span class="st">"Q97.5"</span>]</span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>sig_est <span class="ot">&lt;-</span> <span class="fu">exp</span>(fe[<span class="st">"sigma_Intercept"</span>, <span class="st">"Estimate"</span>])</span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>sig_lo  <span class="ot">&lt;-</span> <span class="fu">exp</span>(fe[<span class="st">"sigma_Intercept"</span>, <span class="st">"Q2.5"</span>])</span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>sig_hi  <span class="ot">&lt;-</span> <span class="fu">exp</span>(fe[<span class="st">"sigma_Intercept"</span>, <span class="st">"Q97.5"</span>])</span>
 <span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>vc <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">VarCorr</span>(fit)</span>
 <span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>caption_txt <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(</span>
@@ -1348,13 +1348,13 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_orchard</span>()</span>
 <span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a>raw_sig <span class="ot">&lt;-</span> raw <span class="sc">|&gt;</span></span>
-<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">log_abs_resid =</span> <span class="fu">log</span>(<span class="fu">abs</span>(yi_lnM_safe <span class="sc">-</span> int_est) <span class="sc">+</span> <span class="fl">1e-6</span>))</span>
+<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">abs_resid =</span> <span class="fu">abs</span>(yi_lnM_safe <span class="sc">-</span> int_est))</span>
 <span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a>p_scl <span class="ot">&lt;-</span> ggplot2<span class="sc">::</span><span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">colour =</span> <span class="st">"grey50"</span>) <span class="sc">+</span></span>
 <span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a>  ggbeeswarm<span class="sc">::</span><span class="fu">geom_quasirandom</span>(</span>
 <span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> raw_sig,</span>
-<span id="cb5-117"><a href="#cb5-117" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> log_abs_resid, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">size =</span> precision),</span>
+<span id="cb5-117"><a href="#cb5-117" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> abs_resid, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">size =</span> precision),</span>
 <span id="cb5-118"><a href="#cb5-118" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.20</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"#88CCEE"</span>, <span class="at">colour =</span> <span class="st">"#0072B2"</span>,</span>
 <span id="cb5-119"><a href="#cb5-119" aria-hidden="true" tabindex="-1"></a>    <span class="at">groupOnX =</span> <span class="cn">FALSE</span></span>
 <span id="cb5-120"><a href="#cb5-120" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
@@ -1373,12 +1373,12 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb5-133"><a href="#cb5-133" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">scale_size_continuous</span>(<span class="at">name =</span> <span class="st">"Precision (1/SE)"</span>, <span class="at">range =</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="dv">4</span>)) <span class="sc">+</span></span>
 <span id="cb5-134"><a href="#cb5-134" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
 <span id="cb5-135"><a href="#cb5-135" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(</span>
-<span id="cb5-136"><a href="#cb5-136" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Residual lnM"</span>,</span>
+<span id="cb5-136"><a href="#cb5-136" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"residual lnM (SD)"</span>,</span>
 <span id="cb5-137"><a href="#cb5-137" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span>,</span>
 <span id="cb5-138"><a href="#cb5-138" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Scale -- Overall baseline (m00)"</span>,</span>
 <span id="cb5-139"><a href="#cb5-139" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="fu">sprintf</span>(</span>
-<span id="cb5-140"><a href="#cb5-140" aria-hidden="true" tabindex="-1"></a>      <span class="st">"sigma_Intercept = %.3f [%.3f, %.3f] | exp(sigma) = %.3f"</span>,</span>
-<span id="cb5-141"><a href="#cb5-141" aria-hidden="true" tabindex="-1"></a>      sig_est, sig_lo, sig_hi, <span class="fu">exp</span>(sig_est)</span>
+<span id="cb5-140"><a href="#cb5-140" aria-hidden="true" tabindex="-1"></a>      <span class="st">"residual SD = %.3f [%.3f, %.3f]"</span>,</span>
+<span id="cb5-141"><a href="#cb5-141" aria-hidden="true" tabindex="-1"></a>      sig_est, sig_lo, sig_hi</span>
 <span id="cb5-142"><a href="#cb5-142" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb5-143"><a href="#cb5-143" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb5-144"><a href="#cb5-144" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_orchard</span>()</span>

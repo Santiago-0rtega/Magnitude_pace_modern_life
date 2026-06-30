@@ -103,32 +103,29 @@ get_level_estimates <- function(fit, moderator) {
   out
 }
 
-get_sig_estimates <- function(fit, moderator) {
-  fe <- brms::fixef(fit)
-  ref <- levels(factor(fit$data[[moderator]]))[1]
-  sig_int <- fe["sigma_Intercept", "Estimate"]
-  sig_int_lo <- fe["sigma_Intercept", "Q2.5"]
-  sig_int_hi <- fe["sigma_Intercept", "Q97.5"]
-  out <- tibble::tibble(
-    level = ref,
-    estimate = sig_int,
-    lowerCL = sig_int_lo,
-    upperCL = sig_int_hi
-  )
-  sig_rows <- grep(paste0("^sigma_", moderator), rownames(fe))
-  for (r in sig_rows) {
-    nm <- rownames(fe)[r]
-    lvl <- sub(paste0("sigma_", moderator), "", nm)
-    out <- dplyr::bind_rows(out, tibble::tibble(
-      level = lvl,
-      estimate = sig_int + fe[nm, "Estimate"],
-      lowerCL = sig_int + fe[nm, "Q2.5"],
-      upperCL = sig_int + fe[nm, "Q97.5"]
-    ))
+get_sig_estimates <- function(fit, moderator, levels_vec = NULL) {
+  if (is.null(levels_vec)) {
+    levels_vec <- levels(factor(fit$data[[moderator]]))
   }
-  out
-}
 
+  nd <- data.frame(x = levels_vec, stringsAsFactors = FALSE)
+  names(nd)[1] <- moderator
+  nd[["es_id_model"]] <- NA
+  nd[["ref_id"]] <- NA
+  nd[["sp_ncbi"]] <- NA
+
+  tidybayes::epred_draws(
+    fit, newdata = nd, re_formula = NA, dpar = TRUE, ndraws = 1000
+  ) |>
+    dplyr::group_by(.data[[moderator]]) |>
+    dplyr::summarise(
+      estimate = median(sigma),
+      lowerCL = quantile(sigma, 0.025),
+      upperCL = quantile(sigma, 0.975),
+      .groups = "drop"
+    ) |>
+    dplyr::rename(level = dplyr::all_of(moderator))
+}
 get_pred_interval <- function(fit, moderator, levels_vec) {
   nd <- data.frame(x = levels_vec, stringsAsFactors = FALSE)
   names(nd)[1] <- moderator
@@ -172,7 +169,7 @@ raw <- raw_source[!is.na(raw_source[[moderator]]), ] |>
   )
 
 ests <- get_level_estimates(fit, moderator)
-sig_ests <- get_sig_estimates(fit, moderator)
+sig_ests <- get_sig_estimates(fit, moderator, unique(raw$level))
 pi_df <- get_pred_interval(fit, moderator, unique(raw$level))
 ests <- dplyr::left_join(ests, pi_df, by = "level")
 
@@ -224,13 +221,13 @@ p_loc <- ggplot2::ggplot() +
 
 raw_sig <- raw |>
   dplyr::left_join(dplyr::select(ests, level, loc_est = estimate), by = "level") |>
-  dplyr::mutate(log_abs_resid = log(abs(yi_lnM_safe - loc_est) + 1e-6))
+  dplyr::mutate(abs_resid = abs(yi_lnM_safe - loc_est))
 
 p_scl <- ggplot2::ggplot() +
   ggplot2::geom_vline(xintercept = 0, linetype = "dashed", colour = "grey50") +
   ggbeeswarm::geom_quasirandom(
     data = raw_sig,
-    ggplot2::aes(x = log_abs_resid, y = level,
+    ggplot2::aes(x = abs_resid, y = level,
                  size = precision, colour = level, fill = level),
     alpha = 0.30, shape = 21, groupOnX = FALSE
   ) +
@@ -253,10 +250,10 @@ p_scl <- ggplot2::ggplot() +
   ggplot2::scale_fill_manual(values = colors, guide = "none") +
   ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.4, 4)) +
   ggplot2::labs(
-    x = "Residual lnM",
+    x = "residual lnM (SD)",
     y = NULL,
     title = paste("Scale --", moderator_label),
-    caption = "Bubbles: log|yi - group mean|, sized by precision. Trunk = predicted log-SD (sigma). Positive = greater heterogeneity."
+    caption = "Bubbles: absolute residual lnM, sized by precision. Trunk = predicted residual SD (sigma)."
   ) +
   theme_orchard()
 
