@@ -109,6 +109,7 @@ plot_intercept <- function(cache) {
   sig_est <- median(cache$post$sigma)
   sig_lo <- quantile(cache$post$sigma, 0.025)
   sig_hi <- quantile(cache$post$sigma, 0.975)
+  cap_half_height <- 0.08
 
   p_loc <- ggplot2::ggplot() +
     ggplot2::geom_vline(xintercept = 0, linetype = "dashed", colour = "grey50") +
@@ -118,11 +119,23 @@ plot_intercept <- function(cache) {
       alpha = 0.20, shape = 21, fill = COL_LOCATION_LIGHT, colour = COL_LOCATION,
       groupOnX = FALSE
     ) +
-    ggplot2::geom_linerange(ggplot2::aes(y = 1, xmin = int_lo, xmax = int_hi),
-                            linewidth = 2.1, colour = COL_LOCATION) +
+    ggplot2::geom_segment(
+      ggplot2::aes(x = int_lo, xend = int_hi, y = 1, yend = 1),
+      linewidth = 1.25, colour = "grey10"
+    ) +
+    ggplot2::geom_segment(
+      ggplot2::aes(x = int_lo, xend = int_lo,
+                   y = 1 - cap_half_height, yend = 1 + cap_half_height),
+      linewidth = 1.25, colour = "grey10"
+    ) +
+    ggplot2::geom_segment(
+      ggplot2::aes(x = int_hi, xend = int_hi,
+                   y = 1 - cap_half_height, yend = 1 + cap_half_height),
+      linewidth = 1.25, colour = "grey10"
+    ) +
     ggplot2::geom_point(ggplot2::aes(x = int_est, y = 1),
                         size = 3.4, shape = 23,
-                        fill = "white", colour = COL_LOCATION, stroke = 1.1) +
+                        fill = "white", colour = "grey10", stroke = 1.1) +
     ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.3, 4)) +
     ggplot2::scale_y_continuous(breaks = NULL) +
     ggplot2::labs(x = "Location effect (lnM)", y = NULL,
@@ -137,11 +150,23 @@ plot_intercept <- function(cache) {
       alpha = 0.20, shape = 21, fill = COL_SCALE_LIGHT, colour = COL_SCALE,
       groupOnX = FALSE
     ) +
-    ggplot2::geom_linerange(ggplot2::aes(y = 1, xmin = sig_lo, xmax = sig_hi),
-                            linewidth = 2.1, colour = COL_SCALE) +
+    ggplot2::geom_segment(
+      ggplot2::aes(x = sig_lo, xend = sig_hi, y = 1, yend = 1),
+      linewidth = 1.25, colour = "grey10"
+    ) +
+    ggplot2::geom_segment(
+      ggplot2::aes(x = sig_lo, xend = sig_lo,
+                   y = 1 - cap_half_height, yend = 1 + cap_half_height),
+      linewidth = 1.25, colour = "grey10"
+    ) +
+    ggplot2::geom_segment(
+      ggplot2::aes(x = sig_hi, xend = sig_hi,
+                   y = 1 - cap_half_height, yend = 1 + cap_half_height),
+      linewidth = 1.25, colour = "grey10"
+    ) +
     ggplot2::geom_point(ggplot2::aes(x = sig_est, y = 1),
                         size = 3.4, shape = 23,
-                        fill = "white", colour = COL_SCALE, stroke = 1.1) +
+                        fill = "white", colour = "grey10", stroke = 1.1) +
     ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.3, 4)) +
     ggplot2::scale_y_continuous(breaks = NULL) +
     ggplot2::labs(x = "residual lnM (SD)", y = NULL,
