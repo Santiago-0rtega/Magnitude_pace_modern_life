@@ -41,7 +41,7 @@ model_id <- "m01"
 model_file <- "m01_ls_disturbance"
 moderator <- "disturbance"
 moderator_label <- "Disturbance context"
-label_map <- c("Climate change" = "Climate change", "Hunt_harv" = "Hunting / harvesting", "Introduction" = "Introduction", "Landscapechange" = "Landscape change", "Other" = "Other (natural variation)", "Pollution" = "Pollution", "Responsetointroductions" = "Response to introductions")
+label_map <- c("Climate change" = "Climate change", "Hunt_harv" = "Hunting / harvesting", "Introduction" = "Introduction", "Landscapechange" = "Landscape change", "Other" = "Other (in situ natural variation)", "Pollution" = "Pollution", "Responsetointroductions" = "Response to introductions")
 
 out_dir <- here::here("outputs", "figures", "publication", "orchard")
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)

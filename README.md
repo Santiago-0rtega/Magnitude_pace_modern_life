@@ -98,21 +98,26 @@ cmdstanr::install_cmdstan()
 
 ### What lnM measures
 
-lnM is the **log magnitude of phenotypic divergence** between a focal and a reference population (or time point). Formally:
+lnM is the **log magnitude of phenotypic separation** between two groups. It measures how far apart two group means are relative to their typical within-group variation, without retaining the sign of the trait difference. It is therefore a magnitude effect size, not a directional contrast between a focal and reference population.
 
-$$\text{lnM} = \ln\!\left(\frac{|\bar{x}_\text{focal} - \bar{x}_\text{ref}|}{SD_\text{pooled}}\right)$$
+For a two-group comparison:
 
-- **Focal population**: the population that has experienced environmental change, disturbance, or the condition of interest (e.g., post-disturbance, synchronic comparison, longer elapsed time).
-- **Reference population**: the ancestral state, control, or comparator (e.g., pre-disturbance, allochronic baseline, shorter elapsed time).
+$$
+\ln M = \ln\left(\frac{s_B}{s_W}\right),
+$$
 
-Because lnM is the log of an *absolute* magnitude, it can take negative values (when the raw divergence is < 1 SD) and positive values (when divergence > 1 SD). The natural null is lnM = 0, i.e., divergence of exactly 1 pooled SD.
+where `s_B` is the between-group separation component and `s_W` is the pooled within-group standard deviation.
+
+Because lnM is on a log ratio scale, it can take negative values (separation is less than one pooled within-group SD) and positive values (separation is greater than one pooled within-group SD). The natural reference point is lnM = 0, i.e. between-group separation of about one pooled within-group SD.
+
+The sign of lnM is **not** the direction of trait change. Human disturbance can increase or decrease a trait mean depending on system and trait; lnM asks about the magnitude of separation, not whether the first group is larger than the second.
 
 ### Location submodel
 
 The location submodel estimates the **mean lnM** for each moderator level (posterior mean of the fixed effect). Interpretation:
 
 - **Intercept**: mean lnM for the reference category of the moderator, after accounting for study (ref_id), phylogeny (sp_ncbi), and sampling variance (es_id_model).
-- **Coefficient for level k**: difference in mean lnM between level k and the reference. Positive = focal groups at level k show greater divergence; negative = less divergence.
+- **Coefficient for level k**: difference in mean lnM between level k and the reference category. Positive = greater magnitude of separation in level k; negative = smaller magnitude of separation.
 - **Overall baseline (m00 intercept ≈ −0.06, 95% CrI [−0.97, 0.84])**: on average across all contexts, the magnitude of phenotypic divergence is indistinguishable from zero on the log scale (i.e., M ≈ 1 SD). There is no consistent directional signal of accelerated or decelerated divergence.
 
 ### Scale submodel

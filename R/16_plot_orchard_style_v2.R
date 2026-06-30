@@ -114,7 +114,7 @@ all_models <- list(
          "Hunt_harv"       = "Hunting / harvesting",
          "Introduction"    = "Introduction",
          "Landscapechange" = "Landscape change",
-         "Other"           = "Other (natural variation)",
+         "Other"           = "Other (in situ natural variation)",
          "Pollution"       = "Pollution",
          "Responsetointroductions" = "Response to introductions"
        )),

@@ -8,6 +8,10 @@ cache_dir <- here::here("outputs", "epred_draws")
 cache     <- read_epred_cache("m09", cache_dir)
 ```
 
+::: {.callout-warning}
+This page is temporarily withheld from the main rendered book navigation. The original data-type model had poor scale-parameter diagnostics and sparse levels; interpret no data-type result as a current main result until the replacement model is finalized.
+:::
+
 Built from the cleaned refit (m09b: index n=14 and temperature n=19 dropped, reference = linear) when available, otherwise m09.
 
 ## Model summary

@@ -22,7 +22,7 @@ label_maps <- list(
     "Hunt_harv" = "Hunting / harvest",
     "Introduction" = "Introduction",
     "Landscape change" = "Landscape change",
-    "Other" = "Other",
+    "Other" = "Other (in situ natural variation)",
     "Pollution" = "Pollution",
     "Response to introductions" = "Response to introductions"
   ),
@@ -58,6 +58,8 @@ COL_SCALE <- "#D55E00"
 COL_SCALE_LIGHT <- "#E69F00"
 COL_SCALE_RIBBON <- "#F2B27E"
 PRECISION_LABEL <- "Effect-size precision (1/SE)"
+SCALE_CAPTION_MARKS <- "Points show absolute residual lnM values; diamonds and intervals show model-estimated residual heterogeneity (sigma_lnm)."
+SCALE_CAPTION_RIBBON <- "Points show absolute residual lnM values; line and ribbon show model-estimated residual heterogeneity (sigma_lnm)."
 CATEGORY_COLS <- c(
   "#0072B2", "#D55E00", "#009E73", "#CC79A7", "#E69F00",
   "#56B4E9", "#6A3D9A", "#999999", "#000000"
@@ -170,7 +172,8 @@ plot_intercept <- function(cache) {
     ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.3, 4)) +
     ggplot2::scale_y_continuous(breaks = NULL) +
     ggplot2::labs(x = "residual lnM (SD)", y = NULL,
-                  title = "Scale -- Overall baseline (m00)") +
+                  title = "Scale -- Overall baseline (m00)",
+                  caption = SCALE_CAPTION_MARKS) +
     theme_orchard()
 
   list(location = p_loc, scale = p_scl,
@@ -228,7 +231,8 @@ plot_continuous <- function(cache) {
     ) +
     ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.3, 4)) +
     ggplot2::labs(x = lab, y = "residual lnM (SD)",
-                  title = paste("Scale --", lab)) +
+                  title = paste("Scale --", lab),
+                  caption = SCALE_CAPTION_RIBBON) +
     theme_orchard()
 
   list(location = p_loc, scale = p_scl,
@@ -350,7 +354,8 @@ plot_categorical <- function(cache) {
     ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.4, 4)) +
     ggplot2::scale_y_continuous(breaks = y_breaks, labels = lev_order) +
     ggplot2::labs(x = "residual lnM (SD)", y = NULL,
-                  title = paste("Scale --", lab)) +
+                  title = paste("Scale --", lab),
+                  caption = SCALE_CAPTION_MARKS) +
     theme_orchard()
 
   height_single <- max(2.5 + n_levels * 0.55, 5)

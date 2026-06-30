@@ -8,6 +8,10 @@ cache_dir <- here::here("outputs", "epred_draws")
 cache     <- read_epred_cache("m06", cache_dir)
 ```
 
+::: {.callout-warning}
+This page is temporarily withheld from the main rendered book navigation. The original taxonomic model had convergence and sparse-level problems; interpret no taxonomic result as a current main result until the replacement model is finalized.
+:::
+
 Built from the collapsed-levels refit (m06b; sparse taxa <5 dropped) when available, otherwise the original m06.
 
 ## Model summary
