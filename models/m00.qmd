@@ -20,16 +20,133 @@ print_cache_summary(cache)
 
 ## Orchard-like model figure
 
-The orchard-style figure is read from `outputs/figures/publication/orchard/`. The full figure-generation code is kept in `R/16_plot_orchard_style_v2.R`.
+The orchard-style figure is read from `outputs/figures/publication/orchard/`. The complete editable code used to build this plot is shown below.
 
 ```{r figure, fig.width=8, fig.height=9}
 knitr::include_graphics(
   here::here("outputs", "figures", "publication", "orchard", "m00_orchard_combined.png")
 )
 ```
-### Regenerate this figure
+### Editable plotting code
 
-```{r regenerate-orchard-m00, eval=FALSE}
-Sys.setenv(ORCHARD_MODEL_IDS = "m00")
-source(here::here("R", "16_plot_orchard_style_v2.R"))
+```{r build-orchard-m00, eval=FALSE}
+library(here)
+library(tidyverse)
+library(brms)
+library(ggbeeswarm)
+library(patchwork)
+
+out_dir <- here::here("outputs", "figures", "publication", "orchard")
+dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
+
+dat_es <- readRDS(here::here("outputs", "effect_sizes", "proceed_lnm_safe.rds"))
+fit <- readRDS(here::here("outputs", "models", "m00_ls_intercept_only.rds"))
+
+theme_orchard <- function() {
+  ggplot2::theme_classic(base_size = 13) +
+    ggplot2::theme(
+      axis.text.y        = ggplot2::element_text(size = 11),
+      axis.title.x       = ggplot2::element_text(size = 12),
+      axis.ticks.y       = ggplot2::element_blank(),
+      panel.grid.major.x = ggplot2::element_line(colour = "grey92"),
+      legend.position    = "bottom",
+      legend.title       = ggplot2::element_text(size = 10),
+      plot.title         = ggplot2::element_text(size = 13, face = "bold"),
+      plot.caption       = ggplot2::element_text(size = 9, colour = "grey50")
+    )
+}
+
+save_plot <- function(p, stem, width = 9, height = 6) {
+  ggplot2::ggsave(file.path(out_dir, paste0(stem, ".pdf")), p,
+                  width = width, height = height, device = cairo_pdf)
+  ggplot2::ggsave(file.path(out_dir, paste0(stem, ".png")), p,
+                  width = width, height = height, dpi = 300, type = "cairo")
+}
+
+raw <- dat_es |>
+  dplyr::mutate(precision = 1 / sqrt(vi_lnM_safe))
+
+fe <- brms::fixef(fit)
+int_est <- fe["Intercept", "Estimate"]
+int_lo  <- fe["Intercept", "Q2.5"]
+int_hi  <- fe["Intercept", "Q97.5"]
+sig_est <- fe["sigma_Intercept", "Estimate"]
+sig_lo  <- fe["sigma_Intercept", "Q2.5"]
+sig_hi  <- fe["sigma_Intercept", "Q97.5"]
+
+vc <- brms::VarCorr(fit)
+caption_txt <- sprintf(
+  "n = %d effect sizes | study SD = %.2f | phylogeny SD = %.2f",
+  nrow(raw), vc$ref_id$sd["Intercept", "Estimate"],
+  vc$sp_ncbi$sd["Intercept", "Estimate"]
+)
+
+p_loc <- ggplot2::ggplot() +
+  ggplot2::geom_vline(xintercept = 0, linetype = "dashed", colour = "grey50") +
+  ggbeeswarm::geom_quasirandom(
+    data = raw,
+    ggplot2::aes(x = yi_lnM_safe, y = 1, size = precision),
+    alpha = 0.20, shape = 21, fill = "#88CCEE", colour = "#0072B2",
+    groupOnX = FALSE
+  ) +
+  ggplot2::geom_linerange(
+    ggplot2::aes(y = 1, xmin = int_lo, xmax = int_hi),
+    linewidth = 1.5, colour = "grey15"
+  ) +
+  ggplot2::geom_point(
+    ggplot2::aes(x = int_est, y = 1),
+    size = 5, shape = 21, fill = "white", colour = "grey10", stroke = 1.2
+  ) +
+  ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.3, 4)) +
+  ggplot2::scale_y_continuous(breaks = NULL) +
+  ggplot2::labs(
+    x = "Location effect (lnM)",
+    y = NULL,
+    title = "Location -- Overall baseline (m00)",
+    caption = caption_txt
+  ) +
+  theme_orchard()
+
+raw_sig <- raw |>
+  dplyr::mutate(log_abs_resid = log(abs(yi_lnM_safe - int_est) + 1e-6))
+
+p_scl <- ggplot2::ggplot() +
+  ggplot2::geom_vline(xintercept = 0, linetype = "dashed", colour = "grey50") +
+  ggbeeswarm::geom_quasirandom(
+    data = raw_sig,
+    ggplot2::aes(x = log_abs_resid, y = 1, size = precision),
+    alpha = 0.20, shape = 21, fill = "#88CCEE", colour = "#0072B2",
+    groupOnX = FALSE
+  ) +
+  ggplot2::geom_linerange(
+    ggplot2::aes(y = 1, xmin = sig_lo, xmax = sig_hi),
+    linewidth = 3, colour = "white"
+  ) +
+  ggplot2::geom_linerange(
+    ggplot2::aes(y = 1, xmin = sig_lo, xmax = sig_hi),
+    linewidth = 1.5, colour = "grey15"
+  ) +
+  ggplot2::geom_point(
+    ggplot2::aes(x = sig_est, y = 1),
+    size = 5, shape = 21, fill = "white", colour = "grey10", stroke = 1.2
+  ) +
+  ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.3, 4)) +
+  ggplot2::scale_y_continuous(breaks = NULL) +
+  ggplot2::labs(
+    x = "Residual lnM",
+    y = NULL,
+    title = "Scale -- Overall baseline (m00)",
+    caption = sprintf(
+      "sigma_Intercept = %.3f [%.3f, %.3f] | exp(sigma) = %.3f",
+      sig_est, sig_lo, sig_hi, exp(sig_est)
+    )
+  ) +
+  theme_orchard()
+
+p_comb <- patchwork::wrap_plots(p_loc, p_scl, ncol = 1)
+
+save_plot(p_loc,  "m00_orchard_location", width = 9, height = 4)
+save_plot(p_scl,  "m00_orchard_scale",    width = 9, height = 4)
+save_plot(p_comb, "m00_orchard_combined", width = 9, height = 8)
+p_comb
 ```

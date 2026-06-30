@@ -563,10 +563,9 @@ window.Quarto = {
   <ul>
   <li><a href="#about-this-supplement" id="toc-about-this-supplement" class="nav-link active" data-scroll-target="#about-this-supplement"><span class="header-section-number">0.1</span> About this supplement</a></li>
   <li><a href="#the-proceed-database" id="toc-the-proceed-database" class="nav-link" data-scroll-target="#the-proceed-database"><span class="header-section-number">0.2</span> The PROCEED database</a></li>
-  <li><a href="#the-effect-size-lnm" id="toc-the-effect-size-lnm" class="nav-link" data-scroll-target="#the-effect-size-lnm"><span class="header-section-number">0.3</span> The effect size: lnM</a></li>
-  <li><a href="#locationscale-meta-regression" id="toc-locationscale-meta-regression" class="nav-link" data-scroll-target="#locationscale-meta-regression"><span class="header-section-number">0.4</span> Location–scale meta-regression</a></li>
-  <li><a href="#random-effects" id="toc-random-effects" class="nav-link" data-scroll-target="#random-effects"><span class="header-section-number">0.5</span> Random effects</a></li>
-  <li><a href="#caching-and-reproducibility" id="toc-caching-and-reproducibility" class="nav-link" data-scroll-target="#caching-and-reproducibility"><span class="header-section-number">0.6</span> Caching and reproducibility</a></li>
+  <li><a href="#locationscale-meta-regression" id="toc-locationscale-meta-regression" class="nav-link" data-scroll-target="#locationscale-meta-regression"><span class="header-section-number">0.3</span> Location–scale meta-regression</a></li>
+  <li><a href="#random-effects" id="toc-random-effects" class="nav-link" data-scroll-target="#random-effects"><span class="header-section-number">0.4</span> Random effects</a></li>
+  <li><a href="#caching-and-reproducibility" id="toc-caching-and-reproducibility" class="nav-link" data-scroll-target="#caching-and-reproducibility"><span class="header-section-number">0.5</span> Caching and reproducibility</a></li>
   </ul>
 </nav>
     </div>
@@ -617,13 +616,8 @@ window.Quarto = {
 <h2 data-number="0.2" class="anchored" data-anchor-id="the-proceed-database"><span class="header-section-number">0.2</span> The PROCEED database</h2>
 <p>The analyses use the <strong>PROCEED v6.2</strong> database of rates of evolutionary and phenotypic change. Each row represents one contrast between two populations or time points, with the raw summary statistics (means, standard deviations, sample sizes) needed to compute an effect size.</p>
 </section>
-<section id="the-effect-size-lnm" class="level2" data-number="0.3">
-<h2 data-number="0.3" class="anchored" data-anchor-id="the-effect-size-lnm"><span class="header-section-number">0.3</span> The effect size: lnM</h2>
-<p>The central effect size is <span class="math inline">\(\ln M\)</span> — the log ratio of the geometric mean absolute deviation from the trait mean. For independent-groups contrasts, <span class="math inline">\(\ln M\)</span> is estimated using the <strong>SAFE</strong> (Simulation-based Adjusted For Estimation error) procedure implemented in <code>orchaRd:::.safe_lnM_indep()</code>. The SAFE estimator uses Monte Carlo sampling to propagate uncertainty from small samples and avoids the bias of naive estimators when sample sizes are small.</p>
-<p>A positive <span class="math inline">\(\ln M\)</span> indicates that the later or disturbed population shows greater phenotypic dispersion than the reference population. A value of zero indicates equal dispersion.</p>
-</section>
-<section id="locationscale-meta-regression" class="level2" data-number="0.4">
-<h2 data-number="0.4" class="anchored" data-anchor-id="locationscale-meta-regression"><span class="header-section-number">0.4</span> Location–scale meta-regression</h2>
+<section id="locationscale-meta-regression" class="level2" data-number="0.3">
+<h2 data-number="0.3" class="anchored" data-anchor-id="locationscale-meta-regression"><span class="header-section-number">0.3</span> Location–scale meta-regression</h2>
 <p>The central statistical framework is <strong>location–scale meta-regression</strong> implemented in <code>brms</code>. Each model has the conceptual form:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bf</span>(</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  yi_lnM_safe <span class="sc">~</span> moderator <span class="sc">+</span> random_effects,</span>
@@ -632,8 +626,8 @@ window.Quarto = {
 <p>The <strong>location submodel</strong> asks whether a moderator predicts the <em>average</em> magnitude of phenotypic divergence (<span class="math inline">\(\overline{\ln M}\)</span>). The <strong>scale submodel</strong> asks whether the same moderator predicts the <em>residual variation</em> — the degree to which divergence is consistent (low <span class="math inline">\(\sigma\)</span>) or heterogeneous (high <span class="math inline">\(\sigma\)</span>) after accounting for the location effect.</p>
 <p><strong>One independent model per moderator.</strong> No large multi-moderator model is fitted. This ensures that each moderator’s effect is estimated from all data available for that moderator, and that no moderator’s influence is masked by collinearity with others.</p>
 </section>
-<section id="random-effects" class="level2" data-number="0.5">
-<h2 data-number="0.5" class="anchored" data-anchor-id="random-effects"><span class="header-section-number">0.5</span> Random effects</h2>
+<section id="random-effects" class="level2" data-number="0.4">
+<h2 data-number="0.4" class="anchored" data-anchor-id="random-effects"><span class="header-section-number">0.4</span> Random effects</h2>
 <p>Every main model includes:</p>
 <ul>
 <li><code>(1 | ref_id)</code> — non-independence among contrasts from the same reference.</li>
@@ -642,8 +636,8 @@ window.Quarto = {
 </ul>
 <p><code>sys_id</code> (study system) is reserved for sensitivity analyses because it is highly associated with <code>ref_id</code> and <code>sp_ncbi</code> and can make variance components hard to identify.</p>
 </section>
-<section id="caching-and-reproducibility" class="level2" data-number="0.6">
-<h2 data-number="0.6" class="anchored" data-anchor-id="caching-and-reproducibility"><span class="header-section-number">0.6</span> Caching and reproducibility</h2>
+<section id="caching-and-reproducibility" class="level2" data-number="0.5">
+<h2 data-number="0.5" class="anchored" data-anchor-id="caching-and-reproducibility"><span class="header-section-number">0.5</span> Caching and reproducibility</h2>
 <p>Heavy computations are cached as <code>.rds</code> files in <code>outputs/</code>. The book reads cached files by default. To recompute:</p>
 <ul>
 <li><strong>Effect sizes:</strong> set <code>recompute_effect_sizes &lt;- TRUE</code> in <code>02_lnm_effect_sizes.qmd</code>.</li>
@@ -1148,45 +1142,40 @@ window.Quarto = {
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>The analyses use the **PROCEED v6.2** database of rates of evolutionary and phenotypic change. Each row represents one contrast between two populations or time points, with the raw summary statistics (means, standard deviations, sample sizes) needed to compute an effect size.</span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">## The effect size: lnM</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>The central effect size is $\ln M$ — the log ratio of the geometric mean absolute deviation from the trait mean. For independent-groups contrasts, $\ln M$ is estimated using the **SAFE** (Simulation-based Adjusted For Estimation error) procedure implemented in <span class="in">`orchaRd:::.safe_lnM_indep()`</span>. The SAFE estimator uses Monte Carlo sampling to propagate uncertainty from small samples and avoids the bias of naive estimators when sample sizes are small.</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>A positive $\ln M$ indicates that the later or disturbed population shows greater phenotypic dispersion than the reference population. A value of zero indicates equal dispersion.</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="fu">## Location–scale meta-regression</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>The central statistical framework is **location–scale meta-regression** implemented in <span class="in">`brms`</span>. Each model has the conceptual form:</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="fu">bf</span>(</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  yi_lnM_safe <span class="sc">~</span> moderator <span class="sc">+</span> random_effects,</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  sigma <span class="sc">~</span> moderator</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>The **location submodel** asks whether a moderator predicts the *average* magnitude of phenotypic divergence ($\overline{\ln M}$). The **scale submodel** asks whether the same moderator predicts the *residual variation* — the degree to which divergence is consistent (low $\sigma$) or heterogeneous (high $\sigma$) after accounting for the location effect.</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>**One independent model per moderator.** No large multi-moderator model is fitted. This ensures that each moderator's effect is estimated from all data available for that moderator, and that no moderator's influence is masked by collinearity with others.</span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="fu">## Random effects</span></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>Every main model includes:</span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`(1 | ref_id)`</span> — non-independence among contrasts from the same reference.</span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`(1 | gr(sp_ncbi, cov = A))`</span> — phylogenetic relatedness among species.</span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`(1 | gr(es_id_model, cov = V))`</span> — known sampling variance (SAFE estimates), using the brms known-variance trick with a <span class="in">`constant(1)`</span> prior on the corresponding SD.</span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="in">`sys_id`</span> (study system) is reserved for sensitivity analyses because it is highly associated with <span class="in">`ref_id`</span> and <span class="in">`sp_ncbi`</span> and can make variance components hard to identify.</span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="fu">## Caching and reproducibility</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## Location–scale meta-regression</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>The central statistical framework is **location–scale meta-regression** implemented in <span class="in">`brms`</span>. Each model has the conceptual form:</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="fu">bf</span>(</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  yi_lnM_safe <span class="sc">~</span> moderator <span class="sc">+</span> random_effects,</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  sigma <span class="sc">~</span> moderator</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>The **location submodel** asks whether a moderator predicts the *average* magnitude of phenotypic divergence ($\overline{\ln M}$). The **scale submodel** asks whether the same moderator predicts the *residual variation* — the degree to which divergence is consistent (low $\sigma$) or heterogeneous (high $\sigma$) after accounting for the location effect.</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>**One independent model per moderator.** No large multi-moderator model is fitted. This ensures that each moderator's effect is estimated from all data available for that moderator, and that no moderator's influence is masked by collinearity with others.</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="fu">## Random effects</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>Every main model includes:</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`(1 | ref_id)`</span> — non-independence among contrasts from the same reference.</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`(1 | gr(sp_ncbi, cov = A))`</span> — phylogenetic relatedness among species.</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`(1 | gr(es_id_model, cov = V))`</span> — known sampling variance (SAFE estimates), using the brms known-variance trick with a <span class="in">`constant(1)`</span> prior on the corresponding SD.</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="in">`sys_id`</span> (study system) is reserved for sensitivity analyses because it is highly associated with <span class="in">`ref_id`</span> and <span class="in">`sp_ncbi`</span> and can make variance components hard to identify.</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="fu">## Caching and reproducibility</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>Heavy computations are cached as <span class="in">`.rds`</span> files in <span class="in">`outputs/`</span>. The book reads cached files by default. To recompute:</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Effect sizes:** set <span class="in">`recompute_effect_sizes &lt;- TRUE`</span> in <span class="in">`02_lnm_effect_sizes.qmd`</span>.</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Models:** set <span class="in">`refit_models &lt;- TRUE`</span> in <span class="in">`05_location_scale_model_grid.qmd`</span>.</span>
 <span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>Heavy computations are cached as <span class="in">`.rds`</span> files in <span class="in">`outputs/`</span>. The book reads cached files by default. To recompute:</span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Effect sizes:** set <span class="in">`recompute_effect_sizes &lt;- TRUE`</span> in <span class="in">`02_lnm_effect_sizes.qmd`</span>.</span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Models:** set <span class="in">`refit_models &lt;- TRUE`</span> in <span class="in">`05_location_scale_model_grid.qmd`</span>.</span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>Package versions, CmdStan version, and a git commit hash are recorded in @sec-reproducibility.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>Package versions, CmdStan version, and a git commit hash are recorded in @sec-reproducibility.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

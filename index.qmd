@@ -14,11 +14,6 @@ It documents every analytical step, from data import to final figures, in a repr
 
 The analyses use the **PROCEED v6.2** database of rates of evolutionary and phenotypic change. Each row represents one contrast between two populations or time points, with the raw summary statistics (means, standard deviations, sample sizes) needed to compute an effect size.
 
-## The effect size: lnM
-
-The central effect size is $\ln M$ — the log ratio of the geometric mean absolute deviation from the trait mean. For independent-groups contrasts, $\ln M$ is estimated using the **SAFE** (Simulation-based Adjusted For Estimation error) procedure implemented in `orchaRd:::.safe_lnM_indep()`. The SAFE estimator uses Monte Carlo sampling to propagate uncertainty from small samples and avoids the bias of naive estimators when sample sizes are small.
-
-A positive $\ln M$ indicates that the later or disturbed population shows greater phenotypic dispersion than the reference population. A value of zero indicates equal dispersion.
 
 ## Location–scale meta-regression
 
