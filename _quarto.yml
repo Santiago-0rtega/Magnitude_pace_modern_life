@@ -76,4 +76,4 @@ execute:
   warning: false
   message: false
   freeze: auto
-  cache: true
+  cache: false

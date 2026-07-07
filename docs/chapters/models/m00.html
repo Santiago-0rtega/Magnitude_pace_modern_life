@@ -112,6 +112,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<script src="../../site_libs/kePrint-0.0.1/kePrint.js"></script>
+
+<link href="../../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
 <link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 
 <script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
@@ -640,14 +644,14 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <p>Location–scale <span class="math inline">\(I^2\)</span> from this intercept-only baseline, partitioned into between-study (reference), phylogenetic, and within-study (residual) components following the location–scale meta-analysis framework of Nakagawa et al.&nbsp;Read from the precomputed cache (<code>outputs/summaries/heterogeneity_m00.rds</code>); the full fit is never loaded at render.</p>
 <div class="cell">
 <div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
+<table class="table caption-top table-sm table-striped small">
 <caption>Location–scale heterogeneity (I², %) with 95% credible intervals.</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Component</th>
-<th style="text-align: right;">I² (%)</th>
-<th style="text-align: right;">Lower 95% CrI</th>
-<th style="text-align: right;">Upper 95% CrI</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Component</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">I² (%)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Lower 95% CrI</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Upper 95% CrI</th>
 </tr>
 </thead>
 <tbody>
@@ -703,12 +707,12 @@ W = V^{-1}.
 \]</span></p>
 <div class="cell">
 <div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
+<table class="table caption-top table-sm table-striped small">
 <caption>Precomputed variance components used in the m00 heterogeneity denominator.</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Quantity</th>
-<th style="text-align: right;">Value</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Quantity</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Value</th>
 </tr>
 </thead>
 <tbody>

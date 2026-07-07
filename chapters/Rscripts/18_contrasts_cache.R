@@ -10,7 +10,10 @@
 #   outputs/summaries/heterogeneity_m00.rds         list($I2, $components, $Vbar)
 # ─────────────────────────────────────────────────────────────────────────────
 
-suppressMessages({ library(dplyr) })
+suppressMessages({ library(dplyr); library(kableExtra) })
+
+# CI excludes 0 (both bounds same sign) → contrast is "credibly non-zero".
+.ci_excludes_zero <- function(lo, hi) (lo > 0 & hi > 0) | (lo < 0 & hi < 0)
 
 read_contrasts_cache <- function(
     id,
@@ -48,7 +51,7 @@ format_location_contrasts <- function(cache, digits = 3) {
     `Lower 95% HPD`   = lo,
     `Upper 95% HPD`   = hi
   )
-  if (!is.null(df$pd)) out[["pd"]] <- df$pd
+  out[[".sig"]] <- .ci_excludes_zero(lo, hi)
   .round_num(out, digits)
 }
 
@@ -62,7 +65,7 @@ format_scale_contrasts <- function(cache, digits = 3) {
     `Lower 95% HPD`   = df$lower.HPD,
     `Upper 95% HPD`   = df$upper.HPD
   )
-  if (!is.null(df$pd)) out[["pd"]] <- df$pd
+  out[[".sig"]] <- .ci_excludes_zero(df$lower.HPD, df$upper.HPD)
   .round_num(out, digits)
 }
 
@@ -81,7 +84,13 @@ format_scale_emmeans <- function(cache, digits = 3) {
 kable_contrasts <- function(df, caption = NULL, digits = 3) {
   if (is.null(df) || !nrow(df))
     return(knitr::asis_output("_Contrast table unavailable — rebuild the cache on totoro._"))
-  knitr::kable(df, caption = caption, digits = digits)
+  sig <- if (".sig" %in% names(df)) df[[".sig"]] else rep(FALSE, nrow(df))
+  df  <- df[, setdiff(names(df), ".sig"), drop = FALSE]     # hide the flag column
+  kb  <- kableExtra::kbl(df, caption = caption, digits = digits) |>
+    kableExtra::kable_styling(full_width = FALSE)
+  rows <- which(sig)                                        # NA treated as FALSE
+  if (length(rows)) kb <- kableExtra::row_spec(kb, rows, bold = TRUE)
+  kb
 }
 
 # ── Heterogeneity (m00) ───────────────────────────────────────────────────────

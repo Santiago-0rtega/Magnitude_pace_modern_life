@@ -67,9 +67,19 @@ sigma_contrasts <- function(fit, moderator) {
 
   sig_int <- draws[["b_sigma_Intercept"]]
   lev_draws <- list(); lev_draws[[ref_lev]] <- sig_int
+  # brms strips spaces/special chars (keeps alphanumerics + underscore) when it
+  # names factor-level coefficients, e.g. "Landscape change" -> "Landscapechange".
+  # Match on the stripped form so levels with spaces are NOT silently dropped.
+  sig_cols  <- grep(paste0("^b_sigma_", moderator), names(draws), value = TRUE)
+  col_key   <- gsub("[^[:alnum:]_]", "", sub(paste0("^b_sigma_", moderator), "", sig_cols))
   for (lv in setdiff(all_lev, ref_lev)) {
-    col <- paste0("b_sigma_", moderator, lv)
-    if (col %in% names(draws)) lev_draws[[lv]] <- sig_int + draws[[col]]
+    lv_key <- gsub("[^[:alnum:]_]", "", lv)
+    hit    <- sig_cols[col_key == lv_key]
+    if (length(hit) == 1L) {
+      lev_draws[[lv]] <- sig_int + draws[[hit]]
+    } else {
+      message("  scale: no sigma coefficient matched level '", lv, "' — dropped")
+    }
   }
 
   hpd <- function(d) as.numeric(coda::HPDinterval(coda::as.mcmc(d)))
