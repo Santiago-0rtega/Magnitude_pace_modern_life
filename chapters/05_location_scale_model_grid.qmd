@@ -1,0 +1,369 @@
+---
+title: "Location–scale model grid"
+---
+
+```{r setup}
+source(here::here("chapters", "Rscripts", "00_packages.R"))
+source(here::here("chapters", "Rscripts", "01_paths.R"))
+source(here::here("chapters", "Rscripts", "05_phylogeny.R"))
+source(here::here("chapters", "Rscripts", "06_model_registry.R"))
+source(here::here("chapters", "Rscripts", "07_model_formulas.R"))
+source(here::here("chapters", "Rscripts", "08_fit_or_read_model.R"))
+source(here::here("chapters", "Rscripts", "09_model_summaries.R"))
+source(here::here("chapters", "Rscripts", "10_model_diagnostics.R"))
+source(here::here("chapters", "Rscripts", "15_render_guard.R"))   # read-only: never refit / rebuild phylogeny
+
+# Change to TRUE only when you want to refit all models from scratch
+refit_models <- FALSE
+
+# The grid status + combined effect tables are pre-computed (precompute_grid_summaries.R)
+# into outputs/tables/grid_summary_cache.rds so the book never loads a 400 MB model.
+# Set TRUE only to regenerate them by loading every model (slow).
+rebuild_grid <- FALSE
+```
+
+## Overview
+
+This chapter fits (or reads) one independent location–scale meta-regression for each moderator in the registry. No multi-moderator model is fitted. The registry is defined in `R/06_model_registry.R`.
+
+```{r show-registry}
+moderator_grid
+```
+
+## Excluded moderators
+
+Two moderators were fit but are **excluded from the primary results** reported in this supplement. Both fits (and any refits) are retained in `outputs/models/` for reproducibility; their estimates are simply not carried into the grid status, effect-summary tables, or publication figures below.
+
+```{r excluded-registry}
+excluded_grid |> dplyr::select(model_id, moderator, label, reason)
+```
+
+## Load data and phylogeny
+
+```{r load-data}
+dat_es <- readRDS(here::here("Rdata", "effect_sizes", "proceed_lnm_safe.rds"))
+cat("Total contrasts:", nrow(dat_es), "\n")
+```
+
+```{r load-phylogeny}
+# build_or_read_phylogeny() returns list(A = ..., name_map = ...)
+# It uses prepR4pcm for name normalisation + 4-stage reconciliation before rotl.
+phylo_out <- tryCatch({
+  A_path       <- here::here("Rdata", "phylogeny", "proceed_A_matrix.rds")
+  name_map_path <- here::here("Rdata", "phylogeny", "proceed_name_map.rds")
+
+  if (file.exists(A_path) && file.exists(name_map_path)) {
+    list(A        = readRDS(A_path),
+         name_map = readRDS(name_map_path))
+  } else {
+    message("No cached phylogeny — building via prepR4pcm + rotl ...")
+    build_or_read_phylogeny(
+      species_vec = unique(as.character(dat_es$sp_ncbi)),
+      recompute   = FALSE
+    )
+  }
+}, error = function(e) {
+  message("Phylogeny load/build failed: ", conditionMessage(e))
+  NULL
+})
+
+A_full   <- phylo_out$A
+name_map <- phylo_out$name_map
+
+if (!is.null(A_full)) {
+  cat("Phylogenetic matrix:", nrow(A_full), "×", ncol(A_full), "\n")
+} else {
+  message("Phylogenetic matrix unavailable — models will omit the phylogenetic term.")
+}
+```
+
+```{r apply-name-map}
+# Apply the prepR4pcm name map to dat_es ONCE here, adding sp_ncbi_canonical.
+# prepare_phylo_and_data() will use this column to match rows to A.
+# Rows whose sp_ncbi had no canonical match get NA in sp_ncbi_canonical and
+# are excluded from the phylogenetic term (but not from other random effects).
+if (!is.null(name_map)) {
+  dat_es <- apply_phylo_name_map(dat_es, name_map)
+  n_resolved <- sum(!is.na(dat_es$sp_ncbi_canonical))
+  n_na_orig  <- sum(is.na(dat_es$sp_ncbi) | dat_es$sp_ncbi == "")
+  n_unresolved <- sum(
+    !is.na(dat_es$sp_ncbi) & dat_es$sp_ncbi != "" &
+    is.na(dat_es$sp_ncbi_canonical)
+  )
+  cat("sp_ncbi_canonical coverage:\n")
+  cat("  Resolved to canonical name :", n_resolved, "\n")
+  cat("  Original sp_ncbi was NA/blank:", n_na_orig, "\n")
+  cat("  Named but unresolved        :", n_unresolved, "\n")
+} else {
+  # No name map — fall back to using sp_ncbi directly
+  dat_es$sp_ncbi_canonical <- dat_es$sp_ncbi
+  message("No name map available; using sp_ncbi as-is for phylogeny matching.")
+}
+```
+
+## Verify moderators exist in the data
+
+```{r check-moderators}
+grid_status <- moderator_grid |>
+  dplyr::mutate(
+    in_data = moderator %in% names(dat_es),
+    n_nonmissing = purrr::map_int(moderator, function(m) {
+      if (m %in% names(dat_es)) sum(!is.na(dat_es[[m]])) else 0L
+    })
+  )
+
+grid_status
+```
+
+## Fit or read models
+
+The loop below iterates over every row of the registry. For each moderator it:
+
+1. Checks the moderator exists and has enough data.
+2. Drops rows missing that moderator.
+3. Rebuilds the sequential `es_id_model` and sampling-variance matrix `V`.
+4. Subsets the phylogenetic matrix `A` to the species present.
+5. Builds the formula and priors.
+6. Calls `fit_or_read_model()`, which reads the cached `.rds` if it exists.
+7. Extracts summaries and diagnostics.
+
+```{r fit-grid, eval=rebuild_grid, results='hide'}
+# Heavy path (rebuild_grid = TRUE only): load every model and extract summaries.
+# Normal renders skip this and read the precomputed cache below.
+all_fe    <- list()
+all_diag  <- list()
+status_rows <- list()
+
+for (i in seq_len(nrow(moderator_grid))) {
+  row        <- moderator_grid[i, ]
+  mod_id     <- row$model_id
+  moderator  <- row$moderator
+  mod_label  <- row$label
+  mod_type   <- row$type
+  model_file <- paste0(mod_id, "_ls_", moderator)
+
+  message("\n--- ", mod_id, ": ", moderator, " ---")
+
+  # ── 1. Check moderator exists ──────────────────────────────────────────────
+  if (!moderator %in% names(dat_es)) {
+    status_rows[[i]] <- tibble::tibble(
+      model_id = mod_id, moderator = moderator, label = mod_label,
+      type = mod_type, n_rows = 0L, n_levels = NA_integer_,
+      n_missing_excluded = NA_integer_,
+      model_path = NA_character_, status = "skipped: variable absent",
+      notes = "Moderator not found in dataset.",
+      max_rhat = NA_real_, min_bulk_ess = NA_real_, min_tail_ess = NA_real_,
+      n_divergent = NA_integer_, max_treedepth_hits = NA_integer_
+    )
+    next
+  }
+
+  # ── 2. Subset data for this moderator ─────────────────────────────────────
+  n_before     <- nrow(dat_es)
+  dat_model    <- dat_es[!is.na(dat_es[[moderator]]), ]
+  n_missing_ex <- n_before - nrow(dat_model)
+
+  if (mod_type == "categorical") {
+    dat_model[[moderator]] <- droplevels(factor(dat_model[[moderator]]))
+  }
+
+  # Check sample size per level for categorical moderators
+  n_levels <- NA_integer_
+  level_counts <- NULL
+  if (mod_type == "categorical") {
+    level_counts <- table(dat_model[[moderator]])
+    n_levels     <- length(level_counts)
+    sparse       <- level_counts[level_counts < 5]
+    if (length(sparse) > 0) {
+      message("Sparse levels (<5 obs) in ", moderator, ": ",
+              paste(names(sparse), collapse = ", "))
+    }
+    if (all(level_counts < 3)) {
+      status_rows[[i]] <- tibble::tibble(
+        model_id = mod_id, moderator = moderator, label = mod_label,
+        type = mod_type, n_rows = nrow(dat_model), n_levels = n_levels,
+        n_missing_excluded = n_missing_ex,
+        model_path = NA_character_, status = "skipped: too sparse",
+        notes = "All levels have fewer than 3 observations.",
+        max_rhat = NA_real_, min_bulk_ess = NA_real_, min_tail_ess = NA_real_,
+        n_divergent = NA_integer_, max_treedepth_hits = NA_integer_
+      )
+      next
+    }
+  }
+
+  if (nrow(dat_model) < 10) {
+    status_rows[[i]] <- tibble::tibble(
+      model_id = mod_id, moderator = moderator, label = mod_label,
+      type = mod_type, n_rows = nrow(dat_model), n_levels = n_levels,
+      n_missing_excluded = n_missing_ex,
+      model_path = NA_character_, status = "skipped: insufficient data",
+      notes = paste("Only", nrow(dat_model), "rows after missingness exclusion."),
+      max_rhat = NA_real_, min_bulk_ess = NA_real_, min_tail_ess = NA_real_,
+      n_divergent = NA_integer_, max_treedepth_hits = NA_integer_
+    )
+    next
+  }
+
+  # ── 3 & 4. Align data to phylogeny, build V ─────────────────────────────────
+  # prepare_phylo_and_data() subsets A to species present in this model's data,
+  # filters dat_model to the intersection (so every sp_ncbi level is in A),
+  # rebuilds es_id_model sequentially, and constructs the diagonal V matrix.
+  dat_model <- dat_model |>
+    dplyr::mutate(es_id_model = factor(seq_len(dplyr::n())))
+
+  phylo     <- prepare_phylo_and_data(dat_model, A_full, label = mod_id)
+  dat_model <- phylo$dat_model
+  A_mod     <- phylo$A_mod
+  V         <- phylo$V
+  has_phylo <- phylo$has_phylo
+
+  # ── 5. Build formula and priors ───────────────────────────────────────────
+  formula <- build_ls_formula(moderator, has_phylogeny = has_phylo)
+  priors  <- build_ls_priors(formula, dat_model, V, A = A_mod)
+
+  # ── 5b. Verify constant(1) is correctly set before any fitting ────────────
+  prior_ok <- verify_esid_prior(priors, model_name = mod_id)
+  if (!prior_ok) {
+    status_rows[[i]] <- tibble::tibble(
+      model_id = mod_id, moderator = moderator, label = mod_label,
+      type = mod_type, n_rows = nrow(dat_model), n_levels = n_levels,
+      n_missing_excluded = n_missing_ex,
+      model_path = NA_character_, status = "skipped: prior check failed",
+      notes = "constant(1) was not confirmed at coef=Intercept level for es_id_model.",
+      max_rhat = NA_real_, min_bulk_ess = NA_real_, min_tail_ess = NA_real_,
+      n_divergent = NA_integer_, max_treedepth_hits = NA_integer_
+    )
+    next
+  }
+
+  # ── 6. Fit or read ─────────────────────────────────────────────────────────
+  model_path_full <- file.path(
+    here::here("Rdata", "models"),
+    paste0(model_file, ".rds")
+  )
+
+  fit <- tryCatch({
+    fit_or_read_model(
+      model_name = model_file,
+      fit_fun    = function() {
+        fit_ls_model(dat_model, formula, priors,
+                     V = V, A = A_mod,
+                     mcmc_args = default_mcmc_args)
+      },
+      model_dir  = here::here("Rdata", "models"),
+      refit      = refit_models
+    )
+  }, error = function(e) {
+    message("Model fitting failed for ", moderator, ": ", conditionMessage(e))
+    NULL
+  })
+
+  # ── 7. Extract summaries and diagnostics ──────────────────────────────────
+  if (is.null(fit)) {
+    status_rows[[i]] <- tibble::tibble(
+      model_id = mod_id, moderator = moderator, label = mod_label,
+      type = mod_type, n_rows = nrow(dat_model), n_levels = n_levels,
+      n_missing_excluded = n_missing_ex,
+      model_path = model_path_full, status = "failed",
+      notes = "Model returned NULL (fitting error).",
+      max_rhat = NA_real_, min_bulk_ess = NA_real_, min_tail_ess = NA_real_,
+      n_divergent = NA_integer_, max_treedepth_hits = NA_integer_
+    )
+    next
+  }
+
+  fe   <- extract_fixed_effects(fit, mod_id, moderator)
+  diag <- tryCatch(
+    extract_diagnostics(fit, mod_id, moderator),
+    error = function(e) {
+      message("Diagnostics failed for ", moderator, ": ", conditionMessage(e))
+      tibble::tibble(
+        model_id = mod_id, moderator = moderator,
+        max_rhat = NA_real_, min_bulk_ess = NA_real_,
+        min_tail_ess = NA_real_, n_divergent = NA_integer_,
+        max_treedepth_hits = NA_integer_
+      )
+    }
+  )
+
+  all_fe[[mod_id]]   <- split_location_scale(fe)
+  all_diag[[mod_id]] <- diag
+
+  status_rows[[i]] <- tibble::tibble(
+    model_id           = mod_id,
+    moderator          = moderator,
+    label              = mod_label,
+    type               = mod_type,
+    n_rows             = nrow(dat_model),
+    n_levels           = n_levels,
+    n_missing_excluded = n_missing_ex,
+    model_path         = model_path_full,
+    status             = "fitted",
+    notes              = "",
+    max_rhat           = diag$max_rhat,
+    min_bulk_ess       = diag$min_bulk_ess,
+    min_tail_ess       = diag$min_tail_ess,
+    n_divergent        = diag$n_divergent,
+    max_treedepth_hits = diag$max_treedepth_hits
+  )
+}
+```
+
+## Assemble grid summaries
+
+```{r grid-assemble}
+grid_cache <- here::here("Rdata", "tables", "grid_summary_cache.rds")
+
+if (rebuild_grid) {
+  # Persist what the loop above produced (also refreshes the CSVs + cache).
+  model_status <- dplyr::bind_rows(status_rows)
+  readr::write_csv(model_status, here::here("Rdata", "tables", "model_grid_status.csv"))
+  summ     <- save_combined_summaries(all_fe,  tables_dir = here::here("Rdata", "tables"))
+  diag_tbl <- save_combined_diagnostics(all_diag, tables_dir = here::here("Rdata", "tables"))
+  loc_effects <- summ$location; scl_effects <- summ$scale
+  saveRDS(list(status = model_status, location = loc_effects,
+               scale = scl_effects, diagnostics = diag_tbl), grid_cache)
+} else {
+  # Normal render: read the small precomputed cache — no 400 MB model is loaded.
+  pace_need(grid_cache, "model grid summary cache")
+  g <- readRDS(grid_cache)
+  model_status <- g$status; loc_effects <- g$location
+  scl_effects  <- g$scale;  diag_tbl    <- g$diagnostics
+}
+
+model_status <- model_status |>
+  dplyr::mutate(
+    status = dplyr::case_when(
+      model_id == "m06" ~ "withheld: replacement model pending",
+      model_id == "m09" ~ "withheld: replacement model pending",
+      TRUE ~ status
+    ),
+    notes = dplyr::case_when(
+      model_id == "m06" ~ "Original taxonomic model had poor convergence and sparse-level geometry; do not interpret this row as a current main result until the replacement model is finalized.",
+      model_id == "m09" ~ "Original data-type model had poor scale-parameter diagnostics and sparse levels; do not interpret this row as a current main result until the replacement model is finalized.",
+      TRUE ~ notes
+    )
+  )
+```
+
+## Model status table
+
+The taxonomic-group (`m06`) and data-type (`m09`) result pages are temporarily withheld from the rendered book navigation. The original fits had known convergence or sparse-level problems, and the replacement models are being finalized before these moderators are presented as main results.
+
+```{r status-table}
+model_status
+```
+
+## Convergence overview
+
+```{r convergence}
+model_status |>
+  dplyr::filter(status == "fitted") |>
+  dplyr::select(model_id, moderator, max_rhat, min_bulk_ess, n_divergent) |>
+  dplyr::mutate(
+    rhat_ok = dplyr::if_else(max_rhat <= 1.01, "ok", "warn"),
+    ess_ok  = dplyr::if_else(min_bulk_ess >= 400, "ok", "warn"),
+    div_ok  = dplyr::if_else(n_divergent < 10, "ok", "warn")
+  )
+```

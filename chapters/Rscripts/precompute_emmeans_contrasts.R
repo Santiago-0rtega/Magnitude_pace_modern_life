@@ -1,0 +1,153 @@
+# precompute_emmeans_contrasts.R
+# Run ONCE on totoro (models are local + fast there). For each CATEGORICAL
+# moderator model, compute estimated marginal means and all pairwise
+# level-vs-level contrasts, for BOTH the location part and the scale (sigma)
+# part, and save them as small structured tables the book can read without ever
+# loading a 400 MB fit.
+#
+#   Location: emmeans(fit, ~ moderator, epred = TRUE, re_formula = NA) and
+#             pairwise contrasts (no p-value adjustment; Bayesian HPD intervals).
+#   Scale:    marginal means and pairwise contrasts built directly from the
+#             posterior draws of the sigma (log-scale) coefficients, since
+#             emmeans cannot target the scale part of a brms location-scale fit.
+#             Reported on the log-sigma scale; exp() gives the residual SD.
+#
+# Outputs (all small):
+#   outputs/summaries/emmeans_contrasts_cache.rds   (named list by model_id)
+#   outputs/tables/contrasts/<id>_location_emmeans.csv
+#   outputs/tables/contrasts/<id>_location_contrasts.csv
+#   outputs/tables/contrasts/<id>_scale_emmeans.csv
+#   outputs/tables/contrasts/<id>_scale_contrasts.csv
+#
+#   Rscript precompute_emmeans_contrasts.R
+
+setwd(if (dir.exists("/home/ortegara/Documents/PACE"))
+        "/home/ortegara/Documents/PACE" else getwd())
+suppressMessages({
+  library(brms); library(emmeans); library(dplyr); library(tibble); library(readr)
+  library(coda)
+})
+source(file.path("R", "06_model_registry.R"))
+
+model_dir     <- file.path("outputs", "models")
+tables_dir    <- file.path("outputs", "tables", "contrasts")
+summ_dir      <- file.path("outputs", "summaries")
+dir.create(tables_dir, showWarnings = FALSE, recursive = TRUE)
+dir.create(summ_dir,   showWarnings = FALSE, recursive = TRUE)
+
+# Prefer refit (_v2 / _v3) fits where they exist, mirroring the grid precompute.
+candidates <- list(
+  m06 = c("m06c_ls_taxa3", "m06b_ls_taxa_v2"),
+  m09 = "m09b_ls_data_type_v2",
+  m10 = "m10b_ls_transf_data_v2"
+)
+resolve_file <- function(mod_id, moderator) {
+  cand <- c(candidates[[mod_id]], paste0(mod_id, "_ls_", moderator))
+  hit  <- cand[file.exists(file.path(model_dir, paste0(cand, ".rds")))]
+  if (length(hit)) hit[1] else NA_character_
+}
+
+# The actual moderator column can differ from the registry name for refit (_v2)
+# models (e.g. m10 uses "transf_data_v2"). Detect it from the fit itself: it is
+# the sole predictor column that is not the response or a grouping factor.
+detect_moderator <- function(fit, fallback) {
+  non_mod <- c("yi_lnM_safe", "ref_id", "sp_ncbi", "es_id_model", "es_id",
+               "vi_lnM_safe", "es_id_db", "sys_id")
+  cand <- setdiff(names(fit$data), non_mod)
+  if (length(cand) == 1L) cand else fallback
+}
+
+# ── Scale (sigma) marginals + pairwise contrasts, from posterior draws ────────
+# log-sigma per level = b_sigma_Intercept (+ b_sigma_<moderator><level>).
+sigma_contrasts <- function(fit, moderator) {
+  draws   <- brms::as_draws_df(fit)
+  ref_lev <- levels(factor(fit$data[[moderator]]))[1]
+  all_lev <- unique(as.character(fit$data[[moderator]]))
+  all_lev <- all_lev[!is.na(all_lev)]
+
+  sig_int <- draws[["b_sigma_Intercept"]]
+  lev_draws <- list(); lev_draws[[ref_lev]] <- sig_int
+  for (lv in setdiff(all_lev, ref_lev)) {
+    col <- paste0("b_sigma_", moderator, lv)
+    if (col %in% names(draws)) lev_draws[[lv]] <- sig_int + draws[[col]]
+  }
+
+  hpd <- function(d) as.numeric(coda::HPDinterval(coda::as.mcmc(d)))
+
+  emm <- bind_rows(lapply(names(lev_draws), function(lv) {
+    d <- lev_draws[[lv]]; h <- hpd(d)
+    tibble(level = lv, emmean = mean(d), lower.HPD = h[1], upper.HPD = h[2],
+           residual_SD = exp(mean(d)))
+  }))
+
+  levs  <- names(lev_draws)
+  pairs <- bind_rows(lapply(seq_along(levs), function(i)
+    bind_rows(lapply(seq_along(levs), function(j) {
+      if (j <= i) return(NULL)
+      d <- lev_draws[[levs[i]]] - lev_draws[[levs[j]]]; h <- hpd(d)
+      pdir <- mean(d > 0)
+      tibble(contrast = paste(levs[i], "-", levs[j]),
+             estimate = mean(d), lower.HPD = h[1], upper.HPD = h[2],
+             pd = max(pdir, 1 - pdir))
+    }))))
+  list(emmeans = emm, contrasts = pairs)
+}
+
+# ── Location marginals + pairwise contrasts, via emmeans on the epred ─────────
+location_contrasts <- function(fit, moderator) {
+  em <- emmeans::emmeans(fit, as.formula(paste("~", moderator)),
+                         epred = TRUE, re_formula = NA)
+  emm_df <- as.data.frame(summary(em)) |>
+    rename(level = 1) |> as_tibble()
+
+  pw <- emmeans::contrast(em, method = "pairwise", adjust = "none")
+  ctr_df <- as.data.frame(summary(pw, infer = TRUE)) |> as_tibble()
+
+  # Probability of direction from the contrast posterior draws.
+  pd <- tryCatch({
+    mc <- as.matrix(emmeans::as.mcmc.emmGrid(pw, names = FALSE))
+    apply(mc, 2, function(d) { p <- mean(d > 0); max(p, 1 - p) })
+  }, error = function(e) rep(NA_real_, nrow(ctr_df)))
+  ctr_df$pd <- pd
+  list(emmeans = emm_df, contrasts = ctr_df)
+}
+
+cat_grid <- dplyr::filter(moderator_grid, type == "categorical")
+cache <- list()
+
+for (i in seq_len(nrow(cat_grid))) {
+  row       <- cat_grid[i, ]
+  mod_id    <- row$model_id; moderator <- row$moderator; mod_label <- row$label
+  mf <- resolve_file(mod_id, moderator)
+  if (is.na(mf)) { message(mod_id, ": no rds — skipped"); next }
+
+  message(mod_id, ": reading ", mf)
+  fit <- readRDS(file.path(model_dir, paste0(mf, ".rds")))
+  moderator <- detect_moderator(fit, moderator)
+  message("  moderator column: ", moderator)
+
+  loc <- tryCatch(location_contrasts(fit, moderator),
+                  error = function(e) { message("  location failed: ",
+                                                 conditionMessage(e)); NULL })
+  scl <- tryCatch(sigma_contrasts(fit, moderator),
+                  error = function(e) { message("  scale failed: ",
+                                                conditionMessage(e)); NULL })
+
+  cache[[mod_id]] <- list(model_id = mod_id, moderator = moderator,
+                          label = mod_label, model_file = mf,
+                          loc_emmeans   = loc$emmeans,   loc_contrasts = loc$contrasts,
+                          scl_emmeans   = scl$emmeans,   scl_contrasts = scl$contrasts)
+
+  if (!is.null(loc)) {
+    write_csv(loc$emmeans,   file.path(tables_dir, paste0(mod_id, "_location_emmeans.csv")))
+    write_csv(loc$contrasts, file.path(tables_dir, paste0(mod_id, "_location_contrasts.csv")))
+  }
+  if (!is.null(scl)) {
+    write_csv(scl$emmeans,   file.path(tables_dir, paste0(mod_id, "_scale_emmeans.csv")))
+    write_csv(scl$contrasts, file.path(tables_dir, paste0(mod_id, "_scale_contrasts.csv")))
+  }
+  rm(fit); gc(verbose = FALSE)
+}
+
+saveRDS(cache, file.path(summ_dir, "emmeans_contrasts_cache.rds"))
+message("\nDone. cached models: ", paste(names(cache), collapse = ", "))

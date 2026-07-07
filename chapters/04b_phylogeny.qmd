@@ -1,0 +1,140 @@
+---
+title: "Phylogenetic reconciliation"
+---
+
+```{r setup}
+source(here::here("chapters", "Rscripts", "00_packages.R"))
+source(here::here("chapters", "Rscripts", "01_paths.R"))
+source(here::here("chapters", "Rscripts", "05_phylogeny.R"))
+source(here::here("chapters", "Rscripts", "15_render_guard.R"))   # read-only: never rebuild the phylogeny here
+```
+
+## Why a phylogenetic random effect
+
+Species that share evolutionary history tend to share trait values for reasons
+unrelated to the moderators in these models. The phylogenetic random effect
+`(1 | gr(sp_ncbi, cov = A))`, included in every main location–scale model,
+accounts for this by letting species-level intercepts covary according to a
+matrix `A` derived from a tree of the analysed species. This chapter documents
+how that tree and `A` were built, and how species that could not be placed on
+the tree are handled.
+
+## Building the tree and the correlation matrix
+
+Species names in PROCEED were matched to the Open Tree of Life synthetic tree
+(Hinchliff et al. 2015) via the `rotl` package, retrieving the induced subtree
+for the matched taxa. Because PROCEED spans plant, invertebrate, and vertebrate
+species, name matching was not restricted to a single higher-level taxonomic
+context.
+
+The tree's tip labels were then reconciled against the original PROCEED species
+names using a four-stage cascade implemented in `prepR4pcm`:
+
+1. **Exact match**
+2. **Normalized match** — case, whitespace, and underscore differences resolved
+3. **Synonym resolution** — via GNVerifier (`authority = "gnverifier"`), checking
+   the name against external taxonomic databases for accepted synonyms
+4. **Fuzzy match** — approximate string matching for names still unresolved
+
+Species that cannot be resolved at any stage are excluded from the
+phylogenetic random effect (see [Unmatched species](#unmatched-species)
+below), but are **not** excluded from the rest of the model.
+
+Multifurcations in the retrieved tree were randomly resolved into bifurcations
+with zero-length branches (`ape::multi2di`). Where branch lengths were not
+available from Open Tree of Life, Grafen branch lengths (power ρ = 1) were
+assigned (`ape::compute.brlen`). The resulting tree was converted to a
+phylogenetic correlation matrix under a Brownian-motion model of trait
+evolution (`prepR4pcm::pr_phylo_cor`, falling back to `ape::vcv.phylo` if
+unavailable).
+
+All of this logic lives in `R/05_phylogeny.R::build_or_read_phylogeny()`; this
+chapter only *reads* the cached result — rebuilding it requires network access
+to Open Tree of Life and GNVerifier and is not done automatically on render.
+
+```{r recompute-toggle}
+# Change to TRUE only to force a full network rebuild of the tree (slow,
+# requires internet access). Normal renders read the cache below.
+recompute_phylogeny <- FALSE
+```
+
+## Load cached phylogeny
+
+```{r load-phylo}
+tree_path      <- here::here("Rdata", "phylogeny", "proceed_tree.rds")
+A_path         <- here::here("Rdata", "phylogeny", "proceed_A_matrix.rds")
+name_map_path  <- here::here("Rdata", "phylogeny", "proceed_name_map.rds")
+unmatched_path <- here::here("Rdata", "phylogeny", "unmatched_species.csv")
+
+if (recompute_phylogeny) {
+  dat_es <- readRDS(here::here("Rdata", "effect_sizes", "proceed_lnm_safe.rds"))
+  phylo_out <- build_or_read_phylogeny(
+    species_vec = unique(as.character(dat_es$sp_ncbi)),
+    recompute   = TRUE
+  )
+} else {
+  pace_need(A_path,        "phylogenetic correlation matrix")
+  pace_need(name_map_path, "phylogenetic name map")
+  phylo_out <- list(A = readRDS(A_path), name_map = readRDS(name_map_path))
+}
+
+A_full     <- phylo_out$A
+name_map   <- phylo_out$name_map
+tree_final <- tryCatch(readRDS(tree_path), error = function(e) NULL)
+```
+
+## Reconciliation summary
+
+```{r reconciliation-summary}
+n_total      <- nrow(name_map)
+n_resolved   <- sum(!is.na(name_map$sp_ncbi_canonical) &
+                       nzchar(name_map$sp_ncbi_canonical))
+n_unresolved <- n_total - n_resolved
+n_tips       <- if (!is.null(tree_final)) length(tree_final$tip.label) else nrow(A_full)
+
+tibble::tibble(
+  Metric = c(
+    "Unique species names submitted",
+    "Reconciled to a canonical taxon",
+    "Unresolved (excluded from phylogenetic term)",
+    "Unique tips in pruned tree / rows in A"
+  ),
+  N = c(n_total, n_resolved, n_unresolved, n_tips),
+  `%` = round(100 * c(n_total, n_resolved, n_unresolved, n_tips) / n_total, 1)
+)
+```
+
+## Unmatched species
+
+These species names could not be reconciled to a tree tip at any stage of the
+cascade (exact, normalized, synonym via GNVerifier, or fuzzy) and are
+therefore excluded from the phylogenetic random effect. They are retained in
+every other random effect.
+
+```{r unmatched-table}
+if (file.exists(unmatched_path)) {
+  readr::read_csv(unmatched_path, show_col_types = FALSE)
+} else {
+  cat("No unmatched-species file found — all species were resolved.\n")
+}
+```
+
+## Species retained but absent from the tree ("star" species)
+
+A separate, smaller category of row loss can occur *inside* an individual
+model: a species can be reconciled to a canonical name (and so appear in
+`name_map`) but still be absent from the tree subset used to build `A` for a
+particular moderator's data. `prepare_phylo_and_data()`, called once per model
+in the location–scale model grid, assigns these species zero phylogenetic
+correlation with every other species — a star-phylogeny contribution — rather
+than dropping them. See the Dependency structure chapter for the per-contrast
+accounting of this.
+
+## Phylogenetic correlation matrix — summary
+
+```{r a-matrix-summary}
+off_diag <- A_full[row(A_full) != col(A_full)]
+cat("A matrix dimensions:", nrow(A_full), "×", ncol(A_full), "\n")
+cat("Off-diagonal correlation range: [",
+    round(min(off_diag), 3), ", ", round(max(off_diag), 3), "]\n", sep = "")
+```

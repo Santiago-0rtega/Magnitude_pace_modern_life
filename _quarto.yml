@@ -18,36 +18,37 @@ book:
     - index.qmd
     - part: "Data & Effect Sizes"
       chapters:
-        - 01_data_preparation.qmd
-        - 02_lnm_effect_sizes.qmd
-        - 03_descriptive_summaries.qmd
+        - chapters/01_data_preparation.qmd
+        - chapters/02_lnm_effect_sizes.qmd
+        - chapters/03_descriptive_summaries.qmd
     - part: "Non-independence"
       chapters:
-        - 04_dependency_structure.qmd
+        - chapters/04_dependency_structure.qmd
+        - chapters/04b_phylogeny.qmd
     - part: "Location–Scale Models"
       chapters:
-        - 05_location_scale_model_grid.qmd
+        - chapters/05_location_scale_model_grid.qmd
     - part: "Results — one chapter per model"
       chapters:
-        - models/m00.qmd
-        - models/m01.qmd
-        - models/m02.qmd
-        - models/m03.qmd
-        - models/m04.qmd
-        - models/m05.qmd
-        - models/m07.qmd
-        - models/m08.qmd
-        - models/m10.qmd
-        - models/m11.qmd
-        - models/m12.qmd
-        - models/m13.qmd
+        - chapters/models/m00.qmd
+        - chapters/models/m01.qmd
+        - chapters/models/m02.qmd
+        - chapters/models/m03.qmd
+        - chapters/models/m04.qmd
+        - chapters/models/m05.qmd
+        - chapters/models/m07.qmd
+        - chapters/models/m08.qmd
+        - chapters/models/m10.qmd
+        - chapters/models/m11.qmd
+        - chapters/models/m12.qmd
+        - chapters/models/m13.qmd
     - part: "Robustness"
       chapters:
-        - 07_sensitivity_analyses.qmd
+        - chapters/07_sensitivity_analyses.qmd
     - part: "Figures & Reproducibility"
       chapters:
-        - 08_publication_figures.qmd
-        - 09_reproducibility.qmd
+        - chapters/08_publication_figures.qmd
+        - chapters/09_reproducibility.qmd
 
 format:
   html:

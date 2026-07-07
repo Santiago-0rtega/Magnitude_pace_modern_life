@@ -12,12 +12,29 @@ It documents every analytical step, from data import to final figures, in a repr
 
 ## The PROCEED database
 
-The analyses use the **PROCEED v6.2** database of rates of evolutionary and phenotypic change. Each row represents one contrast between two populations or time points, with the raw summary statistics (means, standard deviations, sample sizes) needed to compute an effect size.
+The analyses use the **PROCEED v6.2** database of rates of evolutionary and phenotypic change. Each row represents one contrast between two populations or time points, with the raw summary statistics (means, standard deviations, sample sizes) needed to compute $\ln M$.
 
+## Purpose of lnM
 
-## Location–scale meta-regression
+The effect size used in this book is $\ln M$, a log-magnitude statistic for the distance between two group means irrespective of direction. It is designed for questions where the magnitude of phenotypic divergence matters more than whether the focal group is higher or lower. Unlike taking $|d|$ or $|\ln RR|$, $\ln M$ is defined from one-way ANOVA components and is intended to be analysed directly with standard meta-analytic and meta-regression models.
 
-The central statistical framework is **location–scale meta-regression** implemented in `brms`. Each model has the conceptual form:
+For each two-group contrast, the analytic definition starts with the between- and within-group mean squares, $MS_B$ and $MS_W$. The within-group variance is $s_W^2 = MS_W$, and the between-component variance is:
+
+$$
+s_B^2 = \frac{MS_B - MS_W}{n_0},
+$$
+
+where $n_0 = 2n_1n_2 / (n_1 + n_2)$ is the harmonic-mean sample size. The target effect size is then:
+
+$$
+\ln M = \ln\left(\frac{s_B}{s_W}\right).
+$$
+
+Thus, $\ln M = 0$ means the estimated between-component standard deviation equals the within-group standard deviation. This is a high-magnitude threshold: for large, balanced independent groups, it is approximately equivalent to a standardized mean difference of $d \approx 1.4$.
+
+## Location-scale meta-regression
+
+The central statistical framework is **location-scale meta-regression** implemented in `brms`. Each model has the conceptual form:
 
 ```r
 bf(
@@ -26,7 +43,7 @@ bf(
 )
 ```
 
-The **location submodel** asks whether a moderator predicts the *average* magnitude of phenotypic divergence ($\overline{\ln M}$). The **scale submodel** asks whether the same moderator predicts the *residual variation* — the degree to which divergence is consistent (low $\sigma$) or heterogeneous (high $\sigma$) after accounting for the location effect.
+The **location submodel** asks whether a moderator predicts the *average* log magnitude of phenotypic divergence ($\overline{\ln M}$). The **scale submodel** asks whether the same moderator predicts the *residual variation* - the degree to which divergence is consistent (low $\sigma_{\ln M}$) or heterogeneous (high $\sigma_{\ln M}$) after accounting for the location effect.
 
 **One independent model per moderator.** No large multi-moderator model is fitted. This ensures that each moderator's effect is estimated from all data available for that moderator, and that no moderator's influence is masked by collinearity with others.
 
@@ -34,9 +51,9 @@ The **location submodel** asks whether a moderator predicts the *average* magnit
 
 Every main model includes:
 
-- `(1 | ref_id)` — non-independence among contrasts from the same reference.
-- `(1 | gr(sp_ncbi, cov = A))` — phylogenetic relatedness among species.
-- `(1 | gr(es_id_model, cov = V))` — known sampling variance (SAFE estimates), using the brms known-variance trick with a `constant(1)` prior on the corresponding SD.
+- `(1 | ref_id)` - non-independence among contrasts from the same reference.
+- `(1 | gr(sp_ncbi, cov = A))` - phylogenetic relatedness among species.
+- `(1 | gr(es_id_model, cov = V))` - known sampling variance from SAFE estimates, using the brms known-variance trick with a `constant(1)` prior on the corresponding SD.
 
 `sys_id` (study system) is reserved for sensitivity analyses because it is highly associated with `ref_id` and `sp_ncbi` and can make variance components hard to identify.
 

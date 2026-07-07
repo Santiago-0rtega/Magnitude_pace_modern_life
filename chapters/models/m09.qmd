@@ -1,0 +1,17 @@
+---
+title: "m09 — Data type (excluded)"
+---
+
+::: {.callout-warning}
+**Excluded from the primary supplementary results.** Data type is not reported as a moderator in this book. This page documents what was attempted and why it was dropped.
+:::
+
+## What was attempted
+
+The original `data_type` model (m09) had sparse, poorly behaved levels. A cleaned refit, **m09b**, dropped the `index` (n = 14) and `temperature` (n = 19) levels and reset the reference level to `linear`.
+
+## Why it was dropped
+
+The m09b refit converged and completed, but still returned **5 of 8000 post-warmup transitions (0.06%) as divergent**. That rate is low, but a divergence is a direct signal that the sampler could not fully explore the posterior in some region of parameter space — the estimates in that region cannot be trusted at face value, even if most of the posterior looks fine.
+
+**Decision:** m09 (data type) — both the original fit and the m09b refit — is excluded from the primary results on this basis. Both are retained in `outputs/models/` for reproducibility and are mentioned here for transparency, but are not summarized, plotted, or fed into the aggregated effect tables or publication figures.

@@ -1,0 +1,136 @@
+---
+title: "Publication figures"
+---
+
+```{r setup}
+source(here::here("chapters", "Rscripts", "00_packages.R"))
+source(here::here("chapters", "Rscripts", "01_paths.R"))
+source(here::here("chapters", "Rscripts", "06_model_registry.R"))
+source(here::here("chapters", "Rscripts", "11_plotting_orchard_like.R"))
+source(here::here("chapters", "Rscripts", "12_save_figures.R"))
+```
+
+This chapter reads cached model results and generates publication-ready figures. No models are fitted here.
+
+```{r load-tables}
+status_file <- here::here("Rdata", "tables", "model_grid_status.csv")
+loc_file    <- here::here("Rdata", "tables", "location_effects_all_moderators.csv")
+scl_file    <- here::here("Rdata", "tables", "scale_effects_all_moderators.csv")
+
+model_status <- if (file.exists(status_file)) readr::read_csv(status_file, show_col_types = FALSE) else NULL
+loc_effects  <- if (file.exists(loc_file))    readr::read_csv(loc_file,    show_col_types = FALSE) else NULL
+scl_effects  <- if (file.exists(scl_file))    readr::read_csv(scl_file,    show_col_types = FALSE) else NULL
+
+fitted_ids <- if (!is.null(model_status)) {
+  model_status$model_id[model_status$status == "fitted"]
+} else character(0)
+
+cat("Models with figures to generate:", length(fitted_ids), "\n")
+```
+
+## Generate figures per moderator
+
+```{r figure-loop}
+for (i in seq_len(nrow(moderator_grid))) {
+  row       <- moderator_grid[i, ]
+  mod_id    <- row$model_id
+  moderator <- row$moderator
+  label     <- row$label
+  mod_type  <- row$type
+
+  if (!mod_id %in% fitted_ids) {
+    message("Skipping figure for ", mod_id, " (not fitted).")
+    next
+  }
+
+  loc_dat <- if (!is.null(loc_effects))
+    dplyr::filter(loc_effects, model_id == mod_id) else NULL
+  scl_dat <- if (!is.null(scl_effects))
+    dplyr::filter(scl_effects, model_id == mod_id) else NULL
+
+  if (is.null(loc_dat) || nrow(loc_dat) == 0) {
+    message("No location effects for ", mod_id)
+    next
+  }
+
+  # Build plots based on moderator type
+  if (mod_type == "categorical") {
+    p_loc <- plot_categorical_location(
+      loc_dat |> dplyr::filter(submodel == "location"),
+      label
+    )
+    p_scl <- if (!is.null(scl_dat) && nrow(scl_dat) > 0) {
+      plot_categorical_scale(
+        scl_dat |> dplyr::filter(submodel == "scale"),
+        label
+      )
+    } else NULL
+  } else {
+    # For continuous predictors, build a simple coefficient plot
+    # (full prediction ribbons require the fitted model object)
+    p_loc <- loc_dat |>
+      dplyr::filter(submodel == "location", !grepl("^Intercept", term)) |>
+      ggplot2::ggplot(ggplot2::aes(x = estimate, y = term)) +
+      ggplot2::geom_vline(xintercept = 0, linetype = "dashed", colour = "grey60") +
+      ggplot2::geom_pointrange(
+        ggplot2::aes(xmin = q2_5, xmax = q97_5), size = 0.6
+      ) +
+      ggplot2::labs(
+        x = "Slope estimate (lnM per unit moderator)",
+        y = NULL,
+        title = paste("Location slope:", label)
+      ) +
+      ggplot2::theme_classic(base_size = 12)
+
+    p_scl <- if (!is.null(scl_dat) && nrow(scl_dat) > 0) {
+      scl_dat |>
+        dplyr::filter(submodel == "scale", !grepl("^Intercept", term)) |>
+        ggplot2::ggplot(ggplot2::aes(x = estimate, y = term)) +
+        ggplot2::geom_vline(xintercept = 0, linetype = "dashed", colour = "grey60") +
+        ggplot2::geom_pointrange(
+          ggplot2::aes(xmin = q2_5, xmax = q97_5),
+          size = 0.6, colour = "#e06c75"
+        ) +
+        ggplot2::labs(
+          x = "Slope estimate (log sigma per unit moderator)",
+          y = NULL,
+          title = paste("Scale slope:", label),
+          caption = "Positive = greater residual heterogeneity."
+        ) +
+        ggplot2::theme_classic(base_size = 12)
+    } else NULL
+  }
+
+  # Save location figure
+  fname_loc <- paste0(mod_id, "_", moderator, "_location")
+  save_plot_dual(p_loc, fname_loc)
+
+  # Save scale figure
+  if (!is.null(p_scl)) {
+    fname_scl <- paste0(mod_id, "_", moderator, "_scale")
+    save_plot_dual(p_scl, fname_scl, height = 100)
+
+    # Combined figure
+    p_combined <- patchwork::wrap_plots(p_loc, p_scl, ncol = 1)
+    fname_comb <- paste0(mod_id, "_", moderator, "_location_scale_combined")
+    save_plot_dual(p_combined, fname_comb, height = 220)
+  }
+
+  message("Saved figures for ", mod_id, " (", moderator, ")")
+}
+
+cat("Figure generation complete.\n")
+```
+
+## Figure inventory
+
+```{r figure-inventory}
+png_files <- list.files(here::here("Rdata", "figures", "png"), pattern = "\\.png$")
+pdf_files <- list.files(here::here("Rdata", "figures", "pdf"), pattern = "\\.pdf$")
+
+cat("PNG figures:", length(png_files), "\n")
+cat("PDF figures:", length(pdf_files), "\n")
+
+tibble::tibble(file = png_files) |>
+  dplyr::mutate(moderator = stringr::str_extract(file, "(?<=ls_)[^_]+"))
+```

@@ -1,0 +1,224 @@
+---
+title: "Descriptive summaries"
+---
+
+```{r setup}
+source(here::here("chapters", "Rscripts", "00_packages.R"))
+source(here::here("chapters", "Rscripts", "01_paths.R"))
+
+theme_descriptive <- function() {
+  ggplot2::theme_classic(base_size = 12) +
+    ggplot2::theme(
+      plot.title = ggplot2::element_text(face = "bold", hjust = 0.5),
+      axis.line = ggplot2::element_blank(),
+      axis.ticks = ggplot2::element_blank(),
+      axis.text = ggplot2::element_blank(),
+      axis.title = ggplot2::element_blank(),
+      legend.title = ggplot2::element_blank()
+    )
+}
+
+plot_count_donut <- function(dat, var, title, palette = NULL) {
+  count_dat <- dat |>
+    dplyr::filter(!is.na(.data[[var]])) |>
+    dplyr::count(.data[[var]], name = "n", sort = TRUE) |>
+    dplyr::mutate(
+      prop = n / sum(n),
+      label = stringr::str_wrap(paste0(.data[[var]], " (", n, ")"), width = 24),
+      ypos = cumsum(prop) - 0.5 * prop
+    )
+
+  if (is.null(palette)) {
+    palette <- scales::hue_pal(l = 58, c = 70)(nrow(count_dat))
+  }
+
+  ggplot2::ggplot(count_dat, ggplot2::aes(x = 2, y = prop, fill = label)) +
+    ggplot2::geom_col(width = 1, colour = "white", linewidth = 0.5) +
+    ggplot2::coord_polar(theta = "y") +
+    ggplot2::xlim(0.5, 2.5) +
+    ggplot2::scale_fill_manual(values = palette) +
+    ggplot2::labs(title = title, fill = NULL) +
+    ggplot2::annotate(
+      "text",
+      x = 0.5,
+      y = 0,
+      label = paste0("k = ", sum(count_dat$n)),
+      fontface = "bold",
+      size = 4
+    ) +
+    ggplot2::guides(fill = ggplot2::guide_legend(ncol = 2, byrow = TRUE)) +
+    theme_descriptive()
+}
+```
+
+## Load effect-size dataset
+
+```{r load}
+dat_es <- readRDS(here::here("Rdata", "effect_sizes", "proceed_lnm_safe.rds"))
+cat("Contrasts:", nrow(dat_es), "\n")
+```
+
+## Overview counts
+
+```{r overview}
+dat_es |>
+  dplyr::summarise(
+    k_contrasts  = dplyr::n(),
+    n_studies    = dplyr::n_distinct(ref_id),
+    n_systems    = dplyr::n_distinct(sys_id),
+    n_species    = dplyr::n_distinct(sp_ncbi),
+    n_allochronic = sum(design == "Allochronic", na.rm = TRUE),
+    n_synchronic  = sum(design == "Synchronic",  na.rm = TRUE)
+  )
+```
+
+## Counts by moderator
+
+The following tables keep the exact counts visible. The donut plots below them provide a faster visual read of the main design and moderator composition.
+
+```{r by-disturbance}
+dat_es |> dplyr::count(disturbance, sort = TRUE)
+```
+
+```{r by-design}
+dat_es |> dplyr::count(design, sort = TRUE)
+```
+
+```{r by-trait-type}
+dat_es |> dplyr::count(trait_type, sort = TRUE)
+```
+
+```{r by-taxa}
+dat_es |> dplyr::count(taxa, sort = TRUE)
+```
+
+```{r by-genphen}
+dat_es |> dplyr::count(genphen, sort = TRUE)
+```
+
+```{r by-env-change}
+dat_es |> dplyr::count(env_change, sort = TRUE)
+```
+
+```{r by-data-type}
+dat_es |> dplyr::count(data_type, sort = TRUE)
+```
+
+```{r by-transf-data}
+dat_es |> dplyr::count(transf_data, sort = TRUE)
+```
+
+```{r by-data-scale}
+dat_es |> dplyr::count(data_scale, sort = TRUE)
+```
+
+## Donut summaries
+
+```{r donut-design-disturbance, fig.width=10, fig.height=5}
+plot_count_donut(dat_es, "design", "Comparison design") +
+  plot_count_donut(dat_es, "disturbance", "Disturbance context") +
+  patchwork::plot_layout(guides = "keep") &
+  ggplot2::theme(legend.position = "bottom", legend.text = ggplot2::element_text(size = 8))
+```
+
+```{r donut-trait-taxa, fig.width=10, fig.height=5}
+plot_count_donut(dat_es, "trait_type", "Trait type") +
+  plot_count_donut(dat_es, "taxa", "Taxonomic group") +
+  patchwork::plot_layout(guides = "keep") &
+  ggplot2::theme(legend.position = "bottom", legend.text = ggplot2::element_text(size = 8))
+```
+
+```{r donut-data, fig.width=10, fig.height=5}
+plot_count_donut(dat_es, "genphen", "Phenotypic vs genetic data") +
+  plot_count_donut(dat_es, "data_scale", "Measurement scale") +
+  patchwork::plot_layout(guides = "keep") &
+  ggplot2::theme(legend.position = "bottom", legend.text = ggplot2::element_text(size = 8))
+```
+
+## Distributions
+
+### lnM estimates
+
+```{r dist-yi}
+ggplot2::ggplot(dat_es, ggplot2::aes(x = yi_lnM_safe)) +
+  ggplot2::geom_histogram(bins = 50, fill = "steelblue", colour = "white") +
+  ggplot2::geom_vline(xintercept = 0, linetype = "dashed") +
+  ggplot2::labs(x = "lnM (SAFE)", y = "Count",
+                title = "Distribution of lnM effect sizes") +
+  ggplot2::theme_classic()
+```
+
+### Sampling variances
+
+```{r dist-vi}
+ggplot2::ggplot(dat_es, ggplot2::aes(x = (vi_lnM_safe))) +
+  ggplot2::geom_histogram(bins = 50, fill = "coral", colour = "white") +
+  ggplot2::labs(x = "sampling variance", y = "Count",
+                title = "Distribution of sampling variances") +
+  ggplot2::theme_classic()
+```
+
+### Elapsed years
+
+```{r dist-years}
+dat_es |>
+  dplyr::filter(!is.na(log10_years)) |>
+  ggplot2::ggplot(ggplot2::aes(x = log10_years)) +
+  ggplot2::geom_histogram(bins = 40, fill = "seagreen", colour = "white") +
+  ggplot2::labs(x = "log10(years)", y = "Count",
+                title = "Distribution of elapsed time (years)") +
+  ggplot2::theme_classic()
+```
+
+### Elapsed generations
+
+```{r dist-gen}
+dat_es |>
+  dplyr::filter(!is.na(log10_generations)) |>
+  ggplot2::ggplot(ggplot2::aes(x = log10_generations)) +
+  ggplot2::geom_histogram(bins = 40, fill = "mediumpurple", colour = "white") +
+  ggplot2::labs(x = "log10(generations)", y = "Count",
+                title = "Distribution of elapsed time (generations)") +
+  ggplot2::theme_classic()
+```
+
+### Sample sizes
+
+```{r dist-n}
+dat_es |>
+  dplyr::filter(!is.na(n_total)) |>
+  ggplot2::ggplot(ggplot2::aes(x = n_total)) +
+  ggplot2::geom_histogram(bins = 50, fill = "goldenrod", colour = "white") +
+  ggplot2::scale_x_log10() +
+  ggplot2::labs(x = "Total N (log10 scale)", y = "Count",
+                title = "Distribution of total sample sizes") +
+  ggplot2::theme_classic()
+```
+
+## Save descriptive tables
+
+```{r save-tables}
+tab_overview <- dat_es |>
+  dplyr::summarise(
+    k_contrasts   = dplyr::n(),
+    n_studies     = dplyr::n_distinct(ref_id),
+    n_systems     = dplyr::n_distinct(sys_id),
+    n_species     = dplyr::n_distinct(sp_ncbi),
+    n_allochronic = sum(design == "Allochronic", na.rm = TRUE),
+    n_synchronic  = sum(design == "Synchronic",  na.rm = TRUE)
+  )
+
+readr::write_csv(tab_overview,
+                 here::here("Rdata", "tables", "descriptive_overview.csv"))
+
+for (var in c("disturbance", "design", "trait_type", "taxa",
+               "genphen", "env_change", "data_type", "transf_data", "data_scale")) {
+  tbl <- dat_es |> dplyr::count(.data[[var]], sort = TRUE)
+  readr::write_csv(
+    tbl,
+    here::here("Rdata", "tables", paste0("counts_by_", var, ".csv"))
+  )
+}
+
+cat("Descriptive tables saved to outputs/tables/\n")
+```

@@ -1,0 +1,280 @@
+---
+title: "Sensitivity analyses"
+---
+
+```{r setup}
+source(here::here("chapters", "Rscripts", "00_packages.R"))
+source(here::here("chapters", "Rscripts", "01_paths.R"))
+source(here::here("chapters", "Rscripts", "05_phylogeny.R"))
+source(here::here("chapters", "Rscripts", "07_model_formulas.R"))
+source(here::here("chapters", "Rscripts", "08_fit_or_read_model.R"))
+source(here::here("chapters", "Rscripts", "09_model_summaries.R"))
+source(here::here("chapters", "Rscripts", "10_model_diagnostics.R"))
+source(here::here("chapters", "Rscripts", "15_render_guard.R"))   # read-only: never refit sensitivity models
+
+refit_sensitivity <- FALSE
+
+# The sensitivity models are NOT fit at render. Set TRUE only on a compute server
+# to fit + cache them; normal renders read the cached CSVs (or show "pending").
+rebuild_sensitivity <- FALSE
+
+# Priority moderators for sensitivity analyses.
+# "taxa" is excluded here too — see R/06_model_registry.R (excluded_grid) for
+# why m06/taxa is dropped from the primary results.
+priority_mods <- c("disturbance", "design", "log10_years",
+                    "log10_generations", "trait_type")
+```
+
+## Overview
+
+Sensitivity analyses repeat selected models under modified data or random-effects specifications. The primary moderators examined in sensitivity analyses are: `r paste(priority_mods, collapse = ", ")`.
+
+All sensitivity models are saved in `outputs/models/sensitivity/` and all summary tables in `outputs/tables/sensitivity/`.
+
+```{r load-data}
+dat_es <- readRDS(here::here("Rdata", "effect_sizes", "proceed_lnm_safe.rds"))
+
+A_full   <- tryCatch(readRDS(here::here("Rdata", "phylogeny", "proceed_A_matrix.rds")),
+                     error = function(e) NULL)
+name_map <- tryCatch(readRDS(here::here("Rdata", "phylogeny", "proceed_name_map.rds")),
+                     error = function(e) NULL)
+
+# Apply the prepR4pcm name map so sp_ncbi_canonical is available
+if (!is.null(name_map)) {
+  dat_es <- apply_phylo_name_map(dat_es, name_map)
+} else {
+  dat_es$sp_ncbi_canonical <- dat_es$sp_ncbi
+}
+```
+
+## Sensitivity 1: minimum total sample size (N ≥ 40)
+
+Restricts to contrasts where $n_1 + n_2 \geq 40$. Checks whether conclusions about the priority moderators change when poorly replicated contrasts are excluded.
+
+```{r sens-n40, eval=rebuild_sensitivity}
+dat_n40 <- dat_es |> dplyr::filter(n_total >= 40)
+cat("Contrasts with N >= 40:", nrow(dat_n40), "\n")
+
+sens1_results <- list()
+for (moderator in priority_mods) {
+  if (!moderator %in% names(dat_n40)) next
+
+  dat_mod <- dat_n40[!is.na(dat_n40[[moderator]]), ]
+  if (nrow(dat_mod) < 10) {
+    message("Skipping N40 sensitivity for ", moderator, ": too few rows.")
+    next
+  }
+
+  dat_mod <- dat_mod |>
+    dplyr::mutate(es_id_model = factor(seq_len(dplyr::n())))
+  if (is.factor(dat_mod[[moderator]])) {
+    dat_mod[[moderator]] <- droplevels(dat_mod[[moderator]])
+  }
+
+  phylo     <- prepare_phylo_and_data(dat_mod, A_full,
+                                      label = paste0("sens1_n40_", moderator))
+  dat_mod   <- phylo$dat_model
+  A_mod     <- phylo$A_mod
+  V         <- phylo$V
+  has_phylo <- phylo$has_phylo
+
+  formula <- build_ls_formula(moderator, has_phylogeny = has_phylo)
+  priors  <- build_ls_priors(formula, dat_mod, V, A = A_mod)
+  mname   <- paste0("sens1_n40_", moderator)
+
+  if (!verify_esid_prior(priors, model_name = mname)) {
+    message("Skipping ", mname, ": prior check failed.")
+    next
+  }
+
+  fit <- tryCatch(
+    fit_or_read_model(
+      model_name = mname,
+      fit_fun    = function() fit_ls_model(dat_mod, formula, priors,
+                                           V = V, A = A_mod,
+                                           mcmc_args = default_mcmc_args),
+      model_dir  = here::here("Rdata", "models", "sensitivity"),
+      refit      = refit_sensitivity
+    ),
+    error = function(e) { message("Failed: ", mname); NULL }
+  )
+
+  if (!is.null(fit)) {
+    sens1_results[[moderator]] <- list(
+      fe   = extract_fixed_effects(fit, mname, moderator),
+      diag = tryCatch(extract_diagnostics(fit, mname, moderator),
+                      error = function(e) NULL)
+    )
+  }
+}
+```
+
+### N ≥ 40 results
+
+```{r sens1-summary}
+csv1 <- here::here("Rdata", "tables", "sensitivity", "sens1_n40_location.csv")
+if (exists("sens1_results") && length(sens1_results) > 0) {
+  sens1_loc <- purrr::map_dfr(sens1_results, ~ .x$fe |> dplyr::filter(submodel == "location"))
+  sens1_scl <- purrr::map_dfr(sens1_results, ~ .x$fe |> dplyr::filter(submodel == "scale"))
+  readr::write_csv(sens1_loc, csv1)
+  readr::write_csv(sens1_scl, here::here("Rdata", "tables", "sensitivity", "sens1_n40_scale.csv"))
+  sens1_loc
+} else if (file.exists(csv1)) {
+  readr::read_csv(csv1, show_col_types = FALSE)
+} else {
+  cat("Sensitivity (N ≥ 40) not yet fitted — fit on the server, then re-render.\n")
+}
+```
+
+## Sensitivity 2: no-phylogeny fallback
+
+Repeats priority moderator models without the `(1 | gr(sp_ncbi, cov = A))` term. Checks whether conclusions depend strongly on the phylogenetic scaffold.
+
+```{r sens-no-phylo, eval=rebuild_sensitivity}
+sens2_results <- list()
+for (moderator in priority_mods) {
+  if (!moderator %in% names(dat_es)) next
+
+  dat_mod <- dat_es[!is.na(dat_es[[moderator]]), ]
+  if (nrow(dat_mod) < 10) next
+
+  dat_mod <- dat_mod |>
+    dplyr::mutate(es_id_model = factor(seq_len(dplyr::n())))
+  if (is.factor(dat_mod[[moderator]])) {
+    dat_mod[[moderator]] <- droplevels(dat_mod[[moderator]])
+  }
+
+  V <- diag(dat_mod$vi_lnM_safe)
+  rownames(V) <- colnames(V) <- as.character(dat_mod$es_id_model)
+
+  formula <- build_ls_formula(moderator, has_phylogeny = FALSE)
+  priors  <- build_ls_priors(formula, dat_mod, V, A = NULL)
+  mname   <- paste0("sens2_nophylo_", moderator)
+
+  if (!verify_esid_prior(priors, model_name = mname)) {
+    message("Skipping ", mname, ": prior check failed.")
+    next
+  }
+
+  fit <- tryCatch(
+    fit_or_read_model(
+      model_name = mname,
+      fit_fun    = function() fit_ls_model(dat_mod, formula, priors,
+                                           V = V, A = NULL,
+                                           mcmc_args = default_mcmc_args),
+      model_dir  = here::here("Rdata", "models", "sensitivity"),
+      refit      = refit_sensitivity
+    ),
+    error = function(e) { message("Failed: ", mname); NULL }
+  )
+
+  if (!is.null(fit)) {
+    sens2_results[[moderator]] <- list(
+      fe   = extract_fixed_effects(fit, mname, moderator),
+      diag = tryCatch(extract_diagnostics(fit, mname, moderator),
+                      error = function(e) NULL)
+    )
+  }
+}
+```
+
+### No-phylogeny results
+
+```{r sens2-summary}
+csv2 <- here::here("Rdata", "tables", "sensitivity", "sens2_nophylo_location.csv")
+if (exists("sens2_results") && length(sens2_results) > 0) {
+  sens2_loc <- purrr::map_dfr(sens2_results, ~ .x$fe |> dplyr::filter(submodel == "location"))
+  sens2_scl <- purrr::map_dfr(sens2_results, ~ .x$fe |> dplyr::filter(submodel == "scale"))
+  readr::write_csv(sens2_loc, csv2)
+  readr::write_csv(sens2_scl, here::here("Rdata", "tables", "sensitivity", "sens2_nophylo_scale.csv"))
+  sens2_loc
+} else if (file.exists(csv2)) {
+  readr::read_csv(csv2, show_col_types = FALSE)
+} else {
+  cat("No-phylogeny sensitivity not yet fitted — fit on the server, then re-render.\n")
+}
+```
+
+## Sensitivity 3: sys_id random effect
+
+Adds `(1 | sys_id)` to the location submodel for priority moderators. This sensitivity analysis checks whether study-system clustering explains residual heterogeneity after accounting for reference and phylogeny. If `sys_id` is nearly collinear with `ref_id` and `sp_ncbi`, this model may be weakly identifiable — that outcome is reported explicitly.
+
+```{r sens-sysid, eval=rebuild_sensitivity}
+sens3_results <- list()
+for (moderator in priority_mods) {
+  if (!moderator %in% names(dat_es)) next
+
+  dat_mod <- dat_es[!is.na(dat_es[[moderator]]) & !is.na(dat_es$sys_id), ]
+  if (nrow(dat_mod) < 10) next
+
+  dat_mod <- dat_mod |>
+    dplyr::mutate(
+      es_id_model = factor(seq_len(dplyr::n())),
+      sys_id      = droplevels(factor(sys_id))
+    )
+  if (is.factor(dat_mod[[moderator]])) {
+    dat_mod[[moderator]] <- droplevels(dat_mod[[moderator]])
+  }
+
+  phylo     <- prepare_phylo_and_data(dat_mod, A_full,
+                                      label = paste0("sens3_sysid_", moderator))
+  dat_mod   <- phylo$dat_model
+  A_mod     <- phylo$A_mod
+  V         <- phylo$V
+  has_phylo <- phylo$has_phylo
+
+  formula <- build_ls_formula(moderator, has_phylogeny = has_phylo, has_sys_id = TRUE)
+  priors  <- build_ls_priors(formula, dat_mod, V, A = A_mod)
+  mname   <- paste0("sens3_sysid_", moderator)
+
+  if (!verify_esid_prior(priors, model_name = mname)) {
+    message("Skipping ", mname, ": prior check failed.")
+    next
+  }
+
+  fit <- tryCatch(
+    fit_or_read_model(
+      model_name = mname,
+      fit_fun    = function() fit_ls_model(dat_mod, formula, priors,
+                                           V = V, A = A_mod,
+                                           mcmc_args = default_mcmc_args),
+      model_dir  = here::here("Rdata", "models", "sensitivity"),
+      refit      = refit_sensitivity
+    ),
+    error = function(e) { message("Failed: ", mname); NULL }
+  )
+
+  if (!is.null(fit)) {
+    diag_row <- tryCatch(
+      extract_diagnostics(fit, mname, moderator),
+      error = function(e) NULL
+    )
+    note <- ""
+    if (!is.null(diag_row) && !is.na(diag_row$n_divergent) &&
+        diag_row$n_divergent > 20) {
+      note <- "Warning: many divergent transitions — model may be weakly identifiable with sys_id."
+      message(note)
+    }
+    sens3_results[[moderator]] <- list(
+      fe   = extract_fixed_effects(fit, mname, moderator),
+      diag = diag_row,
+      note = note
+    )
+  }
+}
+```
+
+### sys_id results
+
+```{r sens3-summary}
+csv3 <- here::here("Rdata", "tables", "sensitivity", "sens3_sysid_location.csv")
+if (exists("sens3_results") && length(sens3_results) > 0) {
+  sens3_loc <- purrr::map_dfr(sens3_results, ~ .x$fe |> dplyr::filter(submodel == "location"))
+  readr::write_csv(sens3_loc, csv3)
+  sens3_loc
+} else if (file.exists(csv3)) {
+  readr::read_csv(csv3, show_col_types = FALSE)
+} else {
+  cat("sys_id sensitivity not yet fitted — fit on the server, then re-render.\n")
+}
+```

@@ -1,0 +1,81 @@
+---
+title: "Data preparation"
+---
+
+```{r setup}
+source(here::here("chapters", "Rscripts", "00_packages.R"))
+source(here::here("chapters", "Rscripts", "01_paths.R"))
+source(here::here("chapters", "Rscripts", "02_read_clean_data.R"))
+source(here::here("chapters", "Rscripts", "03_filters.R"))
+source(here::here("chapters", "Rscripts", "15_render_guard.R"))   # read-only: never rebuild the database
+
+# The cleaned/filtered contrast dataset is cached as an .rds. The book READS it
+# by default. Set to TRUE only to rebuild the database from the raw PROCEED CSV.
+rebuild_clean_data <- FALSE
+
+clean_path <- here::here("Rdata", "data_clean", "proceed_clean_filtered.rds")
+```
+
+This chapter produces the cleaned, filtered contrast dataset (`proceed_clean_filtered.rds`) used throughout the book. By default it **reads the cached file**; the cleaning pipeline below is documentation and only executes when `rebuild_clean_data <- TRUE`.
+
+## Cleaning & filtering pipeline
+
+The steps applied when (re)building the dataset:
+
+1. `read_proceed()` - read the raw PROCEED v6.2 rates database.
+2. `clean_proceed()` - coerce grouping/categorical variables to factors.
+3. `require_lnm_vars()` - keep contrasts with the two-group summary statistics required for $\ln M$: means, standard deviations, and sample sizes for both groups.
+4. `filter_generations(max_gen = 300)` - apply the generations <= 300 filter; contrasts with missing generation time are retained.
+5. `add_derived_vars()` - add `n_total`, `log10_years`, `log10_generations`.
+
+```{r rebuild, eval=rebuild_clean_data}
+dat_raw       <- read_proceed()
+dat_clean     <- clean_proceed(dat_raw)
+dat_filtered  <- require_lnm_vars(dat_clean)
+dat_filtered  <- filter_generations(dat_filtered, max_gen = 300)
+dat_lnm_input <- add_derived_vars(dat_filtered)
+
+saveRDS(dat_lnm_input, clean_path)
+cat("Rebuilt and saved cleaned dataset:", nrow(dat_lnm_input), "contrasts\n")
+```
+
+## Load the cleaned dataset
+
+```{r load}
+if (!rebuild_clean_data) {
+  pace_need(clean_path, "cleaned dataset")
+  dat_lnm_input <- readRDS(clean_path)
+  cat("Read cached cleaned dataset:", nrow(dat_lnm_input), "contrasts\n")
+}
+```
+
+## Design coverage
+
+```{r design-counts}
+dat_lnm_input |>
+  dplyr::count(design, sort = TRUE)
+```
+
+## Derived variables
+
+```{r derived}
+dplyr::glimpse(
+  dplyr::select(dat_lnm_input, n_total, log10_years, log10_generations)
+)
+```
+
+## Dataset summary
+
+```{r summary}
+dat_lnm_input |>
+  dplyr::summarise(
+    k              = dplyr::n(),
+    n_studies      = dplyr::n_distinct(ref_id),
+    n_systems      = dplyr::n_distinct(sys_id),
+    n_species      = dplyr::n_distinct(sp_ncbi),
+    n_allochronic  = sum(design == "Allochronic",  na.rm = TRUE),
+    n_synchronic   = sum(design == "Synchronic",   na.rm = TRUE),
+    pct_has_gen    = round(100 * mean(!is.na(generations)), 1),
+    pct_has_years  = round(100 * mean(!is.na(years) & years > 0), 1)
+  )
+```

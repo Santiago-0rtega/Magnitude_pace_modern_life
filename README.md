@@ -35,7 +35,7 @@ The book will render in minutes in default mode.
 
 ## Recompute effect sizes
 
-Open `02_lnm_effect_sizes.qmd` and set:
+Open `chapters/02_lnm_effect_sizes.qmd` and set:
 
 ```r
 recompute_effect_sizes <- TRUE
@@ -47,7 +47,7 @@ This re-runs the SAFE lnM estimator for all contrasts. It is slow (minutes to ho
 
 ## Refit models
 
-Open `05_location_scale_model_grid.qmd` and set:
+Open `chapters/05_location_scale_model_grid.qmd` and set:
 
 ```r
 refit_models <- TRUE
@@ -65,6 +65,7 @@ cmdstanr::install_cmdstan()
 
 | Path | Contents |
 |---|---|
+| `chapters/` | Quarto source chapters, including `chapters/models/` for model-specific chapters |
 | `outputs/effect_sizes/` | SAFE lnM estimates (`.rds`) and diagnostics (`.csv`) |
 | `outputs/data_clean/` | Cleaned and filtered PROCEED dataset (`.rds`) |
 | `outputs/phylogeny/` | Phylogenetic tree and correlation matrix (`.rds`) |
@@ -81,16 +82,17 @@ cmdstanr::install_cmdstan()
 
 | Chapter | Purpose |
 |---|---|
-| `index.qmd` | Introduction and reproducibility guide |
-| `01_data_preparation.qmd` | Data import, cleaning, inclusion criteria |
-| `02_lnm_effect_sizes.qmd` | SAFE lnM computation |
-| `03_descriptive_summaries.qmd` | Summary tables and distributions |
-| `04_dependency_structure.qmd` | Non-independence diagnostics |
-| `05_location_scale_model_grid.qmd` | Fit/read all 11 location–scale models |
-| `06_location_scale_results_by_moderator.qmd` | Results for each moderator |
-| `07_sensitivity_analyses.qmd` | N≥40, no-phylogeny, sys_id sensitivities |
-| `08_publication_figures.qmd` | Generate and save all figures |
-| `09_reproducibility.qmd` | Session info, git hash, model cache |
+| `chapters/index.qmd` | Introduction and reproducibility guide |
+| `chapters/01_data_preparation.qmd` | Data import, cleaning, inclusion criteria |
+| `chapters/02_lnm_effect_sizes.qmd` | SAFE lnM computation |
+| `chapters/03_descriptive_summaries.qmd` | Summary tables and distributions |
+| `chapters/04_dependency_structure.qmd` | Non-independence diagnostics |
+| `chapters/04b_phylogeny.qmd` | Phylogenetic tree construction and species-name reconciliation |
+| `chapters/05_location_scale_model_grid.qmd` | Fit/read location-scale models |
+| `chapters/models/m00.qmd` to `chapters/models/m13.qmd` | Model-specific results chapters; dropped `m06` and `m09` are kept as source files but omitted from `_quarto.yml` |
+| `chapters/07_sensitivity_analyses.qmd` | N>=40, no-phylogeny, sys_id sensitivities |
+| `chapters/08_publication_figures.qmd` | Generate and save all figures |
+| `chapters/09_reproducibility.qmd` | Session info, git hash, model cache |
 
 ---
 

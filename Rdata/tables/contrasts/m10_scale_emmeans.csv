@@ -1,0 +1,3 @@
+level,emmean,lower.HPD,upper.HPD,residual_SD
+Transformed,-1.838306635,-2.25037,-1.46121,0.15908658980955834
+Untransformed,-1.080111948625,-1.106271,-1.053859,0.3395575105206972
