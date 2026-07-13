@@ -52,6 +52,310 @@ All of this logic lives in `R/05_phylogeny.R::build_or_read_phylogeny()`; this
 chapter only *reads* the cached result — rebuilding it requires network access
 to Open Tree of Life and GNVerifier and is not done automatically on render.
 
+## The `prepR4pcm` reconciliation functions {#prepr4pcm-source}
+
+The cascade above is implemented in the `prepR4pcm` package
+(`itchyshin/prepR4pcm`, v0.5.0.9000, commit `cca21b9`). Because those functions
+are the black box behind `build_or_read_phylogeny()`, the exported functions
+this chapter's pipeline actually calls — `pr_normalize_names()`,
+`pr_get_tree()`, `reconcile_tree()`, `reconcile_apply()`, `reconcile_mapping()`,
+and `pr_phylo_cor()` — are reproduced below for the record. The block is
+**not evaluated** (`eval=FALSE`): rendering this chapter reads the cached
+`.rds` reconciliation outputs (next section), it does not re-run the package.
+Internal helpers (prefixed `.pr_*`, together with `pr_run_cascade()`,
+`pr_align_tree()`, `pr_strip_authority()`, etc.) are not shown here; see the
+[package source](https://github.com/itchyshin/prepR4pcm) for those.
+
+```{r prepr4pcm-source, eval=FALSE}
+# ── prepR4pcm exported functions used by build_or_read_phylogeny() ────────────
+# Source: itchyshin/prepR4pcm v0.5.0.9000 (commit cca21b9). Reproduced for the
+# record only; this chapter reads the cached .rds outputs instead of running it.
+
+pr_normalize_names <- function (names, rank = c("species", "subspecies"), parser = c("internal",
+    "gnparser"))
+{
+    rank <- match.arg(rank)
+    parser <- match.arg(parser)
+    if (parser == "gnparser") {
+        return(.pr_normalize_gnparser(names, rank))
+    }
+    original <- names
+    names <- as.character(names)
+    is_na <- is.na(names)
+    names[is_na] <- ""
+    names <- trimws(names)
+    names <- gsub("_", " ", names, fixed = TRUE)
+    names <- gsub("\\s+", " ", names)
+    names <- gsub("\\s+ott\\d+$", "", names, perl = TRUE)
+    names <- pr_strip_authority(names)
+    names <- sub("\\s*\\([^()]*\\)\\s*$", "", names, perl = TRUE)
+    names <- gsub("\\s*×\\s*", " x ", names)
+    names <- gsub("^x\\s+", "x ", names)
+    names <- gsub("\\s+x\\s+", " x ", names)
+    names <- gsub("\\bsubsp\\.?\\s+", "subsp. ", names, perl = TRUE)
+    names <- gsub("\\bssp\\.?\\s+", "subsp. ", names, perl = TRUE)
+    names <- gsub("\\bvar\\.?\\s+", "var. ", names, perl = TRUE)
+    names <- gsub("\\bf\\.?\\s+", "f. ", names, perl = TRUE)
+    if (rank == "species") {
+        names <- pr_strip_infraspecific(names)
+    }
+    names <- pr_standardise_case(names)
+    names <- trimws(names)
+    names[is_na] <- NA_character_
+    changed <- !is_na & (original != names)
+    log <- tibble(original = original, normalised = names, changed = changed)
+    attr(names, "normalisation_log") <- log
+    names
+}
+
+pr_get_tree <- function (x, source = c("rotl", "rtrees", "clootl", "fishtree",
+    "datelife", "auto"), species_col = NULL, taxon = NULL, n_tree = 1L,
+    cache = FALSE, tnrs = c("auto", "always", "never"), min_match = 0.8,
+    check_ultrametric = TRUE, resolve_polytomies = FALSE, branch_lengths = NULL,
+    ...)
+{
+    source <- match.arg(source)
+    tnrs <- match.arg(tnrs)
+    if (!is.null(branch_lengths)) {
+        branch_lengths <- match.arg(branch_lengths, choices = c("grafen",
+            "compute.brlen", "unit"))
+    }
+    n_tree <- .pr_validate_positive_integer(n_tree, "n_tree")
+    if (!is.numeric(min_match) || length(min_match) != 1L ||
+        is.na(min_match) || !is.finite(min_match) || min_match <
+        0 || min_match > 1) {
+        cli::cli_abort(c("{.arg min_match} must be a length-1 numeric in [0, 1].",
+            i = "Got: {.val {min_match}}."))
+    }
+    species <- .pr_extract_species_for_tree(x, species_col)
+    if (length(species) == 0) {
+        cli::cli_abort(c("No species names available to query the backend.",
+            i = "If you passed a {.cls reconciliation} object, ensure {.code mapping$name_y} contains resolved names."))
+    }
+    if (source == "auto") {
+        return(.pr_get_tree_auto(species, taxon = taxon, n_tree = n_tree,
+            cache = cache, tnrs = tnrs, min_match = min_match,
+            ...))
+    }
+    resolved <- .pr_resolve_query(species, source, tnrs)
+    species_query <- resolved$query
+    if (isTRUE(cache)) {
+        key <- .pr_tree_cache_key(resolved$original, source = source,
+            n_tree = n_tree, taxon = taxon, tnrs = tnrs, query = species_query,
+            ...)
+        cached <- .pr_tree_cache_get(key, source)
+        if (!is.null(cached)) {
+            return(cached)
+        }
+    }
+    result <- switch(source, rotl = .pr_get_tree_rotl(species_query,
+        n_tree = n_tree, ...), rtrees = .pr_get_tree_rtrees(species_query,
+        n_tree = n_tree, taxon = taxon, ...), clootl = .pr_get_tree_clootl(species_query,
+        n_tree = n_tree, ...), fishtree = .pr_get_tree_fishtree(species_query,
+        n_tree = n_tree, ...), datelife = .pr_get_tree_datelife(species_query,
+        n_tree = n_tree, ...))
+    in_query <- result$in_query
+    if (!is.logical(in_query) || length(in_query) != length(resolved$original)) {
+        cli::cli_abort(c("Internal: backend wrapper returned malformed {.code in_query}.",
+            i = "Expected {.cls logical} of length {length(resolved$original)}; got {.cls {class(in_query)[1]}} of length {length(in_query)}."))
+    }
+    matched <- resolved$original[in_query]
+    unmatched <- resolved$original[!in_query]
+    is_multi <- inherits(result$tree, "multiPhylo")
+    n_returned <- if (is_multi)
+        length(result$tree)
+    else 1L
+    tip_set_consistent <- TRUE
+    dropped_per_tree <- NULL
+    if (is_multi && length(result$tree) > 1L) {
+        tip_sets <- lapply(result$tree, function(t) sort(t$tip.label))
+        tip_set_consistent <- all(vapply(tip_sets[-1L], function(s) identical(s,
+            tip_sets[[1L]]), logical(1L)))
+        if (!tip_set_consistent) {
+            union_tips <- Reduce(union, tip_sets)
+            dropped_per_tree <- lapply(tip_sets, function(s) setdiff(union_tips,
+                s))
+        }
+    }
+    stopifnot(`matched must be a subset of unique input` = all(matched %in%
+        resolved$original), `unmatched must be a subset of unique input` = all(unmatched %in%
+        resolved$original), `matched + unmatched must cover unique input` = length(matched) +
+        length(unmatched) == length(resolved$original), `matched and unmatched must be disjoint` = length(intersect(matched,
+        unmatched)) == 0L)
+    wrapper_meta <- if (is.list(result$backend_meta)) {
+        result$backend_meta
+    }
+    else {
+        list()
+    }
+    if (identical(source, "rtrees") && is.data.frame(wrapper_meta$placement) &&
+        nrow(wrapper_meta$placement) == length(resolved$original)) {
+        wrapper_meta$placement$input_name <- resolved$original
+    }
+    backend_meta <- utils::modifyList(wrapper_meta, list(n_queried = length(resolved$original),
+        n_requested = as.integer(n_tree), n_returned = n_returned,
+        n_matched = length(matched), tnrs_replacements = resolved$tnrs_replacements,
+        tip_set_consistent = tip_set_consistent, dropped_per_tree = dropped_per_tree))
+    backend_meta <- .pr_ensure_tree_provenance(result$tree, backend_meta,
+        source)
+    result$tree <- .pr_post_process_tree(result$tree, resolve_polytomies = resolve_polytomies,
+        branch_lengths = branch_lengths)
+    mapping <- .pr_build_tree_mapping(input_name = resolved$original,
+        normalized_name = resolved$normalised, query_name = resolved$query,
+        in_tree = in_query, tree = result$tree, backend_meta = backend_meta,
+        tnrs_audit = resolved$tnrs_audit)
+    out <- list(tree = result$tree, matched = matched, unmatched = unmatched,
+        mapping = mapping, source = source, backend_meta = backend_meta)
+    class(out) <- "pr_tree_result"
+    if (isTRUE(cache)) {
+        .pr_tree_cache_put(key, source, out)
+    }
+    if (isTRUE(check_ultrametric)) {
+        .pr_check_tree_ultrametric(out$tree, source)
+    }
+    out
+}
+
+reconcile_tree <- function (x, tree, x_species = NULL, authority = "col", rank = c("species",
+    "subspecies"), overrides = NULL, db_version = NULL, fuzzy = FALSE,
+    fuzzy_threshold = 0.9, flag_threshold = 0.95, resolve = c("flag",
+        "first"), quiet = FALSE, x_label = NULL)
+{
+    x_source <- x_label %||% deparse(substitute(x))
+    rank <- match.arg(rank)
+    resolve <- match.arg(resolve)
+    if (!is.data.frame(x))
+        abort("`x` must be a data frame.", call = caller_env())
+    authority <- pr_validate_authority(authority)
+    if (is.null(x_species))
+        x_species <- pr_detect_species_column(x, "x_species")
+    if (!x_species %in% names(x)) {
+        abort(paste0("Column '", x_species, "' not found in `x`."),
+            call = caller_env())
+    }
+    tree_obj <- pr_load_tree(tree)
+    tips <- tree_obj$tip.label
+    if (nrow(x) == 0)
+        abort("`x` has 0 rows.", call = caller_env())
+    if (is.factor(x[[x_species]])) {
+        cli_alert_warning("Converting factor column '{x_species}' in `x` to character.")
+        x[[x_species]] <- as.character(x[[x_species]])
+    }
+    names_x <- as.character(x[[x_species]])
+    if (all(is.na(names_x))) {
+        abort("All species names in `x` are NA.", call = caller_env())
+    }
+    tree_source <- if (is.character(tree)) {
+        basename(tree)
+    }
+    else {
+        sprintf("phylo (%d tips)", length(tips))
+    }
+    overrides_df <- pr_load_overrides(overrides)
+    if (!quiet) {
+        cli_alert_info("Reconciling {length(unique(names_x))} data names vs {length(tips)} tree tips")
+    }
+    mapping <- pr_run_cascade(names_x = names_x, names_y = tips,
+        authority = authority, db_version = db_version, rank = rank,
+        overrides = overrides_df, fuzzy = fuzzy, fuzzy_threshold = fuzzy_threshold,
+        flag_threshold = flag_threshold, resolve = resolve, quiet = quiet)
+    meta <- list(call = match.call(), type = "data_tree", timestamp = Sys.time(),
+        authority = authority %||% "none", db_version = db_version %||%
+            "latest", fuzzy = fuzzy, fuzzy_threshold = if (fuzzy) fuzzy_threshold else NA_real_,
+        fuzzy_method = if (fuzzy) "component_levenshtein" else NA_character_,
+        resolve = resolve, prepR4pcm_version = as.character(utils::packageVersion("prepR4pcm")),
+        x_source = x_source, y_source = tree_source, rank = rank)
+    result <- new_reconciliation(mapping = mapping, meta = meta)
+    if (!quiet && nrow(result$unused_overrides) > 0) {
+        pr_warn_unused_overrides(result$unused_overrides)
+    }
+    if (!quiet) {
+        n_matched <- sum(mapping$in_x & mapping$in_y, na.rm = TRUE)
+        n_total <- result$counts$n_x
+        cli_alert_success("Matched {n_matched}/{n_total} data names to tree tips")
+    }
+    result
+}
+
+reconcile_apply <- function (reconciliation, data = NULL, tree = NULL, species_col = NULL,
+    drop_unresolved = FALSE)
+{
+    validate_reconciliation(reconciliation)
+    mapping <- reconciliation$mapping
+    matched <- mapping[mapping$in_x & mapping$in_y, ]
+    result <- list(data = NULL, tree = NULL)
+    if (!is.null(data)) {
+        if (!is.data.frame(data)) {
+            abort("`data` must be a data frame.", call = caller_env())
+        }
+        if (is.null(species_col)) {
+            species_col <- pr_detect_species_column(data, "species_col")
+        }
+        if (!species_col %in% names(data)) {
+            cli::cli_abort(c("Column {.val {species_col}} not found in {.arg data}.",
+                i = "Available columns: {.val {names(data)}}."))
+        }
+        data_names <- as.character(data[[species_col]])
+        if (drop_unresolved) {
+            keep <- data_names %in% matched$name_x
+            data <- data[keep, , drop = FALSE]
+            n_dropped <- sum(!keep)
+            if (n_dropped > 0) {
+                cli_alert_warning("Dropped {n_dropped} rows with unresolved species from data")
+            }
+        }
+        result$data <- data
+    }
+    if (!is.null(tree)) {
+        tree <- pr_load_tree(tree)
+        tree <- pr_align_tree(tree, mapping, drop_unresolved = drop_unresolved)
+        if (drop_unresolved) {
+            n_tips <- length(tree$tip.label)
+            cli_alert_info("Tree has {n_tips} tips after alignment")
+        }
+        result$tree <- tree
+    }
+    result
+}
+
+reconcile_mapping <- function (reconciliation, include_unused_overrides = FALSE)
+{
+    validate_reconciliation(reconciliation)
+    if (!isTRUE(include_unused_overrides)) {
+        return(reconciliation$mapping)
+    }
+    unused <- reconciliation$unused_overrides
+    if (is.null(unused) || nrow(unused) == 0) {
+        return(reconciliation$mapping)
+    }
+    unused_rows <- tibble(name_x = unused$name_x, name_y = unused$name_y,
+        name_resolved = NA_character_, match_type = "override_unused",
+        match_score = NA_real_, match_source = "user_override",
+        in_x = FALSE, in_y = FALSE, notes = unused$reason)
+    rbind(reconciliation$mapping, unused_rows)
+}
+
+pr_phylo_cor <- function (x, corr = TRUE, ...)
+{
+    tree <- if (inherits(x, "pr_tree_result"))
+        x$tree
+    else x
+    if (inherits(tree, "multiPhylo")) {
+        return(lapply(tree, pr_phylo_cor, corr = corr, ...))
+    }
+    if (!inherits(tree, "phylo")) {
+        cli::cli_abort(c("{.arg x} must be a {.cls phylo}, {.cls multiPhylo}, or {.cls pr_tree_result}.",
+            i = "Got: {.cls {class(x)[1]}}."))
+    }
+    if (is.null(tree$edge.length)) {
+        cli::cli_abort(c("Tree has no branch lengths --- {.fn pr_phylo_cor} cannot compute a correlation matrix.",
+            i = "If your tree came from {.code source = \"rotl\"}, run {.fn pr_get_tree} again with {.code branch_lengths = \"grafen\"} to assign Grafen's method-based lengths.",
+            `>` = "Or transform manually: {.code tree <- ape::compute.brlen(tree, method = \"Grafen\")}."))
+    }
+    ape::vcv(tree, corr = corr, ...)
+}
+```
+
 ```{r recompute-toggle}
 # Change to TRUE only to force a full network rebuild of the tree (slow,
 # requires internet access). Normal renders read the cache below.

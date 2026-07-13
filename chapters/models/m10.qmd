@@ -1,5 +1,5 @@
 ---
-title: "m10 — Transformation status"
+title: "Transformation status"
 ---
 
 ```{r setup, include=FALSE}

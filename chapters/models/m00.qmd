@@ -1,5 +1,5 @@
 ---
-title: "m00 — Intercept-only baseline"
+title: "Intercept-only baseline"
 ---
 
 ```{r setup, include=FALSE}

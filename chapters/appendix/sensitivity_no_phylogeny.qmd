@@ -1,0 +1,64 @@
+---
+title: "Sensitivity B — No phylogenetic random effect"
+---
+
+```{r setup, include=FALSE}
+source(here::here("chapters", "Rscripts", "00_packages.R"))
+source(here::here("chapters", "Rscripts", "19_sensitivity_tables.R"))
+variant <- "sens2_nophylo"
+```
+
+## What this tests
+
+The primary models place a phylogenetic random effect
+`(1 | gr(sp_ncbi, cov = A))` on every species-level intercept, using a
+correlation matrix `A` derived from an Open Tree of Life scaffold. That scaffold
+is a pragmatic comparative tree, not a fully resolved, time-calibrated phylogeny
+(protocol §3.6): its topology is assembled from multiple sources, unresolved
+nodes are resolved algorithmically, and branch lengths are assigned by Grafen's
+method. This analysis refits each included moderator model with the phylogenetic
+term **removed**, keeping the `ref_id` study effect and everything else fixed, to
+check that conclusions do not depend strongly on that scaffold. The full dataset
+is used (no sample-size restriction).
+
+## How it was fit
+
+Fit on `totoro`, not at render — 4 chains × 4,000 iterations (2,000 warmup),
+`adapt_delta = 0.97`, `max_treedepth = 15`, `cmdstanr`.
+
+```{r how-fit, eval=FALSE}
+formula <- build_ls_formula(moderator, has_phylogeny = FALSE)   # drop (1 | gr(sp_ncbi, cov = A))
+V       <- diag(dat_mod$vi_lnM_safe)
+fit     <- fit_ls_model(
+  dat_mod, formula,
+  build_ls_priors(formula, dat_mod, V, A = NULL),
+  V = V, A = NULL, mcmc_args = default_mcmc_args)
+```
+
+## Convergence diagnostics
+
+```{r diagnostics, echo=FALSE}
+sens_diagnostics_table(variant)
+```
+
+All models converged cleanly (R̂ < 1.01, no divergent transitions) — unsurprising,
+since dropping the dense phylogenetic covariance removes the hardest part of the
+posterior geometry.
+
+## Reading the tables
+
+Raw location–scale coefficients on treatment coding: the **Intercept** row is the
+reference-level value, each other row the difference from it. The matched
+**primary** (phylogeny-included) coefficient is shown alongside, and the
+**Stability** column reads *consistent* when the two share sign and the same 95%
+credible-interval conclusion, **DIFFERS** (highlighted) otherwise.
+
+```{r stability-line, echo=FALSE, results='asis'}
+cat("**Overall:** ", sens_stability_summary(variant), "\n")
+```
+
+## Results by moderator
+
+```{r results, echo=FALSE, results='asis'}
+sens_all_moderator_tables(variant)
+```

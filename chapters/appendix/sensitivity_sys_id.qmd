@@ -1,0 +1,73 @@
+---
+title: "Sensitivity C — Study-system (sys_id) random effect"
+---
+
+```{r setup, include=FALSE}
+source(here::here("chapters", "Rscripts", "00_packages.R"))
+source(here::here("chapters", "Rscripts", "19_sensitivity_tables.R"))
+variant <- "sens3_sysid"
+```
+
+## What this tests
+
+Protocol §3.7 (final analysis) and §3.5. Contrasts from the same study system
+may be non-independent because they share a population, location, disturbance
+history, or research programme. The primary model captures study-level
+dependence through `ref_id` and shared ancestry through the phylogeny, but does
+**not** include a separate study-system term, because `sys_id`, `ref_id`, and
+species identity are strongly associated in PROCEED — most systems map to a
+single species and often a single source — so including all three risks poorly
+identified variance components. This analysis adds `(1 | sys_id)` to each
+included moderator model and reports the outcome explicitly, per the protocol's
+commitment to flag weak identifiability rather than interpret confounded
+components separately. The full dataset is used.
+
+## How it was fit
+
+Fit on `totoro`, not at render — 4 chains × 4,000 iterations (2,000 warmup),
+`adapt_delta = 0.97`, `max_treedepth = 15`, `cmdstanr`.
+
+```{r how-fit, eval=FALSE}
+phylo   <- prepare_phylo_and_data(dat_mod, A_full)
+formula <- build_ls_formula(moderator, has_phylogeny = phylo$has_phylo,
+                            has_sys_id = TRUE)              # + (1 | sys_id)
+fit     <- fit_ls_model(
+  phylo$dat_model, formula,
+  build_ls_priors(formula, phylo$dat_model, phylo$V, A = phylo$A_mod),
+  V = phylo$V, A = phylo$A_mod, mcmc_args = default_mcmc_args)
+```
+
+## Convergence diagnostics
+
+```{r diagnostics, echo=FALSE}
+sens_diagnostics_table(variant)
+```
+
+::: {.callout-warning}
+The **disturbance** model returned 21 divergent transitions and the **design**
+model 7. This is the weak-identifiability signal the protocol anticipated: with
+`sys_id` added on top of `ref_id` and the phylogeny, the sampler struggles in
+part of the posterior. R̂ (< 1.01) and ESS remain acceptable, but the individual
+`sys_id`, `ref_id`, and phylogenetic variance components should **not** be
+interpreted separately for these models.
+:::
+
+## Reading the tables
+
+Raw location–scale coefficients on treatment coding: the **Intercept** row is the
+reference-level value, each other row the difference from it. The matched
+**primary** (no `sys_id`) coefficient is shown alongside, and the **Stability**
+column reads *consistent* when the two share sign and the same 95%
+credible-interval conclusion, **DIFFERS** (highlighted) otherwise. Stability of
+the moderator coefficients here indicates the reported effects are not artefacts
+of omitting a study-system term.
+
+```{r stability-line, echo=FALSE, results='asis'}
+cat("**Overall:** ", sens_stability_summary(variant), "\n")
+```
+
+## Results by moderator
+
+```{r results, echo=FALSE, results='asis'}
+sens_all_moderator_tables(variant)
+```

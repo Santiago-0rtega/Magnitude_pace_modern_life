@@ -38,17 +38,15 @@ book:
         - chapters/models/m05.qmd
         - chapters/models/m07.qmd
         - chapters/models/m08.qmd
-        - chapters/models/m10.qmd
-        - chapters/models/m11.qmd
         - chapters/models/m12.qmd
-        - chapters/models/m13.qmd
-    - part: "Robustness"
-      chapters:
-        - chapters/07_sensitivity_analyses.qmd
     - part: "Figures & Reproducibility"
       chapters:
         - chapters/08_publication_figures.qmd
         - chapters/09_reproducibility.qmd
+  appendices:
+    - chapters/appendix/sensitivity_min_n.qmd
+    - chapters/appendix/sensitivity_no_phylogeny.qmd
+    - chapters/appendix/sensitivity_sys_id.qmd
 
 format:
   html:

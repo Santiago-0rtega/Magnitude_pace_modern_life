@@ -1,5 +1,5 @@
 ---
-title: "m03 — Elapsed time (log₁₀ years)"
+title: "Elapsed time (log₁₀ years)"
 ---
 
 ```{r setup, include=FALSE}

@@ -1,5 +1,5 @@
 ---
-title: "m02 — Comparison design"
+title: "Comparison design"
 ---
 
 ```{r setup, include=FALSE}

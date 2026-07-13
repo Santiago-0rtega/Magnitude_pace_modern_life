@@ -1,0 +1,69 @@
+---
+title: "Sensitivity A — Minimum sample size (N ≥ 40)"
+---
+
+```{r setup, include=FALSE}
+source(here::here("chapters", "Rscripts", "00_packages.R"))
+source(here::here("chapters", "Rscripts", "19_sensitivity_tables.R"))
+variant <- "sens1_n40"
+```
+
+## What this tests
+
+Protocol §3.7 (first analysis). `ln M` is estimated less stably when the two
+groups being compared are small, because the plug-in sampling variance can
+become unstable when between-group variation is small relative to within-group
+variation. To check that the main conclusions do not rest on poorly replicated
+contrasts, every included moderator model is refit after restricting the data
+to contrasts with total sample size $n_1 + n_2 \geq 40$ — **5,364 of 7,511
+contrasts**. All other model structure (phylogeny, `ref_id`, priors, MCMC
+settings) is identical to the primary fit.
+
+## How it was fit
+
+Fit on the compute server (`totoro`), not at render. Each model uses 4 chains ×
+4,000 iterations (2,000 warmup), `adapt_delta = 0.97`, `max_treedepth = 15`,
+`cmdstanr`. The book reads the cached summary tables only.
+
+```{r how-fit, eval=FALSE}
+dat_n40 <- dat_es |> dplyr::filter(n_total >= 40)          # 5,364 contrasts
+phylo   <- prepare_phylo_and_data(dat_mod, A_full)          # phylogeny retained
+formula <- build_ls_formula(moderator, has_phylogeny = phylo$has_phylo)
+fit     <- fit_ls_model(
+  phylo$dat_model, formula,
+  build_ls_priors(formula, phylo$dat_model, phylo$V, A = phylo$A_mod),
+  V = phylo$V, A = phylo$A_mod, mcmc_args = default_mcmc_args)
+```
+
+## Convergence diagnostics
+
+```{r diagnostics, echo=FALSE}
+sens_diagnostics_table(variant)
+```
+
+::: {.callout-warning}
+The **trait type** model returned 57 divergent transitions. R̂ and ESS remain
+acceptable, but the restricted sample stresses the sampler for the many
+trait-type levels, so its scale-submodel estimates in particular should be read
+with caution.
+:::
+
+## Reading the tables
+
+Each moderator is shown as a raw location–scale coefficient table on the model's
+default treatment coding: the **Intercept** row is the reference-level value and
+each other row is the difference from that reference. The matched **primary**
+coefficient is shown alongside. The **Stability** column compares the two: it
+reads *consistent* when the sensitivity and primary coefficients share sign and
+the same 95% credible-interval conclusion (both exclude or both include zero),
+and **DIFFERS** (highlighted) otherwise.
+
+```{r stability-line, echo=FALSE, results='asis'}
+cat("**Overall:** ", sens_stability_summary(variant), "\n")
+```
+
+## Results by moderator
+
+```{r results, echo=FALSE, results='asis'}
+sens_all_moderator_tables(variant)
+```

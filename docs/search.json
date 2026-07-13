@@ -1025,5 +1025,170 @@
       "Figures & Reproducibility",
       "<span class='chapter-number'>22</span>  <span class='chapter-title'>Reproducibility</span>"
     ]
+  },
+  {
+    "objectID": "chapters/appendix/sensitivity_no_phylogeny.html",
+    "href": "chapters/appendix/sensitivity_no_phylogeny.html",
+    "title": "Appendix B — Sensitivity B — No phylogenetic random effect",
+    "section": "",
+    "text": "B.1 What this tests\nThe primary models place a phylogenetic random effect (1 | gr(sp_ncbi, cov = A)) on every species-level intercept, using a correlation matrix A derived from an Open Tree of Life scaffold. That scaffold is a pragmatic comparative tree, not a fully resolved, time-calibrated phylogeny (protocol §3.6): its topology is assembled from multiple sources, unresolved nodes are resolved algorithmically, and branch lengths are assigned by Grafen’s method. This analysis refits each included moderator model with the phylogenetic term removed, keeping the ref_id study effect and everything else fixed, to check that conclusions do not depend strongly on that scaffold. The full dataset is used (no sample-size restriction).",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Sensitivity B — No phylogenetic random effect</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/appendix/sensitivity_no_phylogeny.html#how-it-was-fit",
+    "href": "chapters/appendix/sensitivity_no_phylogeny.html#how-it-was-fit",
+    "title": "Appendix B — Sensitivity B — No phylogenetic random effect",
+    "section": "B.2 How it was fit",
+    "text": "B.2 How it was fit\nFit on totoro, not at render — 4 chains × 4,000 iterations (2,000 warmup), adapt_delta = 0.97, max_treedepth = 15, cmdstanr.\n\n\nCode\nformula &lt;- build_ls_formula(moderator, has_phylogeny = FALSE)   # drop (1 | gr(sp_ncbi, cov = A))\nV       &lt;- diag(dat_mod$vi_lnM_safe)\nfit     &lt;- fit_ls_model(\n  dat_mod, formula,\n  build_ls_priors(formula, dat_mod, V, A = NULL),\n  V = V, A = NULL, mcmc_args = default_mcmc_args)",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Sensitivity B — No phylogenetic random effect</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/appendix/sensitivity_no_phylogeny.html#convergence-diagnostics",
+    "href": "chapters/appendix/sensitivity_no_phylogeny.html#convergence-diagnostics",
+    "title": "Appendix B — Sensitivity B — No phylogenetic random effect",
+    "section": "B.3 Convergence diagnostics",
+    "text": "B.3 Convergence diagnostics\n\n\n\nConvergence diagnostics (4 chains, 2000 post-warmup draws each).\n\n\nModerator\nMax R̂\nMin bulk ESS\nMin tail ESS\nDivergences\nMax-treedepth hits\n\n\n\n\nComparison design (m02)\n1.0090\n619\n988\n0\n0\n\n\nDisturbance context (m01)\n1.0044\n903\n1779\n0\n0\n\n\nEnvironmental-change context (m08)\n1.0094\n481\n1029\n0\n0\n\n\nPhenotypic vs genetic study (m07)\n1.0084\n438\n1216\n0\n0\n\n\nElapsed time — log₁₀ generations (m04)\n1.0094\n548\n1094\n0\n0\n\n\nElapsed time — log₁₀ years (m03)\n1.0073\n460\n1095\n0\n0\n\n\nTrait type (m05)\n1.0052\n538\n1183\n0\n0\n\n\n\n\n\nAll models converged cleanly (R̂ &lt; 1.01, no divergent transitions) — unsurprising, since dropping the dense phylogenetic covariance removes the hardest part of the posterior geometry.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Sensitivity B — No phylogenetic random effect</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/appendix/sensitivity_no_phylogeny.html#reading-the-tables",
+    "href": "chapters/appendix/sensitivity_no_phylogeny.html#reading-the-tables",
+    "title": "Appendix B — Sensitivity B — No phylogenetic random effect",
+    "section": "B.4 Reading the tables",
+    "text": "B.4 Reading the tables\nRaw location–scale coefficients on treatment coding: the Intercept row is the reference-level value, each other row the difference from it. The matched primary (phylogeny-included) coefficient is shown alongside, and the Stability column reads consistent when the two share sign and the same 95% credible-interval conclusion, DIFFERS (highlighted) otherwise.\nOverall: 3 of 36 moderator coefficients change their credible-interval conclusion relative to the primary fit.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Sensitivity B — No phylogenetic random effect</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/appendix/sensitivity_no_phylogeny.html#results-by-moderator",
+    "href": "chapters/appendix/sensitivity_no_phylogeny.html#results-by-moderator",
+    "title": "Appendix B — Sensitivity B — No phylogenetic random effect",
+    "section": "B.5 Results by moderator",
+    "text": "B.5 Results by moderator\n\nB.5.1 Disturbance context (m01)\n\n\n\nDisturbance context (m01)\n\n\nSub-model\nTerm\nSensitivity β [95% CrI]\nPrimary β [95% CrI]\nStability\n\n\n\n\nLocation (mean lnM)\nIntercept (ref.)\n-0.684 [-1.013, -0.348]\n-0.495 [-1.281, 0.315]\nDIFFERS\n\n\nHunt_harv\n-0.104 [-0.438, 0.227]\n-0.260 [-0.620, 0.089]\nconsistent\n\n\nIntroduction\n0.132 [-0.231, 0.483]\n0.007 [-0.396, 0.396]\nconsistent\n\n\nLandscapechange\n0.387 [-0.035, 0.808]\n0.249 [-0.208, 0.708]\nconsistent\n\n\nOther\n-0.133 [-0.453, 0.188]\n-0.272 [-0.622, 0.072]\nconsistent\n\n\nPollution\n0.321 [-0.159, 0.797]\n0.069 [-0.511, 0.629]\nconsistent\n\n\nResponsetointroductions\n0.237 [-0.289, 0.761]\n0.019 [-0.538, 0.580]\nconsistent\n\n\nScale (log-SD)\nIntercept (ref.)\n-0.628 [-0.787, -0.474]\n-0.687 [-0.867, -0.523]\nconsistent\n\n\nHunt_harv\n0.310 [0.144, 0.482]\n0.365 [0.182, 0.553]\nconsistent\n\n\nIntroduction\n-0.047 [-0.204, 0.113]\n0.011 [-0.160, 0.193]\nDIFFERS\n\n\nLandscapechange\n-0.371 [-0.611, -0.124]\n-0.315 [-0.581, -0.060]\nconsistent\n\n\nOther\n0.093 [-0.070, 0.260]\n0.133 [-0.043, 0.317]\nconsistent\n\n\nPollution\n-0.106 [-0.362, 0.148]\n-0.050 [-0.312, 0.209]\nconsistent\n\n\nResponsetointroductions\n0.079 [-0.120, 0.283]\n0.147 [-0.059, 0.363]\nconsistent\n\n\n\n\n\n\n\nB.5.2 Comparison design (m02)\n\n\n\nComparison design (m02)\n\n\nSub-model\nTerm\nSensitivity β [95% CrI]\nPrimary β [95% CrI]\nStability\n\n\n\n\nLocation (mean lnM)\nIntercept (ref.)\n-0.809 [-0.964, -0.652]\n-0.693 [-1.406, 0.007]\nDIFFERS\n\n\nSynchronic\n0.336 [0.173, 0.491]\n0.253 [0.084, 0.420]\nconsistent\n\n\nScale (log-SD)\nIntercept (ref.)\n-0.456 [-0.494, -0.418]\n-0.466 [-0.505, -0.426]\nconsistent\n\n\nSynchronic\n-0.220 [-0.271, -0.170]\n-0.211 [-0.262, -0.159]\nconsistent\n\n\n\n\n\n\n\nB.5.3 Elapsed time — log₁₀ years (m03)\n\n\n\nElapsed time — log₁₀ years (m03)\n\n\nSub-model\nTerm\nSensitivity β [95% CrI]\nPrimary β [95% CrI]\nStability\n\n\n\n\nLocation (mean lnM)\nIntercept (ref.)\n-1.046 [-1.198, -0.890]\n-1.017 [-1.817, -0.225]\nconsistent\n\n\nslope\n0.302 [0.234, 0.372]\n0.313 [0.242, 0.385]\nconsistent\n\n\nScale (log-SD)\nIntercept (ref.)\n-0.345 [-0.421, -0.270]\n-0.358 [-0.434, -0.284]\nconsistent\n\n\nslope\n-0.167 [-0.216, -0.118]\n-0.163 [-0.211, -0.115]\nconsistent\n\n\n\n\n\n\n\nB.5.4 Elapsed time — log₁₀ generations (m04)\n\n\n\nElapsed time — log₁₀ generations (m04)\n\n\nSub-model\nTerm\nSensitivity β [95% CrI]\nPrimary β [95% CrI]\nStability\n\n\n\n\nLocation (mean lnM)\nIntercept (ref.)\n-0.924 [-1.064, -0.783]\n-0.928 [-1.846, -0.029]\nconsistent\n\n\nslope\n0.261 [0.189, 0.332]\n0.286 [0.215, 0.361]\nconsistent\n\n\nScale (log-SD)\nIntercept (ref.)\n-0.393 [-0.442, -0.345]\n-0.401 [-0.452, -0.351]\nconsistent\n\n\nslope\n-0.148 [-0.180, -0.116]\n-0.148 [-0.182, -0.115]\nconsistent\n\n\n\n\n\n\n\nB.5.5 Trait type (m05)\n\n\n\nTrait type (m05)\n\n\nSub-model\nTerm\nSensitivity β [95% CrI]\nPrimary β [95% CrI]\nStability\n\n\n\n\nLocation (mean lnM)\nIntercept (ref.)\n-1.297 [-2.061, -0.523]\n-1.314 [-2.431, -0.164]\nconsistent\n\n\ngrowth\n0.768 [0.002, 1.539]\n0.824 [0.008, 1.571]\nconsistent\n\n\notherLH\n0.847 [0.088, 1.607]\n0.911 [0.112, 1.651]\nconsistent\n\n\nothermorphology\n0.709 [-0.063, 1.471]\n0.779 [-0.026, 1.519]\nconsistent\n\n\nphenology\n0.696 [-0.137, 1.508]\n0.810 [-0.045, 1.609]\nconsistent\n\n\nphysio\n0.636 [-0.140, 1.393]\n0.697 [-0.108, 1.444]\nconsistent\n\n\nresponse\n0.836 [0.021, 1.647]\n0.879 [0.058, 1.663]\nconsistent\n\n\nsize\n0.776 [0.009, 1.534]\n0.837 [0.040, 1.572]\nconsistent\n\n\nScale (log-SD)\nIntercept (ref.)\n-0.371 [-0.866, 0.136]\n-0.374 [-0.838, 0.129]\nconsistent\n\n\ngrowth\n-0.950 [-1.568, -0.352]\n-0.939 [-1.528, -0.382]\nconsistent\n\n\notherLH\n-0.177 [-0.686, 0.323]\n-0.181 [-0.685, 0.291]\nconsistent\n\n\nothermorphology\n-0.490 [-1.003, 0.007]\n-0.515 [-1.020, -0.045]\nDIFFERS\n\n\nphenology\n-0.333 [-0.882, 0.227]\n-0.383 [-0.946, 0.155]\nconsistent\n\n\nphysio\n-0.578 [-1.123, -0.063]\n-0.581 [-1.114, -0.087]\nconsistent\n\n\nresponse\n-0.269 [-0.912, 0.339]\n-0.255 [-0.895, 0.319]\nconsistent\n\n\nsize\n-0.041 [-0.553, 0.453]\n-0.041 [-0.544, 0.426]\nconsistent\n\n\n\n\n\n\n\nB.5.6 Phenotypic vs genetic study (m07)\n\n\n\nPhenotypic vs genetic study (m07)\n\n\nSub-model\nTerm\nSensitivity β [95% CrI]\nPrimary β [95% CrI]\nStability\n\n\n\n\nLocation (mean lnM)\nIntercept (ref.)\n-0.483 [-0.602, -0.366]\n-0.426 [-1.191, 0.324]\nDIFFERS\n\n\nPhenotypic\n-0.173 [-0.300, -0.044]\n-0.175 [-0.315, -0.034]\nconsistent\n\n\nScale (log-SD)\nIntercept (ref.)\n-0.831 [-0.882, -0.780]\n-0.839 [-0.892, -0.789]\nconsistent\n\n\nPhenotypic\n0.338 [0.278, 0.398]\n0.341 [0.283, 0.400]\nconsistent\n\n\n\n\n\n\n\nB.5.7 Environmental-change context (m08)\n\n\n\nEnvironmental-change context (m08)\n\n\nSub-model\nTerm\nSensitivity β [95% CrI]\nPrimary β [95% CrI]\nStability\n\n\n\n\nLocation (mean lnM)\nIntercept (ref.)\n-0.565 [-0.679, -0.456]\n-0.538 [-1.270, 0.195]\nDIFFERS\n\n\nongoing\n-0.012 [-0.187, 0.169]\n0.058 [-0.133, 0.248]\nDIFFERS\n\n\nScale (log-SD)\nIntercept (ref.)\n-0.670 [-0.702, -0.638]\n-0.673 [-0.704, -0.641]\nconsistent\n\n\nongoing\n0.224 [0.172, 0.275]\n0.217 [0.164, 0.269]\nconsistent",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Sensitivity B — No phylogenetic random effect</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/appendix/sensitivity_min_n.html",
+    "href": "chapters/appendix/sensitivity_min_n.html",
+    "title": "Appendix A — Sensitivity A — Minimum sample size (N ≥ 40)",
+    "section": "",
+    "text": "A.1 What this tests\nProtocol §3.7 (first analysis). ln M is estimated less stably when the two groups being compared are small, because the plug-in sampling variance can become unstable when between-group variation is small relative to within-group variation. To check that the main conclusions do not rest on poorly replicated contrasts, every included moderator model is refit after restricting the data to contrasts with total sample size \\(n_1 + n_2 \\geq 40\\) — 5,364 of 7,511 contrasts. All other model structure (phylogeny, ref_id, priors, MCMC settings) is identical to the primary fit.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Sensitivity A — Minimum sample size (N ≥ 40)</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/appendix/sensitivity_min_n.html#how-it-was-fit",
+    "href": "chapters/appendix/sensitivity_min_n.html#how-it-was-fit",
+    "title": "Appendix A — Sensitivity A — Minimum sample size (N ≥ 40)",
+    "section": "A.2 How it was fit",
+    "text": "A.2 How it was fit\nFit on the compute server (totoro), not at render. Each model uses 4 chains × 4,000 iterations (2,000 warmup), adapt_delta = 0.97, max_treedepth = 15, cmdstanr. The book reads the cached summary tables only.\n\n\nCode\ndat_n40 &lt;- dat_es |&gt; dplyr::filter(n_total &gt;= 40)          # 5,364 contrasts\nphylo   &lt;- prepare_phylo_and_data(dat_mod, A_full)          # phylogeny retained\nformula &lt;- build_ls_formula(moderator, has_phylogeny = phylo$has_phylo)\nfit     &lt;- fit_ls_model(\n  phylo$dat_model, formula,\n  build_ls_priors(formula, phylo$dat_model, phylo$V, A = phylo$A_mod),\n  V = phylo$V, A = phylo$A_mod, mcmc_args = default_mcmc_args)",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Sensitivity A — Minimum sample size (N ≥ 40)</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/appendix/sensitivity_min_n.html#convergence-diagnostics",
+    "href": "chapters/appendix/sensitivity_min_n.html#convergence-diagnostics",
+    "title": "Appendix A — Sensitivity A — Minimum sample size (N ≥ 40)",
+    "section": "A.3 Convergence diagnostics",
+    "text": "A.3 Convergence diagnostics\n\n\n\nConvergence diagnostics (4 chains, 2000 post-warmup draws each).\n\n\nModerator\nMax R̂\nMin bulk ESS\nMin tail ESS\nDivergences\nMax-treedepth hits\n\n\n\n\nTrait type (m05)\n1.0096\n807\n434\n57\n0\n\n\nComparison design (m02)\n1.0039\n564\n966\n1\n0\n\n\nDisturbance context (m01)\n1.0041\n684\n1163\n0\n0\n\n\nEnvironmental-change context (m08)\n1.0057\n532\n938\n0\n0\n\n\nPhenotypic vs genetic study (m07)\n1.0070\n494\n700\n0\n0\n\n\nElapsed time — log₁₀ generations (m04)\n1.0047\n692\n1072\n0\n0\n\n\nElapsed time — log₁₀ years (m03)\n1.0042\n1010\n1895\n0\n0\n\n\n\n\n\n\n\n\n\n\n\nWarning\n\n\n\nThe trait type model returned 57 divergent transitions. R̂ and ESS remain acceptable, but the restricted sample stresses the sampler for the many trait-type levels, so its scale-submodel estimates in particular should be read with caution.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Sensitivity A — Minimum sample size (N ≥ 40)</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/appendix/sensitivity_min_n.html#reading-the-tables",
+    "href": "chapters/appendix/sensitivity_min_n.html#reading-the-tables",
+    "title": "Appendix A — Sensitivity A — Minimum sample size (N ≥ 40)",
+    "section": "A.4 Reading the tables",
+    "text": "A.4 Reading the tables\nEach moderator is shown as a raw location–scale coefficient table on the model’s default treatment coding: the Intercept row is the reference-level value and each other row is the difference from that reference. The matched primary coefficient is shown alongside. The Stability column compares the two: it reads consistent when the sensitivity and primary coefficients share sign and the same 95% credible-interval conclusion (both exclude or both include zero), and DIFFERS (highlighted) otherwise.\nOverall: 8 of 36 moderator coefficients change their credible-interval conclusion relative to the primary fit.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Sensitivity A — Minimum sample size (N ≥ 40)</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/appendix/sensitivity_min_n.html#results-by-moderator",
+    "href": "chapters/appendix/sensitivity_min_n.html#results-by-moderator",
+    "title": "Appendix A — Sensitivity A — Minimum sample size (N ≥ 40)",
+    "section": "A.5 Results by moderator",
+    "text": "A.5 Results by moderator\n\nA.5.1 Disturbance context (m01)\n\n\n\nDisturbance context (m01)\n\n\nSub-model\nTerm\nSensitivity β [95% CrI]\nPrimary β [95% CrI]\nStability\n\n\n\n\nLocation (mean lnM)\nIntercept (ref.)\n-1.020 [-1.744, -0.275]\n-0.495 [-1.281, 0.315]\nDIFFERS\n\n\nHunt_harv\n-0.026 [-0.669, 0.602]\n-0.260 [-0.620, 0.089]\nconsistent\n\n\nIntroduction\n0.241 [-0.393, 0.854]\n0.007 [-0.396, 0.396]\nconsistent\n\n\nLandscapechange\n0.561 [-0.137, 1.260]\n0.249 [-0.208, 0.708]\nconsistent\n\n\nOther\n-0.055 [-0.701, 0.567]\n-0.272 [-0.622, 0.072]\nconsistent\n\n\nPollution\n0.509 [-0.271, 1.296]\n0.069 [-0.511, 0.629]\nconsistent\n\n\nResponsetointroductions\n0.474 [-0.356, 1.268]\n0.019 [-0.538, 0.580]\nconsistent\n\n\nScale (log-SD)\nIntercept (ref.)\n-0.548 [-0.739, -0.359]\n-0.687 [-0.867, -0.523]\nconsistent\n\n\nHunt_harv\n0.231 [0.033, 0.432]\n0.365 [0.182, 0.553]\nconsistent\n\n\nIntroduction\n-0.089 [-0.285, 0.111]\n0.011 [-0.160, 0.193]\nDIFFERS\n\n\nLandscapechange\n-0.439 [-0.750, -0.132]\n-0.315 [-0.581, -0.060]\nconsistent\n\n\nOther\n0.104 [-0.094, 0.306]\n0.133 [-0.043, 0.317]\nconsistent\n\n\nPollution\n-0.093 [-0.411, 0.240]\n-0.050 [-0.312, 0.209]\nconsistent\n\n\nResponsetointroductions\n0.050 [-0.193, 0.293]\n0.147 [-0.059, 0.363]\nconsistent\n\n\n\n\n\n\n\nA.5.2 Comparison design (m02)\n\n\n\nComparison design (m02)\n\n\nSub-model\nTerm\nSensitivity β [95% CrI]\nPrimary β [95% CrI]\nStability\n\n\n\n\nLocation (mean lnM)\nIntercept (ref.)\n-0.965 [-1.496, -0.408]\n-0.693 [-1.406, 0.007]\nDIFFERS\n\n\nSynchronic\n0.239 [0.043, 0.434]\n0.253 [0.084, 0.420]\nconsistent\n\n\nScale (log-SD)\nIntercept (ref.)\n-0.400 [-0.442, -0.357]\n-0.466 [-0.505, -0.426]\nconsistent\n\n\nSynchronic\n-0.231 [-0.287, -0.174]\n-0.211 [-0.262, -0.159]\nconsistent\n\n\n\n\n\n\n\nA.5.3 Elapsed time — log₁₀ years (m03)\n\n\n\nElapsed time — log₁₀ years (m03)\n\n\nSub-model\nTerm\nSensitivity β [95% CrI]\nPrimary β [95% CrI]\nStability\n\n\n\n\nLocation (mean lnM)\nIntercept (ref.)\n-1.279 [-1.904, -0.639]\n-1.017 [-1.817, -0.225]\nconsistent\n\n\nslope\n0.310 [0.238, 0.383]\n0.313 [0.242, 0.385]\nconsistent\n\n\nScale (log-SD)\nIntercept (ref.)\n-0.359 [-0.437, -0.281]\n-0.358 [-0.434, -0.284]\nconsistent\n\n\nslope\n-0.127 [-0.180, -0.075]\n-0.163 [-0.211, -0.115]\nconsistent\n\n\n\n\n\n\n\nA.5.4 Elapsed time — log₁₀ generations (m04)\n\n\n\nElapsed time — log₁₀ generations (m04)\n\n\nSub-model\nTerm\nSensitivity β [95% CrI]\nPrimary β [95% CrI]\nStability\n\n\n\n\nLocation (mean lnM)\nIntercept (ref.)\n-1.198 [-1.859, -0.542]\n-0.928 [-1.846, -0.029]\nconsistent\n\n\nslope\n0.294 [0.213, 0.372]\n0.286 [0.215, 0.361]\nconsistent\n\n\nScale (log-SD)\nIntercept (ref.)\n-0.334 [-0.386, -0.281]\n-0.401 [-0.452, -0.351]\nconsistent\n\n\nslope\n-0.159 [-0.194, -0.125]\n-0.148 [-0.182, -0.115]\nconsistent\n\n\n\n\n\n\n\nA.5.5 Trait type (m05)\n\n\n\nTrait type (m05)\n\n\nSub-model\nTerm\nSensitivity β [95% CrI]\nPrimary β [95% CrI]\nStability\n\n\n\n\nLocation (mean lnM)\nIntercept (ref.)\n-1.940 [-3.183, -0.692]\n-1.314 [-2.431, -0.164]\nconsistent\n\n\ngrowth\n1.258 [0.168, 2.287]\n0.824 [0.008, 1.571]\nconsistent\n\n\notherLH\n1.257 [0.183, 2.285]\n0.911 [0.112, 1.651]\nconsistent\n\n\nothermorphology\n1.079 [0.002, 2.095]\n0.779 [-0.026, 1.519]\nDIFFERS\n\n\nphenology\n1.287 [0.167, 2.374]\n0.810 [-0.045, 1.609]\nDIFFERS\n\n\nphysio\n1.141 [0.056, 2.169]\n0.697 [-0.108, 1.444]\nDIFFERS\n\n\nresponse\n1.437 [-0.039, 2.943]\n0.879 [0.058, 1.663]\nDIFFERS\n\n\nsize\n1.210 [0.126, 2.235]\n0.837 [0.040, 1.572]\nconsistent\n\n\nScale (log-SD)\nIntercept (ref.)\n-0.255 [-0.782, 0.321]\n-0.374 [-0.838, 0.129]\nconsistent\n\n\ngrowth\n-1.172 [-1.866, -0.516]\n-0.939 [-1.528, -0.382]\nconsistent\n\n\notherLH\n-0.274 [-0.857, 0.263]\n-0.181 [-0.685, 0.291]\nconsistent\n\n\nothermorphology\n-0.589 [-1.169, -0.052]\n-0.515 [-1.020, -0.045]\nconsistent\n\n\nphenology\n-0.470 [-1.113, 0.130]\n-0.383 [-0.946, 0.155]\nconsistent\n\n\nphysio\n-0.459 [-1.079, 0.119]\n-0.581 [-1.114, -0.087]\nDIFFERS\n\n\nresponse\n0.061 [-1.216, 1.234]\n-0.255 [-0.895, 0.319]\nDIFFERS\n\n\nsize\n-0.115 [-0.692, 0.414]\n-0.041 [-0.544, 0.426]\nconsistent\n\n\n\n\n\n\n\nA.5.6 Phenotypic vs genetic study (m07)\n\n\n\nPhenotypic vs genetic study (m07)\n\n\nSub-model\nTerm\nSensitivity β [95% CrI]\nPrimary β [95% CrI]\nStability\n\n\n\n\nLocation (mean lnM)\nIntercept (ref.)\n-0.699 [-1.219, -0.142]\n-0.426 [-1.191, 0.324]\nDIFFERS\n\n\nPhenotypic\n-0.191 [-0.375, -0.008]\n-0.175 [-0.315, -0.034]\nconsistent\n\n\nScale (log-SD)\nIntercept (ref.)\n-0.797 [-0.854, -0.739]\n-0.839 [-0.892, -0.789]\nconsistent\n\n\nPhenotypic\n0.360 [0.294, 0.426]\n0.341 [0.283, 0.400]\nconsistent\n\n\n\n\n\n\n\nA.5.7 Environmental-change context (m08)\n\n\n\nEnvironmental-change context (m08)\n\n\nSub-model\nTerm\nSensitivity β [95% CrI]\nPrimary β [95% CrI]\nStability\n\n\n\n\nLocation (mean lnM)\nIntercept (ref.)\n-0.805 [-1.294, -0.297]\n-0.538 [-1.270, 0.195]\nDIFFERS\n\n\nongoing\n-0.008 [-0.214, 0.196]\n0.058 [-0.133, 0.248]\nDIFFERS\n\n\nScale (log-SD)\nIntercept (ref.)\n-0.628 [-0.664, -0.590]\n-0.673 [-0.704, -0.641]\nconsistent\n\n\nongoing\n0.240 [0.182, 0.297]\n0.217 [0.164, 0.269]\nconsistent",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Sensitivity A — Minimum sample size (N ≥ 40)</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/appendix/sensitivity_sys_id.html",
+    "href": "chapters/appendix/sensitivity_sys_id.html",
+    "title": "Appendix C — Sensitivity C — Study-system (sys_id) random effect",
+    "section": "",
+    "text": "C.1 What this tests\nProtocol §3.7 (final analysis) and §3.5. Contrasts from the same study system may be non-independent because they share a population, location, disturbance history, or research programme. The primary model captures study-level dependence through ref_id and shared ancestry through the phylogeny, but does not include a separate study-system term, because sys_id, ref_id, and species identity are strongly associated in PROCEED — most systems map to a single species and often a single source — so including all three risks poorly identified variance components. This analysis adds (1 | sys_id) to each included moderator model and reports the outcome explicitly, per the protocol’s commitment to flag weak identifiability rather than interpret confounded components separately. The full dataset is used.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Sensitivity C — Study-system (sys_id) random effect</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/appendix/sensitivity_sys_id.html#how-it-was-fit",
+    "href": "chapters/appendix/sensitivity_sys_id.html#how-it-was-fit",
+    "title": "Appendix C — Sensitivity C — Study-system (sys_id) random effect",
+    "section": "C.2 How it was fit",
+    "text": "C.2 How it was fit\nFit on totoro, not at render — 4 chains × 4,000 iterations (2,000 warmup), adapt_delta = 0.97, max_treedepth = 15, cmdstanr.\n\n\nCode\nphylo   &lt;- prepare_phylo_and_data(dat_mod, A_full)\nformula &lt;- build_ls_formula(moderator, has_phylogeny = phylo$has_phylo,\n                            has_sys_id = TRUE)              # + (1 | sys_id)\nfit     &lt;- fit_ls_model(\n  phylo$dat_model, formula,\n  build_ls_priors(formula, phylo$dat_model, phylo$V, A = phylo$A_mod),\n  V = phylo$V, A = phylo$A_mod, mcmc_args = default_mcmc_args)",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Sensitivity C — Study-system (sys_id) random effect</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/appendix/sensitivity_sys_id.html#convergence-diagnostics",
+    "href": "chapters/appendix/sensitivity_sys_id.html#convergence-diagnostics",
+    "title": "Appendix C — Sensitivity C — Study-system (sys_id) random effect",
+    "section": "C.3 Convergence diagnostics",
+    "text": "C.3 Convergence diagnostics\n\n\n\nConvergence diagnostics (4 chains, 2000 post-warmup draws each).\n\n\nModerator\nMax R̂\nMin bulk ESS\nMin tail ESS\nDivergences\nMax-treedepth hits\n\n\n\n\nDisturbance context (m01)\n1.0081\n645\n1329\n21\n0\n\n\nComparison design (m02)\n1.0075\n699\n1459\n7\n0\n\n\nEnvironmental-change context (m08)\n1.0069\n630\n1133\n2\n0\n\n\nElapsed time — log₁₀ generations (m04)\n1.0048\n610\n1009\n2\n0\n\n\nPhenotypic vs genetic study (m07)\n1.0047\n907\n1607\n1\n0\n\n\nElapsed time — log₁₀ years (m03)\n1.0045\n823\n915\n0\n0\n\n\nTrait type (m05)\n1.0089\n559\n1028\n0\n0\n\n\n\n\n\n\n\n\n\n\n\nWarning\n\n\n\nThe disturbance model returned 21 divergent transitions and the design model 7. This is the weak-identifiability signal the protocol anticipated: with sys_id added on top of ref_id and the phylogeny, the sampler struggles in part of the posterior. R̂ (&lt; 1.01) and ESS remain acceptable, but the individual sys_id, ref_id, and phylogenetic variance components should not be interpreted separately for these models.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Sensitivity C — Study-system (sys_id) random effect</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/appendix/sensitivity_sys_id.html#reading-the-tables",
+    "href": "chapters/appendix/sensitivity_sys_id.html#reading-the-tables",
+    "title": "Appendix C — Sensitivity C — Study-system (sys_id) random effect",
+    "section": "C.4 Reading the tables",
+    "text": "C.4 Reading the tables\nRaw location–scale coefficients on treatment coding: the Intercept row is the reference-level value, each other row the difference from it. The matched primary (no sys_id) coefficient is shown alongside, and the Stability column reads consistent when the two share sign and the same 95% credible-interval conclusion, DIFFERS (highlighted) otherwise. Stability of the moderator coefficients here indicates the reported effects are not artefacts of omitting a study-system term.\nOverall: 7 of 36 moderator coefficients change their credible-interval conclusion relative to the primary fit.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Sensitivity C — Study-system (sys_id) random effect</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/appendix/sensitivity_sys_id.html#results-by-moderator",
+    "href": "chapters/appendix/sensitivity_sys_id.html#results-by-moderator",
+    "title": "Appendix C — Sensitivity C — Study-system (sys_id) random effect",
+    "section": "C.5 Results by moderator",
+    "text": "C.5 Results by moderator\n\nC.5.1 Disturbance context (m01)\n\n\n\nDisturbance context (m01)\n\n\nSub-model\nTerm\nSensitivity β [95% CrI]\nPrimary β [95% CrI]\nStability\n\n\n\n\nLocation (mean lnM)\nIntercept (ref.)\n-0.694 [-1.241, -0.094]\n-0.495 [-1.281, 0.315]\nDIFFERS\n\n\nHunt_harv\n-0.034 [-0.497, 0.426]\n-0.260 [-0.620, 0.089]\nconsistent\n\n\nIntroduction\n0.182 [-0.288, 0.653]\n0.007 [-0.396, 0.396]\nconsistent\n\n\nLandscapechange\n0.258 [-0.299, 0.814]\n0.249 [-0.208, 0.708]\nconsistent\n\n\nOther\n-0.045 [-0.509, 0.410]\n-0.272 [-0.622, 0.072]\nconsistent\n\n\nPollution\n0.340 [-0.279, 0.944]\n0.069 [-0.511, 0.629]\nconsistent\n\n\nResponsetointroductions\n0.189 [-0.445, 0.795]\n0.019 [-0.538, 0.580]\nconsistent\n\n\nScale (log-SD)\nIntercept (ref.)\n-0.805 [-1.023, -0.603]\n-0.687 [-0.867, -0.523]\nconsistent\n\n\nHunt_harv\n0.350 [0.131, 0.579]\n0.365 [0.182, 0.553]\nconsistent\n\n\nIntroduction\n0.129 [-0.078, 0.349]\n0.011 [-0.160, 0.193]\nconsistent\n\n\nLandscapechange\n-0.204 [-0.487, 0.079]\n-0.315 [-0.581, -0.060]\nDIFFERS\n\n\nOther\n0.084 [-0.136, 0.314]\n0.133 [-0.043, 0.317]\nconsistent\n\n\nPollution\n0.077 [-0.211, 0.371]\n-0.050 [-0.312, 0.209]\nDIFFERS\n\n\nResponsetointroductions\n0.264 [0.022, 0.513]\n0.147 [-0.059, 0.363]\nDIFFERS\n\n\n\n\n\n\n\nC.5.2 Comparison design (m02)\n\n\n\nComparison design (m02)\n\n\nSub-model\nTerm\nSensitivity β [95% CrI]\nPrimary β [95% CrI]\nStability\n\n\n\n\nLocation (mean lnM)\nIntercept (ref.)\n-0.707 [-1.164, -0.246]\n-0.693 [-1.406, 0.007]\nDIFFERS\n\n\nSynchronic\n0.228 [0.061, 0.398]\n0.253 [0.084, 0.420]\nconsistent\n\n\nScale (log-SD)\nIntercept (ref.)\n-0.674 [-0.748, -0.604]\n-0.466 [-0.505, -0.426]\nconsistent\n\n\nSynchronic\n-0.001 [-0.078, 0.080]\n-0.211 [-0.262, -0.159]\nDIFFERS\n\n\n\n\n\n\n\nC.5.3 Elapsed time — log₁₀ years (m03)\n\n\n\nElapsed time — log₁₀ years (m03)\n\n\nSub-model\nTerm\nSensitivity β [95% CrI]\nPrimary β [95% CrI]\nStability\n\n\n\n\nLocation (mean lnM)\nIntercept (ref.)\n-0.954 [-1.484, -0.391]\n-1.017 [-1.817, -0.225]\nconsistent\n\n\nslope\n0.276 [0.204, 0.348]\n0.313 [0.242, 0.385]\nconsistent\n\n\nScale (log-SD)\nIntercept (ref.)\n-0.583 [-0.692, -0.478]\n-0.358 [-0.434, -0.284]\nconsistent\n\n\nslope\n-0.057 [-0.120, 0.007]\n-0.163 [-0.211, -0.115]\nDIFFERS\n\n\n\n\n\n\n\nC.5.4 Elapsed time — log₁₀ generations (m04)\n\n\n\nElapsed time — log₁₀ generations (m04)\n\n\nSub-model\nTerm\nSensitivity β [95% CrI]\nPrimary β [95% CrI]\nStability\n\n\n\n\nLocation (mean lnM)\nIntercept (ref.)\n-0.908 [-1.458, -0.352]\n-0.928 [-1.846, -0.029]\nconsistent\n\n\nslope\n0.260 [0.186, 0.333]\n0.286 [0.215, 0.361]\nconsistent\n\n\nScale (log-SD)\nIntercept (ref.)\n-0.561 [-0.643, -0.481]\n-0.401 [-0.452, -0.351]\nconsistent\n\n\nslope\n-0.071 [-0.116, -0.024]\n-0.148 [-0.182, -0.115]\nconsistent\n\n\n\n\n\n\n\nC.5.5 Trait type (m05)\n\n\n\nTrait type (m05)\n\n\nSub-model\nTerm\nSensitivity β [95% CrI]\nPrimary β [95% CrI]\nStability\n\n\n\n\nLocation (mean lnM)\nIntercept (ref.)\n-1.290 [-2.200, -0.337]\n-1.314 [-2.431, -0.164]\nconsistent\n\n\ngrowth\n0.777 [0.002, 1.532]\n0.824 [0.008, 1.571]\nconsistent\n\n\notherLH\n0.861 [0.088, 1.612]\n0.911 [0.112, 1.651]\nconsistent\n\n\nothermorphology\n0.732 [-0.039, 1.490]\n0.779 [-0.026, 1.519]\nconsistent\n\n\nphenology\n0.770 [-0.050, 1.562]\n0.810 [-0.045, 1.609]\nconsistent\n\n\nphysio\n0.648 [-0.130, 1.413]\n0.697 [-0.108, 1.444]\nconsistent\n\n\nresponse\n0.838 [0.019, 1.628]\n0.879 [0.058, 1.663]\nconsistent\n\n\nsize\n0.801 [0.030, 1.558]\n0.837 [0.040, 1.572]\nconsistent\n\n\nScale (log-SD)\nIntercept (ref.)\n-0.341 [-0.820, 0.149]\n-0.374 [-0.838, 0.129]\nconsistent\n\n\ngrowth\n-0.961 [-1.546, -0.416]\n-0.939 [-1.528, -0.382]\nconsistent\n\n\notherLH\n-0.216 [-0.718, 0.264]\n-0.181 [-0.685, 0.291]\nconsistent\n\n\nothermorphology\n-0.564 [-1.064, -0.084]\n-0.515 [-1.020, -0.045]\nconsistent\n\n\nphenology\n-0.447 [-1.035, 0.102]\n-0.383 [-0.946, 0.155]\nconsistent\n\n\nphysio\n-0.595 [-1.108, -0.098]\n-0.581 [-1.114, -0.087]\nconsistent\n\n\nresponse\n-0.289 [-0.903, 0.286]\n-0.255 [-0.895, 0.319]\nconsistent\n\n\nsize\n-0.145 [-0.639, 0.335]\n-0.041 [-0.544, 0.426]\nconsistent\n\n\n\n\n\n\n\nC.5.6 Phenotypic vs genetic study (m07)\n\n\n\nPhenotypic vs genetic study (m07)\n\n\nSub-model\nTerm\nSensitivity β [95% CrI]\nPrimary β [95% CrI]\nStability\n\n\n\n\nLocation (mean lnM)\nIntercept (ref.)\n-0.459 [-0.921, 0.040]\n-0.426 [-1.191, 0.324]\nconsistent\n\n\nPhenotypic\n-0.152 [-0.288, -0.013]\n-0.175 [-0.315, -0.034]\nconsistent\n\n\nScale (log-SD)\nIntercept (ref.)\n-0.839 [-0.892, -0.788]\n-0.839 [-0.892, -0.789]\nconsistent\n\n\nPhenotypic\n0.261 [0.198, 0.325]\n0.341 [0.283, 0.400]\nconsistent\n\n\n\n\n\n\n\nC.5.7 Environmental-change context (m08)\n\n\n\nEnvironmental-change context (m08)\n\n\nSub-model\nTerm\nSensitivity β [95% CrI]\nPrimary β [95% CrI]\nStability\n\n\n\n\nLocation (mean lnM)\nIntercept (ref.)\n-0.533 [-0.984, -0.036]\n-0.538 [-1.270, 0.195]\nDIFFERS\n\n\nongoing\n-0.067 [-0.263, 0.134]\n0.058 [-0.133, 0.248]\nDIFFERS\n\n\nScale (log-SD)\nIntercept (ref.)\n-0.677 [-0.710, -0.644]\n-0.673 [-0.704, -0.641]\nconsistent\n\n\nongoing\n0.025 [-0.058, 0.106]\n0.217 [0.164, 0.269]\nDIFFERS",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Sensitivity C — Study-system (sys_id) random effect</span>"
+    ]
   }
 ]
