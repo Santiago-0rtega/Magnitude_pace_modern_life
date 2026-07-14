@@ -176,3 +176,68 @@ sens_stability_summary <- function(variant) {
   sprintf("%d of %d moderator coefficients change their credible-interval conclusion relative to the primary fit.",
           sum(j$differs, na.rm = TRUE), nrow(j))
 }
+
+# Book-level synthesis across all sensitivity variants ------------------------
+sens_variant_summary_data <- function() {
+  variants <- c("sens1_n40", "sens2_nophylo", "sens3_sysid")
+
+  purrr::map_dfr(variants, function(variant) {
+    loc  <- .sens_read(variant, "location")
+    scl  <- .sens_read(variant, "scale")
+    diag <- .sens_read(variant, "diagnostics")
+    prim <- .primary_read()
+
+    if (is.null(loc) || is.null(scl) || is.null(diag)) {
+      return(tibble::tibble(
+        Analysis = sens_variant_meta(variant)$title,
+        `Models available` = if (is.null(diag)) 0L else nrow(diag),
+        `Changed coefficients` = NA_character_,
+        `Max Rhat` = NA_real_, Divergences = NA_integer_, Status = "incomplete"
+      ))
+    }
+
+    sens <- dplyr::bind_rows(loc, scl) |>
+      dplyr::select(moderator, submodel, term,
+                    s_est = estimate, s_lo = q2_5, s_hi = q97_5)
+    joined <- sens |>
+      dplyr::left_join(
+        prim |>
+          dplyr::select(moderator, submodel, term,
+                        p_est = estimate, p_lo = q2_5, p_hi = q97_5),
+        by = c("moderator", "submodel", "term")
+      ) |>
+      dplyr::filter(term != "Intercept", term != "sigma_Intercept", !is.na(p_est)) |>
+      dplyr::mutate(
+        differs = .excl0(s_lo, s_hi) != .excl0(p_lo, p_hi) |
+          sign(s_est) != sign(p_est)
+      )
+
+    n_changed <- sum(joined$differs, na.rm = TRUE)
+    n_compared <- nrow(joined)
+    n_divergent <- sum(diag$n_divergent, na.rm = TRUE)
+
+    tibble::tibble(
+      Analysis = sens_variant_meta(variant)$title,
+      `Models available` = nrow(diag),
+      `Changed coefficients` = sprintf("%d of %d", n_changed, n_compared),
+      `Max Rhat` = max(diag$max_rhat, na.rm = TRUE),
+      Divergences = n_divergent,
+      Status = if (nrow(diag) == length(sens_moderators)) "complete" else "incomplete"
+    )
+  })
+}
+
+sens_variant_summary_table <- function() {
+  out <- sens_variant_summary_data() |>
+    dplyr::mutate(`Max Rhat` = round(`Max Rhat`, 3))
+
+  kableExtra::kbl(
+    out,
+    caption = "Sensitivity-model availability, stability, and diagnostics.",
+    booktabs = TRUE
+  ) |>
+    kableExtra::kable_styling(
+      full_width = FALSE,
+      bootstrap_options = c("striped", "condensed")
+    )
+}

@@ -1,0 +1,40 @@
+---
+title: "Sensitivity analyses"
+---
+
+```{r setup, include=FALSE}
+source(here::here("chapters", "Rscripts", "00_packages.R"))
+source(here::here("chapters", "Rscripts", "19_sensitivity_tables.R"))
+```
+
+## Model status and overall results
+
+The three prespecified sensitivity analyses were run for each of the seven
+moderators included in the primary model set. The table below is generated from
+the synced model summaries rather than entered by hand. A changed coefficient
+is one whose sign or 95% credible-interval conclusion differs from its matched
+primary-model coefficient; intercepts are excluded from this count.
+
+```{r sensitivity-summary, echo=FALSE}
+sens_variant_summary_table()
+```
+
+All 21 expected sensitivity models have cached results. Removing the
+phylogenetic random effect produced the fewest changes relative to the primary
+fits. The minimum-sample-size and study-system analyses produced more changes,
+and their divergent transitions mean those differences should be interpreted
+alongside the model-specific diagnostics rather than as definitive reversals.
+
+## Detailed results
+
+The appendices report every location and scale coefficient beside the matched
+primary estimate, together with convergence diagnostics:
+
+- [Minimum total sample size (N >= 40)](appendix/sensitivity_min_n.qmd)
+- [No phylogenetic random effect](appendix/sensitivity_no_phylogeny.qmd)
+- [Study-system (`sys_id`) random effect](appendix/sensitivity_sys_id.qmd)
+
+Highlighted rows in those tables identify coefficients whose sign or
+credible-interval conclusion changes. The detailed tables use raw treatment-coded
+coefficients so that each sensitivity estimate is compared like-for-like with
+the corresponding primary fit.

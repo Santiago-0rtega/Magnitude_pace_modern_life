@@ -41,6 +41,7 @@ book:
         - chapters/models/m12.qmd
     - part: "Figures & Reproducibility"
       chapters:
+        - chapters/07_sensitivity_analyses.qmd
         - chapters/08_publication_figures.qmd
         - chapters/09_reproducibility.qmd
   appendices:

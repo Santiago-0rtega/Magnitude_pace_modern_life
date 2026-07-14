@@ -941,12 +941,12 @@
   {
     "objectID": "chapters/07_sensitivity_analyses.html",
     "href": "chapters/07_sensitivity_analyses.html",
-    "title": "20  Sensitivity analyses",
+    "title": "17  Sensitivity analyses",
     "section": "",
-    "text": "20.1 Overview\nSensitivity analyses repeat selected models under modified data or random-effects specifications. The primary moderators examined in sensitivity analyses are: disturbance, design, log10_years, log10_generations, trait_type.\nAll sensitivity models are saved in outputs/models/sensitivity/ and all summary tables in outputs/tables/sensitivity/.\nCode\ndat_es &lt;- readRDS(here::here(\"Rdata\", \"effect_sizes\", \"proceed_lnm_safe.rds\"))\n\nA_full   &lt;- tryCatch(readRDS(here::here(\"Rdata\", \"phylogeny\", \"proceed_A_matrix.rds\")),\n                     error = function(e) NULL)\nname_map &lt;- tryCatch(readRDS(here::here(\"Rdata\", \"phylogeny\", \"proceed_name_map.rds\")),\n                     error = function(e) NULL)\n\n# Apply the prepR4pcm name map so sp_ncbi_canonical is available\nif (!is.null(name_map)) {\n  dat_es &lt;- apply_phylo_name_map(dat_es, name_map)\n} else {\n  dat_es$sp_ncbi_canonical &lt;- dat_es$sp_ncbi\n}",
+    "text": "17.1 Model status and overall results\nThe three prespecified sensitivity analyses were run for each of the seven moderators included in the primary model set. The table below is generated from the synced model summaries rather than entered by hand. A changed coefficient is one whose sign or 95% credible-interval conclusion differs from its matched primary-model coefficient; intercepts are excluded from this count.\nSensitivity-model availability, stability, and diagnostics.\n\n\nAnalysis\nModels available\nChanged coefficients\nMax Rhat\nDivergences\nStatus\n\n\n\n\nMinimum total sample size (nb + nb b % 40)\n7\n8 of 36\n1.010\n58\ncomplete\n\n\nNo phylogenetic random effect\n7\n3 of 36\n1.009\n0\ncomplete\n\n\nStudy-system (sys_id) random effect\n7\n7 of 36\n1.009\n33\ncomplete\nAll 21 expected sensitivity models have cached results. Removing the phylogenetic random effect produced the fewest changes relative to the primary fits. The minimum-sample-size and study-system analyses produced more changes, and their divergent transitions mean those differences should be interpreted alongside the model-specific diagnostics rather than as definitive reversals.",
     "crumbs": [
-      "Robustness",
-      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Sensitivity analyses</span>"
+      "Figures & Reproducibility",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Sensitivity analyses</span>"
     ]
   },
   {
@@ -1189,6 +1189,17 @@
     "crumbs": [
       "Appendices",
       "<span class='chapter-number'>C</span>  <span class='chapter-title'>Sensitivity C — Study-system (sys_id) random effect</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/07_sensitivity_analyses.html#detailed-results",
+    "href": "chapters/07_sensitivity_analyses.html#detailed-results",
+    "title": "17  Sensitivity analyses",
+    "section": "17.2 Detailed results",
+    "text": "17.2 Detailed results\nThe appendices report every location and scale coefficient beside the matched primary estimate, together with convergence diagnostics:\n\nMinimum total sample size (N &gt;= 40)\nNo phylogenetic random effect\nStudy-system (sys_id) random effect\n\nHighlighted rows in those tables identify coefficients whose sign or credible-interval conclusion changes. The detailed tables use raw treatment-coded coefficients so that each sensitivity estimate is compared like-for-like with the corresponding primary fit.",
+    "crumbs": [
+      "Figures & Reproducibility",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Sensitivity analyses</span>"
     ]
   }
 ]

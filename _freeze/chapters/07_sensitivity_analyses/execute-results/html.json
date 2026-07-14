@@ -1,0 +1,19 @@
+{
+  "hash": "85198fab72d08fb72537b3b6df86c1a2",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Sensitivity analyses\"\n---\n\n\n\n## Model status and overall results\n\nThe three prespecified sensitivity analyses were run for each of the seven\nmoderators included in the primary model set. The table below is generated from\nthe synced model summaries rather than entered by hand. A changed coefficient\nis one whose sign or 95% credible-interval conclusion differs from its matched\nprimary-model coefficient; intercepts are excluded from this count.\n\n\n::: {.cell}\n::: {.cell-output-display}\n`````{=html}\n<table class=\"table table-striped table-condensed\" style=\"width: auto !important; margin-left: auto; margin-right: auto;\">\n<caption>Sensitivity-model availability, stability, and diagnostics.</caption>\n <thead>\n  <tr>\n   <th style=\"text-align:left;\"> Analysis </th>\n   <th style=\"text-align:right;\"> Models available </th>\n   <th style=\"text-align:left;\"> Changed coefficients </th>\n   <th style=\"text-align:right;\"> Max Rhat </th>\n   <th style=\"text-align:right;\"> Divergences </th>\n   <th style=\"text-align:left;\"> Status </th>\n  </tr>\n </thead>\n<tbody>\n  <tr>\n   <td style=\"text-align:left;\"> Minimum total sample size (nb + nb b\t% 40) </td>\n   <td style=\"text-align:right;\"> 7 </td>\n   <td style=\"text-align:left;\"> 8 of 36 </td>\n   <td style=\"text-align:right;\"> 1.010 </td>\n   <td style=\"text-align:right;\"> 58 </td>\n   <td style=\"text-align:left;\"> complete </td>\n  </tr>\n  <tr>\n   <td style=\"text-align:left;\"> No phylogenetic random effect </td>\n   <td style=\"text-align:right;\"> 7 </td>\n   <td style=\"text-align:left;\"> 3 of 36 </td>\n   <td style=\"text-align:right;\"> 1.009 </td>\n   <td style=\"text-align:right;\"> 0 </td>\n   <td style=\"text-align:left;\"> complete </td>\n  </tr>\n  <tr>\n   <td style=\"text-align:left;\"> Study-system (sys_id) random effect </td>\n   <td style=\"text-align:right;\"> 7 </td>\n   <td style=\"text-align:left;\"> 7 of 36 </td>\n   <td style=\"text-align:right;\"> 1.009 </td>\n   <td style=\"text-align:right;\"> 33 </td>\n   <td style=\"text-align:left;\"> complete </td>\n  </tr>\n</tbody>\n</table>\n\n`````\n:::\n:::\n\n\nAll 21 expected sensitivity models have cached results. Removing the\nphylogenetic random effect produced the fewest changes relative to the primary\nfits. The minimum-sample-size and study-system analyses produced more changes,\nand their divergent transitions mean those differences should be interpreted\nalongside the model-specific diagnostics rather than as definitive reversals.\n\n## Detailed results\n\nThe appendices report every location and scale coefficient beside the matched\nprimary estimate, together with convergence diagnostics:\n\n- [Minimum total sample size (N >= 40)](appendix/sensitivity_min_n.qmd)\n- [No phylogenetic random effect](appendix/sensitivity_no_phylogeny.qmd)\n- [Study-system (`sys_id`) random effect](appendix/sensitivity_sys_id.qmd)\n\nHighlighted rows in those tables identify coefficients whose sign or\ncredible-interval conclusion changes. The detailed tables use raw treatment-coded\ncoefficients so that each sensitivity estimate is compared like-for-like with\nthe corresponding primary fit.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-in-header": [
+        "<script src=\"../site_libs/kePrint-0.0.1/kePrint.js\"></script>\n<link href=\"../site_libs/lightable-0.0.1/lightable.css\" rel=\"stylesheet\" />\n<link href=\"../site_libs/pagedtable-1.1/css/pagedtable.css\" rel=\"stylesheet\" />\n<script src=\"../site_libs/pagedtable-1.1/js/pagedtable.js\"></script>\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
