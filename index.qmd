@@ -16,21 +16,7 @@ The analyses use the **PROCEED v6.2** database of rates of evolutionary and phen
 
 ## Purpose of lnM
 
-The effect size used in this book is $\ln M$, a log-magnitude statistic for the distance between two group means irrespective of direction. It is designed for questions where the magnitude of phenotypic divergence matters more than whether the focal group is higher or lower. Unlike taking $|d|$ or $|\ln RR|$, $\ln M$ is defined from one-way ANOVA components and is intended to be analysed directly with standard meta-analytic and meta-regression models.
-
-For each two-group contrast, the analytic definition starts with the between- and within-group mean squares, $MS_B$ and $MS_W$. The within-group variance is $s_W^2 = MS_W$, and the between-component variance is:
-
-$$
-s_B^2 = \frac{MS_B - MS_W}{n_0},
-$$
-
-where $n_0 = 2n_1n_2 / (n_1 + n_2)$ is the harmonic-mean sample size. The target effect size is then:
-
-$$
-\ln M = \ln\left(\frac{s_B}{s_W}\right).
-$$
-
-Thus, $\ln M = 0$ means the estimated between-component standard deviation equals the within-group standard deviation. This is a high-magnitude threshold: for large, balanced independent groups, it is approximately equivalent to a standardized mean difference of $d \approx 1.4$.
+The effect size used in this book is $\ln M$, which describes the magnitude of separation between two groups without retaining the direction of the difference. Its definition, interpretation, and SAFE estimation are introduced once in @sec-lnm-measures.
 
 ## Location-scale meta-regression
 

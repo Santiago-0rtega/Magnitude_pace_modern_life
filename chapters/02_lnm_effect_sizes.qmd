@@ -12,7 +12,7 @@ source(here::here("chapters", "Rscripts", "15_render_guard.R"))   # read-only: n
 recompute_effect_sizes <- FALSE
 ```
 
-## What lnM measures
+## What lnM measures {#sec-lnm-measures}
 
 This chapter computes the effect size used throughout the book: $\ln M$, the log magnitude of separation between two groups. The key idea is to measure how far apart two group means are without retaining the sign of the difference. This is useful here because human disturbance can push traits in different directions across systems, while the biological question is often about the magnitude of phenotypic divergence.
 
@@ -48,7 +48,7 @@ $$
 where $s_B$ is the square root of the between-component variance and $s_W$ is the pooled within-group standard deviation. The sign of $\ln M$ is therefore not the direction of trait change. Instead:
 
 - $\ln M > 0$ means the estimated between-component standard deviation is larger than the within-group standard deviation.
-- $\ln M = 0$ means those two standard deviations are equal.
+- $\ln M = 0$ means the estimated between- and within-group components are not markedly different in scale; it should not be interpreted as evidence that the underlying components are exactly equal.
 - $\ln M < 0$ means the estimated between-component standard deviation is smaller than the within-group standard deviation.
 
 Because $s_B^2$ subtracts $MS_W$ from $MS_B$, $\ln M = 0$ is not equivalent to "small" separation. For large, balanced independent groups it corresponds approximately to $d = \sqrt{2}$, or about $1.4$, on the standardized mean-difference scale.

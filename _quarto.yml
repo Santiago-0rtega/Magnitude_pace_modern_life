@@ -5,7 +5,7 @@ project:
     - .nojekyll   # disable GitHub Pages Jekyll processing of the rendered site
 
 book:
-  title: "Supplementary analyses: Human disturbance and the magnitude of phenotypic divergence"
+  title: "Supplementary material: Human disturbance and the magnitude of phenotypic divergence"
   author: "TBA"
   date: today
   repo-url: https://github.com/Santiago-0rtega/Magnitude_pace_modern_life
@@ -38,7 +38,7 @@ book:
         - chapters/models/m05.qmd
         - chapters/models/m07.qmd
         - chapters/models/m08.qmd
-        - chapters/models/m12.qmd
+        - chapters/models/m11.qmd
     - part: "Figures & Reproducibility"
       chapters:
         - chapters/07_sensitivity_analyses.qmd

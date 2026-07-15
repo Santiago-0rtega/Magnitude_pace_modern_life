@@ -148,7 +148,7 @@ p_loc <- ggplot2::ggplot() +
   ggplot2::labs(
     x = "Location effect (lnM)",
     y = NULL,
-    title = "Location -- Overall baseline (m00)",
+    title = "Location -- Overall baseline",
     caption = caption_txt
   ) +
   theme_orchard()
@@ -181,7 +181,7 @@ p_scl <- ggplot2::ggplot() +
   ggplot2::labs(
     x = "residual lnM (SD)",
     y = NULL,
-    title = "Scale -- Overall baseline (m00)",
+    title = "Scale -- Overall baseline",
     caption = sprintf(
       "residual SD = %.3f [%.3f, %.3f]",
       sig_est, sig_lo, sig_hi

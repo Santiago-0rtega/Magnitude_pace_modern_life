@@ -1,5 +1,5 @@
 ---
-title: "m09 — Data type (excluded)"
+title: "Data type (excluded)"
 ---
 
 ::: {.callout-warning}

@@ -117,6 +117,40 @@ grid_status
 
 ## Fit or read models
 
+### Covariance matrices used by the model
+
+Two group-level terms in the location submodel use covariance matrices supplied through `data2` in `brms`:
+
+```r
+(1 | gr(sp_ncbi, cov = A)) +
+(1 | gr(es_id_model, cov = V))
+```
+
+`A` is the phylogenetic correlation matrix. It is calculated from the reconciled, pruned phylogeny and then subset (or expanded with zero off-diagonal correlations for unmatched species) so its row and column names match the `sp_ncbi` factor levels used by a given model:
+
+```r
+# Construct the full phylogenetic correlation matrix
+A_full <- prepR4pcm::pr_phylo_cor(tree_final)
+# Equivalent fallback used if pr_phylo_cor() fails:
+# A_full <- ape::vcv.phylo(tree_final, corr = TRUE)
+
+# Align A with the species retained for this moderator model
+species_model <- levels(dat_model$sp_ncbi)
+A <- A_full[species_model, species_model, drop = FALSE]
+```
+
+`V` is the known sampling-error covariance matrix. SAFE supplies one sampling variance per effect size (`vi_lnM_safe`), so the variances occupy the diagonal and the off-diagonal covariances are zero. Its dimension names must match the rebuilt `es_id_model` factor:
+
+```r
+dat_model <- dat_model |>
+  dplyr::mutate(es_id_model = factor(seq_len(dplyr::n())))
+
+V <- diag(dat_model$vi_lnM_safe)
+rownames(V) <- colnames(V) <- as.character(dat_model$es_id_model)
+```
+
+The aligned matrices are passed to `brms` as `data2 = list(A = A, V = V)`. The standard deviation of the `es_id_model` term is fixed to 1 with a `constant(1)` prior, ensuring that `V` contributes the known SAFE sampling uncertainty rather than an additional estimated variance component.
+
 The loop below iterates over every row of the registry. For each moderator it:
 
 1. Checks the moderator exists and has enough data.
@@ -334,22 +368,38 @@ if (rebuild_grid) {
 
 model_status <- model_status |>
   dplyr::mutate(
-    status = dplyr::case_when(
-      model_id == "m06" ~ "withheld: replacement model pending",
-      model_id == "m09" ~ "withheld: replacement model pending",
-      TRUE ~ status
+    status = dplyr::if_else(
+      model_id == "m10", "excluded: did not converge", status
     ),
-    notes = dplyr::case_when(
-      model_id == "m06" ~ "Original taxonomic model had poor convergence and sparse-level geometry; do not interpret this row as a current main result until the replacement model is finalized.",
-      model_id == "m09" ~ "Original data-type model had poor scale-parameter diagnostics and sparse levels; do not interpret this row as a current main result until the replacement model is finalized.",
-      TRUE ~ notes
+    notes = dplyr::if_else(
+      model_id == "m10",
+      "Cleaned transformation-status refit had max Rhat = 1.0128 and minimum bulk ESS = 230; its result chapter and estimates are excluded.",
+      notes
     )
-  )
+  ) |>
+  dplyr::bind_rows(
+    tibble::tribble(
+      ~model_id, ~moderator, ~label, ~type, ~status, ~notes, ~max_rhat, ~min_bulk_ess, ~min_tail_ess, ~n_divergent, ~max_treedepth_hits,
+      "m06", "taxa", "Taxonomic group", "categorical", "excluded: did not converge", "Taxonomic grouping was redundant with the phylogenetic effect and did not reach a usable posterior in a reasonable time.", NA_real_, NA_real_, NA_real_, NA_integer_, NA_integer_,
+      "m09", "data_type", "Data type", "categorical", "excluded: did not converge", "The cleaned refit retained 5 divergent transitions after warmup; its result chapter and estimates are excluded.", NA_real_, NA_real_, NA_real_, 5L, NA_integer_,
+      "m12", "log10_years × disturbance", "Elapsed time (log10 years) × disturbance", "interaction", "excluded: interaction model", "Interaction models were removed from the reported book. The completed m12 fit also retained 4 divergent transitions after warmup.", 1.01, 293, 486, 4L, NA_integer_,
+      "m13", "log10_generations × disturbance", "Elapsed time (log10 generations) × disturbance", "interaction", "excluded: interaction model", "Interaction models were removed from the reported book and no result chapter is presented.", NA_real_, NA_real_, NA_real_, NA_integer_, NA_integer_
+    )
+  ) |>
+  dplyr::arrange(model_id)
+
+# Excluded models are documented in the status table but are not propagated
+# into the reported effect tables or publication figures.
+excluded_model_ids <- c("m06", "m09", "m10", "m12", "m13")
+loc_effects <- loc_effects |>
+  dplyr::filter(!model_id %in% excluded_model_ids)
+scl_effects <- scl_effects |>
+  dplyr::filter(!model_id %in% excluded_model_ids)
 ```
 
 ## Model status table
 
-The taxonomic-group (`m06`) and data-type (`m09`) result pages are temporarily withheld from the rendered book navigation. The original fits had known convergence or sparse-level problems, and the replacement models are being finalized before these moderators are presented as main results.
+Models `m06`, `m09`, and `m10` are excluded because they did not produce a reliable, converged posterior. The interaction models (`m12` and `m13`) are also excluded from the reported book. They remain listed here so that every attempted model and the reason for its exclusion are transparent, but they have no result chapters and do not contribute to the reported effect tables or publication figures.
 
 ```{r status-table}
 model_status
