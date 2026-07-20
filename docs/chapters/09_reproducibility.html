@@ -584,21 +584,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>─ Session info ───────────────────────────────────────────────────────────────
+<pre><code>- Session info ---------------------------------------------------------------
  setting  value
  version  R version 4.6.1 (2026-06-24 ucrt)
  os       Windows 11 x64 (build 26200)
  system   x86_64, mingw32
  ui       RTerm
  language (EN)
- collate  English_Guernsey.utf8
- ctype    English_Guernsey.utf8
+ collate  C
+ ctype    C
  tz       America/Edmonton
- date     2026-07-07
+ date     2026-07-20
  pandoc   3.8.3 @ C:\\Program Files\\RStudio\\resources\\app\\bin\\quarto\\bin\\tools/ (via rmarkdown)
  quarto   NA
 
-─ Packages ───────────────────────────────────────────────────────────────────
+- Packages -------------------------------------------------------------------
  ! package        * version    date (UTC) lib source
    abind            1.4-8      2024-09-12 [1] CRAN (R 4.6.0)
    ape            * 5.8-1      2024-12-16 [1] CRAN (R 4.6.1)
@@ -612,7 +612,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    cli              3.6.6      2026-04-09 [1] CRAN (R 4.6.0)
    cmdstanr       * 0.9.0.9000 2026-06-29 [1] Github (stan-dev/cmdstanr@d67fd53)
    coda             0.19-4.1   2024-01-31 [1] CRAN (R 4.6.1)
-   codetools        0.2-20     2024-03-31 [2] CRAN (R 4.6.1)
    crayon           1.5.3      2024-06-20 [1] CRAN (R 4.6.1)
    digest           0.6.39     2025-11-19 [1] CRAN (R 4.6.1)
    distributional   0.8.1      2026-06-27 [1] CRAN (R 4.6.1)
@@ -694,10 +693,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  [1] C:/Users/zannt/AppData/Local/R/win-library/4.6
  [2] C:/Program Files/R/R-4.6.1/library
 
- * ── Packages attached to the search path.
- D ── DLL MD5 mismatch, broken installation.
+ * -- Packages attached to the search path.
+ D -- DLL MD5 mismatch, broken installation.
 
-──────────────────────────────────────────────────────────────────────────────</code></pre>
+------------------------------------------------------------------------------</code></pre>
 </div>
 </div>
 </section>
@@ -772,7 +771,7 @@ Unresolved      : 7 </code></pre>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Commit hash:"</span>, git_hash, <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Commit hash: c754af2b6136c16ae1390b4384252abf70fdd5a0 </code></pre>
+<pre><code>Commit hash: c3962823a050366f6b10f085763aa315c1b568fb </code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -785,361 +784,145 @@ Unresolved      : 7 </code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Uncommitted changes:
- D ../01_data_preparation.qmd
- D ../01_data_preparation_cache/html/__packages
- D ../01_data_preparation_cache/html/derived_a78dc87b63d6c95cf14fe7cd3c3caece.RData
- D ../01_data_preparation_cache/html/derived_a78dc87b63d6c95cf14fe7cd3c3caece.rdb
- D ../01_data_preparation_cache/html/derived_a78dc87b63d6c95cf14fe7cd3c3caece.rdx
- D ../01_data_preparation_cache/html/design-counts_a67ae3fea0aa449f31ca346eeadddc69.RData
- D ../01_data_preparation_cache/html/design-counts_a67ae3fea0aa449f31ca346eeadddc69.rdb
- D ../01_data_preparation_cache/html/design-counts_a67ae3fea0aa449f31ca346eeadddc69.rdx
- D ../01_data_preparation_cache/html/load_9de13092cdf360bdaee48c5306eaa213.RData
- D ../01_data_preparation_cache/html/load_9de13092cdf360bdaee48c5306eaa213.rdb
- D ../01_data_preparation_cache/html/load_9de13092cdf360bdaee48c5306eaa213.rdx
- D ../01_data_preparation_cache/html/rebuild_8cb72e06a0e9da6fe70db1001ddf0afa.RData
- D ../01_data_preparation_cache/html/rebuild_8cb72e06a0e9da6fe70db1001ddf0afa.rdb
- D ../01_data_preparation_cache/html/rebuild_8cb72e06a0e9da6fe70db1001ddf0afa.rdx
- D ../01_data_preparation_cache/html/setup_1958ad3c145d77cde9e5ced74b73f7d5.RData
- D ../01_data_preparation_cache/html/setup_1958ad3c145d77cde9e5ced74b73f7d5.rdb
- D ../01_data_preparation_cache/html/setup_1958ad3c145d77cde9e5ced74b73f7d5.rdx
- D ../01_data_preparation_cache/html/summary_728128769c631f9b3e4caf0e79c786ea.RData
- D ../01_data_preparation_cache/html/summary_728128769c631f9b3e4caf0e79c786ea.rdb
- D ../01_data_preparation_cache/html/summary_728128769c631f9b3e4caf0e79c786ea.rdx
- D ../02_lnm_effect_sizes.qmd
- D ../02_lnm_effect_sizes_cache/html/__packages
- D ../02_lnm_effect_sizes_cache/html/compute-lnm_c61b3812edd6200c28054ad2f0c37133.RData
- D ../02_lnm_effect_sizes_cache/html/compute-lnm_c61b3812edd6200c28054ad2f0c37133.rdb
- D ../02_lnm_effect_sizes_cache/html/compute-lnm_c61b3812edd6200c28054ad2f0c37133.rdx
- D ../02_lnm_effect_sizes_cache/html/es-summary_49b43474afbd72397d4941761e9796f9.RData
- D ../02_lnm_effect_sizes_cache/html/es-summary_49b43474afbd72397d4941761e9796f9.rdb
- D ../02_lnm_effect_sizes_cache/html/es-summary_49b43474afbd72397d4941761e9796f9.rdx
- D ../02_lnm_effect_sizes_cache/html/id-check_07d8c886c597f979d2b0a67afb55bc54.RData
- D ../02_lnm_effect_sizes_cache/html/id-check_07d8c886c597f979d2b0a67afb55bc54.rdb
- D ../02_lnm_effect_sizes_cache/html/id-check_07d8c886c597f979d2b0a67afb55bc54.rdx
- D ../02_lnm_effect_sizes_cache/html/load-clean_09f8734e45c494167f46ccefc80a08db.RData
- D ../02_lnm_effect_sizes_cache/html/load-clean_09f8734e45c494167f46ccefc80a08db.rdb
- D ../02_lnm_effect_sizes_cache/html/load-clean_09f8734e45c494167f46ccefc80a08db.rdx
- D ../02_lnm_effect_sizes_cache/html/safe-diag_344fa8f580cf5d20017fbe7d743a21f9.RData
- D ../02_lnm_effect_sizes_cache/html/safe-diag_344fa8f580cf5d20017fbe7d743a21f9.rdb
- D ../02_lnm_effect_sizes_cache/html/safe-diag_344fa8f580cf5d20017fbe7d743a21f9.rdx
- D ../02_lnm_effect_sizes_cache/html/setup_a41e488712845f3d570db6a06d9ce92d.RData
- D ../02_lnm_effect_sizes_cache/html/setup_a41e488712845f3d570db6a06d9ce92d.rdb
- D ../02_lnm_effect_sizes_cache/html/setup_a41e488712845f3d570db6a06d9ce92d.rdx
- D ../02_lnm_effect_sizes_cache/html/vcv-dims_40c6cb727807b904bc2ab908f656b6a6.RData
- D ../02_lnm_effect_sizes_cache/html/vcv-dims_40c6cb727807b904bc2ab908f656b6a6.rdb
- D ../02_lnm_effect_sizes_cache/html/vcv-dims_40c6cb727807b904bc2ab908f656b6a6.rdx
- D ../03_descriptive_summaries.qmd
- D ../03_descriptive_summaries_cache/html/__packages
- D ../03_descriptive_summaries_cache/html/by-data-scale_aca08cf7d2dece7217e4725119b3f709.RData
- D ../03_descriptive_summaries_cache/html/by-data-scale_aca08cf7d2dece7217e4725119b3f709.rdb
- D ../03_descriptive_summaries_cache/html/by-data-scale_aca08cf7d2dece7217e4725119b3f709.rdx
- D ../03_descriptive_summaries_cache/html/by-data-type_019f33c2a3d3d834d66b6dd150f922c1.RData
- D ../03_descriptive_summaries_cache/html/by-data-type_019f33c2a3d3d834d66b6dd150f922c1.rdb
- D ../03_descriptive_summaries_cache/html/by-data-type_019f33c2a3d3d834d66b6dd150f922c1.rdx
- D ../03_descriptive_summaries_cache/html/by-design_5235ebf459c7a04a3d2a5dd0a6cbcb56.RData
- D ../03_descriptive_summaries_cache/html/by-design_5235ebf459c7a04a3d2a5dd0a6cbcb56.rdb
- D ../03_descriptive_summaries_cache/html/by-design_5235ebf459c7a04a3d2a5dd0a6cbcb56.rdx
- D ../03_descriptive_summaries_cache/html/by-disturbance_b078a24eda1b1ea4db158dbba58245c0.RData
- D ../03_descriptive_summaries_cache/html/by-disturbance_b078a24eda1b1ea4db158dbba58245c0.rdb
- D ../03_descriptive_summaries_cache/html/by-disturbance_b078a24eda1b1ea4db158dbba58245c0.rdx
- D ../03_descriptive_summaries_cache/html/by-env-change_65f52297e3446044ff6d36594a8e1435.RData
- D ../03_descriptive_summaries_cache/html/by-env-change_65f52297e3446044ff6d36594a8e1435.rdb
- D ../03_descriptive_summaries_cache/html/by-env-change_65f52297e3446044ff6d36594a8e1435.rdx
- D ../03_descriptive_summaries_cache/html/by-genphen_a57c077f95fcb1f811f3e255f6944106.RData
- D ../03_descriptive_summaries_cache/html/by-genphen_a57c077f95fcb1f811f3e255f6944106.rdb
- D ../03_descriptive_summaries_cache/html/by-genphen_a57c077f95fcb1f811f3e255f6944106.rdx
- D ../03_descriptive_summaries_cache/html/by-taxa_f181e6e13f3d82baac7c03a1f849a5ce.RData
- D ../03_descriptive_summaries_cache/html/by-taxa_f181e6e13f3d82baac7c03a1f849a5ce.rdb
- D ../03_descriptive_summaries_cache/html/by-taxa_f181e6e13f3d82baac7c03a1f849a5ce.rdx
- D ../03_descriptive_summaries_cache/html/by-trait-type_194223e4ad64d9f5640d1cdf848630cf.RData
- D ../03_descriptive_summaries_cache/html/by-trait-type_194223e4ad64d9f5640d1cdf848630cf.rdb
- D ../03_descriptive_summaries_cache/html/by-trait-type_194223e4ad64d9f5640d1cdf848630cf.rdx
- D ../03_descriptive_summaries_cache/html/by-transf-data_af4e5b4ebb0e3081e06022101298f5fb.RData
- D ../03_descriptive_summaries_cache/html/by-transf-data_af4e5b4ebb0e3081e06022101298f5fb.rdb
- D ../03_descriptive_summaries_cache/html/by-transf-data_af4e5b4ebb0e3081e06022101298f5fb.rdx
- D ../03_descriptive_summaries_cache/html/dist-gen_e395da04585b1284c2631493f40d0d1e.RData
- D ../03_descriptive_summaries_cache/html/dist-gen_e395da04585b1284c2631493f40d0d1e.rdb
- D ../03_descriptive_summaries_cache/html/dist-gen_e395da04585b1284c2631493f40d0d1e.rdx
- D ../03_descriptive_summaries_cache/html/dist-n_58fee951ac322db4c897fbab3789361b.RData
- D ../03_descriptive_summaries_cache/html/dist-n_58fee951ac322db4c897fbab3789361b.rdb
- D ../03_descriptive_summaries_cache/html/dist-n_58fee951ac322db4c897fbab3789361b.rdx
- D ../03_descriptive_summaries_cache/html/dist-vi_ede6ec4691b21d110c96a8f18eed92c5.RData
- D ../03_descriptive_summaries_cache/html/dist-vi_ede6ec4691b21d110c96a8f18eed92c5.rdb
- D ../03_descriptive_summaries_cache/html/dist-vi_ede6ec4691b21d110c96a8f18eed92c5.rdx
- D ../03_descriptive_summaries_cache/html/dist-years_4dd7cab319c017f516853394879184fc.RData
- D ../03_descriptive_summaries_cache/html/dist-years_4dd7cab319c017f516853394879184fc.rdb
- D ../03_descriptive_summaries_cache/html/dist-years_4dd7cab319c017f516853394879184fc.rdx
- D ../03_descriptive_summaries_cache/html/dist-yi_a5be3cf7535ed53f6facf240dc550678.RData
- D ../03_descriptive_summaries_cache/html/dist-yi_a5be3cf7535ed53f6facf240dc550678.rdb
- D ../03_descriptive_summaries_cache/html/dist-yi_a5be3cf7535ed53f6facf240dc550678.rdx
- D ../03_descriptive_summaries_cache/html/load_44cf208ebcd8ef49aad333918249fef8.RData
- D ../03_descriptive_summaries_cache/html/load_44cf208ebcd8ef49aad333918249fef8.rdb
- D ../03_descriptive_summaries_cache/html/load_44cf208ebcd8ef49aad333918249fef8.rdx
- D ../03_descriptive_summaries_cache/html/overview_d01ead6315240adab0d71c2f2fc64717.RData
- D ../03_descriptive_summaries_cache/html/overview_d01ead6315240adab0d71c2f2fc64717.rdb
- D ../03_descriptive_summaries_cache/html/overview_d01ead6315240adab0d71c2f2fc64717.rdx
- D ../03_descriptive_summaries_cache/html/save-tables_d11954485bf826be4b637fdffd2ec967.RData
- D ../03_descriptive_summaries_cache/html/save-tables_d11954485bf826be4b637fdffd2ec967.rdb
- D ../03_descriptive_summaries_cache/html/save-tables_d11954485bf826be4b637fdffd2ec967.rdx
- D ../03_descriptive_summaries_cache/html/setup_0b9466452fecbfbc669f1bc57d50b227.RData
- D ../03_descriptive_summaries_cache/html/setup_0b9466452fecbfbc669f1bc57d50b227.rdb
- D ../03_descriptive_summaries_cache/html/setup_0b9466452fecbfbc669f1bc57d50b227.rdx
- D ../03_descriptive_summaries_files/figure-html/dist-gen-1.png
- D ../03_descriptive_summaries_files/figure-html/dist-n-1.png
- D ../03_descriptive_summaries_files/figure-html/dist-vi-1.png
- D ../03_descriptive_summaries_files/figure-html/dist-years-1.png
- D ../03_descriptive_summaries_files/figure-html/dist-yi-1.png
- D ../03_descriptive_summaries_files/figure-html/donut-data-1.png
- D ../03_descriptive_summaries_files/figure-html/donut-design-disturbance-1.png
- D ../03_descriptive_summaries_files/figure-html/donut-trait-taxa-1.png
- D ../04_dependency_structure.qmd
- D ../04_dependency_structure_cache/html/__packages
- D ../04_dependency_structure_cache/html/diag-data_dfc73fa46d854964bef7140bb27ad38e.RData
- D ../04_dependency_structure_cache/html/diag-data_dfc73fa46d854964bef7140bb27ad38e.rdb
- D ../04_dependency_structure_cache/html/diag-data_dfc73fa46d854964bef7140bb27ad38e.rdx
- D ../04_dependency_structure_cache/html/load_a365eb1788f5b602a4eecada2514cc4d.RData
- D ../04_dependency_structure_cache/html/load_a365eb1788f5b602a4eecada2514cc4d.rdb
- D ../04_dependency_structure_cache/html/load_a365eb1788f5b602a4eecada2514cc4d.rdx
- D ../04_dependency_structure_cache/html/nesting-fun_a390598b8ad5b9a0cc425520ea2ce95c.RData
- D ../04_dependency_structure_cache/html/nesting-fun_a390598b8ad5b9a0cc425520ea2ce95c.rdb
- D ../04_dependency_structure_cache/html/nesting-fun_a390598b8ad5b9a0cc425520ea2ce95c.rdx
- D ../04_dependency_structure_cache/html/nesting-matrix_9fde9438e64e8412ef7eea8085613400.RData
- D ../04_dependency_structure_cache/html/nesting-matrix_9fde9438e64e8412ef7eea8085613400.rdb
- D ../04_dependency_structure_cache/html/nesting-matrix_9fde9438e64e8412ef7eea8085613400.rdx
- D ../04_dependency_structure_cache/html/nesting-table_720a4fe13de8442036f5d93d2b9d9c68.RData
- D ../04_dependency_structure_cache/html/nesting-table_720a4fe13de8442036f5d93d2b9d9c68.rdb
- D ../04_dependency_structure_cache/html/nesting-table_720a4fe13de8442036f5d93d2b9d9c68.rdx
- D ../04_dependency_structure_cache/html/phylo-coverage_ff9bf0675908e7e2992bc9458f2255ca.RData
- D ../04_dependency_structure_cache/html/phylo-coverage_ff9bf0675908e7e2992bc9458f2255ca.rdb
- D ../04_dependency_structure_cache/html/phylo-coverage_ff9bf0675908e7e2992bc9458f2255ca.rdx
- D ../04_dependency_structure_cache/html/ref-sys_9ff19c994c10ee715fd07c04ed17d4af.RData
- D ../04_dependency_structure_cache/html/ref-sys_9ff19c994c10ee715fd07c04ed17d4af.rdb
- D ../04_dependency_structure_cache/html/ref-sys_9ff19c994c10ee715fd07c04ed17d4af.rdx
- D ../04_dependency_structure_cache/html/save_751f99924facf6660995999089d4495f.RData
- D ../04_dependency_structure_cache/html/save_751f99924facf6660995999089d4495f.rdb
- D ../04_dependency_structure_cache/html/save_751f99924facf6660995999089d4495f.rdx
- D ../04_dependency_structure_cache/html/setup_9bb88a4bab7e51b8aed94cdf964d309a.RData
- D ../04_dependency_structure_cache/html/setup_9bb88a4bab7e51b8aed94cdf964d309a.rdb
- D ../04_dependency_structure_cache/html/setup_9bb88a4bab7e51b8aed94cdf964d309a.rdx
- D ../04_dependency_structure_cache/html/sp-sys_1c6bf7bc8e98be26173773598ab8b96b.RData
- D ../04_dependency_structure_cache/html/sp-sys_1c6bf7bc8e98be26173773598ab8b96b.rdb
- D ../04_dependency_structure_cache/html/sp-sys_1c6bf7bc8e98be26173773598ab8b96b.rdx
- D ../04_dependency_structure_cache/html/support-table_2341a966fbfbcd72a351ec8a46c59e4f.RData
- D ../04_dependency_structure_cache/html/support-table_2341a966fbfbcd72a351ec8a46c59e4f.rdb
- D ../04_dependency_structure_cache/html/support-table_2341a966fbfbcd72a351ec8a46c59e4f.rdx
- D ../04_dependency_structure_cache/html/sys-multi-ref_0944f561cff4f215837908175d851380.RData
- D ../04_dependency_structure_cache/html/sys-multi-ref_0944f561cff4f215837908175d851380.rdb
- D ../04_dependency_structure_cache/html/sys-multi-ref_0944f561cff4f215837908175d851380.rdx
- D ../04_dependency_structure_cache/html/sys-multi-sp_a8a56d5e217b9441102aa6ae654126c0.RData
- D ../04_dependency_structure_cache/html/sys-multi-sp_a8a56d5e217b9441102aa6ae654126c0.rdb
- D ../04_dependency_structure_cache/html/sys-multi-sp_a8a56d5e217b9441102aa6ae654126c0.rdx
- D ../05_location_scale_model_grid.qmd
- D ../05_location_scale_model_grid_cache/html/__packages
- D ../05_location_scale_model_grid_cache/html/apply-name-map_16820b1be4f004f00973d6d3f7048ccf.RData
- D ../05_location_scale_model_grid_cache/html/apply-name-map_16820b1be4f004f00973d6d3f7048ccf.rdb
- D ../05_location_scale_model_grid_cache/html/apply-name-map_16820b1be4f004f00973d6d3f7048ccf.rdx
- D ../05_location_scale_model_grid_cache/html/check-moderators_62eb70f1f3ec4dc291086232f3e9548a.RData
- D ../05_location_scale_model_grid_cache/html/check-moderators_62eb70f1f3ec4dc291086232f3e9548a.rdb
- D ../05_location_scale_model_grid_cache/html/check-moderators_62eb70f1f3ec4dc291086232f3e9548a.rdx
- D ../05_location_scale_model_grid_cache/html/convergence_21cc988d456699a2a63c58b8af7c206b.RData
- D ../05_location_scale_model_grid_cache/html/convergence_21cc988d456699a2a63c58b8af7c206b.rdb
- D ../05_location_scale_model_grid_cache/html/convergence_21cc988d456699a2a63c58b8af7c206b.rdx
- D ../05_location_scale_model_grid_cache/html/fit-grid_714f5c8f6b7e90bf4c01af33ca3356c1.RData
- D ../05_location_scale_model_grid_cache/html/fit-grid_714f5c8f6b7e90bf4c01af33ca3356c1.rdb
- D ../05_location_scale_model_grid_cache/html/fit-grid_714f5c8f6b7e90bf4c01af33ca3356c1.rdx
- D ../05_location_scale_model_grid_cache/html/grid-assemble_a122fe5e179845932ffb3291fa486ee3.RData
- D ../05_location_scale_model_grid_cache/html/grid-assemble_a122fe5e179845932ffb3291fa486ee3.rdb
- D ../05_location_scale_model_grid_cache/html/grid-assemble_a122fe5e179845932ffb3291fa486ee3.rdx
- D ../05_location_scale_model_grid_cache/html/load-data_24c56b93ac28cee1d44d003ba61dd468.RData
- D ../05_location_scale_model_grid_cache/html/load-data_24c56b93ac28cee1d44d003ba61dd468.rdb
- D ../05_location_scale_model_grid_cache/html/load-data_24c56b93ac28cee1d44d003ba61dd468.rdx
- D ../05_location_scale_model_grid_cache/html/load-phylogeny_858d5f42aa52279dc2adb5805c088c62.RData
- D ../05_location_scale_model_grid_cache/html/load-phylogeny_858d5f42aa52279dc2adb5805c088c62.rdb
- D ../05_location_scale_model_grid_cache/html/load-phylogeny_858d5f42aa52279dc2adb5805c088c62.rdx
- D ../05_location_scale_model_grid_cache/html/setup_d1f0432bbc2d598e95d8da53fed63cf7.RData
- D ../05_location_scale_model_grid_cache/html/setup_d1f0432bbc2d598e95d8da53fed63cf7.rdb
- D ../05_location_scale_model_grid_cache/html/setup_d1f0432bbc2d598e95d8da53fed63cf7.rdx
- D ../05_location_scale_model_grid_cache/html/show-registry_3c5cdd8ca8b7e1b5dd5ad612b7e821b7.RData
- D ../05_location_scale_model_grid_cache/html/show-registry_3c5cdd8ca8b7e1b5dd5ad612b7e821b7.rdb
- D ../05_location_scale_model_grid_cache/html/show-registry_3c5cdd8ca8b7e1b5dd5ad612b7e821b7.rdx
- D ../05_location_scale_model_grid_cache/html/status-table_9d501c92e02b7107c202a6f934cd9d61.RData
- D ../05_location_scale_model_grid_cache/html/status-table_9d501c92e02b7107c202a6f934cd9d61.rdb
- D ../05_location_scale_model_grid_cache/html/status-table_9d501c92e02b7107c202a6f934cd9d61.rdx
- D ../07_sensitivity_analyses.qmd
- D ../07_sensitivity_analyses_cache/html/__packages
- D ../07_sensitivity_analyses_cache/html/load-data_e433cf0843f7187507aad7a1c90c85b6.RData
- D ../07_sensitivity_analyses_cache/html/load-data_e433cf0843f7187507aad7a1c90c85b6.rdb
- D ../07_sensitivity_analyses_cache/html/load-data_e433cf0843f7187507aad7a1c90c85b6.rdx
- D ../07_sensitivity_analyses_cache/html/sens-n40_0ac3f25fbfa651997f5be9ed0e70fb75.RData
- D ../07_sensitivity_analyses_cache/html/sens-n40_0ac3f25fbfa651997f5be9ed0e70fb75.rdb
- D ../07_sensitivity_analyses_cache/html/sens-n40_0ac3f25fbfa651997f5be9ed0e70fb75.rdx
- D ../07_sensitivity_analyses_cache/html/sens-no-phylo_2b5364593ab130eff91b2019b7be05cf.RData
- D ../07_sensitivity_analyses_cache/html/sens-no-phylo_2b5364593ab130eff91b2019b7be05cf.rdb
- D ../07_sensitivity_analyses_cache/html/sens-no-phylo_2b5364593ab130eff91b2019b7be05cf.rdx
- D ../07_sensitivity_analyses_cache/html/sens-sysid_0e83a02d6b025f7461ff6f864f1a0cd3.RData
- D ../07_sensitivity_analyses_cache/html/sens-sysid_0e83a02d6b025f7461ff6f864f1a0cd3.rdb
- D ../07_sensitivity_analyses_cache/html/sens-sysid_0e83a02d6b025f7461ff6f864f1a0cd3.rdx
- D ../07_sensitivity_analyses_cache/html/sens1-summary_54009b0b191a2e85573ecdf5c7a92e15.RData
- D ../07_sensitivity_analyses_cache/html/sens1-summary_54009b0b191a2e85573ecdf5c7a92e15.rdb
- D ../07_sensitivity_analyses_cache/html/sens1-summary_54009b0b191a2e85573ecdf5c7a92e15.rdx
- D ../07_sensitivity_analyses_cache/html/sens2-summary_503e35629e98557f1b71438a3bc2ec47.RData
- D ../07_sensitivity_analyses_cache/html/sens2-summary_503e35629e98557f1b71438a3bc2ec47.rdb
- D ../07_sensitivity_analyses_cache/html/sens2-summary_503e35629e98557f1b71438a3bc2ec47.rdx
- D ../07_sensitivity_analyses_cache/html/sens3-summary_1ed121614ed3fe981a4f9ea049670dc7.RData
- D ../07_sensitivity_analyses_cache/html/sens3-summary_1ed121614ed3fe981a4f9ea049670dc7.rdb
- D ../07_sensitivity_analyses_cache/html/sens3-summary_1ed121614ed3fe981a4f9ea049670dc7.rdx
- D ../07_sensitivity_analyses_cache/html/setup_888421f77637d35080ad5820656f713d.RData
- D ../07_sensitivity_analyses_cache/html/setup_888421f77637d35080ad5820656f713d.rdb
- D ../07_sensitivity_analyses_cache/html/setup_888421f77637d35080ad5820656f713d.rdx
- D ../08_publication_figures.qmd
- D ../08_publication_figures_cache/html/__packages
- D ../08_publication_figures_cache/html/figure-inventory_68f64d6138924b9e367760c71a9bb94f.RData
- D ../08_publication_figures_cache/html/figure-inventory_68f64d6138924b9e367760c71a9bb94f.rdb
- D ../08_publication_figures_cache/html/figure-inventory_68f64d6138924b9e367760c71a9bb94f.rdx
- D ../08_publication_figures_cache/html/figure-loop_4d8c8a0f8a9997d5e66378143847c9e7.RData
- D ../08_publication_figures_cache/html/figure-loop_4d8c8a0f8a9997d5e66378143847c9e7.rdb
- D ../08_publication_figures_cache/html/figure-loop_4d8c8a0f8a9997d5e66378143847c9e7.rdx
- D ../08_publication_figures_cache/html/load-tables_b0d9c0d7dc7b8728ba3c31786ebeba86.RData
- D ../08_publication_figures_cache/html/load-tables_b0d9c0d7dc7b8728ba3c31786ebeba86.rdb
- D ../08_publication_figures_cache/html/load-tables_b0d9c0d7dc7b8728ba3c31786ebeba86.rdx
- D ../08_publication_figures_cache/html/setup_bf570edd6dd9bcee99264a80ee813769.RData
- D ../08_publication_figures_cache/html/setup_bf570edd6dd9bcee99264a80ee813769.rdb
- D ../08_publication_figures_cache/html/setup_bf570edd6dd9bcee99264a80ee813769.rdx
- D ../09_reproducibility.qmd
- D ../09_reproducibility_cache/html/__packages
- D ../09_reproducibility_cache/html/cmdstan-version_00a0d40668f8968c04517063bd5f74f2.RData
- D ../09_reproducibility_cache/html/cmdstan-version_00a0d40668f8968c04517063bd5f74f2.rdb
- D ../09_reproducibility_cache/html/cmdstan-version_00a0d40668f8968c04517063bd5f74f2.rdx
- D ../09_reproducibility_cache/html/es-cache_790f600a55a39cc42dd815ab8d854fb1.RData
- D ../09_reproducibility_cache/html/es-cache_790f600a55a39cc42dd815ab8d854fb1.rdb
- D ../09_reproducibility_cache/html/es-cache_790f600a55a39cc42dd815ab8d854fb1.rdx
- D ../09_reproducibility_cache/html/git-info_46856ca737d88401207f84cbf60984c7.RData
- D ../09_reproducibility_cache/html/git-info_46856ca737d88401207f84cbf60984c7.rdb
- D ../09_reproducibility_cache/html/git-info_46856ca737d88401207f84cbf60984c7.rdx
- D ../09_reproducibility_cache/html/here-root_9a8ce9007671a302f9ecacf31532a3f2.RData
- D ../09_reproducibility_cache/html/here-root_9a8ce9007671a302f9ecacf31532a3f2.rdb
- D ../09_reproducibility_cache/html/here-root_9a8ce9007671a302f9ecacf31532a3f2.rdx
- D ../09_reproducibility_cache/html/model-cache_16312da18214ee1120e71597f8edc0d8.RData
- D ../09_reproducibility_cache/html/model-cache_16312da18214ee1120e71597f8edc0d8.rdb
- D ../09_reproducibility_cache/html/model-cache_16312da18214ee1120e71597f8edc0d8.rdx
- D ../09_reproducibility_cache/html/phylo-recon-summary_e432a02e285d27007fc743987bf82ad1.RData
- D ../09_reproducibility_cache/html/phylo-recon-summary_e432a02e285d27007fc743987bf82ad1.rdb
- D ../09_reproducibility_cache/html/phylo-recon-summary_e432a02e285d27007fc743987bf82ad1.rdx
- D ../09_reproducibility_cache/html/prepR4pcm-version_e05fd6db6b0f633ed055f65027c22475.RData
- D ../09_reproducibility_cache/html/prepR4pcm-version_e05fd6db6b0f633ed055f65027c22475.rdb
- D ../09_reproducibility_cache/html/prepR4pcm-version_e05fd6db6b0f633ed055f65027c22475.rdx
- D ../09_reproducibility_cache/html/session-info_1e8c735b623310079b3eac86ae30b3b3.RData
- D ../09_reproducibility_cache/html/session-info_1e8c735b623310079b3eac86ae30b3b3.rdb
- D ../09_reproducibility_cache/html/session-info_1e8c735b623310079b3eac86ae30b3b3.rdx
- D ../09_reproducibility_cache/html/setup_6c7907401215b64a956bb790e29fd634.RData
- D ../09_reproducibility_cache/html/setup_6c7907401215b64a956bb790e29fd634.rdb
- D ../09_reproducibility_cache/html/setup_6c7907401215b64a956bb790e29fd634.rdx
- M ../Magnitude_pace_modern_life.Rproj
- D ../R/00_packages.R
- D ../R/01_paths.R
- D ../R/02_read_clean_data.R
- D ../R/03_filters.R
- D ../R/04_lnm_safe.R
- D ../R/05_phylogeny.R
- D ../R/06_model_registry.R
- D ../R/07_model_formulas.R
- D ../R/08_fit_or_read_model.R
- D ../R/09_model_summaries.R
- D ../R/10_model_diagnostics.R
- D ../R/11_plotting_orchard_like.R
- D ../R/12_save_figures.R
- D ../R/13_epred_draws_plots.R
- D ../R/14_epred_cache.R
- D ../R/15_render_guard.R
- D ../R/16_plot_orchard_style_v2.R
- D ../R/17_plot_orchard_from_epred_cache.R
- M ../README.md
- D ../_freeze/01_data_preparation/execute-results/html.json
- D ../_freeze/02_lnm_effect_sizes/execute-results/html.json
- D ../_freeze/03_descriptive_summaries/execute-results/html.json
- D ../_freeze/03_descriptive_summaries/figure-html/dist-gen-1.png
- D ../_freeze/03_descriptive_summaries/figure-html/dist-n-1.png
- D ../_freeze/03_descriptive_summaries/figure-html/dist-vi-1.png
- D ../_freeze/03_descriptive_summaries/figure-html/dist-years-1.png
- D ../_freeze/03_descriptive_summaries/figure-html/dist-yi-1.png
- D ../_freeze/03_descriptive_summaries/figure-html/donut-data-1.png
- D ../_freeze/03_descriptive_summaries/figure-html/donut-design-disturbance-1.png
- D ../_freeze/03_descriptive_summaries/figure-html/donut-trait-taxa-1.png
- D ../_freeze/04_dependency_structure/execute-results/html.json
- D ../_freeze/05_location_scale_model_grid/execute-results/html.json
- D ../_freeze/07_sensitivity_analyses/execute-results/html.json
- D ../_freeze/08_publication_figures/execute-results/html.json
- D ../_freeze/09_reproducibility/execute-results/html.json
- D ../_freeze/models/m00/execute-results/html.json
- D ../_freeze/models/m00/figure-html/figure-1.png
- D ../_freeze/models/m01/execute-results/html.json
- D ../_freeze/models/m01/figure-html/figure-1.png
- D ../_freeze/models/m02/execute-results/html.json
- D ../_freeze/models/m02/figure-html/figure-1.png
- D ../_freeze/models/m03/execute-results/html.json
- D ../_freeze/models/m03/figure-html/figure-1.png
- D ../_freeze/models/m04/execute-results/html.json
- D ../_freeze/models/m04/figure-html/figure-1.png
- D ../_freeze/models/m05/execute-results/html.json
- D ../_freeze/models/m05/figure-html/figure-1.png
- D ../_freeze/models/m06/execute-results/html.json
- D ../_freeze/models/m06/figure-html/figure-1.png
- D ../_freeze/models/m07/execute-results/html.json
- D ../_freeze/models/m07/figure-html/figure-1.png
- D ../_freeze/models/m08/execute-results/html.json
- D ../_freeze/models/m08/figure-html/figure-1.png
- D ../_freeze/models/m09/execute-results/html.json
- D ../_freeze/models/m09/figure-html/figure-1.png
- D ../_freeze/models/m10/execute-results/html.json
- D ../_freeze/models/m10/figure-html/figure-1.png
- D ../_freeze/models/m11/execute-results/html.json
- D ../_freeze/models/m11/figure-html/figure-1.png
- D ../_freeze/models/m12/execute-results/html.json
- D ../_freeze/models/m13/execute-results/html.json
- D ../_freeze/site_libs/clipboard/clipboard.min.js
- D ../_freeze/site_libs/pagedtable-1.1/css/pagedtable.css
- D ../_freeze/site_libs/pagedtable-1.1/js/pagedtable.js
+ M ../.gitignore
+ M ../Rdata/figures/pdf/m01_disturbance_location.pdf
+ M ../Rdata/figures/pdf/m01_disturbance_location_scale_combined.pdf
+ M ../Rdata/figures/pdf/m01_disturbance_scale.pdf
+ M ../Rdata/figures/pdf/m02_design_location.pdf
+ M ../Rdata/figures/pdf/m02_design_location_scale_combined.pdf
+ M ../Rdata/figures/pdf/m02_design_scale.pdf
+ M ../Rdata/figures/pdf/m03_log10_years_location.pdf
+ M ../Rdata/figures/pdf/m03_log10_years_location_scale_combined.pdf
+ M ../Rdata/figures/pdf/m03_log10_years_scale.pdf
+ M ../Rdata/figures/pdf/m04_log10_generations_location.pdf
+ M ../Rdata/figures/pdf/m04_log10_generations_location_scale_combined.pdf
+ M ../Rdata/figures/pdf/m04_log10_generations_scale.pdf
+ M ../Rdata/figures/pdf/m05_trait_type_location.pdf
+ M ../Rdata/figures/pdf/m05_trait_type_location_scale_combined.pdf
+ M ../Rdata/figures/pdf/m05_trait_type_scale.pdf
+ M ../Rdata/figures/pdf/m07_genphen_location.pdf
+ M ../Rdata/figures/pdf/m07_genphen_location_scale_combined.pdf
+ M ../Rdata/figures/pdf/m07_genphen_scale.pdf
+ M ../Rdata/figures/pdf/m11_data_scale_location.pdf
+ M ../Rdata/figures/pdf/m11_data_scale_location_scale_combined.pdf
+ M ../Rdata/figures/pdf/m11_data_scale_scale.pdf
+ M ../Rdata/figures/png/m01_disturbance_location.png
+ M ../Rdata/figures/png/m01_disturbance_location_scale_combined.png
+ M ../Rdata/figures/png/m01_disturbance_scale.png
+ M ../Rdata/figures/png/m02_design_location.png
+ M ../Rdata/figures/png/m02_design_location_scale_combined.png
+ M ../Rdata/figures/png/m02_design_scale.png
+ M ../Rdata/figures/png/m03_log10_years_location.png
+ M ../Rdata/figures/png/m03_log10_years_location_scale_combined.png
+ M ../Rdata/figures/png/m03_log10_years_scale.png
+ M ../Rdata/figures/png/m04_log10_generations_location.png
+ M ../Rdata/figures/png/m04_log10_generations_location_scale_combined.png
+ M ../Rdata/figures/png/m04_log10_generations_scale.png
+ M ../Rdata/figures/png/m05_trait_type_location.png
+ M ../Rdata/figures/png/m05_trait_type_location_scale_combined.png
+ M ../Rdata/figures/png/m05_trait_type_scale.png
+ M ../Rdata/figures/png/m07_genphen_location.png
+ M ../Rdata/figures/png/m07_genphen_location_scale_combined.png
+ M ../Rdata/figures/png/m07_genphen_scale.png
+ M ../Rdata/figures/png/m11_data_scale_location.png
+ M ../Rdata/figures/png/m11_data_scale_location_scale_combined.png
+ M ../Rdata/figures/png/m11_data_scale_scale.png
+ M ../Rdata/tables/counts_by_data_scale.csv
+ M ../Rdata/tables/counts_by_data_type.csv
+ M ../Rdata/tables/counts_by_design.csv
+ M ../Rdata/tables/counts_by_disturbance.csv
+ M ../Rdata/tables/counts_by_env_change.csv
+ M ../Rdata/tables/counts_by_genphen.csv
+ M ../Rdata/tables/counts_by_taxa.csv
+ M ../Rdata/tables/counts_by_trait_type.csv
+ M ../Rdata/tables/counts_by_transf_data.csv
+ M ../Rdata/tables/dependency_nesting_table.csv
+ M ../Rdata/tables/dependency_support_summary.csv
+ M ../Rdata/tables/descriptive_overview.csv
+ M ../Rdata/tables/model_grid_status.csv
+ M ../Rdata/tables/primary/primary_diagnostics.csv
+ M ../Rdata/tables/primary/primary_fixef.csv
+ D ../_freeze/chapters/01_data_preparation/execute-results/html.json
+ D ../_freeze/chapters/02_lnm_effect_sizes/execute-results/html.json
+ D ../_freeze/chapters/03_descriptive_summaries/execute-results/html.json
+ D ../_freeze/chapters/03_descriptive_summaries/figure-html/dist-gen-1.png
+ D ../_freeze/chapters/03_descriptive_summaries/figure-html/dist-n-1.png
+ D ../_freeze/chapters/03_descriptive_summaries/figure-html/dist-vi-1.png
+ D ../_freeze/chapters/03_descriptive_summaries/figure-html/dist-years-1.png
+ D ../_freeze/chapters/03_descriptive_summaries/figure-html/dist-yi-1.png
+ D ../_freeze/chapters/03_descriptive_summaries/figure-html/donut-data-1.png
+ D ../_freeze/chapters/03_descriptive_summaries/figure-html/donut-design-disturbance-1.png
+ D ../_freeze/chapters/03_descriptive_summaries/figure-html/donut-trait-taxa-1.png
+ D ../_freeze/chapters/04_dependency_structure/execute-results/html.json
+ D ../_freeze/chapters/04b_phylogeny/execute-results/html.json
+ D ../_freeze/chapters/05_location_scale_model_grid/execute-results/html.json
+ D ../_freeze/chapters/07_sensitivity_analyses/execute-results/html.json
+ D ../_freeze/chapters/08_publication_figures/execute-results/html.json
+ M ../_freeze/chapters/appendix/sensitivity_min_n/execute-results/html.json
+ M ../_freeze/chapters/appendix/sensitivity_no_phylogeny/execute-results/html.json
+ M ../_freeze/chapters/appendix/sensitivity_sys_id/execute-results/html.json
+ D ../_freeze/chapters/models/m00/execute-results/html.json
+ D ../_freeze/chapters/models/m01/execute-results/html.json
+ D ../_freeze/chapters/models/m02/execute-results/html.json
+ D ../_freeze/chapters/models/m03/execute-results/html.json
+ D ../_freeze/chapters/models/m04/execute-results/html.json
+ D ../_freeze/chapters/models/m05/execute-results/html.json
+ D ../_freeze/chapters/models/m07/execute-results/html.json
+ D ../_freeze/chapters/models/m11/execute-results/html.json
  M ../_quarto.yml
+ M 03_descriptive_summaries_files/figure-html/dist-n-1.png
+ M 03_descriptive_summaries_files/figure-html/dist-vi-1.png
+ M 03_descriptive_summaries_files/figure-html/dist-years-1.png
+ M 03_descriptive_summaries_files/figure-html/dist-yi-1.png
+ M 03_descriptive_summaries_files/figure-html/donut-data-1.png
+ M 03_descriptive_summaries_files/figure-html/donut-design-disturbance-1.png
+ M 03_descriptive_summaries_files/figure-html/donut-trait-taxa-1.png
+ M 07_sensitivity_analyses.qmd
+ M Rscripts/19_sensitivity_tables.R
+ M Rscripts/precompute_grid_summaries.R
+ M appendix/sensitivity_min_n.qmd
+ M appendix/sensitivity_no_phylogeny.qmd
+ M appendix/sensitivity_sys_id.qmd
  D ../docs/.nojekyll
- D ../docs/01_data_preparation.html
- D ../docs/02_lnm_effect_sizes.html
- D ../docs/03_descriptive_summaries.html
- D ../docs/03_descriptive_summaries_files/figure-html/dist-gen-1.png
- D ../docs/03_descriptive_summaries_files/figure-html/dist-n-1.png
- D ../docs/03_descriptive_summaries_files/figure-html/dist-vi-1.png
- D ../docs/03_descriptive_summaries_files/figure-html/dist-years-1.png
- D ../docs/03_descriptive_summaries_files/figure-html/dist-yi-1.png
- D ../docs/03_descriptive_summaries_files/figure-html/donut-data-1.png
- D ../docs/03_descriptive_summaries_files/figure-html/donut-design-disturbance-1.png
- D ../docs/03_descriptive_summaries_files/figure-html/donut-trait-taxa-1.png
- D ../docs/04_dependency_structure.html
- D ../docs/05_location_scale_model_grid.html
- D ../docs/07_sensitivity_analyses.html
- D ../docs/08_publication_figures.html
- D ../docs/09_reproducibility.html
+ D ../docs/Rdata/figures/publication/orchard/m00_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard/m01_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard/m02_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard/m03_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard/m04_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard/m05_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard/m07_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard/m08_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard/m11_orchard_combined.png
+ D ../docs/chapters/01_data_preparation.html
+ D ../docs/chapters/02_lnm_effect_sizes.html
+ D ../docs/chapters/03_descriptive_summaries.html
+ D ../docs/chapters/03_descriptive_summaries_files/figure-html/dist-gen-1.png
+ D ../docs/chapters/03_descriptive_summaries_files/figure-html/dist-n-1.png
+ D ../docs/chapters/03_descriptive_summaries_files/figure-html/dist-vi-1.png
+ D ../docs/chapters/03_descriptive_summaries_files/figure-html/dist-years-1.png
+ D ../docs/chapters/03_descriptive_summaries_files/figure-html/dist-yi-1.png
+ D ../docs/chapters/03_descriptive_summaries_files/figure-html/donut-data-1.png
+ D ../docs/chapters/03_descriptive_summaries_files/figure-html/donut-design-disturbance-1.png
+ D ../docs/chapters/03_descriptive_summaries_files/figure-html/donut-trait-taxa-1.png
+ D ../docs/chapters/04_dependency_structure.html
+ D ../docs/chapters/04b_phylogeny.html
+ D ../docs/chapters/05_location_scale_model_grid.html
+ D ../docs/chapters/07_sensitivity_analyses.html
+ D ../docs/chapters/08_publication_figures.html
+ D ../docs/chapters/09_reproducibility.html
+ D ../docs/chapters/appendix/sensitivity_min_n.html
+ D ../docs/chapters/appendix/sensitivity_no_phylogeny.html
+ D ../docs/chapters/appendix/sensitivity_sys_id.html
+ D ../docs/chapters/models/m00.html
+ D ../docs/chapters/models/m01.html
+ D ../docs/chapters/models/m02.html
+ D ../docs/chapters/models/m03.html
+ D ../docs/chapters/models/m04.html
+ D ../docs/chapters/models/m05.html
+ D ../docs/chapters/models/m07.html
+ D ../docs/chapters/models/m08.html
+ D ../docs/chapters/models/m11.html
  D ../docs/index.html
- D ../docs/models/m00.html
- D ../docs/models/m01.html
- D ../docs/models/m02.html
- D ../docs/models/m03.html
- D ../docs/models/m04.html
- D ../docs/models/m05.html
- D ../docs/models/m07.html
- D ../docs/models/m08.html
- D ../docs/models/m10.html
- D ../docs/models/m11.html
- D ../docs/models/m12.html
- D ../docs/models/m13.html
- D ../docs/outputs/figures/publication/orchard/m00_orchard_combined.png
- D ../docs/outputs/figures/publication/orchard/m01_orchard_combined.png
- D ../docs/outputs/figures/publication/orchard/m02_orchard_combined.png
- D ../docs/outputs/figures/publication/orchard/m03_orchard_combined.png
- D ../docs/outputs/figures/publication/orchard/m04_orchard_combined.png
- D ../docs/outputs/figures/publication/orchard/m05_orchard_combined.png
- D ../docs/outputs/figures/publication/orchard/m07_orchard_combined.png
- D ../docs/outputs/figures/publication/orchard/m08_orchard_combined.png
- D ../docs/outputs/figures/publication/orchard/m10_orchard_combined.png
- D ../docs/outputs/figures/publication/orchard/m11_orchard_combined.png
  D ../docs/search.json
  D ../docs/site_libs/bootstrap/bootstrap-9e3e5b9121e68b3f077afb32f2c64d95.min.css
  D ../docs/site_libs/bootstrap/bootstrap-dark-acff971833d9769290026d534105daaa.min.css
@@ -1147,6 +930,8 @@ Unresolved      : 7 </code></pre>
  D ../docs/site_libs/bootstrap/bootstrap-icons.woff
  D ../docs/site_libs/bootstrap/bootstrap.min.js
  D ../docs/site_libs/clipboard/clipboard.min.js
+ D ../docs/site_libs/kePrint-0.0.1/kePrint.js
+ D ../docs/site_libs/lightable-0.0.1/lightable.css
  D ../docs/site_libs/pagedtable-1.1/css/pagedtable.css
  D ../docs/site_libs/pagedtable-1.1/js/pagedtable.js
  D ../docs/site_libs/quarto-html/anchor.min.js
@@ -1163,401 +948,23 @@ Unresolved      : 7 </code></pre>
  D ../docs/site_libs/quarto-search/autocomplete.umd.js
  D ../docs/site_libs/quarto-search/fuse.min.js
  D ../docs/site_libs/quarto-search/quarto-search.js
- M ../index.qmd
- D ../models/m00.qmd
- D ../models/m00_cache/html/__packages
- D ../models/m00_cache/html/build-orchard-m00_a3a0fa76e2fbec0c0298936eaabc6230.RData
- D ../models/m00_cache/html/build-orchard-m00_a3a0fa76e2fbec0c0298936eaabc6230.rdb
- D ../models/m00_cache/html/build-orchard-m00_a3a0fa76e2fbec0c0298936eaabc6230.rdx
- D ../models/m00_cache/html/figure_181b79c95b0b284016f27e782a8aedf5.RData
- D ../models/m00_cache/html/figure_181b79c95b0b284016f27e782a8aedf5.rdb
- D ../models/m00_cache/html/figure_181b79c95b0b284016f27e782a8aedf5.rdx
- D ../models/m00_cache/html/setup_7ff1bb5a9bb4970f352fe60e42d6e17c.RData
- D ../models/m00_cache/html/setup_7ff1bb5a9bb4970f352fe60e42d6e17c.rdb
- D ../models/m00_cache/html/setup_7ff1bb5a9bb4970f352fe60e42d6e17c.rdx
- D ../models/m00_cache/html/summary_68572aa6b4720be821959c5981978b4f.RData
- D ../models/m00_cache/html/summary_68572aa6b4720be821959c5981978b4f.rdb
- D ../models/m00_cache/html/summary_68572aa6b4720be821959c5981978b4f.rdx
- D ../models/m00_files/figure-html/figure-1.png
- D ../models/m01.qmd
- D ../models/m01_cache/html/__packages
- D ../models/m01_cache/html/build-orchard-m01_f40171f058bb8d4011f8fc4ea38af746.RData
- D ../models/m01_cache/html/build-orchard-m01_f40171f058bb8d4011f8fc4ea38af746.rdb
- D ../models/m01_cache/html/build-orchard-m01_f40171f058bb8d4011f8fc4ea38af746.rdx
- D ../models/m01_cache/html/figure_c83dff080a0011dd0fd35f14d77d541c.RData
- D ../models/m01_cache/html/figure_c83dff080a0011dd0fd35f14d77d541c.rdb
- D ../models/m01_cache/html/figure_c83dff080a0011dd0fd35f14d77d541c.rdx
- D ../models/m01_cache/html/setup_d32e8b4817937d014fa2f8dc9a6c4b31.RData
- D ../models/m01_cache/html/setup_d32e8b4817937d014fa2f8dc9a6c4b31.rdb
- D ../models/m01_cache/html/setup_d32e8b4817937d014fa2f8dc9a6c4b31.rdx
- D ../models/m01_cache/html/summary_4927ba7583caae10f1e1f095b2a28274.RData
- D ../models/m01_cache/html/summary_4927ba7583caae10f1e1f095b2a28274.rdb
- D ../models/m01_cache/html/summary_4927ba7583caae10f1e1f095b2a28274.rdx
- D ../models/m01_files/figure-html/figure-1.png
- D ../models/m02.qmd
- D ../models/m02_cache/html/__packages
- D ../models/m02_cache/html/build-orchard-m02_47526f68fb4988b46a914315954b9cdf.RData
- D ../models/m02_cache/html/build-orchard-m02_47526f68fb4988b46a914315954b9cdf.rdb
- D ../models/m02_cache/html/build-orchard-m02_47526f68fb4988b46a914315954b9cdf.rdx
- D ../models/m02_cache/html/figure_0e244d227964a3b72f51de0e58fff920.RData
- D ../models/m02_cache/html/figure_0e244d227964a3b72f51de0e58fff920.rdb
- D ../models/m02_cache/html/figure_0e244d227964a3b72f51de0e58fff920.rdx
- D ../models/m02_cache/html/setup_9c4a67e28e4099807ae6fd0d104825b9.RData
- D ../models/m02_cache/html/setup_9c4a67e28e4099807ae6fd0d104825b9.rdb
- D ../models/m02_cache/html/setup_9c4a67e28e4099807ae6fd0d104825b9.rdx
- D ../models/m02_cache/html/summary_cadcd56e5a13bf075f8c032298899a9f.RData
- D ../models/m02_cache/html/summary_cadcd56e5a13bf075f8c032298899a9f.rdb
- D ../models/m02_cache/html/summary_cadcd56e5a13bf075f8c032298899a9f.rdx
- D ../models/m02_files/figure-html/figure-1.png
- D ../models/m03.qmd
- D ../models/m03_cache/html/__packages
- D ../models/m03_cache/html/build-orchard-m03_d89ee205ea14fa923075432c4e50b80c.RData
- D ../models/m03_cache/html/build-orchard-m03_d89ee205ea14fa923075432c4e50b80c.rdb
- D ../models/m03_cache/html/build-orchard-m03_d89ee205ea14fa923075432c4e50b80c.rdx
- D ../models/m03_cache/html/figure_447de756fd9f1b66ab129a86fb390267.RData
- D ../models/m03_cache/html/figure_447de756fd9f1b66ab129a86fb390267.rdb
- D ../models/m03_cache/html/figure_447de756fd9f1b66ab129a86fb390267.rdx
- D ../models/m03_cache/html/setup_ca4d3e75697a606f22a3d98670019d9c.RData
- D ../models/m03_cache/html/setup_ca4d3e75697a606f22a3d98670019d9c.rdb
- D ../models/m03_cache/html/setup_ca4d3e75697a606f22a3d98670019d9c.rdx
- D ../models/m03_cache/html/summary_6340df8c9ac252fee645fb4b156578e5.RData
- D ../models/m03_cache/html/summary_6340df8c9ac252fee645fb4b156578e5.rdb
- D ../models/m03_cache/html/summary_6340df8c9ac252fee645fb4b156578e5.rdx
- D ../models/m03_files/figure-html/figure-1.png
- D ../models/m04.qmd
- D ../models/m04_cache/html/__packages
- D ../models/m04_cache/html/build-orchard-m04_bea5619b95eae4c21d43707526a0f086.RData
- D ../models/m04_cache/html/build-orchard-m04_bea5619b95eae4c21d43707526a0f086.rdb
- D ../models/m04_cache/html/build-orchard-m04_bea5619b95eae4c21d43707526a0f086.rdx
- D ../models/m04_cache/html/figure_460a0dc294a500879a9ee093b63a8f19.RData
- D ../models/m04_cache/html/figure_460a0dc294a500879a9ee093b63a8f19.rdb
- D ../models/m04_cache/html/figure_460a0dc294a500879a9ee093b63a8f19.rdx
- D ../models/m04_cache/html/setup_2938eb7cd65aaa0cec726d824af8035e.RData
- D ../models/m04_cache/html/setup_2938eb7cd65aaa0cec726d824af8035e.rdb
- D ../models/m04_cache/html/setup_2938eb7cd65aaa0cec726d824af8035e.rdx
- D ../models/m04_cache/html/summary_eac3fd9cfcc2106985ba442118e845a7.RData
- D ../models/m04_cache/html/summary_eac3fd9cfcc2106985ba442118e845a7.rdb
- D ../models/m04_cache/html/summary_eac3fd9cfcc2106985ba442118e845a7.rdx
- D ../models/m04_files/figure-html/figure-1.png
- D ../models/m05.qmd
- D ../models/m05_cache/html/__packages
- D ../models/m05_cache/html/build-orchard-m05_19565eaf9c47431a3e56089b0683bfb7.RData
- D ../models/m05_cache/html/build-orchard-m05_19565eaf9c47431a3e56089b0683bfb7.rdb
- D ../models/m05_cache/html/build-orchard-m05_19565eaf9c47431a3e56089b0683bfb7.rdx
- D ../models/m05_cache/html/figure_9ddafb534fced2084af83554c1db2e4f.RData
- D ../models/m05_cache/html/figure_9ddafb534fced2084af83554c1db2e4f.rdb
- D ../models/m05_cache/html/figure_9ddafb534fced2084af83554c1db2e4f.rdx
- D ../models/m05_cache/html/setup_f8bb7e979a687c205669f4f4c41ff218.RData
- D ../models/m05_cache/html/setup_f8bb7e979a687c205669f4f4c41ff218.rdb
- D ../models/m05_cache/html/setup_f8bb7e979a687c205669f4f4c41ff218.rdx
- D ../models/m05_cache/html/summary_dc3bc22d7239ca006f180b4e8b208f23.RData
- D ../models/m05_cache/html/summary_dc3bc22d7239ca006f180b4e8b208f23.rdb
- D ../models/m05_cache/html/summary_dc3bc22d7239ca006f180b4e8b208f23.rdx
- D ../models/m05_files/figure-html/figure-1.png
- D ../models/m06.html
- D ../models/m06.qmd
- D ../models/m06_cache/html/__packages
- D ../models/m06_cache/html/build-orchard-m06_8edbc615beddfb8f452f48a6b93c1999.RData
- D ../models/m06_cache/html/build-orchard-m06_8edbc615beddfb8f452f48a6b93c1999.rdb
- D ../models/m06_cache/html/build-orchard-m06_8edbc615beddfb8f452f48a6b93c1999.rdx
- D ../models/m06_cache/html/figure_987bb4d97b683915832c762d6b54ed60.RData
- D ../models/m06_cache/html/figure_987bb4d97b683915832c762d6b54ed60.rdb
- D ../models/m06_cache/html/figure_987bb4d97b683915832c762d6b54ed60.rdx
- D ../models/m06_cache/html/setup_b0c0e8e9ea0bd68e46e27aa274938721.RData
- D ../models/m06_cache/html/setup_b0c0e8e9ea0bd68e46e27aa274938721.rdb
- D ../models/m06_cache/html/setup_b0c0e8e9ea0bd68e46e27aa274938721.rdx
- D ../models/m06_cache/html/summary_edbd59f8967f1f288fab629b377d0cfb.RData
- D ../models/m06_cache/html/summary_edbd59f8967f1f288fab629b377d0cfb.rdb
- D ../models/m06_cache/html/summary_edbd59f8967f1f288fab629b377d0cfb.rdx
- D ../models/m06_files/figure-html/figure-1.png
- D ../models/m06_files/libs/bootstrap/bootstrap-efbb37e9afcc02144ebbc7afd12a776f.min.css
- D ../models/m06_files/libs/bootstrap/bootstrap-icons.css
- D ../models/m06_files/libs/bootstrap/bootstrap-icons.woff
- D ../models/m06_files/libs/bootstrap/bootstrap.min.js
- D ../models/m06_files/libs/clipboard/clipboard.min.js
- D ../models/m06_files/libs/quarto-html/anchor.min.js
- D ../models/m06_files/libs/quarto-html/popper.min.js
- D ../models/m06_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css
- D ../models/m06_files/libs/quarto-html/quarto.js
- D ../models/m06_files/libs/quarto-html/tabsets/tabsets.js
- D ../models/m06_files/libs/quarto-html/tippy.css
- D ../models/m06_files/libs/quarto-html/tippy.umd.min.js
- D ../models/m07.qmd
- D ../models/m07_cache/html/__packages
- D ../models/m07_cache/html/build-orchard-m07_fd72cb3ef4bdf1e0ce672dbacefe7c92.RData
- D ../models/m07_cache/html/build-orchard-m07_fd72cb3ef4bdf1e0ce672dbacefe7c92.rdb
- D ../models/m07_cache/html/build-orchard-m07_fd72cb3ef4bdf1e0ce672dbacefe7c92.rdx
- D ../models/m07_cache/html/figure_59ca025f7833bdcbe697994867ab5e60.RData
- D ../models/m07_cache/html/figure_59ca025f7833bdcbe697994867ab5e60.rdb
- D ../models/m07_cache/html/figure_59ca025f7833bdcbe697994867ab5e60.rdx
- D ../models/m07_cache/html/setup_aa076b2096ac67d18078a29538ecf646.RData
- D ../models/m07_cache/html/setup_aa076b2096ac67d18078a29538ecf646.rdb
- D ../models/m07_cache/html/setup_aa076b2096ac67d18078a29538ecf646.rdx
- D ../models/m07_cache/html/summary_495ac5d5a5374b432f98b798039bf760.RData
- D ../models/m07_cache/html/summary_495ac5d5a5374b432f98b798039bf760.rdb
- D ../models/m07_cache/html/summary_495ac5d5a5374b432f98b798039bf760.rdx
- D ../models/m07_files/figure-html/figure-1.png
- D ../models/m08.qmd
- D ../models/m08_cache/html/__packages
- D ../models/m08_cache/html/build-orchard-m08_603ac9160ae67a782e610fc488f3c2d7.RData
- D ../models/m08_cache/html/build-orchard-m08_603ac9160ae67a782e610fc488f3c2d7.rdb
- D ../models/m08_cache/html/build-orchard-m08_603ac9160ae67a782e610fc488f3c2d7.rdx
- D ../models/m08_cache/html/figure_93de7f84433924a09c51a9b08c5bcab5.RData
- D ../models/m08_cache/html/figure_93de7f84433924a09c51a9b08c5bcab5.rdb
- D ../models/m08_cache/html/figure_93de7f84433924a09c51a9b08c5bcab5.rdx
- D ../models/m08_cache/html/setup_bd2f3ec005b10e30da2812ba986e8f8e.RData
- D ../models/m08_cache/html/setup_bd2f3ec005b10e30da2812ba986e8f8e.rdb
- D ../models/m08_cache/html/setup_bd2f3ec005b10e30da2812ba986e8f8e.rdx
- D ../models/m08_cache/html/summary_b748df9548b787e7772a54736497f3ea.RData
- D ../models/m08_cache/html/summary_b748df9548b787e7772a54736497f3ea.rdb
- D ../models/m08_cache/html/summary_b748df9548b787e7772a54736497f3ea.rdx
- D ../models/m08_files/figure-html/figure-1.png
- D ../models/m09.html
- D ../models/m09.qmd
- D ../models/m09_cache/html/__packages
- D ../models/m09_cache/html/build-orchard-m09_825644aea65cfad358fef44d1c312688.RData
- D ../models/m09_cache/html/build-orchard-m09_825644aea65cfad358fef44d1c312688.rdb
- D ../models/m09_cache/html/build-orchard-m09_825644aea65cfad358fef44d1c312688.rdx
- D ../models/m09_cache/html/figure_07ab2775cc0f555089fe195f09c82ea0.RData
- D ../models/m09_cache/html/figure_07ab2775cc0f555089fe195f09c82ea0.rdb
- D ../models/m09_cache/html/figure_07ab2775cc0f555089fe195f09c82ea0.rdx
- D ../models/m09_cache/html/setup_7cddcbaab5a5f53268352bd54ff5a631.RData
- D ../models/m09_cache/html/setup_7cddcbaab5a5f53268352bd54ff5a631.rdb
- D ../models/m09_cache/html/setup_7cddcbaab5a5f53268352bd54ff5a631.rdx
- D ../models/m09_cache/html/summary_a03fb80336a687eced1a53cf1022d130.RData
- D ../models/m09_cache/html/summary_a03fb80336a687eced1a53cf1022d130.rdb
- D ../models/m09_cache/html/summary_a03fb80336a687eced1a53cf1022d130.rdx
- D ../models/m09_files/figure-html/figure-1.png
- D ../models/m09_files/libs/bootstrap/bootstrap-efbb37e9afcc02144ebbc7afd12a776f.min.css
- D ../models/m09_files/libs/bootstrap/bootstrap-icons.css
- D ../models/m09_files/libs/bootstrap/bootstrap-icons.woff
- D ../models/m09_files/libs/bootstrap/bootstrap.min.js
- D ../models/m09_files/libs/clipboard/clipboard.min.js
- D ../models/m09_files/libs/quarto-html/anchor.min.js
- D ../models/m09_files/libs/quarto-html/popper.min.js
- D ../models/m09_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css
- D ../models/m09_files/libs/quarto-html/quarto.js
- D ../models/m09_files/libs/quarto-html/tabsets/tabsets.js
- D ../models/m09_files/libs/quarto-html/tippy.css
- D ../models/m09_files/libs/quarto-html/tippy.umd.min.js
- D ../models/m10.qmd
- D ../models/m10_cache/html/__packages
- D ../models/m10_cache/html/build-orchard-m10_fd81a67a3e33b6d9021b335975c912b3.RData
- D ../models/m10_cache/html/build-orchard-m10_fd81a67a3e33b6d9021b335975c912b3.rdb
- D ../models/m10_cache/html/build-orchard-m10_fd81a67a3e33b6d9021b335975c912b3.rdx
- D ../models/m10_cache/html/figure_57f2e3adcee0d7b2bbe91d434ec28430.RData
- D ../models/m10_cache/html/figure_57f2e3adcee0d7b2bbe91d434ec28430.rdb
- D ../models/m10_cache/html/figure_57f2e3adcee0d7b2bbe91d434ec28430.rdx
- D ../models/m10_cache/html/setup_ea9cccec15f41036a683deb00a8375b6.RData
- D ../models/m10_cache/html/setup_ea9cccec15f41036a683deb00a8375b6.rdb
- D ../models/m10_cache/html/setup_ea9cccec15f41036a683deb00a8375b6.rdx
- D ../models/m10_cache/html/summary_07c12cec56151b986f958c742d1bfd29.RData
- D ../models/m10_cache/html/summary_07c12cec56151b986f958c742d1bfd29.rdb
- D ../models/m10_cache/html/summary_07c12cec56151b986f958c742d1bfd29.rdx
- D ../models/m10_files/figure-html/figure-1.png
- D ../models/m11.qmd
- D ../models/m11_cache/html/__packages
- D ../models/m11_cache/html/build-orchard-m11_e7d6ca36ea780005c869af5896356117.RData
- D ../models/m11_cache/html/build-orchard-m11_e7d6ca36ea780005c869af5896356117.rdb
- D ../models/m11_cache/html/build-orchard-m11_e7d6ca36ea780005c869af5896356117.rdx
- D ../models/m11_cache/html/figure_e50a623b6fd7bd7d08b8c12f5fcc586e.RData
- D ../models/m11_cache/html/figure_e50a623b6fd7bd7d08b8c12f5fcc586e.rdb
- D ../models/m11_cache/html/figure_e50a623b6fd7bd7d08b8c12f5fcc586e.rdx
- D ../models/m11_cache/html/setup_68f6b6abe90b30a1b505a827f12c2736.RData
- D ../models/m11_cache/html/setup_68f6b6abe90b30a1b505a827f12c2736.rdb
- D ../models/m11_cache/html/setup_68f6b6abe90b30a1b505a827f12c2736.rdx
- D ../models/m11_cache/html/summary_1894af808f9359df0188e4b19b40ddb1.RData
- D ../models/m11_cache/html/summary_1894af808f9359df0188e4b19b40ddb1.rdb
- D ../models/m11_cache/html/summary_1894af808f9359df0188e4b19b40ddb1.rdx
- D ../models/m11_files/figure-html/figure-1.png
- D ../models/m12.qmd
- D ../models/m12_cache/html/__packages
- D ../models/m12_cache/html/figure_448d92aca518e500eee745c46d2bfe67.RData
- D ../models/m12_cache/html/figure_448d92aca518e500eee745c46d2bfe67.rdb
- D ../models/m12_cache/html/figure_448d92aca518e500eee745c46d2bfe67.rdx
- D ../models/m12_cache/html/setup_d389747639b3e8a3583a8df3e9507947.RData
- D ../models/m12_cache/html/setup_d389747639b3e8a3583a8df3e9507947.rdb
- D ../models/m12_cache/html/setup_d389747639b3e8a3583a8df3e9507947.rdx
- D ../models/m12_cache/html/summary_f7f6f6e92a4941e037d0eae9b71dfec1.RData
- D ../models/m12_cache/html/summary_f7f6f6e92a4941e037d0eae9b71dfec1.rdb
- D ../models/m12_cache/html/summary_f7f6f6e92a4941e037d0eae9b71dfec1.rdx
- D ../models/m13.qmd
- D ../models/m13_cache/html/__packages
- D ../models/m13_cache/html/figure_577add3a8b445b57a39c549f23e0af2e.RData
- D ../models/m13_cache/html/figure_577add3a8b445b57a39c549f23e0af2e.rdb
- D ../models/m13_cache/html/figure_577add3a8b445b57a39c549f23e0af2e.rdx
- D ../models/m13_cache/html/setup_30e3e990e6a1f293551dc2571c2809d4.RData
- D ../models/m13_cache/html/setup_30e3e990e6a1f293551dc2571c2809d4.rdb
- D ../models/m13_cache/html/setup_30e3e990e6a1f293551dc2571c2809d4.rdx
- D ../models/m13_cache/html/summary_ad0833e0026f595c378ccef56c2c420b.RData
- D ../models/m13_cache/html/summary_ad0833e0026f595c378ccef56c2c420b.rdb
- D ../models/m13_cache/html/summary_ad0833e0026f595c378ccef56c2c420b.rdx
- D ../outputs/data_clean/proceed_clean_filtered.rds
- D ../outputs/figures/pdf/m01_disturbance_location.pdf
- D ../outputs/figures/pdf/m01_disturbance_location_scale_combined.pdf
- D ../outputs/figures/pdf/m01_disturbance_scale.pdf
- D ../outputs/figures/pdf/m02_design_location.pdf
- D ../outputs/figures/pdf/m02_design_location_scale_combined.pdf
- D ../outputs/figures/pdf/m02_design_scale.pdf
- D ../outputs/figures/pdf/m03_log10_years_location.pdf
- D ../outputs/figures/pdf/m03_log10_years_location_scale_combined.pdf
- D ../outputs/figures/pdf/m03_log10_years_scale.pdf
- D ../outputs/figures/pdf/m04_log10_generations_location.pdf
- D ../outputs/figures/pdf/m04_log10_generations_location_scale_combined.pdf
- D ../outputs/figures/pdf/m04_log10_generations_scale.pdf
- D ../outputs/figures/pdf/m05_trait_type_location.pdf
- D ../outputs/figures/pdf/m05_trait_type_location_scale_combined.pdf
- D ../outputs/figures/pdf/m05_trait_type_scale.pdf
- D ../outputs/figures/pdf/m06_taxa_location.pdf
- D ../outputs/figures/pdf/m06_taxa_location_scale_combined.pdf
- D ../outputs/figures/pdf/m06_taxa_scale.pdf
- D ../outputs/figures/pdf/m07_genphen_location.pdf
- D ../outputs/figures/pdf/m07_genphen_location_scale_combined.pdf
- D ../outputs/figures/pdf/m07_genphen_scale.pdf
- D ../outputs/figures/pdf/m08_env_change_location.pdf
- D ../outputs/figures/pdf/m08_env_change_location_scale_combined.pdf
- D ../outputs/figures/pdf/m08_env_change_scale.pdf
- D ../outputs/figures/pdf/m09_data_type_location.pdf
- D ../outputs/figures/pdf/m09_data_type_location_scale_combined.pdf
- D ../outputs/figures/pdf/m09_data_type_scale.pdf
- D ../outputs/figures/pdf/m10_transf_data_location.pdf
- D ../outputs/figures/pdf/m10_transf_data_location_scale_combined.pdf
- D ../outputs/figures/pdf/m10_transf_data_scale.pdf
- D ../outputs/figures/pdf/m11_data_scale_location.pdf
- D ../outputs/figures/pdf/m11_data_scale_location_scale_combined.pdf
- D ../outputs/figures/pdf/m11_data_scale_scale.pdf
- D ../outputs/figures/png/m01_disturbance_location.png
- D ../outputs/figures/png/m01_disturbance_location_scale_combined.png
- D ../outputs/figures/png/m01_disturbance_scale.png
- D ../outputs/figures/png/m02_design_location.png
- D ../outputs/figures/png/m02_design_location_scale_combined.png
- D ../outputs/figures/png/m02_design_scale.png
- D ../outputs/figures/png/m03_log10_years_location.png
- D ../outputs/figures/png/m03_log10_years_location_scale_combined.png
- D ../outputs/figures/png/m03_log10_years_scale.png
- D ../outputs/figures/png/m04_log10_generations_location.png
- D ../outputs/figures/png/m04_log10_generations_location_scale_combined.png
- D ../outputs/figures/png/m04_log10_generations_scale.png
- D ../outputs/figures/png/m05_trait_type_location.png
- D ../outputs/figures/png/m05_trait_type_location_scale_combined.png
- D ../outputs/figures/png/m05_trait_type_scale.png
- D ../outputs/figures/png/m06_taxa_location.png
- D ../outputs/figures/png/m06_taxa_location_scale_combined.png
- D ../outputs/figures/png/m06_taxa_scale.png
- D ../outputs/figures/png/m07_genphen_location.png
- D ../outputs/figures/png/m07_genphen_location_scale_combined.png
- D ../outputs/figures/png/m07_genphen_scale.png
- D ../outputs/figures/png/m08_env_change_location.png
- D ../outputs/figures/png/m08_env_change_location_scale_combined.png
- D ../outputs/figures/png/m08_env_change_scale.png
- D ../outputs/figures/png/m09_data_type_location.png
- D ../outputs/figures/png/m09_data_type_location_scale_combined.png
- D ../outputs/figures/png/m09_data_type_scale.png
- D ../outputs/figures/png/m10_transf_data_location.png
- D ../outputs/figures/png/m10_transf_data_location_scale_combined.png
- D ../outputs/figures/png/m10_transf_data_scale.png
- D ../outputs/figures/png/m11_data_scale_location.png
- D ../outputs/figures/png/m11_data_scale_location_scale_combined.png
- D ../outputs/figures/png/m11_data_scale_scale.png
- D ../outputs/figures/publication/orchard/m00_orchard_combined.pdf
- D ../outputs/figures/publication/orchard/m00_orchard_combined.png
- D ../outputs/figures/publication/orchard/m00_orchard_location.pdf
- D ../outputs/figures/publication/orchard/m00_orchard_location.png
- D ../outputs/figures/publication/orchard/m00_orchard_overall.pdf
- D ../outputs/figures/publication/orchard/m00_orchard_overall.png
- D ../outputs/figures/publication/orchard/m00_orchard_scale.pdf
- D ../outputs/figures/publication/orchard/m00_orchard_scale.png
- D ../outputs/figures/publication/orchard/m01_orchard_combined.pdf
- D ../outputs/figures/publication/orchard/m01_orchard_combined.png
- D ../outputs/figures/publication/orchard/m01_orchard_location.pdf
- D ../outputs/figures/publication/orchard/m01_orchard_location.png
- D ../outputs/figures/publication/orchard/m01_orchard_scale.pdf
- D ../outputs/figures/publication/orchard/m01_orchard_scale.png
- D ../outputs/figures/publication/orchard/m02_orchard_combined.pdf
- D ../outputs/figures/publication/orchard/m02_orchard_combined.png
- D ../outputs/figures/publication/orchard/m02_orchard_location.pdf
- D ../outputs/figures/publication/orchard/m02_orchard_location.png
- D ../outputs/figures/publication/orchard/m02_orchard_scale.pdf
- D ../outputs/figures/publication/orchard/m02_orchard_scale.png
- D ../outputs/figures/publication/orchard/m03_orchard_combined.pdf
- D ../outputs/figures/publication/orchard/m03_orchard_combined.png
- D ../outputs/figures/publication/orchard/m03_orchard_location.pdf
- D ../outputs/figures/publication/orchard/m03_orchard_location.png
- D ../outputs/figures/publication/orchard/m03_orchard_scale.pdf
- D ../outputs/figures/publication/orchard/m03_orchard_scale.png
- D ../outputs/figures/publication/orchard/m04_orchard_combined.pdf
- D ../outputs/figures/publication/orchard/m04_orchard_combined.png
- D ../outputs/figures/publication/orchard/m04_orchard_location.pdf
- D ../outputs/figures/publication/orchard/m04_orchard_location.png
- D ../outputs/figures/publication/orchard/m04_orchard_scale.pdf
- D ../outputs/figures/publication/orchard/m04_orchard_scale.png
- D ../outputs/figures/publication/orchard/m05_orchard_combined.pdf
- D ../outputs/figures/publication/orchard/m05_orchard_combined.png
- D ../outputs/figures/publication/orchard/m05_orchard_location.pdf
- D ../outputs/figures/publication/orchard/m05_orchard_location.png
- D ../outputs/figures/publication/orchard/m05_orchard_scale.pdf
- D ../outputs/figures/publication/orchard/m05_orchard_scale.png
- D ../outputs/figures/publication/orchard/m06_orchard_combined.pdf
- D ../outputs/figures/publication/orchard/m06_orchard_combined.png
- D ../outputs/figures/publication/orchard/m06_orchard_location.pdf
- D ../outputs/figures/publication/orchard/m06_orchard_location.png
- D ../outputs/figures/publication/orchard/m06_orchard_scale.pdf
- D ../outputs/figures/publication/orchard/m06_orchard_scale.png
- D ../outputs/figures/publication/orchard/m07_orchard_combined.pdf
- D ../outputs/figures/publication/orchard/m07_orchard_combined.png
- D ../outputs/figures/publication/orchard/m07_orchard_location.pdf
- D ../outputs/figures/publication/orchard/m07_orchard_location.png
- D ../outputs/figures/publication/orchard/m07_orchard_scale.pdf
- D ../outputs/figures/publication/orchard/m07_orchard_scale.png
- D ../outputs/figures/publication/orchard/m08_orchard_combined.pdf
- D ../outputs/figures/publication/orchard/m08_orchard_combined.png
- D ../outputs/figures/publication/orchard/m08_orchard_location.pdf
- D ../outputs/figures/publication/orchard/m08_orchard_location.png
- D ../outputs/figures/publication/orchard/m08_orchard_scale.pdf
- D ../outputs/figures/publication/orchard/m08_orchard_scale.png
- D ../outputs/figures/publication/orchard/m09_orchard_combined.pdf
- D ../outputs/figures/publication/orchard/m09_orchard_combined.png
- D ../outputs/figures/publication/orchard/m09_orchard_location.pdf
- D ../outputs/figures/publication/orchard/m09_orchard_location.png
- D ../outputs/figures/publication/orchard/m09_orchard_scale.pdf
- D ../outputs/figures/publication/orchard/m09_orchard_scale.png
- D ../outputs/figures/publication/orchard/m10_orchard_combined.pdf
- D ../outputs/figures/publication/orchard/m10_orchard_combined.png
- D ../outputs/figures/publication/orchard/m10_orchard_location.pdf
- D ../outputs/figures/publication/orchard/m10_orchard_location.png
- D ../outputs/figures/publication/orchard/m10_orchard_scale.pdf
- D ../outputs/figures/publication/orchard/m10_orchard_scale.png
- D ../outputs/figures/publication/orchard/m11_orchard_combined.pdf
- D ../outputs/figures/publication/orchard/m11_orchard_combined.png
- D ../outputs/figures/publication/orchard/m11_orchard_location.pdf
- D ../outputs/figures/publication/orchard/m11_orchard_location.png
- D ../outputs/figures/publication/orchard/m11_orchard_scale.pdf
- D ../outputs/figures/publication/orchard/m11_orchard_scale.png
- D ../outputs/phylogeny/unmatched_species.csv
- D ../outputs/summaries/model_summaries_emmeans.txt
- D ../outputs/tables/counts_by_data_scale.csv
- D ../outputs/tables/counts_by_data_type.csv
- D ../outputs/tables/counts_by_design.csv
- D ../outputs/tables/counts_by_disturbance.csv
- D ../outputs/tables/counts_by_env_change.csv
- D ../outputs/tables/counts_by_genphen.csv
- D ../outputs/tables/counts_by_taxa.csv
- D ../outputs/tables/counts_by_trait_type.csv
- D ../outputs/tables/counts_by_transf_data.csv
- D ../outputs/tables/dependency_nesting_table.csv
- D ../outputs/tables/dependency_support_summary.csv
- D ../outputs/tables/descriptive_overview.csv
- D ../outputs/tables/location_effects_all_moderators.csv
- D ../outputs/tables/model_diagnostics_all_moderators.csv
- D ../outputs/tables/model_grid_status.csv
- D ../outputs/tables/safe_lnm_diagnostics.csv
- D ../outputs/tables/scale_effects_all_moderators.csv
- D ../precompute_epred_draws.R
- D ../precompute_grid_summaries.R
-?? ../Rdata/
-?? ../_archive_hidden/render_cache_20260707_101809.zip
-?? ../_freeze/chapters/
-?? ./
+?? 01_data_preparation.html
+?? 02_lnm_effect_sizes.html
+?? 03_descriptive_summaries.html
+?? 04_dependency_structure.html
+?? 04b_phylogeny.html
+?? 05_location_scale_model_grid.html
+?? 07_sensitivity_analyses.html
+?? 08_publication_figures.html
+?? 09_reproducibility.rmarkdown
+?? models/m00.html
+?? models/m01.html
+?? models/m02.html
+?? models/m03.html
+?? models/m04.html
+?? models/m05.html
+?? models/m07.html
+?? models/m11.html
 ?? ../index.html
 ?? ../site_libs/ </code></pre>
 </div>
@@ -1607,7 +1014,7 @@ Unresolved      : 7 </code></pre>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["path"],"name":[1],"type":["chr"],"align":["left"]},{"label":["filename"],"name":[2],"type":["chr"],"align":["left"]},{"label":["size_mb"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["modified"],"name":[4],"type":["dttm"],"align":["right"]}],"data":[{"1":"C:/Users/zannt/OneDrive/Github repos/Magnitude_pace_modern_life/Rdata/models/m01_ls_disturbance.rds","2":"m01_ls_disturbance.rds","3":"404.11","4":"2026-06-10 09:42:42.000000"},{"1":"C:/Users/zannt/OneDrive/Github repos/Magnitude_pace_modern_life/Rdata/models/m02_ls_design.rds","2":"m02_ls_design.rds","3":"403.60","4":"2026-06-10 09:43:02.000000"},{"1":"C:/Users/zannt/OneDrive/Github repos/Magnitude_pace_modern_life/Rdata/models/m03_ls_log10_years.rds","2":"m03_ls_log10_years.rds","3":"403.52","4":"2026-06-10 09:43:18.000000"},{"1":"C:/Users/zannt/OneDrive/Github repos/Magnitude_pace_modern_life/Rdata/models/m04_ls_log10_generations.rds","2":"m04_ls_log10_generations.rds","3":"388.76","4":"2026-06-10 09:43:39.000000"},{"1":"C:/Users/zannt/OneDrive/Github repos/Magnitude_pace_modern_life/Rdata/models/m05_ls_trait_type.rds","2":"m05_ls_trait_type.rds","3":"404.01","4":"2026-06-10 09:43:59.000000"},{"1":"C:/Users/zannt/OneDrive/Github repos/Magnitude_pace_modern_life/Rdata/models/m09_ls_data_type.rds","2":"m09_ls_data_type.rds","3":"404.26","4":"2026-06-15 09:27:52.000000"},{"1":"C:/Users/zannt/OneDrive/Github repos/Magnitude_pace_modern_life/Rdata/models/m06_ls_taxa.rds","2":"m06_ls_taxa.rds","3":"202.59","4":"2026-06-15 13:08:42.000000"},{"1":"C:/Users/zannt/OneDrive/Github repos/Magnitude_pace_modern_life/Rdata/models/m08_ls_env_change.rds","2":"m08_ls_env_change.rds","3":"403.54","4":"2026-06-15 13:09:02.000000"},{"1":"C:/Users/zannt/OneDrive/Github repos/Magnitude_pace_modern_life/Rdata/models/m00_ls_intercept_only.rds","2":"m00_ls_intercept_only.rds","3":"396.07","4":"2026-06-22 20:04:45.000000"},{"1":"C:/Users/zannt/OneDrive/Github repos/Magnitude_pace_modern_life/Rdata/models/m11_ls_data_scale.rds","2":"m11_ls_data_scale.rds","3":"402.91","4":"2026-06-22 20:04:52.000000"},{"1":"C:/Users/zannt/OneDrive/Github repos/Magnitude_pace_modern_life/Rdata/models/m07_ls_genphen.rds","2":"m07_ls_genphen.rds","3":"403.55","4":"2026-06-29 10:04:43.018121"},{"1":"C:/Users/zannt/OneDrive/Github repos/Magnitude_pace_modern_life/Rdata/models/m10b_ls_transf_data_v2.rds","2":"m10b_ls_transf_data_v2.rds","3":"394.49","4":"2026-06-29 10:06:42.157159"},{"1":"C:/Users/zannt/OneDrive/Github repos/Magnitude_pace_modern_life/Rdata/models/m09b_ls_data_type_v2.rds","2":"m09b_ls_data_type_v2.rds","3":"394.63","4":"2026-07-07 09:22:19.107627"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["path"],"name":[1],"type":["chr"],"align":["left"]},{"label":["filename"],"name":[2],"type":["chr"],"align":["left"]},{"label":["size_mb"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["modified"],"name":[4],"type":["dttm"],"align":["right"]}],"data":[{"1":"C:/Users/zannt/OneDrive/Github repos/Magnitude_pace_modern_life/Rdata/models/m09_ls_data_type.rds","2":"m09_ls_data_type.rds","3":"404.26","4":"2026-06-15 09:27:52.000000"},{"1":"C:/Users/zannt/OneDrive/Github repos/Magnitude_pace_modern_life/Rdata/models/m06_ls_taxa.rds","2":"m06_ls_taxa.rds","3":"202.59","4":"2026-06-15 13:08:42.000000"},{"1":"C:/Users/zannt/OneDrive/Github repos/Magnitude_pace_modern_life/Rdata/models/m10b_ls_transf_data_v2.rds","2":"m10b_ls_transf_data_v2.rds","3":"394.49","4":"2026-06-29 10:06:42.157159"},{"1":"C:/Users/zannt/OneDrive/Github repos/Magnitude_pace_modern_life/Rdata/models/m09b_ls_data_type_v2.rds","2":"m09b_ls_data_type_v2.rds","3":"394.63","4":"2026-07-07 09:22:19.107627"},{"1":"C:/Users/zannt/OneDrive/Github repos/Magnitude_pace_modern_life/Rdata/models/m00_ls_intercept_only.rds","2":"m00_ls_intercept_only.rds","3":"388.84","4":"2026-07-20 15:38:59.216037"},{"1":"C:/Users/zannt/OneDrive/Github repos/Magnitude_pace_modern_life/Rdata/models/m07_ls_genphen.rds","2":"m07_ls_genphen.rds","3":"388.88","4":"2026-07-20 15:39:03.830459"},{"1":"C:/Users/zannt/OneDrive/Github repos/Magnitude_pace_modern_life/Rdata/models/m08_ls_env_change.rds","2":"m08_ls_env_change.rds","3":"388.92","4":"2026-07-20 15:39:09.210903"},{"1":"C:/Users/zannt/OneDrive/Github repos/Magnitude_pace_modern_life/Rdata/models/m01_ls_disturbance.rds","2":"m01_ls_disturbance.rds","3":"389.44","4":"2026-07-20 15:39:14.083179"},{"1":"C:/Users/zannt/OneDrive/Github repos/Magnitude_pace_modern_life/Rdata/models/m03_ls_log10_years.rds","2":"m03_ls_log10_years.rds","3":"388.86","4":"2026-07-20 15:39:15.555608"},{"1":"C:/Users/zannt/OneDrive/Github repos/Magnitude_pace_modern_life/Rdata/models/m11_ls_data_scale.rds","2":"m11_ls_data_scale.rds","3":"388.22","4":"2026-07-20 15:39:16.194154"},{"1":"C:/Users/zannt/OneDrive/Github repos/Magnitude_pace_modern_life/Rdata/models/m02_ls_design.rds","2":"m02_ls_design.rds","3":"388.96","4":"2026-07-20 15:39:21.862104"},{"1":"C:/Users/zannt/OneDrive/Github repos/Magnitude_pace_modern_life/Rdata/models/m04_ls_log10_generations.rds","2":"m04_ls_log10_generations.rds","3":"388.74","4":"2026-07-20 15:39:22.309272"},{"1":"C:/Users/zannt/OneDrive/Github repos/Magnitude_pace_modern_life/Rdata/models/m05_ls_trait_type.rds","2":"m05_ls_trait_type.rds","3":"389.30","4":"2026-07-20 15:39:25.983530"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -1629,8 +1036,8 @@ Unresolved      : 7 </code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Effect-size cache: C:/Users/zannt/OneDrive/Github repos/Magnitude_pace_modern_life/Rdata/effect_sizes/proceed_lnm_safe.rds 
-Size: 0.69 MB
-Modified: 2026-05-27 15:54:08 </code></pre>
+Size: 0.66 MB
+Modified: 2026-07-20 15:38:24 </code></pre>
 </div>
 </div>
 </section>

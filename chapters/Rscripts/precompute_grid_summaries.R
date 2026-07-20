@@ -61,9 +61,6 @@ for (i in seq_len(nrow(moderator_grid))) {
     next
   }
   dat_model <- dat_es[!is.na(dat_es[[moderator]]), ]
-  n_missing <- nrow(dat_es) - nrow(dat_model)
-  n_levels  <- if (mod_type == "categorical")
-    length(unique(droplevels(factor(dat_model[[moderator]])))) else NA_integer_
 
   mf <- resolve_file(mod_id, moderator)
   if (is.na(mf)) {
@@ -75,6 +72,10 @@ for (i in seq_len(nrow(moderator_grid))) {
 
   message(mod_id, ": reading ", mf)
   fit  <- readRDS(file.path(model_dir, paste0(mf, ".rds")))
+  fit_data <- fit$data
+  n_missing <- nrow(dat_es) - nrow(fit_data)
+  n_levels  <- if (mod_type == "categorical")
+    length(unique(droplevels(factor(fit_data[[moderator]])))) else NA_integer_
   fe   <- extract_fixed_effects(fit, mod_id, moderator)
   diag <- tryCatch(
     extract_diagnostics(fit, mod_id, moderator),
@@ -87,7 +88,7 @@ for (i in seq_len(nrow(moderator_grid))) {
   all_diag[[mod_id]] <- diag
   status_rows[[i]] <- tibble(
     model_id = mod_id, moderator = moderator, label = mod_label, type = mod_type,
-    n_rows = nrow(dat_model), n_levels = n_levels, n_missing_excluded = n_missing,
+    n_rows = nrow(fit_data), n_levels = n_levels, n_missing_excluded = n_missing,
     model_path = file.path(model_dir, paste0(mf, ".rds")), status = "fitted",
     notes = if (startsWith(mf, paste0(mod_id, "b"))) "refit (_v2)" else "",
     max_rhat = diag$max_rhat, min_bulk_ess = diag$min_bulk_ess,

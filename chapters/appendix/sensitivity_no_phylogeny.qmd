@@ -41,9 +41,7 @@ fit     <- fit_ls_model(
 sens_diagnostics_table(variant)
 ```
 
-All models converged cleanly (R̂ < 1.01, no divergent transitions) — unsurprising,
-since dropping the dense phylogenetic covariance removes the hardest part of the
-posterior geometry.
+`r sens_diagnostic_flags(variant)`
 
 ## Reading the tables
 
@@ -51,7 +49,7 @@ Raw location–scale coefficients on treatment coding: the **Intercept** row is 
 reference-level value, each other row the difference from it. The matched
 **primary** (phylogeny-included) coefficient is shown alongside, and the
 **Stability** column reads *consistent* when the two share sign and the same 95%
-credible-interval conclusion, **DIFFERS** (highlighted) otherwise.
+credible-interval conclusion, **DIFFERS** otherwise.
 
 ```{r stability-line, echo=FALSE, results='asis'}
 cat("**Overall:** ", sens_stability_summary(variant), "\n")

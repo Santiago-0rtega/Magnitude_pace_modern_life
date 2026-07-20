@@ -660,7 +660,7 @@ n_0 = \frac{2n_1n_2}{n_1+n_2},
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Contrasts available for lnM:"</span>, <span class="fu">nrow</span>(dat_lnm_input), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Contrasts available for lnM: 7524 </code></pre>
+<pre><code>Contrasts available for lnM: 7250 </code></pre>
 </div>
 </div>
 </section>
@@ -679,7 +679,7 @@ n_0 = \frac{2n_1n_2}{n_1+n_2},
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Effect sizes retained:"</span>, <span class="fu">nrow</span>(dat_es), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Effect sizes retained: 7511 </code></pre>
+<pre><code>Effect sizes retained: 7237 </code></pre>
 </div>
 </div>
 <p>The resulting dataset carries the SAFE point estimate (<code>yi_lnM_safe</code>) and its sampling variance (<code>vi_lnM_safe</code>). These two columns become the response and known sampling-error input for the location-scale meta-regression chapters.</p>
@@ -705,7 +705,7 @@ n_0 = \frac{2n_1n_2}{n_1+n_2},
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["k"],"name":[1],"type":["int"],"align":["right"]},{"label":["min_yi"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["median_yi"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["max_yi"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["min_vi"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["median_vi"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["max_vi"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["n_status_ok"],"name":[8],"type":["int"],"align":["right"]},{"label":["n_failed"],"name":[9],"type":["int"],"align":["right"]}],"data":[{"1":"7511","2":"-5.476","3":"-1.007","4":"3.219","5":"0.000419","6":"0.35497","7":"1.237435","8":"7511","9":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["k"],"name":[1],"type":["int"],"align":["right"]},{"label":["min_yi"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["median_yi"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["max_yi"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["min_vi"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["median_vi"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["max_vi"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["n_status_ok"],"name":[8],"type":["int"],"align":["right"]},{"label":["n_failed"],"name":[9],"type":["int"],"align":["right"]}],"data":[{"1":"7237","2":"-5.476","3":"-1.021","4":"2.96","5":"0.000419","6":"0.353837","7":"0.821737","8":"7237","9":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -735,7 +735,7 @@ n_0 = \frac{2n_1n_2}{n_1+n_2},
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["n_ok"],"name":[1],"type":["int"],"align":["right"]},{"label":["n_not_ok"],"name":[2],"type":["int"],"align":["right"]},{"label":["min_pct_kept"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["median_pct_kept"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["max_attempts"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"7511","2":"0","3":"0.5","4":"84.7","5":"12"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["n_ok"],"name":[1],"type":["int"],"align":["right"]},{"label":["n_not_ok"],"name":[2],"type":["int"],"align":["right"]},{"label":["min_pct_kept"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["median_pct_kept"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["max_attempts"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"7237","2":"0","3":"0.5","4":"84.5","5":"12"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -773,7 +773,7 @@ n_0 = \frac{2n_1n_2}{n_1+n_2},
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Effect-size rows (= dim of V):"</span>, <span class="fu">nrow</span>(dat_es), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Effect-size rows (= dim of V): 7511 </code></pre>
+<pre><code>Effect-size rows (= dim of V): 7237 </code></pre>
 </div>
 </div>
 

@@ -20,3 +20,6 @@ outputs/phylogeny/*.rds
 
 **/*.quarto_ipynb
 *.rds
+
+# Local dated archives of superseded reruns and derived summaries
+/Rdata/archive/

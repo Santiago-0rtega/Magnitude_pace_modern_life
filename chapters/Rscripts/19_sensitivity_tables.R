@@ -114,13 +114,9 @@ sens_moderator_table <- function(variant, moderator) {
     dplyr::select(`Sub-model` = Sub, Term,
                   `Sensitivity β [95% CrI]`, `Primary β [95% CrI]`, Stability)
 
-  diff_rows <- which(disp$Stability == "DIFFERS")
   kb <- kableExtra::kbl(disp, caption = .sens_mod_labels[[moderator]], booktabs = TRUE) |>
     kableExtra::kable_styling(full_width = FALSE,
-                              bootstrap_options = c("striped", "condensed")) |>
-    kableExtra::collapse_rows(columns = 1, valign = "top")
-  if (length(diff_rows) > 0)
-    kb <- kableExtra::row_spec(kb, diff_rows, bold = TRUE, background = "#fff3cd")
+                              bootstrap_options = c("striped", "condensed"))
   kb
 }
 
@@ -139,14 +135,43 @@ sens_diagnostics_table <- function(variant) {
       Divergences        = n_divergent,
       `Max-treedepth hits` = max_treedepth_hits) |>
     dplyr::arrange(dplyr::desc(Divergences))
-  flag <- which(d$Divergences > 20)
   kb <- kableExtra::kbl(d, caption = "Convergence diagnostics (4 chains, 2000 post-warmup draws each).",
                         booktabs = TRUE) |>
     kableExtra::kable_styling(full_width = FALSE,
                               bootstrap_options = c("striped", "condensed"))
-  if (length(flag) > 0)
-    kb <- kableExtra::row_spec(kb, flag, bold = TRUE, background = "#f8d7da")
   kb
+}
+
+# Render-time diagnostic note, generated from the latest synced table so prose
+# cannot retain divergence/Rhat values from an older rerun.
+sens_diagnostic_flags <- function(variant) {
+  d <- .sens_read(variant, "diagnostics")
+  if (is.null(d) || nrow(d) == 0) return("No diagnostic results are available.")
+  diagnostic_labels <- c(
+    disturbance = "Disturbance context (m01)",
+    design = "Comparison design (m02)",
+    log10_years = "Elapsed time in log10 years (m03)",
+    log10_generations = "Elapsed time in log10 generations (m04)",
+    trait_type = "Trait type (m05)",
+    genphen = "Phenotypic vs genetic study (m07)",
+    env_change = "Environmental-change context (m08)"
+  )
+  flagged <- d |>
+    dplyr::filter(n_divergent > 0 | max_rhat > 1.01) |>
+    dplyr::mutate(
+      label = unname(diagnostic_labels[as.character(moderator)]),
+      detail = sprintf("%s: max Rhat = %.4f, divergences = %d",
+                       label, max_rhat, n_divergent)
+    )
+  if (nrow(flagged) == 0) {
+    return(sprintf("All seven models had max Rhat <= 1.01 and zero divergences (largest max Rhat = %.4f).",
+                   max(d$max_rhat, na.rm = TRUE)))
+  }
+  paste0(
+    "Models requiring convergence caution: ",
+    paste(flagged$detail, collapse = "; "),
+    ". See the table above for ESS and treedepth diagnostics."
+  )
 }
 
 # Emit every moderator's comparison table (for a results='asis' chunk) ---------

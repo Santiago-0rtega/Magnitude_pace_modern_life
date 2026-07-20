@@ -44,12 +44,10 @@ sens_diagnostics_table(variant)
 ```
 
 ::: {.callout-warning}
-The **disturbance** model returned 21 divergent transitions and the **design**
-model 7. This is the weak-identifiability signal the protocol anticipated: with
-`sys_id` added on top of `ref_id` and the phylogeny, the sampler struggles in
-part of the posterior. R̂ (< 1.01) and ESS remain acceptable, but the individual
-`sys_id`, `ref_id`, and phylogenetic variance components should **not** be
-interpreted separately for these models.
+`r sens_diagnostic_flags(variant)` This is the weak-identifiability signal the
+protocol anticipated: with `sys_id` added on top of `ref_id` and the phylogeny,
+the individual `sys_id`, `ref_id`, and phylogenetic variance components should
+**not** be interpreted separately for flagged models.
 :::
 
 ## Reading the tables
@@ -58,7 +56,7 @@ Raw location–scale coefficients on treatment coding: the **Intercept** row is 
 reference-level value, each other row the difference from it. The matched
 **primary** (no `sys_id`) coefficient is shown alongside, and the **Stability**
 column reads *consistent* when the two share sign and the same 95%
-credible-interval conclusion, **DIFFERS** (highlighted) otherwise. Stability of
+credible-interval conclusion, **DIFFERS** otherwise. Stability of
 the moderator coefficients here indicates the reported effects are not artefacts
 of omitting a study-system term.
 

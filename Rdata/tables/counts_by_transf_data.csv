@@ -1,9 +1,9 @@
 transf_data,n
-raw,7134
-resid,125
-ln,123
+raw,6900
+ln,111
+resid,104
 ord,73
-log10,22
+log10,21
 NA,19
-arcsin,11
-arcsin.sqr,4
+arcsin,7
+arcsin.sqr,2

@@ -6,6 +6,9 @@ title: "Sensitivity A — Minimum sample size (N ≥ 40)"
 source(here::here("chapters", "Rscripts", "00_packages.R"))
 source(here::here("chapters", "Rscripts", "19_sensitivity_tables.R"))
 variant <- "sens1_n40"
+sens_dat <- readRDS(here::here("Rdata", "effect_sizes", "proceed_lnm_safe.rds"))
+sens_total <- nrow(sens_dat)
+sens_n40 <- sum(sens_dat$n_total >= 40, na.rm = TRUE)
 ```
 
 ## What this tests
@@ -15,7 +18,7 @@ groups being compared are small, because the plug-in sampling variance can
 become unstable when between-group variation is small relative to within-group
 variation. To check that the main conclusions do not rest on poorly replicated
 contrasts, every included moderator model is refit after restricting the data
-to contrasts with total sample size $n_1 + n_2 \geq 40$ — **5,364 of 7,511
+to contrasts with total sample size $n_1 + n_2 \geq 40$ — **`r format(sens_n40, big.mark = ",")` of `r format(sens_total, big.mark = ",")`
 contrasts**. All other model structure (phylogeny, `ref_id`, priors, MCMC
 settings) is identical to the primary fit.
 
@@ -26,7 +29,7 @@ Fit on the compute server (`totoro`), not at render. Each model uses 4 chains ×
 `cmdstanr`. The book reads the cached summary tables only.
 
 ```{r how-fit, eval=FALSE}
-dat_n40 <- dat_es |> dplyr::filter(n_total >= 40)          # 5,364 contrasts
+dat_n40 <- dat_es |> dplyr::filter(n_total >= 40)
 phylo   <- prepare_phylo_and_data(dat_mod, A_full)          # phylogeny retained
 formula <- build_ls_formula(moderator, has_phylogeny = phylo$has_phylo)
 fit     <- fit_ls_model(
@@ -42,10 +45,7 @@ sens_diagnostics_table(variant)
 ```
 
 ::: {.callout-warning}
-The **trait type** model returned 57 divergent transitions. R̂ and ESS remain
-acceptable, but the restricted sample stresses the sampler for the many
-trait-type levels, so its scale-submodel estimates in particular should be read
-with caution.
+`r sens_diagnostic_flags(variant)`
 :::
 
 ## Reading the tables
@@ -56,7 +56,7 @@ each other row is the difference from that reference. The matched **primary**
 coefficient is shown alongside. The **Stability** column compares the two: it
 reads *consistent* when the sensitivity and primary coefficients share sign and
 the same 95% credible-interval conclusion (both exclude or both include zero),
-and **DIFFERS** (highlighted) otherwise.
+and **DIFFERS** otherwise.
 
 ```{r stability-line, echo=FALSE, results='asis'}
 cat("**Overall:** ", sens_stability_summary(variant), "\n")

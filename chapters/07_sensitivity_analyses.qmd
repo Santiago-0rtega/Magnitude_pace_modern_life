@@ -34,7 +34,7 @@ primary estimate, together with convergence diagnostics:
 - [No phylogenetic random effect](appendix/sensitivity_no_phylogeny.qmd)
 - [Study-system (`sys_id`) random effect](appendix/sensitivity_sys_id.qmd)
 
-Highlighted rows in those tables identify coefficients whose sign or
-credible-interval conclusion changes. The detailed tables use raw treatment-coded
+Rows marked **DIFFERS** identify coefficients whose sign or credible-interval
+conclusion changes. The detailed tables use raw treatment-coded
 coefficients so that each sensitivity estimate is compared like-for-like with
 the corresponding primary fit.

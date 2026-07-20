@@ -579,54 +579,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   Links: mu = identity; sigma = log 
 Formula: yi_lnM_safe ~ disturbance + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)) 
          sigma ~ disturbance
-   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7455) 
+   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7186) 
   Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
          total post-warmup draws = 8000
 
 Multilevel Hyperparameters:
-~es_id_model (Number of levels: 7455) 
+~es_id_model (Number of levels: 7186) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 sd(Intercept)     1.00      0.00     1.00     1.00   NA       NA       NA
 
-~ref_id (Number of levels: 266) 
+~ref_id (Number of levels: 254) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.76      0.04     0.68     0.84 1.00     2811     4441
+sd(Intercept)     0.75      0.04     0.67     0.84 1.00     2130     3591
 
-~sp_ncbi (Number of levels: 265) 
+~sp_ncbi (Number of levels: 253) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.63      0.17     0.30     0.99 1.00     1033     1650
+sd(Intercept)     0.67      0.20     0.32     1.07 1.01      727     1704
 
 Regression Coefficients:
                                          Estimate Est.Error l-95% CI u-95% CI
-Intercept                                   -0.50      0.40    -1.28     0.32
-sigma_Intercept                             -0.69      0.09    -0.87    -0.52
-disturbanceHunt_harv                        -0.26      0.18    -0.62     0.09
-disturbanceIntroduction                      0.01      0.20    -0.40     0.40
-disturbanceLandscapechange                   0.25      0.23    -0.21     0.71
-disturbanceOther                            -0.27      0.18    -0.62     0.07
-disturbancePollution                         0.07      0.29    -0.51     0.63
-disturbanceResponsetointroductions           0.02      0.28    -0.54     0.58
-sigma_disturbanceHunt_harv                   0.36      0.09     0.18     0.55
-sigma_disturbanceIntroduction                0.01      0.09    -0.16     0.19
-sigma_disturbanceLandscapechange            -0.32      0.13    -0.58    -0.06
-sigma_disturbanceOther                       0.13      0.09    -0.04     0.32
-sigma_disturbancePollution                  -0.05      0.13    -0.31     0.21
-sigma_disturbanceResponsetointroductions     0.15      0.11    -0.06     0.36
+Intercept                                   -0.53      0.42    -1.34     0.32
+sigma_Intercept                             -0.69      0.09    -0.87    -0.53
+disturbanceHunt_harv                        -0.28      0.18    -0.63     0.08
+disturbanceIntroduction                      0.01      0.20    -0.38     0.40
+disturbanceLandscapechange                   0.21      0.24    -0.25     0.67
+disturbanceOther                            -0.28      0.17    -0.62     0.06
+disturbancePollution                         0.17      0.28    -0.38     0.73
+disturbanceResponsetointroductions           0.10      0.31    -0.50     0.69
+sigma_disturbanceHunt_harv                   0.36      0.09     0.19     0.55
+sigma_disturbanceIntroduction                0.02      0.09    -0.15     0.20
+sigma_disturbanceLandscapechange            -0.43      0.15    -0.74    -0.14
+sigma_disturbanceOther                       0.14      0.09    -0.04     0.33
+sigma_disturbancePollution                  -0.18      0.16    -0.49     0.12
+sigma_disturbanceResponsetointroductions     0.26      0.12     0.03     0.49
                                          Rhat Bulk_ESS Tail_ESS
-Intercept                                1.00     3912     4468
-sigma_Intercept                          1.00     2019     3426
-disturbanceHunt_harv                     1.00     2825     4520
-disturbanceIntroduction                  1.00     2467     3722
-disturbanceLandscapechange               1.00     2782     3932
-disturbanceOther                         1.00     2778     4428
-disturbancePollution                     1.00     2535     4029
-disturbanceResponsetointroductions       1.00     2833     4040
-sigma_disturbanceHunt_harv               1.00     2234     3448
-sigma_disturbanceIntroduction            1.00     2051     3359
-sigma_disturbanceLandscapechange         1.00     1422     2906
-sigma_disturbanceOther                   1.00     2192     3252
-sigma_disturbancePollution               1.00     2331     4107
-sigma_disturbanceResponsetointroductions 1.00     2524     3834
+Intercept                                1.00     3271     3897
+sigma_Intercept                          1.00     1625     2782
+disturbanceHunt_harv                     1.00     2118     3592
+disturbanceIntroduction                  1.00     1841     2877
+disturbanceLandscapechange               1.00     2085     3246
+disturbanceOther                         1.00     2124     3482
+disturbancePollution                     1.00     2072     3441
+disturbanceResponsetointroductions       1.00     2344     3623
+sigma_disturbanceHunt_harv               1.00     1800     3256
+sigma_disturbanceIntroduction            1.00     1600     2867
+sigma_disturbanceLandscapechange         1.00      967     2278
+sigma_disturbanceOther                   1.00     1898     3308
+sigma_disturbancePollution               1.00     1152     2489
+sigma_disturbanceResponsetointroductions 1.00     2096     3469
 
 Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -652,129 +652,129 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Climate change - Hunt_harv</td>
-<td style="text-align: right;">0.259</td>
-<td style="text-align: right;">-0.085</td>
-<td style="text-align: right;">0.624</td>
+<td style="text-align: right;">0.274</td>
+<td style="text-align: right;">-0.074</td>
+<td style="text-align: right;">0.634</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Climate change - Introduction</td>
-<td style="text-align: right;">-0.009</td>
-<td style="text-align: right;">-0.398</td>
-<td style="text-align: right;">0.390</td>
+<td style="text-align: right;">-0.007</td>
+<td style="text-align: right;">-0.388</td>
+<td style="text-align: right;">0.391</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Climate change - Landscape change</td>
-<td style="text-align: right;">-0.246</td>
-<td style="text-align: right;">-0.715</td>
-<td style="text-align: right;">0.197</td>
+<td style="text-align: right;">-0.206</td>
+<td style="text-align: right;">-0.659</td>
+<td style="text-align: right;">0.262</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Climate change - Other</td>
-<td style="text-align: right;">0.269</td>
-<td style="text-align: right;">-0.067</td>
-<td style="text-align: right;">0.625</td>
+<td style="text-align: right;">0.280</td>
+<td style="text-align: right;">-0.072</td>
+<td style="text-align: right;">0.613</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Climate change - Pollution</td>
-<td style="text-align: right;">-0.074</td>
-<td style="text-align: right;">-0.649</td>
-<td style="text-align: right;">0.485</td>
+<td style="text-align: right;">-0.175</td>
+<td style="text-align: right;">-0.739</td>
+<td style="text-align: right;">0.366</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Climate change - Response to introductions</td>
-<td style="text-align: right;">-0.016</td>
-<td style="text-align: right;">-0.585</td>
-<td style="text-align: right;">0.525</td>
+<td style="text-align: right;">-0.097</td>
+<td style="text-align: right;">-0.699</td>
+<td style="text-align: right;">0.492</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;">Hunt_harv - Introduction</td>
-<td style="text-align: right; font-weight: bold;">-0.267</td>
-<td style="text-align: right; font-weight: bold;">-0.522</td>
-<td style="text-align: right; font-weight: bold;">-0.011</td>
+<td style="text-align: right; font-weight: bold;">-0.282</td>
+<td style="text-align: right; font-weight: bold;">-0.550</td>
+<td style="text-align: right; font-weight: bold;">-0.035</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; font-weight: bold;">Hunt_harv - Landscape change</td>
-<td style="text-align: right; font-weight: bold;">-0.508</td>
-<td style="text-align: right; font-weight: bold;">-0.839</td>
-<td style="text-align: right; font-weight: bold;">-0.177</td>
+<td style="text-align: right; font-weight: bold;">-0.483</td>
+<td style="text-align: right; font-weight: bold;">-0.827</td>
+<td style="text-align: right; font-weight: bold;">-0.132</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Hunt_harv - Other</td>
-<td style="text-align: right;">0.012</td>
-<td style="text-align: right;">-0.068</td>
-<td style="text-align: right;">0.093</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">-0.076</td>
+<td style="text-align: right;">0.089</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Hunt_harv - Pollution</td>
-<td style="text-align: right;">-0.332</td>
-<td style="text-align: right;">-0.768</td>
-<td style="text-align: right;">0.160</td>
+<td style="text-align: right;">-0.450</td>
+<td style="text-align: right;">-0.915</td>
+<td style="text-align: right;">0.025</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Hunt_harv - Response to introductions</td>
-<td style="text-align: right;">-0.277</td>
-<td style="text-align: right;">-0.734</td>
-<td style="text-align: right;">0.184</td>
+<td style="text-align: right;">-0.373</td>
+<td style="text-align: right;">-0.891</td>
+<td style="text-align: right;">0.119</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Introduction - Landscape change</td>
-<td style="text-align: right;">-0.241</td>
-<td style="text-align: right;">-0.580</td>
-<td style="text-align: right;">0.051</td>
+<td style="text-align: right;">-0.199</td>
+<td style="text-align: right;">-0.533</td>
+<td style="text-align: right;">0.149</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;">Introduction - Other</td>
-<td style="text-align: right; font-weight: bold;">0.279</td>
-<td style="text-align: right; font-weight: bold;">0.029</td>
-<td style="text-align: right; font-weight: bold;">0.525</td>
+<td style="text-align: right; font-weight: bold;">0.285</td>
+<td style="text-align: right; font-weight: bold;">0.043</td>
+<td style="text-align: right; font-weight: bold;">0.541</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Introduction - Pollution</td>
-<td style="text-align: right;">-0.064</td>
-<td style="text-align: right;">-0.493</td>
-<td style="text-align: right;">0.363</td>
+<td style="text-align: right;">-0.168</td>
+<td style="text-align: right;">-0.574</td>
+<td style="text-align: right;">0.273</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Introduction - Response to introductions</td>
-<td style="text-align: right;">-0.011</td>
-<td style="text-align: right;">-0.415</td>
-<td style="text-align: right;">0.422</td>
+<td style="text-align: right;">-0.089</td>
+<td style="text-align: right;">-0.569</td>
+<td style="text-align: right;">0.376</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; font-weight: bold;">Landscape change - Other</td>
-<td style="text-align: right; font-weight: bold;">0.522</td>
-<td style="text-align: right; font-weight: bold;">0.177</td>
-<td style="text-align: right; font-weight: bold;">0.823</td>
+<td style="text-align: right; font-weight: bold;">0.488</td>
+<td style="text-align: right; font-weight: bold;">0.160</td>
+<td style="text-align: right; font-weight: bold;">0.836</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Landscape change - Pollution</td>
-<td style="text-align: right;">0.178</td>
-<td style="text-align: right;">-0.271</td>
-<td style="text-align: right;">0.677</td>
+<td style="text-align: right;">0.030</td>
+<td style="text-align: right;">-0.470</td>
+<td style="text-align: right;">0.538</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Landscape change - Response to introductions</td>
-<td style="text-align: right;">0.233</td>
-<td style="text-align: right;">-0.239</td>
-<td style="text-align: right;">0.722</td>
+<td style="text-align: right;">0.109</td>
+<td style="text-align: right;">-0.450</td>
+<td style="text-align: right;">0.666</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Other - Pollution</td>
-<td style="text-align: right;">-0.342</td>
-<td style="text-align: right;">-0.793</td>
-<td style="text-align: right;">0.123</td>
+<td style="text-align: right;">-0.454</td>
+<td style="text-align: right;">-0.919</td>
+<td style="text-align: right;">0.015</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Other - Response to introductions</td>
-<td style="text-align: right;">-0.290</td>
-<td style="text-align: right;">-0.766</td>
-<td style="text-align: right;">0.142</td>
+<td style="text-align: right;">-0.378</td>
+<td style="text-align: right;">-0.898</td>
+<td style="text-align: right;">0.112</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Pollution - Response to introductions</td>
-<td style="text-align: right;">0.048</td>
-<td style="text-align: right;">-0.484</td>
-<td style="text-align: right;">0.616</td>
+<td style="text-align: right;">0.078</td>
+<td style="text-align: right;">-0.536</td>
+<td style="text-align: right;">0.664</td>
 </tr>
 </tbody>
 </table>
@@ -795,129 +795,129 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Climate change - Introduction</td>
-<td style="text-align: right;">-0.011</td>
-<td style="text-align: right;">-0.196</td>
-<td style="text-align: right;">0.158</td>
+<td style="text-align: right;">-0.015</td>
+<td style="text-align: right;">-0.192</td>
+<td style="text-align: right;">0.159</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Climate change - Response to introductions</td>
-<td style="text-align: right;">-0.147</td>
-<td style="text-align: right;">-0.356</td>
-<td style="text-align: right;">0.064</td>
+<td style="text-align: left; font-weight: bold;">Climate change - Response to introductions</td>
+<td style="text-align: right; font-weight: bold;">-0.256</td>
+<td style="text-align: right; font-weight: bold;">-0.489</td>
+<td style="text-align: right; font-weight: bold;">-0.032</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Climate change - Other</td>
-<td style="text-align: right;">-0.133</td>
+<td style="text-align: right;">-0.138</td>
 <td style="text-align: right;">-0.317</td>
-<td style="text-align: right;">0.044</td>
+<td style="text-align: right;">0.046</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; font-weight: bold;">Climate change - Landscape change</td>
-<td style="text-align: right; font-weight: bold;">0.315</td>
-<td style="text-align: right; font-weight: bold;">0.065</td>
-<td style="text-align: right; font-weight: bold;">0.584</td>
+<td style="text-align: right; font-weight: bold;">0.431</td>
+<td style="text-align: right; font-weight: bold;">0.148</td>
+<td style="text-align: right; font-weight: bold;">0.742</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Climate change - Pollution</td>
-<td style="text-align: right;">0.050</td>
-<td style="text-align: right;">-0.203</td>
-<td style="text-align: right;">0.315</td>
+<td style="text-align: right;">0.184</td>
+<td style="text-align: right;">-0.112</td>
+<td style="text-align: right;">0.493</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; font-weight: bold;">Climate change - Hunt_harv</td>
 <td style="text-align: right; font-weight: bold;">-0.365</td>
-<td style="text-align: right; font-weight: bold;">-0.546</td>
-<td style="text-align: right; font-weight: bold;">-0.178</td>
+<td style="text-align: right; font-weight: bold;">-0.550</td>
+<td style="text-align: right; font-weight: bold;">-0.186</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;">Introduction - Response to introductions</td>
-<td style="text-align: right; font-weight: bold;">-0.136</td>
-<td style="text-align: right; font-weight: bold;">-0.263</td>
-<td style="text-align: right; font-weight: bold;">-0.001</td>
+<td style="text-align: right; font-weight: bold;">-0.241</td>
+<td style="text-align: right; font-weight: bold;">-0.386</td>
+<td style="text-align: right; font-weight: bold;">-0.085</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; font-weight: bold;">Introduction - Other</td>
-<td style="text-align: right; font-weight: bold;">-0.122</td>
-<td style="text-align: right; font-weight: bold;">-0.187</td>
-<td style="text-align: right; font-weight: bold;">-0.052</td>
+<td style="text-align: right; font-weight: bold;">-0.123</td>
+<td style="text-align: right; font-weight: bold;">-0.190</td>
+<td style="text-align: right; font-weight: bold;">-0.053</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;">Introduction - Landscape change</td>
-<td style="text-align: right; font-weight: bold;">0.326</td>
-<td style="text-align: right; font-weight: bold;">0.134</td>
-<td style="text-align: right; font-weight: bold;">0.523</td>
+<td style="text-align: right; font-weight: bold;">0.447</td>
+<td style="text-align: right; font-weight: bold;">0.222</td>
+<td style="text-align: right; font-weight: bold;">0.703</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Introduction - Pollution</td>
-<td style="text-align: right;">0.061</td>
-<td style="text-align: right;">-0.135</td>
-<td style="text-align: right;">0.263</td>
+<td style="text-align: right;">0.199</td>
+<td style="text-align: right;">-0.051</td>
+<td style="text-align: right;">0.452</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;">Introduction - Hunt_harv</td>
-<td style="text-align: right; font-weight: bold;">-0.354</td>
-<td style="text-align: right; font-weight: bold;">-0.427</td>
-<td style="text-align: right; font-weight: bold;">-0.285</td>
+<td style="text-align: right; font-weight: bold;">-0.350</td>
+<td style="text-align: right; font-weight: bold;">-0.420</td>
+<td style="text-align: right; font-weight: bold;">-0.278</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Response to introductions - Other</td>
-<td style="text-align: right;">0.015</td>
-<td style="text-align: right;">-0.127</td>
-<td style="text-align: right;">0.152</td>
+<td style="text-align: right;">0.118</td>
+<td style="text-align: right;">-0.038</td>
+<td style="text-align: right;">0.276</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;">Response to introductions - Landscape change</td>
-<td style="text-align: right; font-weight: bold;">0.463</td>
-<td style="text-align: right; font-weight: bold;">0.236</td>
-<td style="text-align: right; font-weight: bold;">0.694</td>
+<td style="text-align: right; font-weight: bold;">0.687</td>
+<td style="text-align: right; font-weight: bold;">0.406</td>
+<td style="text-align: right; font-weight: bold;">0.962</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Response to introductions - Pollution</td>
-<td style="text-align: right;">0.198</td>
-<td style="text-align: right;">-0.044</td>
-<td style="text-align: right;">0.425</td>
+<td style="text-align: left; font-weight: bold;">Response to introductions - Pollution</td>
+<td style="text-align: right; font-weight: bold;">0.440</td>
+<td style="text-align: right; font-weight: bold;">0.163</td>
+<td style="text-align: right; font-weight: bold;">0.742</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left; font-weight: bold;">Response to introductions - Hunt_harv</td>
-<td style="text-align: right; font-weight: bold;">-0.217</td>
-<td style="text-align: right; font-weight: bold;">-0.352</td>
-<td style="text-align: right; font-weight: bold;">-0.076</td>
+<td style="text-align: left;">Response to introductions - Hunt_harv</td>
+<td style="text-align: right;">-0.109</td>
+<td style="text-align: right;">-0.272</td>
+<td style="text-align: right;">0.050</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; font-weight: bold;">Other - Landscape change</td>
-<td style="text-align: right; font-weight: bold;">0.448</td>
-<td style="text-align: right; font-weight: bold;">0.255</td>
-<td style="text-align: right; font-weight: bold;">0.655</td>
+<td style="text-align: right; font-weight: bold;">0.570</td>
+<td style="text-align: right; font-weight: bold;">0.334</td>
+<td style="text-align: right; font-weight: bold;">0.819</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Other - Pollution</td>
-<td style="text-align: right;">0.183</td>
-<td style="text-align: right;">-0.026</td>
-<td style="text-align: right;">0.387</td>
+<td style="text-align: left; font-weight: bold;">Other - Pollution</td>
+<td style="text-align: right; font-weight: bold;">0.322</td>
+<td style="text-align: right; font-weight: bold;">0.066</td>
+<td style="text-align: right; font-weight: bold;">0.581</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; font-weight: bold;">Other - Hunt_harv</td>
-<td style="text-align: right; font-weight: bold;">-0.232</td>
-<td style="text-align: right; font-weight: bold;">-0.316</td>
-<td style="text-align: right; font-weight: bold;">-0.151</td>
+<td style="text-align: right; font-weight: bold;">-0.227</td>
+<td style="text-align: right; font-weight: bold;">-0.311</td>
+<td style="text-align: right; font-weight: bold;">-0.144</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Landscape change - Pollution</td>
-<td style="text-align: right;">-0.265</td>
-<td style="text-align: right;">-0.534</td>
-<td style="text-align: right;">0.019</td>
+<td style="text-align: right;">-0.248</td>
+<td style="text-align: right;">-0.589</td>
+<td style="text-align: right;">0.088</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; font-weight: bold;">Landscape change - Hunt_harv</td>
-<td style="text-align: right; font-weight: bold;">-0.680</td>
-<td style="text-align: right; font-weight: bold;">-0.881</td>
-<td style="text-align: right; font-weight: bold;">-0.480</td>
+<td style="text-align: right; font-weight: bold;">-0.796</td>
+<td style="text-align: right; font-weight: bold;">-1.047</td>
+<td style="text-align: right; font-weight: bold;">-0.558</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;">Pollution - Hunt_harv</td>
-<td style="text-align: right; font-weight: bold;">-0.415</td>
-<td style="text-align: right; font-weight: bold;">-0.616</td>
-<td style="text-align: right; font-weight: bold;">-0.204</td>
+<td style="text-align: right; font-weight: bold;">-0.549</td>
+<td style="text-align: right; font-weight: bold;">-0.804</td>
+<td style="text-align: right; font-weight: bold;">-0.294</td>
 </tr>
 </tbody>
 </table>

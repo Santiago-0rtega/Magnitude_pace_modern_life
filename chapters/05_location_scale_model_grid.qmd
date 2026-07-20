@@ -115,6 +115,14 @@ grid_status <- moderator_grid |>
 grid_status
 ```
 
+The availability table is evaluated before phylogenetic name matching: all
+7,237 eligible contrasts have both elapsed years and elapsed generations because
+known generation time is part of the inclusion filter. The fitted-model status
+table below reports the analysis sample after matching to the phylogenetic
+covariance matrix. Consequently, the elapsed-years and elapsed-generations
+models share the maximum fitted sample size (7,186 contrasts); the 51 unmatched
+contrasts are excluded from every phylogeny-adjusted primary model.
+
 ## Fit or read models
 
 ### Covariance matrices used by the model

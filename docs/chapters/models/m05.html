@@ -579,58 +579,58 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   Links: mu = identity; sigma = log 
 Formula: yi_lnM_safe ~ trait_type + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)) 
          sigma ~ trait_type
-   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7455) 
+   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7186) 
   Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
          total post-warmup draws = 8000
 
 Multilevel Hyperparameters:
-~es_id_model (Number of levels: 7455) 
+~es_id_model (Number of levels: 7186) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 sd(Intercept)     1.00      0.00     1.00     1.00   NA       NA       NA
 
-~ref_id (Number of levels: 266) 
+~ref_id (Number of levels: 254) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.75      0.04     0.68     0.84 1.00     1512     2813
+sd(Intercept)     0.74      0.04     0.66     0.83 1.00     1297     2809
 
-~sp_ncbi (Number of levels: 265) 
+~sp_ncbi (Number of levels: 253) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.78      0.16     0.49     1.10 1.00     1056     2155
+sd(Intercept)     0.84      0.17     0.54     1.20 1.01      808     2050
 
 Regression Coefficients:
                                 Estimate Est.Error l-95% CI u-95% CI Rhat
-Intercept                          -1.31      0.57    -2.43    -0.16 1.00
-sigma_Intercept                    -0.37      0.25    -0.84     0.13 1.00
-trait_typegrowth                    0.82      0.40     0.01     1.57 1.00
-trait_typeotherLH                   0.91      0.39     0.11     1.65 1.00
-trait_typeothermorphology           0.78      0.39    -0.03     1.52 1.00
-trait_typephenology                 0.81      0.42    -0.05     1.61 1.00
-trait_typephysio                    0.70      0.39    -0.11     1.44 1.00
-trait_typeresponse                  0.88      0.41     0.06     1.66 1.00
-trait_typesize                      0.84      0.39     0.04     1.57 1.00
-sigma_trait_typegrowth             -0.94      0.29    -1.53    -0.38 1.00
-sigma_trait_typeotherLH            -0.18      0.25    -0.69     0.29 1.00
-sigma_trait_typeothermorphology    -0.52      0.25    -1.02    -0.05 1.00
-sigma_trait_typephenology          -0.38      0.28    -0.95     0.15 1.00
-sigma_trait_typephysio             -0.58      0.26    -1.11    -0.09 1.00
-sigma_trait_typeresponse           -0.26      0.31    -0.89     0.32 1.00
-sigma_trait_typesize               -0.04      0.25    -0.54     0.43 1.00
+Intercept                          -1.33      0.62    -2.52    -0.11 1.00
+sigma_Intercept                    -0.37      0.25    -0.86     0.13 1.00
+trait_typegrowth                    0.83      0.41     0.04     1.62 1.00
+trait_typeotherLH                   0.91      0.40     0.13     1.68 1.00
+trait_typeothermorphology           0.78      0.40     0.00     1.56 1.00
+trait_typephenology                 0.81      0.43    -0.02     1.63 1.00
+trait_typephysio                    0.70      0.40    -0.08     1.48 1.00
+trait_typeresponse                  1.17      0.44     0.31     2.02 1.00
+trait_typesize                      0.83      0.40     0.06     1.61 1.00
+sigma_trait_typegrowth             -0.98      0.31    -1.61    -0.39 1.00
+sigma_trait_typeotherLH            -0.18      0.26    -0.69     0.31 1.00
+sigma_trait_typeothermorphology    -0.52      0.26    -1.03    -0.02 1.00
+sigma_trait_typephenology          -0.38      0.29    -0.94     0.17 1.00
+sigma_trait_typephysio             -0.70      0.27    -1.22    -0.18 1.00
+sigma_trait_typeresponse           -0.55      0.40    -1.35     0.16 1.00
+sigma_trait_typesize               -0.04      0.25    -0.54     0.45 1.00
                                 Bulk_ESS Tail_ESS
-Intercept                           1604     2825
-sigma_Intercept                     1113     2086
-trait_typegrowth                    1114     1579
-trait_typeotherLH                   1082     1561
-trait_typeothermorphology           1097     1628
-trait_typephenology                 1178     1772
-trait_typephysio                    1105     1609
-trait_typeresponse                  1218     1812
-trait_typesize                      1095     1622
-sigma_trait_typegrowth               909     1715
-sigma_trait_typeotherLH             1126     2024
-sigma_trait_typeothermorphology     1122     2166
-sigma_trait_typephenology           1204     2071
-sigma_trait_typephysio              1108     2020
-sigma_trait_typeresponse            1218     2193
-sigma_trait_typesize                1122     2007
+Intercept                           1182     2367
+sigma_Intercept                     1114     2515
+trait_typegrowth                     931     1867
+trait_typeotherLH                    935     1845
+trait_typeothermorphology            935     1820
+trait_typephenology                  966     2009
+trait_typephysio                     941     1770
+trait_typeresponse                  1043     2031
+trait_typesize                       939     1838
+sigma_trait_typegrowth               739     1060
+sigma_trait_typeotherLH             1124     2604
+sigma_trait_typeothermorphology     1118     2558
+sigma_trait_typephenology           1253     2633
+sigma_trait_typephysio              1098     2523
+sigma_trait_typeresponse            1001      940
+sigma_trait_typesize                1120     2609
 
 Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -656,171 +656,171 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;">behaviour - growth</td>
-<td style="text-align: right; font-weight: bold;">-0.832</td>
-<td style="text-align: right; font-weight: bold;">-1.600</td>
-<td style="text-align: right; font-weight: bold;">-0.056</td>
+<td style="text-align: right; font-weight: bold;">-0.834</td>
+<td style="text-align: right; font-weight: bold;">-1.628</td>
+<td style="text-align: right; font-weight: bold;">-0.059</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; font-weight: bold;">behaviour - otherLH</td>
-<td style="text-align: right; font-weight: bold;">-0.925</td>
-<td style="text-align: right; font-weight: bold;">-1.663</td>
-<td style="text-align: right; font-weight: bold;">-0.130</td>
+<td style="text-align: right; font-weight: bold;">-0.911</td>
+<td style="text-align: right; font-weight: bold;">-1.690</td>
+<td style="text-align: right; font-weight: bold;">-0.143</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left; font-weight: bold;">behaviour - othermorphology</td>
-<td style="text-align: right; font-weight: bold;">-0.790</td>
-<td style="text-align: right; font-weight: bold;">-1.542</td>
-<td style="text-align: right; font-weight: bold;">-0.026</td>
+<td style="text-align: left;">behaviour - othermorphology</td>
+<td style="text-align: right;">-0.786</td>
+<td style="text-align: right;">-1.548</td>
+<td style="text-align: right;">0.000</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">behaviour - phenology</td>
-<td style="text-align: right;">-0.818</td>
-<td style="text-align: right;">-1.598</td>
-<td style="text-align: right;">0.048</td>
+<td style="text-align: right;">-0.812</td>
+<td style="text-align: right;">-1.617</td>
+<td style="text-align: right;">0.028</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">behaviour - physio</td>
-<td style="text-align: right;">-0.708</td>
-<td style="text-align: right;">-1.483</td>
-<td style="text-align: right;">0.055</td>
+<td style="text-align: right;">-0.701</td>
+<td style="text-align: right;">-1.472</td>
+<td style="text-align: right;">0.078</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; font-weight: bold;">behaviour - response</td>
-<td style="text-align: right; font-weight: bold;">-0.887</td>
-<td style="text-align: right; font-weight: bold;">-1.693</td>
-<td style="text-align: right; font-weight: bold;">-0.097</td>
+<td style="text-align: right; font-weight: bold;">-1.169</td>
+<td style="text-align: right; font-weight: bold;">-2.007</td>
+<td style="text-align: right; font-weight: bold;">-0.307</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;">behaviour - size</td>
-<td style="text-align: right; font-weight: bold;">-0.850</td>
-<td style="text-align: right; font-weight: bold;">-1.618</td>
-<td style="text-align: right; font-weight: bold;">-0.089</td>
+<td style="text-align: right; font-weight: bold;">-0.840</td>
+<td style="text-align: right; font-weight: bold;">-1.623</td>
+<td style="text-align: right; font-weight: bold;">-0.078</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">growth - otherLH</td>
-<td style="text-align: right;">-0.085</td>
-<td style="text-align: right;">-0.208</td>
-<td style="text-align: right;">0.030</td>
+<td style="text-align: right;">-0.079</td>
+<td style="text-align: right;">-0.200</td>
+<td style="text-align: right;">0.042</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">growth - othermorphology</td>
-<td style="text-align: right;">0.047</td>
+<td style="text-align: right;">0.046</td>
 <td style="text-align: right;">-0.088</td>
-<td style="text-align: right;">0.171</td>
+<td style="text-align: right;">0.178</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">growth - phenology</td>
-<td style="text-align: right;">0.012</td>
-<td style="text-align: right;">-0.284</td>
-<td style="text-align: right;">0.331</td>
+<td style="text-align: right;">0.023</td>
+<td style="text-align: right;">-0.275</td>
+<td style="text-align: right;">0.328</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">growth - physio</td>
-<td style="text-align: right;">0.127</td>
-<td style="text-align: right;">-0.008</td>
+<td style="text-align: right;">0.131</td>
+<td style="text-align: right;">-0.016</td>
 <td style="text-align: right;">0.272</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">growth - response</td>
-<td style="text-align: right;">-0.058</td>
-<td style="text-align: right;">-0.336</td>
-<td style="text-align: right;">0.244</td>
+<td style="text-align: right;">-0.343</td>
+<td style="text-align: right;">-0.684</td>
+<td style="text-align: right;">0.016</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">growth - size</td>
-<td style="text-align: right;">-0.011</td>
-<td style="text-align: right;">-0.133</td>
-<td style="text-align: right;">0.104</td>
+<td style="text-align: right;">-0.005</td>
+<td style="text-align: right;">-0.123</td>
+<td style="text-align: right;">0.112</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; font-weight: bold;">otherLH - othermorphology</td>
-<td style="text-align: right; font-weight: bold;">0.132</td>
-<td style="text-align: right; font-weight: bold;">0.038</td>
-<td style="text-align: right; font-weight: bold;">0.220</td>
+<td style="text-align: right; font-weight: bold;">0.125</td>
+<td style="text-align: right; font-weight: bold;">0.036</td>
+<td style="text-align: right; font-weight: bold;">0.219</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">otherLH - phenology</td>
-<td style="text-align: right;">0.100</td>
-<td style="text-align: right;">-0.180</td>
-<td style="text-align: right;">0.391</td>
+<td style="text-align: right;">0.101</td>
+<td style="text-align: right;">-0.183</td>
+<td style="text-align: right;">0.381</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; font-weight: bold;">otherLH - physio</td>
-<td style="text-align: right; font-weight: bold;">0.214</td>
-<td style="text-align: right; font-weight: bold;">0.108</td>
-<td style="text-align: right; font-weight: bold;">0.322</td>
+<td style="text-align: right; font-weight: bold;">0.210</td>
+<td style="text-align: right; font-weight: bold;">0.097</td>
+<td style="text-align: right; font-weight: bold;">0.321</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">otherLH - response</td>
-<td style="text-align: right;">0.028</td>
-<td style="text-align: right;">-0.244</td>
-<td style="text-align: right;">0.297</td>
+<td style="text-align: right;">-0.266</td>
+<td style="text-align: right;">-0.597</td>
+<td style="text-align: right;">0.085</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; font-weight: bold;">otherLH - size</td>
 <td style="text-align: right; font-weight: bold;">0.073</td>
-<td style="text-align: right; font-weight: bold;">0.007</td>
-<td style="text-align: right; font-weight: bold;">0.139</td>
+<td style="text-align: right; font-weight: bold;">0.002</td>
+<td style="text-align: right; font-weight: bold;">0.134</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">othermorphology - phenology</td>
-<td style="text-align: right;">-0.033</td>
-<td style="text-align: right;">-0.333</td>
-<td style="text-align: right;">0.243</td>
+<td style="text-align: right;">-0.026</td>
+<td style="text-align: right;">-0.323</td>
+<td style="text-align: right;">0.246</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">othermorphology - physio</td>
-<td style="text-align: right;">0.081</td>
-<td style="text-align: right;">-0.030</td>
-<td style="text-align: right;">0.189</td>
+<td style="text-align: right;">0.084</td>
+<td style="text-align: right;">-0.031</td>
+<td style="text-align: right;">0.202</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">othermorphology - response</td>
-<td style="text-align: right;">-0.103</td>
-<td style="text-align: right;">-0.378</td>
-<td style="text-align: right;">0.172</td>
+<td style="text-align: left; font-weight: bold;">othermorphology - response</td>
+<td style="text-align: right; font-weight: bold;">-0.389</td>
+<td style="text-align: right; font-weight: bold;">-0.703</td>
+<td style="text-align: right; font-weight: bold;">-0.024</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">othermorphology - size</td>
-<td style="text-align: right;">-0.059</td>
-<td style="text-align: right;">-0.142</td>
-<td style="text-align: right;">0.025</td>
+<td style="text-align: right;">-0.052</td>
+<td style="text-align: right;">-0.144</td>
+<td style="text-align: right;">0.033</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">phenology - physio</td>
-<td style="text-align: right;">0.115</td>
-<td style="text-align: right;">-0.196</td>
-<td style="text-align: right;">0.408</td>
+<td style="text-align: right;">0.111</td>
+<td style="text-align: right;">-0.187</td>
+<td style="text-align: right;">0.403</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">phenology - response</td>
-<td style="text-align: right;">-0.067</td>
-<td style="text-align: right;">-0.459</td>
-<td style="text-align: right;">0.329</td>
+<td style="text-align: right;">-0.363</td>
+<td style="text-align: right;">-0.793</td>
+<td style="text-align: right;">0.084</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">phenology - size</td>
-<td style="text-align: right;">-0.023</td>
-<td style="text-align: right;">-0.326</td>
-<td style="text-align: right;">0.256</td>
+<td style="text-align: right;">-0.026</td>
+<td style="text-align: right;">-0.319</td>
+<td style="text-align: right;">0.247</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">physio - response</td>
-<td style="text-align: right;">-0.185</td>
-<td style="text-align: right;">-0.459</td>
-<td style="text-align: right;">0.099</td>
+<td style="text-align: left; font-weight: bold;">physio - response</td>
+<td style="text-align: right; font-weight: bold;">-0.471</td>
+<td style="text-align: right; font-weight: bold;">-0.793</td>
+<td style="text-align: right; font-weight: bold;">-0.116</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;">physio - size</td>
-<td style="text-align: right; font-weight: bold;">-0.140</td>
-<td style="text-align: right; font-weight: bold;">-0.245</td>
-<td style="text-align: right; font-weight: bold;">-0.032</td>
+<td style="text-align: right; font-weight: bold;">-0.137</td>
+<td style="text-align: right; font-weight: bold;">-0.250</td>
+<td style="text-align: right; font-weight: bold;">-0.028</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">response - size</td>
-<td style="text-align: right;">0.045</td>
-<td style="text-align: right;">-0.225</td>
-<td style="text-align: right;">0.312</td>
+<td style="text-align: right;">0.339</td>
+<td style="text-align: right;">-0.018</td>
+<td style="text-align: right;">0.661</td>
 </tr>
 </tbody>
 </table>
@@ -841,171 +841,171 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;">behaviour - othermorphology</td>
-<td style="text-align: right; font-weight: bold;">0.515</td>
-<td style="text-align: right; font-weight: bold;">0.024</td>
-<td style="text-align: right; font-weight: bold;">0.993</td>
+<td style="text-align: right; font-weight: bold;">0.519</td>
+<td style="text-align: right; font-weight: bold;">0.007</td>
+<td style="text-align: right; font-weight: bold;">1.005</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">behaviour - size</td>
-<td style="text-align: right;">0.041</td>
-<td style="text-align: right;">-0.428</td>
-<td style="text-align: right;">0.541</td>
+<td style="text-align: right;">0.037</td>
+<td style="text-align: right;">-0.473</td>
+<td style="text-align: right;">0.513</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">behaviour - otherLH</td>
 <td style="text-align: right;">0.181</td>
-<td style="text-align: right;">-0.276</td>
-<td style="text-align: right;">0.697</td>
+<td style="text-align: right;">-0.320</td>
+<td style="text-align: right;">0.674</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; font-weight: bold;">behaviour - growth</td>
-<td style="text-align: right; font-weight: bold;">0.939</td>
-<td style="text-align: right; font-weight: bold;">0.378</td>
-<td style="text-align: right; font-weight: bold;">1.525</td>
+<td style="text-align: right; font-weight: bold;">0.977</td>
+<td style="text-align: right; font-weight: bold;">0.379</td>
+<td style="text-align: right; font-weight: bold;">1.601</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">behaviour - phenology</td>
 <td style="text-align: right;">0.383</td>
-<td style="text-align: right;">-0.159</td>
-<td style="text-align: right;">0.942</td>
+<td style="text-align: right;">-0.182</td>
+<td style="text-align: right;">0.924</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; font-weight: bold;">behaviour - physio</td>
-<td style="text-align: right; font-weight: bold;">0.581</td>
-<td style="text-align: right; font-weight: bold;">0.078</td>
-<td style="text-align: right; font-weight: bold;">1.102</td>
+<td style="text-align: right; font-weight: bold;">0.698</td>
+<td style="text-align: right; font-weight: bold;">0.167</td>
+<td style="text-align: right; font-weight: bold;">1.202</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">behaviour - response</td>
-<td style="text-align: right;">0.255</td>
-<td style="text-align: right;">-0.335</td>
-<td style="text-align: right;">0.865</td>
+<td style="text-align: right;">0.550</td>
+<td style="text-align: right;">-0.201</td>
+<td style="text-align: right;">1.296</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; font-weight: bold;">othermorphology - size</td>
-<td style="text-align: right; font-weight: bold;">-0.475</td>
-<td style="text-align: right; font-weight: bold;">-0.537</td>
-<td style="text-align: right; font-weight: bold;">-0.404</td>
+<td style="text-align: right; font-weight: bold;">-0.483</td>
+<td style="text-align: right; font-weight: bold;">-0.550</td>
+<td style="text-align: right; font-weight: bold;">-0.412</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;">othermorphology - otherLH</td>
-<td style="text-align: right; font-weight: bold;">-0.335</td>
-<td style="text-align: right; font-weight: bold;">-0.422</td>
-<td style="text-align: right; font-weight: bold;">-0.255</td>
+<td style="text-align: right; font-weight: bold;">-0.338</td>
+<td style="text-align: right; font-weight: bold;">-0.420</td>
+<td style="text-align: right; font-weight: bold;">-0.254</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; font-weight: bold;">othermorphology - growth</td>
-<td style="text-align: right; font-weight: bold;">0.424</td>
-<td style="text-align: right; font-weight: bold;">0.111</td>
-<td style="text-align: right; font-weight: bold;">0.747</td>
+<td style="text-align: right; font-weight: bold;">0.458</td>
+<td style="text-align: right; font-weight: bold;">0.120</td>
+<td style="text-align: right; font-weight: bold;">0.797</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">othermorphology - phenology</td>
-<td style="text-align: right;">-0.132</td>
-<td style="text-align: right;">-0.400</td>
-<td style="text-align: right;">0.148</td>
+<td style="text-align: right;">-0.136</td>
+<td style="text-align: right;">-0.403</td>
+<td style="text-align: right;">0.135</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">othermorphology - physio</td>
-<td style="text-align: right;">0.066</td>
-<td style="text-align: right;">-0.107</td>
-<td style="text-align: right;">0.238</td>
+<td style="text-align: right;">0.178</td>
+<td style="text-align: right;">-0.021</td>
+<td style="text-align: right;">0.380</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">othermorphology - response</td>
-<td style="text-align: right;">-0.260</td>
-<td style="text-align: right;">-0.614</td>
-<td style="text-align: right;">0.105</td>
+<td style="text-align: right;">0.030</td>
+<td style="text-align: right;">-0.522</td>
+<td style="text-align: right;">0.588</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; font-weight: bold;">size - otherLH</td>
-<td style="text-align: right; font-weight: bold;">0.140</td>
-<td style="text-align: right; font-weight: bold;">0.068</td>
-<td style="text-align: right; font-weight: bold;">0.212</td>
+<td style="text-align: right; font-weight: bold;">0.144</td>
+<td style="text-align: right; font-weight: bold;">0.075</td>
+<td style="text-align: right; font-weight: bold;">0.216</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;">size - growth</td>
-<td style="text-align: right; font-weight: bold;">0.898</td>
-<td style="text-align: right; font-weight: bold;">0.605</td>
-<td style="text-align: right; font-weight: bold;">1.235</td>
+<td style="text-align: right; font-weight: bold;">0.941</td>
+<td style="text-align: right; font-weight: bold;">0.610</td>
+<td style="text-align: right; font-weight: bold;">1.278</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; font-weight: bold;">size - phenology</td>
-<td style="text-align: right; font-weight: bold;">0.343</td>
-<td style="text-align: right; font-weight: bold;">0.067</td>
-<td style="text-align: right; font-weight: bold;">0.611</td>
+<td style="text-align: right; font-weight: bold;">0.347</td>
+<td style="text-align: right; font-weight: bold;">0.070</td>
+<td style="text-align: right; font-weight: bold;">0.610</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;">size - physio</td>
-<td style="text-align: right; font-weight: bold;">0.540</td>
-<td style="text-align: right; font-weight: bold;">0.375</td>
-<td style="text-align: right; font-weight: bold;">0.708</td>
+<td style="text-align: right; font-weight: bold;">0.661</td>
+<td style="text-align: right; font-weight: bold;">0.466</td>
+<td style="text-align: right; font-weight: bold;">0.854</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">size - response</td>
-<td style="text-align: right;">0.215</td>
-<td style="text-align: right;">-0.135</td>
-<td style="text-align: right;">0.578</td>
+<td style="text-align: right;">0.513</td>
+<td style="text-align: right;">-0.003</td>
+<td style="text-align: right;">1.101</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;">otherLH - growth</td>
-<td style="text-align: right; font-weight: bold;">0.758</td>
+<td style="text-align: right; font-weight: bold;">0.796</td>
 <td style="text-align: right; font-weight: bold;">0.458</td>
-<td style="text-align: right; font-weight: bold;">1.094</td>
+<td style="text-align: right; font-weight: bold;">1.134</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">otherLH - phenology</td>
-<td style="text-align: right;">0.203</td>
-<td style="text-align: right;">-0.071</td>
-<td style="text-align: right;">0.478</td>
+<td style="text-align: right;">0.202</td>
+<td style="text-align: right;">-0.067</td>
+<td style="text-align: right;">0.479</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;">otherLH - physio</td>
-<td style="text-align: right; font-weight: bold;">0.400</td>
-<td style="text-align: right; font-weight: bold;">0.229</td>
-<td style="text-align: right; font-weight: bold;">0.576</td>
+<td style="text-align: right; font-weight: bold;">0.517</td>
+<td style="text-align: right; font-weight: bold;">0.317</td>
+<td style="text-align: right; font-weight: bold;">0.721</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">otherLH - response</td>
-<td style="text-align: right;">0.075</td>
-<td style="text-align: right;">-0.274</td>
-<td style="text-align: right;">0.450</td>
+<td style="text-align: right;">0.369</td>
+<td style="text-align: right;">-0.188</td>
+<td style="text-align: right;">0.918</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;">growth - phenology</td>
-<td style="text-align: right; font-weight: bold;">-0.556</td>
-<td style="text-align: right; font-weight: bold;">-0.984</td>
-<td style="text-align: right; font-weight: bold;">-0.152</td>
+<td style="text-align: right; font-weight: bold;">-0.594</td>
+<td style="text-align: right; font-weight: bold;">-1.019</td>
+<td style="text-align: right; font-weight: bold;">-0.174</td>
 </tr>
 <tr class="even">
-<td style="text-align: left; font-weight: bold;">growth - physio</td>
-<td style="text-align: right; font-weight: bold;">-0.358</td>
-<td style="text-align: right; font-weight: bold;">-0.730</td>
-<td style="text-align: right; font-weight: bold;">-0.025</td>
+<td style="text-align: left;">growth - physio</td>
+<td style="text-align: right;">-0.279</td>
+<td style="text-align: right;">-0.668</td>
+<td style="text-align: right;">0.111</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left; font-weight: bold;">growth - response</td>
-<td style="text-align: right; font-weight: bold;">-0.684</td>
-<td style="text-align: right; font-weight: bold;">-1.193</td>
-<td style="text-align: right; font-weight: bold;">-0.234</td>
+<td style="text-align: left;">growth - response</td>
+<td style="text-align: right;">-0.427</td>
+<td style="text-align: right;">-1.099</td>
+<td style="text-align: right;">0.236</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">phenology - physio</td>
-<td style="text-align: right;">0.198</td>
-<td style="text-align: right;">-0.114</td>
-<td style="text-align: right;">0.517</td>
+<td style="text-align: right;">0.314</td>
+<td style="text-align: right;">-0.008</td>
+<td style="text-align: right;">0.661</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">phenology - response</td>
-<td style="text-align: right;">-0.128</td>
-<td style="text-align: right;">-0.584</td>
-<td style="text-align: right;">0.316</td>
+<td style="text-align: right;">0.166</td>
+<td style="text-align: right;">-0.441</td>
+<td style="text-align: right;">0.802</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">physio - response</td>
-<td style="text-align: right;">-0.326</td>
-<td style="text-align: right;">-0.717</td>
-<td style="text-align: right;">0.078</td>
+<td style="text-align: right;">-0.148</td>
+<td style="text-align: right;">-0.733</td>
+<td style="text-align: right;">0.445</td>
 </tr>
 </tbody>
 </table>

@@ -574,29 +574,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   Links: mu = identity; sigma = log 
 Formula: yi_lnM_safe ~ log10_years + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)) 
          sigma ~ log10_years
-   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7455) 
+   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7186) 
   Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
          total post-warmup draws = 8000
 
 Multilevel Hyperparameters:
-~es_id_model (Number of levels: 7455) 
+~es_id_model (Number of levels: 7186) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 sd(Intercept)     1.00      0.00     1.00     1.00   NA       NA       NA
 
-~ref_id (Number of levels: 266) 
+~ref_id (Number of levels: 254) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.76      0.04     0.68     0.84 1.00     2650     4348
+sd(Intercept)     0.75      0.04     0.67     0.84 1.00     1791     3504
 
-~sp_ncbi (Number of levels: 265) 
+~sp_ncbi (Number of levels: 253) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.70      0.16     0.42     1.03 1.00     1228     2638
+sd(Intercept)     0.74      0.17     0.44     1.11 1.00      733     1846
 
 Regression Coefficients:
                   Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept            -1.02      0.39    -1.82    -0.23 1.00     4104     4539
-sigma_Intercept      -0.36      0.04    -0.43    -0.28 1.00     4512     5818
-log10_years           0.31      0.04     0.24     0.38 1.00     7449     6486
-sigma_log10_years    -0.16      0.02    -0.21    -0.11 1.00     3843     5583
+Intercept            -1.02      0.42    -1.86    -0.17 1.00     2138     2817
+sigma_Intercept      -0.35      0.04    -0.43    -0.28 1.00     3788     5628
+log10_years           0.31      0.04     0.23     0.38 1.00     5535     5894
+sigma_log10_years    -0.17      0.02    -0.21    -0.12 1.00     3285     4781
 
 Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential

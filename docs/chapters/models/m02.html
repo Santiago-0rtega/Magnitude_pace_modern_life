@@ -579,34 +579,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   Links: mu = identity; sigma = log 
 Formula: yi_lnM_safe ~ design + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)) 
          sigma ~ design
-   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7455) 
+   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7186) 
   Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
          total post-warmup draws = 8000
 
 Multilevel Hyperparameters:
-~es_id_model (Number of levels: 7455) 
+~es_id_model (Number of levels: 7186) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 sd(Intercept)     1.00      0.00     1.00     1.00   NA       NA       NA
 
-~ref_id (Number of levels: 266) 
+~ref_id (Number of levels: 254) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.76      0.04     0.68     0.84 1.00     2269     3999
+sd(Intercept)     0.75      0.04     0.67     0.84 1.00     2112     3664
 
-~sp_ncbi (Number of levels: 265) 
+~sp_ncbi (Number of levels: 253) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.61      0.17     0.29     0.96 1.00      756     1044
+sd(Intercept)     0.66      0.19     0.29     1.04 1.00      903     1446
 
 Regression Coefficients:
                        Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
-Intercept                 -0.69      0.36    -1.41     0.01 1.00     4950
-sigma_Intercept           -0.47      0.02    -0.50    -0.43 1.00     5663
-designSynchronic           0.25      0.09     0.08     0.42 1.00     5555
-sigma_designSynchronic    -0.21      0.03    -0.26    -0.16 1.00     4609
+Intercept                 -0.72      0.37    -1.47     0.02 1.00     5060
+sigma_Intercept           -0.47      0.02    -0.51    -0.43 1.00     4913
+designSynchronic           0.25      0.09     0.08     0.42 1.00     5483
+sigma_designSynchronic    -0.21      0.03    -0.26    -0.16 1.00     3998
                        Tail_ESS
-Intercept                  3958
-sigma_Intercept            6462
-designSynchronic           5163
-sigma_designSynchronic     5513
+Intercept                  4579
+sigma_Intercept            6629
+designSynchronic           6079
+sigma_designSynchronic     5650
 
 Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -632,8 +632,8 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;">Allochronic - Synchronic</td>
-<td style="text-align: right; font-weight: bold;">-0.252</td>
-<td style="text-align: right; font-weight: bold;">-0.418</td>
+<td style="text-align: right; font-weight: bold;">-0.251</td>
+<td style="text-align: right; font-weight: bold;">-0.42</td>
 <td style="text-align: right; font-weight: bold;">-0.081</td>
 </tr>
 </tbody>
@@ -655,9 +655,9 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;">Allochronic - Synchronic</td>
-<td style="text-align: right; font-weight: bold;">0.211</td>
-<td style="text-align: right; font-weight: bold;">0.16</td>
-<td style="text-align: right; font-weight: bold;">0.263</td>
+<td style="text-align: right; font-weight: bold;">0.208</td>
+<td style="text-align: right; font-weight: bold;">0.157</td>
+<td style="text-align: right; font-weight: bold;">0.26</td>
 </tr>
 </tbody>
 </table>

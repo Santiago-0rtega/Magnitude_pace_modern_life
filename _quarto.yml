@@ -74,5 +74,8 @@ crossref:
 execute:
   warning: false
   message: false
-  freeze: auto
+  # Numerical chapters depend on synced RDS/CSV outputs whose timestamps are
+  # not tracked by Quarto's source-only freeze logic. Always execute so rerun
+  # summaries cannot silently remain stale.
+  freeze: false
   cache: false

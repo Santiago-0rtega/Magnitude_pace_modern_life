@@ -727,6 +727,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<p>The availability table is evaluated before phylogenetic name matching: all 7,237 eligible contrasts have both elapsed years and elapsed generations because known generation time is part of the inclusion filter. The fitted-model status table below reports the analysis sample after matching to the phylogenetic covariance matrix. Consequently, the elapsed-years and elapsed-generations models share the maximum fitted sample size (7,186 contrasts); the 51 unmatched contrasts are excluded from every phylogeny-adjusted primary model.</p>
 </section>
 <section id="fit-or-read-models" class="level2" data-number="7.5">
 <h2 data-number="7.5" class="anchored" data-anchor-id="fit-or-read-models"><span class="header-section-number">7.5</span> Fit or read models</h2>
@@ -1017,7 +1018,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["model_id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["moderator"],"name":[2],"type":["chr"],"align":["left"]},{"label":["label"],"name":[3],"type":["chr"],"align":["left"]},{"label":["type"],"name":[4],"type":["chr"],"align":["left"]},{"label":["n_rows"],"name":[5],"type":["int"],"align":["right"]},{"label":["n_levels"],"name":[6],"type":["int"],"align":["right"]},{"label":["n_missing_excluded"],"name":[7],"type":["int"],"align":["right"]},{"label":["model_path"],"name":[8],"type":["chr"],"align":["left"]},{"label":["status"],"name":[9],"type":["chr"],"align":["left"]},{"label":["notes"],"name":[10],"type":["chr"],"align":["left"]},{"label":["max_rhat"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["min_bulk_ess"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["min_tail_ess"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["n_divergent"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["max_treedepth_hits"],"name":[15],"type":["int"],"align":["right"]}],"data":[{"1":"m01","2":"disturbance","3":"Disturbance context","4":"categorical","5":"7237","6":"7","7":"0","8":"outputs/models/m01_ls_disturbance.rds","9":"fitted","10":"","11":"1.005388","12":"727.4961","13":"1703.5796","14":"0","15":"0"},{"1":"m02","2":"design","3":"Comparison design","4":"categorical","5":"7237","6":"2","7":"0","8":"outputs/models/m02_ls_design.rds","9":"fitted","10":"","11":"1.005619","12":"903.2349","13":"1446.1392","14":"0","15":"0"},{"1":"m03","2":"log10_years","3":"Elapsed time (log10 years)","4":"continuous","5":"7237","6":"NA","7":"0","8":"outputs/models/m03_ls_log10_years.rds","9":"fitted","10":"","11":"1.003838","12":"733.4218","13":"1845.6007","14":"0","15":"0"},{"1":"m04","2":"log10_generations","3":"Elapsed time (log10 generations)","4":"continuous","5":"7237","6":"NA","7":"0","8":"outputs/models/m04_ls_log10_generations.rds","9":"fitted","10":"","11":"1.005644","12":"904.8396","13":"1913.0071","14":"0","15":"0"},{"1":"m05","2":"trait_type","3":"Trait type","4":"categorical","5":"7237","6":"8","7":"0","8":"outputs/models/m05_ls_trait_type.rds","9":"fitted","10":"","11":"1.007823","12":"739.3589","13":"939.7719","14":"0","15":"0"},{"1":"m06","2":"taxa","3":"Taxonomic group","4":"categorical","5":"NA","6":"NA","7":"NA","8":"NA","9":"excluded: did not converge","10":"Taxonomic grouping was redundant with the phylogenetic effect and did not reach a usable posterior in a reasonable time.","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"m07","2":"genphen","3":"Phenotypic vs genetic study","4":"categorical","5":"7237","6":"2","7":"0","8":"outputs/models/m07_ls_genphen.rds","9":"fitted","10":"","11":"1.005198","12":"999.5873","13":"1839.2373","14":"0","15":"0"},{"1":"m08","2":"env_change","3":"Environmental-change context","4":"categorical","5":"NA","6":"NA","7":"NA","8":"NA","9":"excluded: did not converge","10":"Corrected-data fit had max Rhat = 1.0143, minimum bulk ESS = 780, minimum tail ESS = 663, and zero divergences; moved to the appendix and excluded from reported estimates.","11":"1.014300","12":"780.0000","13":"663.0000","14":"0","15":"0"},{"1":"m09","2":"data_type","3":"Data type","4":"categorical","5":"NA","6":"NA","7":"NA","8":"NA","9":"excluded: did not converge","10":"The cleaned refit retained 5 divergent transitions after warmup; its result chapter and estimates are excluded.","11":"NA","12":"NA","13":"NA","14":"5","15":"NA"},{"1":"m10","2":"transf_data","3":"Transformation status","4":"categorical","5":"NA","6":"NA","7":"NA","8":"NA","9":"excluded: did not converge","10":"Cleaned transformation-status refit had max Rhat = 1.0128 and minimum bulk ESS = 230; its result chapter and estimates are excluded.","11":"1.012800","12":"230.0000","13":"363.0000","14":"0","15":"0"},{"1":"m11","2":"data_scale","3":"Measurement scale","4":"categorical","5":"7223","6":"2","7":"14","8":"outputs/models/m11_ls_data_scale.rds","9":"fitted","10":"","11":"1.006995","12":"842.3527","13":"1191.0593","14":"0","15":"0"},{"1":"m12","2":"log10_years <U+00D7> disturbance","3":"Elapsed time (log10 years) <U+00D7> disturbance","4":"interaction","5":"NA","6":"NA","7":"NA","8":"NA","9":"excluded: interaction model","10":"Interaction models were removed from the reported book. The completed m12 fit also retained 4 divergent transitions after warmup.","11":"1.010000","12":"293.0000","13":"486.0000","14":"4","15":"NA"},{"1":"m13","2":"log10_generations <U+00D7> disturbance","3":"Elapsed time (log10 generations) <U+00D7> disturbance","4":"interaction","5":"NA","6":"NA","7":"NA","8":"NA","9":"excluded: interaction model","10":"Interaction models were removed from the reported book and no result chapter is presented.","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["model_id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["moderator"],"name":[2],"type":["chr"],"align":["left"]},{"label":["label"],"name":[3],"type":["chr"],"align":["left"]},{"label":["type"],"name":[4],"type":["chr"],"align":["left"]},{"label":["n_rows"],"name":[5],"type":["int"],"align":["right"]},{"label":["n_levels"],"name":[6],"type":["int"],"align":["right"]},{"label":["n_missing_excluded"],"name":[7],"type":["int"],"align":["right"]},{"label":["model_path"],"name":[8],"type":["chr"],"align":["left"]},{"label":["status"],"name":[9],"type":["chr"],"align":["left"]},{"label":["notes"],"name":[10],"type":["chr"],"align":["left"]},{"label":["max_rhat"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["min_bulk_ess"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["min_tail_ess"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["n_divergent"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["max_treedepth_hits"],"name":[15],"type":["int"],"align":["right"]}],"data":[{"1":"m01","2":"disturbance","3":"Disturbance context","4":"categorical","5":"7186","6":"7","7":"51","8":"outputs/models/m01_ls_disturbance.rds","9":"fitted","10":"","11":"1.005388","12":"727.4961","13":"1703.5796","14":"0","15":"0"},{"1":"m02","2":"design","3":"Comparison design","4":"categorical","5":"7186","6":"2","7":"51","8":"outputs/models/m02_ls_design.rds","9":"fitted","10":"","11":"1.005619","12":"903.2349","13":"1446.1392","14":"0","15":"0"},{"1":"m03","2":"log10_years","3":"Elapsed time (log10 years)","4":"continuous","5":"7186","6":"NA","7":"51","8":"outputs/models/m03_ls_log10_years.rds","9":"fitted","10":"","11":"1.003838","12":"733.4218","13":"1845.6007","14":"0","15":"0"},{"1":"m04","2":"log10_generations","3":"Elapsed time (log10 generations)","4":"continuous","5":"7186","6":"NA","7":"51","8":"outputs/models/m04_ls_log10_generations.rds","9":"fitted","10":"","11":"1.005644","12":"904.8396","13":"1913.0071","14":"0","15":"0"},{"1":"m05","2":"trait_type","3":"Trait type","4":"categorical","5":"7186","6":"8","7":"51","8":"outputs/models/m05_ls_trait_type.rds","9":"fitted","10":"","11":"1.007823","12":"739.3589","13":"939.7719","14":"0","15":"0"},{"1":"m06","2":"taxa","3":"Taxonomic group","4":"categorical","5":"NA","6":"NA","7":"NA","8":"NA","9":"excluded: did not converge","10":"Taxonomic grouping was redundant with the phylogenetic effect and did not reach a usable posterior in a reasonable time.","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"m07","2":"genphen","3":"Phenotypic vs genetic study","4":"categorical","5":"7186","6":"2","7":"51","8":"outputs/models/m07_ls_genphen.rds","9":"fitted","10":"","11":"1.005198","12":"999.5873","13":"1839.2373","14":"0","15":"0"},{"1":"m08","2":"env_change","3":"Environmental-change context","4":"categorical","5":"NA","6":"NA","7":"NA","8":"NA","9":"excluded: did not converge","10":"Corrected-data fit had max Rhat = 1.0143, minimum bulk ESS = 780, minimum tail ESS = 663, and zero divergences; moved to the appendix and excluded from reported estimates.","11":"1.014300","12":"780.0000","13":"663.0000","14":"0","15":"0"},{"1":"m09","2":"data_type","3":"Data type","4":"categorical","5":"NA","6":"NA","7":"NA","8":"NA","9":"excluded: did not converge","10":"The cleaned refit retained 5 divergent transitions after warmup; its result chapter and estimates are excluded.","11":"NA","12":"NA","13":"NA","14":"5","15":"NA"},{"1":"m10","2":"transf_data","3":"Transformation status","4":"categorical","5":"NA","6":"NA","7":"NA","8":"NA","9":"excluded: did not converge","10":"Cleaned transformation-status refit had max Rhat = 1.0128 and minimum bulk ESS = 230; its result chapter and estimates are excluded.","11":"1.012800","12":"230.0000","13":"363.0000","14":"0","15":"0"},{"1":"m11","2":"data_scale","3":"Measurement scale","4":"categorical","5":"7172","6":"2","7":"65","8":"outputs/models/m11_ls_data_scale.rds","9":"fitted","10":"","11":"1.006995","12":"842.3527","13":"1191.0593","14":"0","15":"0"},{"1":"m12","2":"log10_years <U+00D7> disturbance","3":"Elapsed time (log10 years) <U+00D7> disturbance","4":"interaction","5":"NA","6":"NA","7":"NA","8":"NA","9":"excluded: interaction model","10":"Interaction models were removed from the reported book. The completed m12 fit also retained 4 divergent transitions after warmup.","11":"1.010000","12":"293.0000","13":"486.0000","14":"4","15":"NA"},{"1":"m13","2":"log10_generations <U+00D7> disturbance","3":"Elapsed time (log10 generations) <U+00D7> disturbance","4":"interaction","5":"NA","6":"NA","7":"NA","8":"NA","9":"excluded: interaction model","10":"Interaction models were removed from the reported book and no result chapter is presented.","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -1647,310 +1648,318 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb18-115"><a href="#cb18-115" aria-hidden="true" tabindex="-1"></a>grid_status</span>
 <span id="cb18-116"><a href="#cb18-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb18-117"><a href="#cb18-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-118"><a href="#cb18-118" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fit or read models</span></span>
-<span id="cb18-119"><a href="#cb18-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-120"><a href="#cb18-120" aria-hidden="true" tabindex="-1"></a><span class="fu">### Covariance matrices used by the model</span></span>
-<span id="cb18-121"><a href="#cb18-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-122"><a href="#cb18-122" aria-hidden="true" tabindex="-1"></a>Two group-level terms in the location submodel use covariance matrices supplied through <span class="in">`data2`</span> in <span class="in">`brms`</span>:</span>
-<span id="cb18-123"><a href="#cb18-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-124"><a href="#cb18-124" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb18-125"><a href="#cb18-125" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span> <span class="sc">|</span> <span class="fu">gr</span>(sp_ncbi, <span class="at">cov =</span> A)) <span class="sc">+</span></span>
-<span id="cb18-126"><a href="#cb18-126" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span> <span class="sc">|</span> <span class="fu">gr</span>(es_id_model, <span class="at">cov =</span> V))</span>
-<span id="cb18-127"><a href="#cb18-127" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-128"><a href="#cb18-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-129"><a href="#cb18-129" aria-hidden="true" tabindex="-1"></a><span class="in">`A`</span> is the phylogenetic correlation matrix. It is calculated from the reconciled, pruned phylogeny and then subset (or expanded with zero off-diagonal correlations for unmatched species) so its row and column names match the <span class="in">`sp_ncbi`</span> factor levels used by a given model:</span>
-<span id="cb18-130"><a href="#cb18-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-131"><a href="#cb18-131" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb18-132"><a href="#cb18-132" aria-hidden="true" tabindex="-1"></a><span class="co"># Construct the full phylogenetic correlation matrix</span></span>
-<span id="cb18-133"><a href="#cb18-133" aria-hidden="true" tabindex="-1"></a>A_full <span class="ot">&lt;-</span> prepR4pcm<span class="sc">::</span><span class="fu">pr_phylo_cor</span>(tree_final)</span>
-<span id="cb18-134"><a href="#cb18-134" aria-hidden="true" tabindex="-1"></a><span class="co"># Equivalent fallback used if pr_phylo_cor() fails:</span></span>
-<span id="cb18-135"><a href="#cb18-135" aria-hidden="true" tabindex="-1"></a><span class="co"># A_full &lt;- ape::vcv.phylo(tree_final, corr = TRUE)</span></span>
+<span id="cb18-118"><a href="#cb18-118" aria-hidden="true" tabindex="-1"></a>The availability table is evaluated before phylogenetic name matching: all</span>
+<span id="cb18-119"><a href="#cb18-119" aria-hidden="true" tabindex="-1"></a>7,237 eligible contrasts have both elapsed years and elapsed generations because</span>
+<span id="cb18-120"><a href="#cb18-120" aria-hidden="true" tabindex="-1"></a>known generation time is part of the inclusion filter. The fitted-model status</span>
+<span id="cb18-121"><a href="#cb18-121" aria-hidden="true" tabindex="-1"></a>table below reports the analysis sample after matching to the phylogenetic</span>
+<span id="cb18-122"><a href="#cb18-122" aria-hidden="true" tabindex="-1"></a>covariance matrix. Consequently, the elapsed-years and elapsed-generations</span>
+<span id="cb18-123"><a href="#cb18-123" aria-hidden="true" tabindex="-1"></a>models share the maximum fitted sample size (7,186 contrasts); the 51 unmatched</span>
+<span id="cb18-124"><a href="#cb18-124" aria-hidden="true" tabindex="-1"></a>contrasts are excluded from every phylogeny-adjusted primary model.</span>
+<span id="cb18-125"><a href="#cb18-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-126"><a href="#cb18-126" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fit or read models</span></span>
+<span id="cb18-127"><a href="#cb18-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-128"><a href="#cb18-128" aria-hidden="true" tabindex="-1"></a><span class="fu">### Covariance matrices used by the model</span></span>
+<span id="cb18-129"><a href="#cb18-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-130"><a href="#cb18-130" aria-hidden="true" tabindex="-1"></a>Two group-level terms in the location submodel use covariance matrices supplied through <span class="in">`data2`</span> in <span class="in">`brms`</span>:</span>
+<span id="cb18-131"><a href="#cb18-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-132"><a href="#cb18-132" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb18-133"><a href="#cb18-133" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span> <span class="sc">|</span> <span class="fu">gr</span>(sp_ncbi, <span class="at">cov =</span> A)) <span class="sc">+</span></span>
+<span id="cb18-134"><a href="#cb18-134" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span> <span class="sc">|</span> <span class="fu">gr</span>(es_id_model, <span class="at">cov =</span> V))</span>
+<span id="cb18-135"><a href="#cb18-135" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb18-136"><a href="#cb18-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-137"><a href="#cb18-137" aria-hidden="true" tabindex="-1"></a><span class="co"># Align A with the species retained for this moderator model</span></span>
-<span id="cb18-138"><a href="#cb18-138" aria-hidden="true" tabindex="-1"></a>species_model <span class="ot">&lt;-</span> <span class="fu">levels</span>(dat_model<span class="sc">$</span>sp_ncbi)</span>
-<span id="cb18-139"><a href="#cb18-139" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> A_full[species_model, species_model, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
-<span id="cb18-140"><a href="#cb18-140" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-141"><a href="#cb18-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-142"><a href="#cb18-142" aria-hidden="true" tabindex="-1"></a><span class="in">`V`</span> is the known sampling-error covariance matrix. SAFE supplies one sampling variance per effect size (<span class="in">`vi_lnM_safe`</span>), so the variances occupy the diagonal and the off-diagonal covariances are zero. Its dimension names must match the rebuilt <span class="in">`es_id_model`</span> factor:</span>
-<span id="cb18-143"><a href="#cb18-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-144"><a href="#cb18-144" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb18-145"><a href="#cb18-145" aria-hidden="true" tabindex="-1"></a>dat_model <span class="ot">&lt;-</span> dat_model <span class="sc">|&gt;</span></span>
-<span id="cb18-146"><a href="#cb18-146" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">es_id_model =</span> <span class="fu">factor</span>(<span class="fu">seq_len</span>(dplyr<span class="sc">::</span><span class="fu">n</span>())))</span>
-<span id="cb18-147"><a href="#cb18-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-148"><a href="#cb18-148" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> <span class="fu">diag</span>(dat_model<span class="sc">$</span>vi_lnM_safe)</span>
-<span id="cb18-149"><a href="#cb18-149" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(V) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(V) <span class="ot">&lt;-</span> <span class="fu">as.character</span>(dat_model<span class="sc">$</span>es_id_model)</span>
-<span id="cb18-150"><a href="#cb18-150" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-137"><a href="#cb18-137" aria-hidden="true" tabindex="-1"></a><span class="in">`A`</span> is the phylogenetic correlation matrix. It is calculated from the reconciled, pruned phylogeny and then subset (or expanded with zero off-diagonal correlations for unmatched species) so its row and column names match the <span class="in">`sp_ncbi`</span> factor levels used by a given model:</span>
+<span id="cb18-138"><a href="#cb18-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-139"><a href="#cb18-139" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb18-140"><a href="#cb18-140" aria-hidden="true" tabindex="-1"></a><span class="co"># Construct the full phylogenetic correlation matrix</span></span>
+<span id="cb18-141"><a href="#cb18-141" aria-hidden="true" tabindex="-1"></a>A_full <span class="ot">&lt;-</span> prepR4pcm<span class="sc">::</span><span class="fu">pr_phylo_cor</span>(tree_final)</span>
+<span id="cb18-142"><a href="#cb18-142" aria-hidden="true" tabindex="-1"></a><span class="co"># Equivalent fallback used if pr_phylo_cor() fails:</span></span>
+<span id="cb18-143"><a href="#cb18-143" aria-hidden="true" tabindex="-1"></a><span class="co"># A_full &lt;- ape::vcv.phylo(tree_final, corr = TRUE)</span></span>
+<span id="cb18-144"><a href="#cb18-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-145"><a href="#cb18-145" aria-hidden="true" tabindex="-1"></a><span class="co"># Align A with the species retained for this moderator model</span></span>
+<span id="cb18-146"><a href="#cb18-146" aria-hidden="true" tabindex="-1"></a>species_model <span class="ot">&lt;-</span> <span class="fu">levels</span>(dat_model<span class="sc">$</span>sp_ncbi)</span>
+<span id="cb18-147"><a href="#cb18-147" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> A_full[species_model, species_model, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb18-148"><a href="#cb18-148" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-149"><a href="#cb18-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-150"><a href="#cb18-150" aria-hidden="true" tabindex="-1"></a><span class="in">`V`</span> is the known sampling-error covariance matrix. SAFE supplies one sampling variance per effect size (<span class="in">`vi_lnM_safe`</span>), so the variances occupy the diagonal and the off-diagonal covariances are zero. Its dimension names must match the rebuilt <span class="in">`es_id_model`</span> factor:</span>
 <span id="cb18-151"><a href="#cb18-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-152"><a href="#cb18-152" aria-hidden="true" tabindex="-1"></a>The aligned matrices are passed to <span class="in">`brms`</span> as <span class="in">`data2 = list(A = A, V = V)`</span>. The standard deviation of the <span class="in">`es_id_model`</span> term is fixed to 1 with a <span class="in">`constant(1)`</span> prior, ensuring that <span class="in">`V`</span> contributes the known SAFE sampling uncertainty rather than an additional estimated variance component.</span>
-<span id="cb18-153"><a href="#cb18-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-154"><a href="#cb18-154" aria-hidden="true" tabindex="-1"></a>The loop below iterates over every row of the registry. For each moderator it:</span>
+<span id="cb18-152"><a href="#cb18-152" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb18-153"><a href="#cb18-153" aria-hidden="true" tabindex="-1"></a>dat_model <span class="ot">&lt;-</span> dat_model <span class="sc">|&gt;</span></span>
+<span id="cb18-154"><a href="#cb18-154" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">es_id_model =</span> <span class="fu">factor</span>(<span class="fu">seq_len</span>(dplyr<span class="sc">::</span><span class="fu">n</span>())))</span>
 <span id="cb18-155"><a href="#cb18-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-156"><a href="#cb18-156" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Checks the moderator exists and has enough data.</span>
-<span id="cb18-157"><a href="#cb18-157" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Drops rows missing that moderator.</span>
-<span id="cb18-158"><a href="#cb18-158" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Rebuilds the sequential <span class="in">`es_id_model`</span> and sampling-variance matrix <span class="in">`V`</span>.</span>
-<span id="cb18-159"><a href="#cb18-159" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Subsets the phylogenetic matrix <span class="in">`A`</span> to the species present.</span>
-<span id="cb18-160"><a href="#cb18-160" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Builds the formula and priors.</span>
-<span id="cb18-161"><a href="#cb18-161" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Calls <span class="in">`fit_or_read_model()`</span>, which reads the cached <span class="in">`.rds`</span> if it exists.</span>
-<span id="cb18-162"><a href="#cb18-162" aria-hidden="true" tabindex="-1"></a><span class="ss">7. </span>Extracts summaries and diagnostics.</span>
+<span id="cb18-156"><a href="#cb18-156" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> <span class="fu">diag</span>(dat_model<span class="sc">$</span>vi_lnM_safe)</span>
+<span id="cb18-157"><a href="#cb18-157" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(V) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(V) <span class="ot">&lt;-</span> <span class="fu">as.character</span>(dat_model<span class="sc">$</span>es_id_model)</span>
+<span id="cb18-158"><a href="#cb18-158" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-159"><a href="#cb18-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-160"><a href="#cb18-160" aria-hidden="true" tabindex="-1"></a>The aligned matrices are passed to <span class="in">`brms`</span> as <span class="in">`data2 = list(A = A, V = V)`</span>. The standard deviation of the <span class="in">`es_id_model`</span> term is fixed to 1 with a <span class="in">`constant(1)`</span> prior, ensuring that <span class="in">`V`</span> contributes the known SAFE sampling uncertainty rather than an additional estimated variance component.</span>
+<span id="cb18-161"><a href="#cb18-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-162"><a href="#cb18-162" aria-hidden="true" tabindex="-1"></a>The loop below iterates over every row of the registry. For each moderator it:</span>
 <span id="cb18-163"><a href="#cb18-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-164"><a href="#cb18-164" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fit-grid, eval=rebuild_grid, results='hide'}</span></span>
-<span id="cb18-165"><a href="#cb18-165" aria-hidden="true" tabindex="-1"></a><span class="co"># Heavy path (rebuild_grid = TRUE only): load every model and extract summaries.</span></span>
-<span id="cb18-166"><a href="#cb18-166" aria-hidden="true" tabindex="-1"></a><span class="co"># Normal renders skip this and read the precomputed cache below.</span></span>
-<span id="cb18-167"><a href="#cb18-167" aria-hidden="true" tabindex="-1"></a>all_fe    <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb18-168"><a href="#cb18-168" aria-hidden="true" tabindex="-1"></a>all_diag  <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb18-169"><a href="#cb18-169" aria-hidden="true" tabindex="-1"></a>status_rows <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb18-170"><a href="#cb18-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-171"><a href="#cb18-171" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="fu">nrow</span>(moderator_grid))) {</span>
-<span id="cb18-172"><a href="#cb18-172" aria-hidden="true" tabindex="-1"></a>  row        <span class="ot">&lt;-</span> moderator_grid[i, ]</span>
-<span id="cb18-173"><a href="#cb18-173" aria-hidden="true" tabindex="-1"></a>  mod_id     <span class="ot">&lt;-</span> row<span class="sc">$</span>model_id</span>
-<span id="cb18-174"><a href="#cb18-174" aria-hidden="true" tabindex="-1"></a>  moderator  <span class="ot">&lt;-</span> row<span class="sc">$</span>moderator</span>
-<span id="cb18-175"><a href="#cb18-175" aria-hidden="true" tabindex="-1"></a>  mod_label  <span class="ot">&lt;-</span> row<span class="sc">$</span>label</span>
-<span id="cb18-176"><a href="#cb18-176" aria-hidden="true" tabindex="-1"></a>  mod_type   <span class="ot">&lt;-</span> row<span class="sc">$</span>type</span>
-<span id="cb18-177"><a href="#cb18-177" aria-hidden="true" tabindex="-1"></a>  model_file <span class="ot">&lt;-</span> <span class="fu">paste0</span>(mod_id, <span class="st">"_ls_"</span>, moderator)</span>
+<span id="cb18-164"><a href="#cb18-164" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Checks the moderator exists and has enough data.</span>
+<span id="cb18-165"><a href="#cb18-165" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Drops rows missing that moderator.</span>
+<span id="cb18-166"><a href="#cb18-166" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Rebuilds the sequential <span class="in">`es_id_model`</span> and sampling-variance matrix <span class="in">`V`</span>.</span>
+<span id="cb18-167"><a href="#cb18-167" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Subsets the phylogenetic matrix <span class="in">`A`</span> to the species present.</span>
+<span id="cb18-168"><a href="#cb18-168" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Builds the formula and priors.</span>
+<span id="cb18-169"><a href="#cb18-169" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Calls <span class="in">`fit_or_read_model()`</span>, which reads the cached <span class="in">`.rds`</span> if it exists.</span>
+<span id="cb18-170"><a href="#cb18-170" aria-hidden="true" tabindex="-1"></a><span class="ss">7. </span>Extracts summaries and diagnostics.</span>
+<span id="cb18-171"><a href="#cb18-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-172"><a href="#cb18-172" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fit-grid, eval=rebuild_grid, results='hide'}</span></span>
+<span id="cb18-173"><a href="#cb18-173" aria-hidden="true" tabindex="-1"></a><span class="co"># Heavy path (rebuild_grid = TRUE only): load every model and extract summaries.</span></span>
+<span id="cb18-174"><a href="#cb18-174" aria-hidden="true" tabindex="-1"></a><span class="co"># Normal renders skip this and read the precomputed cache below.</span></span>
+<span id="cb18-175"><a href="#cb18-175" aria-hidden="true" tabindex="-1"></a>all_fe    <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb18-176"><a href="#cb18-176" aria-hidden="true" tabindex="-1"></a>all_diag  <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb18-177"><a href="#cb18-177" aria-hidden="true" tabindex="-1"></a>status_rows <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
 <span id="cb18-178"><a href="#cb18-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-179"><a href="#cb18-179" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">--- "</span>, mod_id, <span class="st">": "</span>, moderator, <span class="st">" ---"</span>)</span>
-<span id="cb18-180"><a href="#cb18-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-181"><a href="#cb18-181" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ── 1. Check moderator exists ──────────────────────────────────────────────</span></span>
-<span id="cb18-182"><a href="#cb18-182" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span>moderator <span class="sc">%in%</span> <span class="fu">names</span>(dat_es)) {</span>
-<span id="cb18-183"><a href="#cb18-183" aria-hidden="true" tabindex="-1"></a>    status_rows[[i]] <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb18-184"><a href="#cb18-184" aria-hidden="true" tabindex="-1"></a>      <span class="at">model_id =</span> mod_id, <span class="at">moderator =</span> moderator, <span class="at">label =</span> mod_label,</span>
-<span id="cb18-185"><a href="#cb18-185" aria-hidden="true" tabindex="-1"></a>      <span class="at">type =</span> mod_type, <span class="at">n_rows =</span> <span class="dv">0</span>L, <span class="at">n_levels =</span> <span class="cn">NA_integer_</span>,</span>
-<span id="cb18-186"><a href="#cb18-186" aria-hidden="true" tabindex="-1"></a>      <span class="at">n_missing_excluded =</span> <span class="cn">NA_integer_</span>,</span>
-<span id="cb18-187"><a href="#cb18-187" aria-hidden="true" tabindex="-1"></a>      <span class="at">model_path =</span> <span class="cn">NA_character_</span>, <span class="at">status =</span> <span class="st">"skipped: variable absent"</span>,</span>
-<span id="cb18-188"><a href="#cb18-188" aria-hidden="true" tabindex="-1"></a>      <span class="at">notes =</span> <span class="st">"Moderator not found in dataset."</span>,</span>
-<span id="cb18-189"><a href="#cb18-189" aria-hidden="true" tabindex="-1"></a>      <span class="at">max_rhat =</span> <span class="cn">NA_real_</span>, <span class="at">min_bulk_ess =</span> <span class="cn">NA_real_</span>, <span class="at">min_tail_ess =</span> <span class="cn">NA_real_</span>,</span>
-<span id="cb18-190"><a href="#cb18-190" aria-hidden="true" tabindex="-1"></a>      <span class="at">n_divergent =</span> <span class="cn">NA_integer_</span>, <span class="at">max_treedepth_hits =</span> <span class="cn">NA_integer_</span></span>
-<span id="cb18-191"><a href="#cb18-191" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb18-192"><a href="#cb18-192" aria-hidden="true" tabindex="-1"></a>    <span class="cf">next</span></span>
-<span id="cb18-193"><a href="#cb18-193" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb18-194"><a href="#cb18-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-195"><a href="#cb18-195" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ── 2. Subset data for this moderator ─────────────────────────────────────</span></span>
-<span id="cb18-196"><a href="#cb18-196" aria-hidden="true" tabindex="-1"></a>  n_before     <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dat_es)</span>
-<span id="cb18-197"><a href="#cb18-197" aria-hidden="true" tabindex="-1"></a>  dat_model    <span class="ot">&lt;-</span> dat_es[<span class="sc">!</span><span class="fu">is.na</span>(dat_es[[moderator]]), ]</span>
-<span id="cb18-198"><a href="#cb18-198" aria-hidden="true" tabindex="-1"></a>  n_missing_ex <span class="ot">&lt;-</span> n_before <span class="sc">-</span> <span class="fu">nrow</span>(dat_model)</span>
-<span id="cb18-199"><a href="#cb18-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-200"><a href="#cb18-200" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (mod_type <span class="sc">==</span> <span class="st">"categorical"</span>) {</span>
-<span id="cb18-201"><a href="#cb18-201" aria-hidden="true" tabindex="-1"></a>    dat_model[[moderator]] <span class="ot">&lt;-</span> <span class="fu">droplevels</span>(<span class="fu">factor</span>(dat_model[[moderator]]))</span>
-<span id="cb18-202"><a href="#cb18-202" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb18-203"><a href="#cb18-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-204"><a href="#cb18-204" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Check sample size per level for categorical moderators</span></span>
-<span id="cb18-205"><a href="#cb18-205" aria-hidden="true" tabindex="-1"></a>  n_levels <span class="ot">&lt;-</span> <span class="cn">NA_integer_</span></span>
-<span id="cb18-206"><a href="#cb18-206" aria-hidden="true" tabindex="-1"></a>  level_counts <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb18-207"><a href="#cb18-207" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (mod_type <span class="sc">==</span> <span class="st">"categorical"</span>) {</span>
-<span id="cb18-208"><a href="#cb18-208" aria-hidden="true" tabindex="-1"></a>    level_counts <span class="ot">&lt;-</span> <span class="fu">table</span>(dat_model[[moderator]])</span>
-<span id="cb18-209"><a href="#cb18-209" aria-hidden="true" tabindex="-1"></a>    n_levels     <span class="ot">&lt;-</span> <span class="fu">length</span>(level_counts)</span>
-<span id="cb18-210"><a href="#cb18-210" aria-hidden="true" tabindex="-1"></a>    sparse       <span class="ot">&lt;-</span> level_counts[level_counts <span class="sc">&lt;</span> <span class="dv">5</span>]</span>
-<span id="cb18-211"><a href="#cb18-211" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">length</span>(sparse) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb18-212"><a href="#cb18-212" aria-hidden="true" tabindex="-1"></a>      <span class="fu">message</span>(<span class="st">"Sparse levels (&lt;5 obs) in "</span>, moderator, <span class="st">": "</span>,</span>
-<span id="cb18-213"><a href="#cb18-213" aria-hidden="true" tabindex="-1"></a>              <span class="fu">paste</span>(<span class="fu">names</span>(sparse), <span class="at">collapse =</span> <span class="st">", "</span>))</span>
-<span id="cb18-214"><a href="#cb18-214" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb18-215"><a href="#cb18-215" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">all</span>(level_counts <span class="sc">&lt;</span> <span class="dv">3</span>)) {</span>
-<span id="cb18-216"><a href="#cb18-216" aria-hidden="true" tabindex="-1"></a>      status_rows[[i]] <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb18-217"><a href="#cb18-217" aria-hidden="true" tabindex="-1"></a>        <span class="at">model_id =</span> mod_id, <span class="at">moderator =</span> moderator, <span class="at">label =</span> mod_label,</span>
-<span id="cb18-218"><a href="#cb18-218" aria-hidden="true" tabindex="-1"></a>        <span class="at">type =</span> mod_type, <span class="at">n_rows =</span> <span class="fu">nrow</span>(dat_model), <span class="at">n_levels =</span> n_levels,</span>
-<span id="cb18-219"><a href="#cb18-219" aria-hidden="true" tabindex="-1"></a>        <span class="at">n_missing_excluded =</span> n_missing_ex,</span>
-<span id="cb18-220"><a href="#cb18-220" aria-hidden="true" tabindex="-1"></a>        <span class="at">model_path =</span> <span class="cn">NA_character_</span>, <span class="at">status =</span> <span class="st">"skipped: too sparse"</span>,</span>
-<span id="cb18-221"><a href="#cb18-221" aria-hidden="true" tabindex="-1"></a>        <span class="at">notes =</span> <span class="st">"All levels have fewer than 3 observations."</span>,</span>
-<span id="cb18-222"><a href="#cb18-222" aria-hidden="true" tabindex="-1"></a>        <span class="at">max_rhat =</span> <span class="cn">NA_real_</span>, <span class="at">min_bulk_ess =</span> <span class="cn">NA_real_</span>, <span class="at">min_tail_ess =</span> <span class="cn">NA_real_</span>,</span>
-<span id="cb18-223"><a href="#cb18-223" aria-hidden="true" tabindex="-1"></a>        <span class="at">n_divergent =</span> <span class="cn">NA_integer_</span>, <span class="at">max_treedepth_hits =</span> <span class="cn">NA_integer_</span></span>
-<span id="cb18-224"><a href="#cb18-224" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb18-225"><a href="#cb18-225" aria-hidden="true" tabindex="-1"></a>      <span class="cf">next</span></span>
-<span id="cb18-226"><a href="#cb18-226" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb18-227"><a href="#cb18-227" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb18-228"><a href="#cb18-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-229"><a href="#cb18-229" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">nrow</span>(dat_model) <span class="sc">&lt;</span> <span class="dv">10</span>) {</span>
-<span id="cb18-230"><a href="#cb18-230" aria-hidden="true" tabindex="-1"></a>    status_rows[[i]] <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb18-231"><a href="#cb18-231" aria-hidden="true" tabindex="-1"></a>      <span class="at">model_id =</span> mod_id, <span class="at">moderator =</span> moderator, <span class="at">label =</span> mod_label,</span>
-<span id="cb18-232"><a href="#cb18-232" aria-hidden="true" tabindex="-1"></a>      <span class="at">type =</span> mod_type, <span class="at">n_rows =</span> <span class="fu">nrow</span>(dat_model), <span class="at">n_levels =</span> n_levels,</span>
-<span id="cb18-233"><a href="#cb18-233" aria-hidden="true" tabindex="-1"></a>      <span class="at">n_missing_excluded =</span> n_missing_ex,</span>
-<span id="cb18-234"><a href="#cb18-234" aria-hidden="true" tabindex="-1"></a>      <span class="at">model_path =</span> <span class="cn">NA_character_</span>, <span class="at">status =</span> <span class="st">"skipped: insufficient data"</span>,</span>
-<span id="cb18-235"><a href="#cb18-235" aria-hidden="true" tabindex="-1"></a>      <span class="at">notes =</span> <span class="fu">paste</span>(<span class="st">"Only"</span>, <span class="fu">nrow</span>(dat_model), <span class="st">"rows after missingness exclusion."</span>),</span>
-<span id="cb18-236"><a href="#cb18-236" aria-hidden="true" tabindex="-1"></a>      <span class="at">max_rhat =</span> <span class="cn">NA_real_</span>, <span class="at">min_bulk_ess =</span> <span class="cn">NA_real_</span>, <span class="at">min_tail_ess =</span> <span class="cn">NA_real_</span>,</span>
-<span id="cb18-237"><a href="#cb18-237" aria-hidden="true" tabindex="-1"></a>      <span class="at">n_divergent =</span> <span class="cn">NA_integer_</span>, <span class="at">max_treedepth_hits =</span> <span class="cn">NA_integer_</span></span>
-<span id="cb18-238"><a href="#cb18-238" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb18-239"><a href="#cb18-239" aria-hidden="true" tabindex="-1"></a>    <span class="cf">next</span></span>
-<span id="cb18-240"><a href="#cb18-240" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb18-241"><a href="#cb18-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-242"><a href="#cb18-242" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ── 3 &amp; 4. Align data to phylogeny, build V ─────────────────────────────────</span></span>
-<span id="cb18-243"><a href="#cb18-243" aria-hidden="true" tabindex="-1"></a>  <span class="co"># prepare_phylo_and_data() subsets A to species present in this model's data,</span></span>
-<span id="cb18-244"><a href="#cb18-244" aria-hidden="true" tabindex="-1"></a>  <span class="co"># filters dat_model to the intersection (so every sp_ncbi level is in A),</span></span>
-<span id="cb18-245"><a href="#cb18-245" aria-hidden="true" tabindex="-1"></a>  <span class="co"># rebuilds es_id_model sequentially, and constructs the diagonal V matrix.</span></span>
-<span id="cb18-246"><a href="#cb18-246" aria-hidden="true" tabindex="-1"></a>  dat_model <span class="ot">&lt;-</span> dat_model <span class="sc">|&gt;</span></span>
-<span id="cb18-247"><a href="#cb18-247" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">es_id_model =</span> <span class="fu">factor</span>(<span class="fu">seq_len</span>(dplyr<span class="sc">::</span><span class="fu">n</span>())))</span>
-<span id="cb18-248"><a href="#cb18-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-249"><a href="#cb18-249" aria-hidden="true" tabindex="-1"></a>  phylo     <span class="ot">&lt;-</span> <span class="fu">prepare_phylo_and_data</span>(dat_model, A_full, <span class="at">label =</span> mod_id)</span>
-<span id="cb18-250"><a href="#cb18-250" aria-hidden="true" tabindex="-1"></a>  dat_model <span class="ot">&lt;-</span> phylo<span class="sc">$</span>dat_model</span>
-<span id="cb18-251"><a href="#cb18-251" aria-hidden="true" tabindex="-1"></a>  A_mod     <span class="ot">&lt;-</span> phylo<span class="sc">$</span>A_mod</span>
-<span id="cb18-252"><a href="#cb18-252" aria-hidden="true" tabindex="-1"></a>  V         <span class="ot">&lt;-</span> phylo<span class="sc">$</span>V</span>
-<span id="cb18-253"><a href="#cb18-253" aria-hidden="true" tabindex="-1"></a>  has_phylo <span class="ot">&lt;-</span> phylo<span class="sc">$</span>has_phylo</span>
-<span id="cb18-254"><a href="#cb18-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-255"><a href="#cb18-255" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ── 5. Build formula and priors ───────────────────────────────────────────</span></span>
-<span id="cb18-256"><a href="#cb18-256" aria-hidden="true" tabindex="-1"></a>  formula <span class="ot">&lt;-</span> <span class="fu">build_ls_formula</span>(moderator, <span class="at">has_phylogeny =</span> has_phylo)</span>
-<span id="cb18-257"><a href="#cb18-257" aria-hidden="true" tabindex="-1"></a>  priors  <span class="ot">&lt;-</span> <span class="fu">build_ls_priors</span>(formula, dat_model, V, <span class="at">A =</span> A_mod)</span>
-<span id="cb18-258"><a href="#cb18-258" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-259"><a href="#cb18-259" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ── 5b. Verify constant(1) is correctly set before any fitting ────────────</span></span>
-<span id="cb18-260"><a href="#cb18-260" aria-hidden="true" tabindex="-1"></a>  prior_ok <span class="ot">&lt;-</span> <span class="fu">verify_esid_prior</span>(priors, <span class="at">model_name =</span> mod_id)</span>
-<span id="cb18-261"><a href="#cb18-261" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span>prior_ok) {</span>
-<span id="cb18-262"><a href="#cb18-262" aria-hidden="true" tabindex="-1"></a>    status_rows[[i]] <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb18-263"><a href="#cb18-263" aria-hidden="true" tabindex="-1"></a>      <span class="at">model_id =</span> mod_id, <span class="at">moderator =</span> moderator, <span class="at">label =</span> mod_label,</span>
-<span id="cb18-264"><a href="#cb18-264" aria-hidden="true" tabindex="-1"></a>      <span class="at">type =</span> mod_type, <span class="at">n_rows =</span> <span class="fu">nrow</span>(dat_model), <span class="at">n_levels =</span> n_levels,</span>
-<span id="cb18-265"><a href="#cb18-265" aria-hidden="true" tabindex="-1"></a>      <span class="at">n_missing_excluded =</span> n_missing_ex,</span>
-<span id="cb18-266"><a href="#cb18-266" aria-hidden="true" tabindex="-1"></a>      <span class="at">model_path =</span> <span class="cn">NA_character_</span>, <span class="at">status =</span> <span class="st">"skipped: prior check failed"</span>,</span>
-<span id="cb18-267"><a href="#cb18-267" aria-hidden="true" tabindex="-1"></a>      <span class="at">notes =</span> <span class="st">"constant(1) was not confirmed at coef=Intercept level for es_id_model."</span>,</span>
-<span id="cb18-268"><a href="#cb18-268" aria-hidden="true" tabindex="-1"></a>      <span class="at">max_rhat =</span> <span class="cn">NA_real_</span>, <span class="at">min_bulk_ess =</span> <span class="cn">NA_real_</span>, <span class="at">min_tail_ess =</span> <span class="cn">NA_real_</span>,</span>
-<span id="cb18-269"><a href="#cb18-269" aria-hidden="true" tabindex="-1"></a>      <span class="at">n_divergent =</span> <span class="cn">NA_integer_</span>, <span class="at">max_treedepth_hits =</span> <span class="cn">NA_integer_</span></span>
-<span id="cb18-270"><a href="#cb18-270" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb18-271"><a href="#cb18-271" aria-hidden="true" tabindex="-1"></a>    <span class="cf">next</span></span>
-<span id="cb18-272"><a href="#cb18-272" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb18-273"><a href="#cb18-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-274"><a href="#cb18-274" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ── 6. Fit or read ─────────────────────────────────────────────────────────</span></span>
-<span id="cb18-275"><a href="#cb18-275" aria-hidden="true" tabindex="-1"></a>  model_path_full <span class="ot">&lt;-</span> <span class="fu">file.path</span>(</span>
-<span id="cb18-276"><a href="#cb18-276" aria-hidden="true" tabindex="-1"></a>    here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"models"</span>),</span>
-<span id="cb18-277"><a href="#cb18-277" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(model_file, <span class="st">".rds"</span>)</span>
-<span id="cb18-278"><a href="#cb18-278" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb18-279"><a href="#cb18-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-280"><a href="#cb18-280" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>({</span>
-<span id="cb18-281"><a href="#cb18-281" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit_or_read_model</span>(</span>
-<span id="cb18-282"><a href="#cb18-282" aria-hidden="true" tabindex="-1"></a>      <span class="at">model_name =</span> model_file,</span>
-<span id="cb18-283"><a href="#cb18-283" aria-hidden="true" tabindex="-1"></a>      <span class="at">fit_fun    =</span> <span class="cf">function</span>() {</span>
-<span id="cb18-284"><a href="#cb18-284" aria-hidden="true" tabindex="-1"></a>        <span class="fu">fit_ls_model</span>(dat_model, formula, priors,</span>
-<span id="cb18-285"><a href="#cb18-285" aria-hidden="true" tabindex="-1"></a>                     <span class="at">V =</span> V, <span class="at">A =</span> A_mod,</span>
-<span id="cb18-286"><a href="#cb18-286" aria-hidden="true" tabindex="-1"></a>                     <span class="at">mcmc_args =</span> default_mcmc_args)</span>
-<span id="cb18-287"><a href="#cb18-287" aria-hidden="true" tabindex="-1"></a>      },</span>
-<span id="cb18-288"><a href="#cb18-288" aria-hidden="true" tabindex="-1"></a>      <span class="at">model_dir  =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"models"</span>),</span>
-<span id="cb18-289"><a href="#cb18-289" aria-hidden="true" tabindex="-1"></a>      <span class="at">refit      =</span> refit_models</span>
-<span id="cb18-290"><a href="#cb18-290" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb18-291"><a href="#cb18-291" aria-hidden="true" tabindex="-1"></a>  }, <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
-<span id="cb18-292"><a href="#cb18-292" aria-hidden="true" tabindex="-1"></a>    <span class="fu">message</span>(<span class="st">"Model fitting failed for "</span>, moderator, <span class="st">": "</span>, <span class="fu">conditionMessage</span>(e))</span>
-<span id="cb18-293"><a href="#cb18-293" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NULL</span></span>
-<span id="cb18-294"><a href="#cb18-294" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb18-295"><a href="#cb18-295" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-296"><a href="#cb18-296" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ── 7. Extract summaries and diagnostics ──────────────────────────────────</span></span>
-<span id="cb18-297"><a href="#cb18-297" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(fit)) {</span>
-<span id="cb18-298"><a href="#cb18-298" aria-hidden="true" tabindex="-1"></a>    status_rows[[i]] <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb18-299"><a href="#cb18-299" aria-hidden="true" tabindex="-1"></a>      <span class="at">model_id =</span> mod_id, <span class="at">moderator =</span> moderator, <span class="at">label =</span> mod_label,</span>
-<span id="cb18-300"><a href="#cb18-300" aria-hidden="true" tabindex="-1"></a>      <span class="at">type =</span> mod_type, <span class="at">n_rows =</span> <span class="fu">nrow</span>(dat_model), <span class="at">n_levels =</span> n_levels,</span>
-<span id="cb18-301"><a href="#cb18-301" aria-hidden="true" tabindex="-1"></a>      <span class="at">n_missing_excluded =</span> n_missing_ex,</span>
-<span id="cb18-302"><a href="#cb18-302" aria-hidden="true" tabindex="-1"></a>      <span class="at">model_path =</span> model_path_full, <span class="at">status =</span> <span class="st">"failed"</span>,</span>
-<span id="cb18-303"><a href="#cb18-303" aria-hidden="true" tabindex="-1"></a>      <span class="at">notes =</span> <span class="st">"Model returned NULL (fitting error)."</span>,</span>
-<span id="cb18-304"><a href="#cb18-304" aria-hidden="true" tabindex="-1"></a>      <span class="at">max_rhat =</span> <span class="cn">NA_real_</span>, <span class="at">min_bulk_ess =</span> <span class="cn">NA_real_</span>, <span class="at">min_tail_ess =</span> <span class="cn">NA_real_</span>,</span>
-<span id="cb18-305"><a href="#cb18-305" aria-hidden="true" tabindex="-1"></a>      <span class="at">n_divergent =</span> <span class="cn">NA_integer_</span>, <span class="at">max_treedepth_hits =</span> <span class="cn">NA_integer_</span></span>
-<span id="cb18-306"><a href="#cb18-306" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb18-307"><a href="#cb18-307" aria-hidden="true" tabindex="-1"></a>    <span class="cf">next</span></span>
-<span id="cb18-308"><a href="#cb18-308" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb18-309"><a href="#cb18-309" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-310"><a href="#cb18-310" aria-hidden="true" tabindex="-1"></a>  fe   <span class="ot">&lt;-</span> <span class="fu">extract_fixed_effects</span>(fit, mod_id, moderator)</span>
-<span id="cb18-311"><a href="#cb18-311" aria-hidden="true" tabindex="-1"></a>  diag <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
-<span id="cb18-312"><a href="#cb18-312" aria-hidden="true" tabindex="-1"></a>    <span class="fu">extract_diagnostics</span>(fit, mod_id, moderator),</span>
-<span id="cb18-313"><a href="#cb18-313" aria-hidden="true" tabindex="-1"></a>    <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
-<span id="cb18-314"><a href="#cb18-314" aria-hidden="true" tabindex="-1"></a>      <span class="fu">message</span>(<span class="st">"Diagnostics failed for "</span>, moderator, <span class="st">": "</span>, <span class="fu">conditionMessage</span>(e))</span>
-<span id="cb18-315"><a href="#cb18-315" aria-hidden="true" tabindex="-1"></a>      tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb18-316"><a href="#cb18-316" aria-hidden="true" tabindex="-1"></a>        <span class="at">model_id =</span> mod_id, <span class="at">moderator =</span> moderator,</span>
-<span id="cb18-317"><a href="#cb18-317" aria-hidden="true" tabindex="-1"></a>        <span class="at">max_rhat =</span> <span class="cn">NA_real_</span>, <span class="at">min_bulk_ess =</span> <span class="cn">NA_real_</span>,</span>
-<span id="cb18-318"><a href="#cb18-318" aria-hidden="true" tabindex="-1"></a>        <span class="at">min_tail_ess =</span> <span class="cn">NA_real_</span>, <span class="at">n_divergent =</span> <span class="cn">NA_integer_</span>,</span>
-<span id="cb18-319"><a href="#cb18-319" aria-hidden="true" tabindex="-1"></a>        <span class="at">max_treedepth_hits =</span> <span class="cn">NA_integer_</span></span>
-<span id="cb18-320"><a href="#cb18-320" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb18-321"><a href="#cb18-321" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb18-322"><a href="#cb18-322" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb18-323"><a href="#cb18-323" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-324"><a href="#cb18-324" aria-hidden="true" tabindex="-1"></a>  all_fe[[mod_id]]   <span class="ot">&lt;-</span> <span class="fu">split_location_scale</span>(fe)</span>
-<span id="cb18-325"><a href="#cb18-325" aria-hidden="true" tabindex="-1"></a>  all_diag[[mod_id]] <span class="ot">&lt;-</span> diag</span>
-<span id="cb18-326"><a href="#cb18-326" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-327"><a href="#cb18-327" aria-hidden="true" tabindex="-1"></a>  status_rows[[i]] <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb18-328"><a href="#cb18-328" aria-hidden="true" tabindex="-1"></a>    <span class="at">model_id           =</span> mod_id,</span>
-<span id="cb18-329"><a href="#cb18-329" aria-hidden="true" tabindex="-1"></a>    <span class="at">moderator          =</span> moderator,</span>
-<span id="cb18-330"><a href="#cb18-330" aria-hidden="true" tabindex="-1"></a>    <span class="at">label              =</span> mod_label,</span>
-<span id="cb18-331"><a href="#cb18-331" aria-hidden="true" tabindex="-1"></a>    <span class="at">type               =</span> mod_type,</span>
-<span id="cb18-332"><a href="#cb18-332" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_rows             =</span> <span class="fu">nrow</span>(dat_model),</span>
-<span id="cb18-333"><a href="#cb18-333" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_levels           =</span> n_levels,</span>
-<span id="cb18-334"><a href="#cb18-334" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_missing_excluded =</span> n_missing_ex,</span>
-<span id="cb18-335"><a href="#cb18-335" aria-hidden="true" tabindex="-1"></a>    <span class="at">model_path         =</span> model_path_full,</span>
-<span id="cb18-336"><a href="#cb18-336" aria-hidden="true" tabindex="-1"></a>    <span class="at">status             =</span> <span class="st">"fitted"</span>,</span>
-<span id="cb18-337"><a href="#cb18-337" aria-hidden="true" tabindex="-1"></a>    <span class="at">notes              =</span> <span class="st">""</span>,</span>
-<span id="cb18-338"><a href="#cb18-338" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_rhat           =</span> diag<span class="sc">$</span>max_rhat,</span>
-<span id="cb18-339"><a href="#cb18-339" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_bulk_ess       =</span> diag<span class="sc">$</span>min_bulk_ess,</span>
-<span id="cb18-340"><a href="#cb18-340" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_tail_ess       =</span> diag<span class="sc">$</span>min_tail_ess,</span>
-<span id="cb18-341"><a href="#cb18-341" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_divergent        =</span> diag<span class="sc">$</span>n_divergent,</span>
-<span id="cb18-342"><a href="#cb18-342" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_treedepth_hits =</span> diag<span class="sc">$</span>max_treedepth_hits</span>
-<span id="cb18-343"><a href="#cb18-343" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb18-344"><a href="#cb18-344" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb18-345"><a href="#cb18-345" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-346"><a href="#cb18-346" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-347"><a href="#cb18-347" aria-hidden="true" tabindex="-1"></a><span class="fu">## Assemble grid summaries</span></span>
-<span id="cb18-348"><a href="#cb18-348" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-349"><a href="#cb18-349" aria-hidden="true" tabindex="-1"></a><span class="in">```{r grid-assemble}</span></span>
-<span id="cb18-350"><a href="#cb18-350" aria-hidden="true" tabindex="-1"></a>grid_cache <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"tables"</span>, <span class="st">"grid_summary_cache.rds"</span>)</span>
-<span id="cb18-351"><a href="#cb18-351" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-352"><a href="#cb18-352" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (rebuild_grid) {</span>
-<span id="cb18-353"><a href="#cb18-353" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Persist what the loop above produced (also refreshes the CSVs + cache).</span></span>
-<span id="cb18-354"><a href="#cb18-354" aria-hidden="true" tabindex="-1"></a>  model_status <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(status_rows)</span>
-<span id="cb18-355"><a href="#cb18-355" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">write_csv</span>(model_status, here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"tables"</span>, <span class="st">"model_grid_status.csv"</span>))</span>
-<span id="cb18-356"><a href="#cb18-356" aria-hidden="true" tabindex="-1"></a>  summ     <span class="ot">&lt;-</span> <span class="fu">save_combined_summaries</span>(all_fe,  <span class="at">tables_dir =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"tables"</span>))</span>
-<span id="cb18-357"><a href="#cb18-357" aria-hidden="true" tabindex="-1"></a>  diag_tbl <span class="ot">&lt;-</span> <span class="fu">save_combined_diagnostics</span>(all_diag, <span class="at">tables_dir =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"tables"</span>))</span>
-<span id="cb18-358"><a href="#cb18-358" aria-hidden="true" tabindex="-1"></a>  loc_effects <span class="ot">&lt;-</span> summ<span class="sc">$</span>location; scl_effects <span class="ot">&lt;-</span> summ<span class="sc">$</span>scale</span>
-<span id="cb18-359"><a href="#cb18-359" aria-hidden="true" tabindex="-1"></a>  <span class="fu">saveRDS</span>(<span class="fu">list</span>(<span class="at">status =</span> model_status, <span class="at">location =</span> loc_effects,</span>
-<span id="cb18-360"><a href="#cb18-360" aria-hidden="true" tabindex="-1"></a>               <span class="at">scale =</span> scl_effects, <span class="at">diagnostics =</span> diag_tbl), grid_cache)</span>
-<span id="cb18-361"><a href="#cb18-361" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb18-362"><a href="#cb18-362" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Normal render: read the small precomputed cache — no 400 MB model is loaded.</span></span>
-<span id="cb18-363"><a href="#cb18-363" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pace_need</span>(grid_cache, <span class="st">"model grid summary cache"</span>)</span>
-<span id="cb18-364"><a href="#cb18-364" aria-hidden="true" tabindex="-1"></a>  g <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(grid_cache)</span>
-<span id="cb18-365"><a href="#cb18-365" aria-hidden="true" tabindex="-1"></a>  model_status <span class="ot">&lt;-</span> g<span class="sc">$</span>status; loc_effects <span class="ot">&lt;-</span> g<span class="sc">$</span>location</span>
-<span id="cb18-366"><a href="#cb18-366" aria-hidden="true" tabindex="-1"></a>  scl_effects  <span class="ot">&lt;-</span> g<span class="sc">$</span>scale;  diag_tbl    <span class="ot">&lt;-</span> g<span class="sc">$</span>diagnostics</span>
-<span id="cb18-367"><a href="#cb18-367" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb18-368"><a href="#cb18-368" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-369"><a href="#cb18-369" aria-hidden="true" tabindex="-1"></a>model_status <span class="ot">&lt;-</span> model_status <span class="sc">|&gt;</span></span>
-<span id="cb18-370"><a href="#cb18-370" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb18-371"><a href="#cb18-371" aria-hidden="true" tabindex="-1"></a>    <span class="at">status =</span> dplyr<span class="sc">::</span><span class="fu">if_else</span>(</span>
-<span id="cb18-372"><a href="#cb18-372" aria-hidden="true" tabindex="-1"></a>      model_id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"m08"</span>, <span class="st">"m10"</span>), <span class="st">"excluded: did not converge"</span>, status</span>
-<span id="cb18-373"><a href="#cb18-373" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb18-374"><a href="#cb18-374" aria-hidden="true" tabindex="-1"></a>    <span class="at">notes =</span> dplyr<span class="sc">::</span><span class="fu">case_when</span>(</span>
-<span id="cb18-375"><a href="#cb18-375" aria-hidden="true" tabindex="-1"></a>      model_id <span class="sc">==</span> <span class="st">"m08"</span> <span class="sc">~</span> <span class="st">"Corrected-data fit had max Rhat = 1.0143, minimum bulk ESS = 780, minimum tail ESS = 663, and zero divergences; moved to the appendix and excluded from reported estimates."</span>,</span>
-<span id="cb18-376"><a href="#cb18-376" aria-hidden="true" tabindex="-1"></a>      model_id <span class="sc">==</span> <span class="st">"m10"</span> <span class="sc">~</span> <span class="st">"Cleaned transformation-status refit had max Rhat = 1.0128 and minimum bulk ESS = 230; its result chapter and estimates are excluded."</span>,</span>
-<span id="cb18-377"><a href="#cb18-377" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> notes</span>
-<span id="cb18-378"><a href="#cb18-378" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb18-379"><a href="#cb18-379" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb18-380"><a href="#cb18-380" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(</span>
-<span id="cb18-381"><a href="#cb18-381" aria-hidden="true" tabindex="-1"></a>    tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
-<span id="cb18-382"><a href="#cb18-382" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span>model_id, <span class="sc">~</span>moderator, <span class="sc">~</span>label, <span class="sc">~</span>type, <span class="sc">~</span>status, <span class="sc">~</span>notes, <span class="sc">~</span>max_rhat, <span class="sc">~</span>min_bulk_ess, <span class="sc">~</span>min_tail_ess, <span class="sc">~</span>n_divergent, <span class="sc">~</span>max_treedepth_hits,</span>
-<span id="cb18-383"><a href="#cb18-383" aria-hidden="true" tabindex="-1"></a>      <span class="st">"m06"</span>, <span class="st">"taxa"</span>, <span class="st">"Taxonomic group"</span>, <span class="st">"categorical"</span>, <span class="st">"excluded: did not converge"</span>, <span class="st">"Taxonomic grouping was redundant with the phylogenetic effect and did not reach a usable posterior in a reasonable time."</span>, <span class="cn">NA_real_</span>, <span class="cn">NA_real_</span>, <span class="cn">NA_real_</span>, <span class="cn">NA_integer_</span>, <span class="cn">NA_integer_</span>,</span>
-<span id="cb18-384"><a href="#cb18-384" aria-hidden="true" tabindex="-1"></a>      <span class="st">"m08"</span>, <span class="st">"env_change"</span>, <span class="st">"Environmental-change context"</span>, <span class="st">"categorical"</span>, <span class="st">"excluded: did not converge"</span>, <span class="st">"Corrected-data fit had max Rhat = 1.0143, minimum bulk ESS = 780, minimum tail ESS = 663, and zero divergences; moved to the appendix and excluded from reported estimates."</span>, <span class="fl">1.0143</span>, <span class="dv">780</span>, <span class="dv">663</span>, <span class="dv">0</span>L, <span class="dv">0</span>L,</span>
-<span id="cb18-385"><a href="#cb18-385" aria-hidden="true" tabindex="-1"></a>      <span class="st">"m09"</span>, <span class="st">"data_type"</span>, <span class="st">"Data type"</span>, <span class="st">"categorical"</span>, <span class="st">"excluded: did not converge"</span>, <span class="st">"The cleaned refit retained 5 divergent transitions after warmup; its result chapter and estimates are excluded."</span>, <span class="cn">NA_real_</span>, <span class="cn">NA_real_</span>, <span class="cn">NA_real_</span>, <span class="dv">5</span>L, <span class="cn">NA_integer_</span>,</span>
-<span id="cb18-386"><a href="#cb18-386" aria-hidden="true" tabindex="-1"></a>      <span class="st">"m10"</span>, <span class="st">"transf_data"</span>, <span class="st">"Transformation status"</span>, <span class="st">"categorical"</span>, <span class="st">"excluded: did not converge"</span>, <span class="st">"Cleaned transformation-status refit had max Rhat = 1.0128 and minimum bulk ESS = 230; its result chapter and estimates are excluded."</span>, <span class="fl">1.0128</span>, <span class="dv">230</span>, <span class="dv">363</span>, <span class="dv">0</span>L, <span class="dv">0</span>L,</span>
-<span id="cb18-387"><a href="#cb18-387" aria-hidden="true" tabindex="-1"></a>      <span class="st">"m12"</span>, <span class="st">"log10_years × disturbance"</span>, <span class="st">"Elapsed time (log10 years) × disturbance"</span>, <span class="st">"interaction"</span>, <span class="st">"excluded: interaction model"</span>, <span class="st">"Interaction models were removed from the reported book. The completed m12 fit also retained 4 divergent transitions after warmup."</span>, <span class="fl">1.01</span>, <span class="dv">293</span>, <span class="dv">486</span>, <span class="dv">4</span>L, <span class="cn">NA_integer_</span>,</span>
-<span id="cb18-388"><a href="#cb18-388" aria-hidden="true" tabindex="-1"></a>      <span class="st">"m13"</span>, <span class="st">"log10_generations × disturbance"</span>, <span class="st">"Elapsed time (log10 generations) × disturbance"</span>, <span class="st">"interaction"</span>, <span class="st">"excluded: interaction model"</span>, <span class="st">"Interaction models were removed from the reported book and no result chapter is presented."</span>, <span class="cn">NA_real_</span>, <span class="cn">NA_real_</span>, <span class="cn">NA_real_</span>, <span class="cn">NA_integer_</span>, <span class="cn">NA_integer_</span></span>
-<span id="cb18-389"><a href="#cb18-389" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb18-390"><a href="#cb18-390" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb18-391"><a href="#cb18-391" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(model_id)</span>
-<span id="cb18-392"><a href="#cb18-392" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-393"><a href="#cb18-393" aria-hidden="true" tabindex="-1"></a><span class="co"># Excluded models are documented in the status table but are not propagated</span></span>
-<span id="cb18-394"><a href="#cb18-394" aria-hidden="true" tabindex="-1"></a><span class="co"># into the reported effect tables or publication figures.</span></span>
-<span id="cb18-395"><a href="#cb18-395" aria-hidden="true" tabindex="-1"></a>excluded_model_ids <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"m06"</span>, <span class="st">"m08"</span>, <span class="st">"m09"</span>, <span class="st">"m10"</span>, <span class="st">"m12"</span>, <span class="st">"m13"</span>)</span>
-<span id="cb18-396"><a href="#cb18-396" aria-hidden="true" tabindex="-1"></a>loc_effects <span class="ot">&lt;-</span> loc_effects <span class="sc">|&gt;</span></span>
-<span id="cb18-397"><a href="#cb18-397" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span>model_id <span class="sc">%in%</span> excluded_model_ids)</span>
-<span id="cb18-398"><a href="#cb18-398" aria-hidden="true" tabindex="-1"></a>scl_effects <span class="ot">&lt;-</span> scl_effects <span class="sc">|&gt;</span></span>
-<span id="cb18-399"><a href="#cb18-399" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span>model_id <span class="sc">%in%</span> excluded_model_ids)</span>
-<span id="cb18-400"><a href="#cb18-400" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-401"><a href="#cb18-401" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-402"><a href="#cb18-402" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model status table</span></span>
-<span id="cb18-403"><a href="#cb18-403" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-404"><a href="#cb18-404" aria-hidden="true" tabindex="-1"></a>Models <span class="in">`m06`</span>, <span class="in">`m08`</span>, <span class="in">`m09`</span>, and <span class="in">`m10`</span> are excluded because they did not produce a reliable, converged posterior. The <span class="in">`m08`</span> diagnostics page is retained in the appendix for transparency. The interaction models (<span class="in">`m12`</span> and <span class="in">`m13`</span>) are also excluded from the reported book. None of these models contributes to the reported effect tables or publication figures.</span>
-<span id="cb18-405"><a href="#cb18-405" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-406"><a href="#cb18-406" aria-hidden="true" tabindex="-1"></a><span class="in">```{r status-table}</span></span>
-<span id="cb18-407"><a href="#cb18-407" aria-hidden="true" tabindex="-1"></a>model_status</span>
+<span id="cb18-179"><a href="#cb18-179" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="fu">nrow</span>(moderator_grid))) {</span>
+<span id="cb18-180"><a href="#cb18-180" aria-hidden="true" tabindex="-1"></a>  row        <span class="ot">&lt;-</span> moderator_grid[i, ]</span>
+<span id="cb18-181"><a href="#cb18-181" aria-hidden="true" tabindex="-1"></a>  mod_id     <span class="ot">&lt;-</span> row<span class="sc">$</span>model_id</span>
+<span id="cb18-182"><a href="#cb18-182" aria-hidden="true" tabindex="-1"></a>  moderator  <span class="ot">&lt;-</span> row<span class="sc">$</span>moderator</span>
+<span id="cb18-183"><a href="#cb18-183" aria-hidden="true" tabindex="-1"></a>  mod_label  <span class="ot">&lt;-</span> row<span class="sc">$</span>label</span>
+<span id="cb18-184"><a href="#cb18-184" aria-hidden="true" tabindex="-1"></a>  mod_type   <span class="ot">&lt;-</span> row<span class="sc">$</span>type</span>
+<span id="cb18-185"><a href="#cb18-185" aria-hidden="true" tabindex="-1"></a>  model_file <span class="ot">&lt;-</span> <span class="fu">paste0</span>(mod_id, <span class="st">"_ls_"</span>, moderator)</span>
+<span id="cb18-186"><a href="#cb18-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-187"><a href="#cb18-187" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">--- "</span>, mod_id, <span class="st">": "</span>, moderator, <span class="st">" ---"</span>)</span>
+<span id="cb18-188"><a href="#cb18-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-189"><a href="#cb18-189" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ── 1. Check moderator exists ──────────────────────────────────────────────</span></span>
+<span id="cb18-190"><a href="#cb18-190" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span>moderator <span class="sc">%in%</span> <span class="fu">names</span>(dat_es)) {</span>
+<span id="cb18-191"><a href="#cb18-191" aria-hidden="true" tabindex="-1"></a>    status_rows[[i]] <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb18-192"><a href="#cb18-192" aria-hidden="true" tabindex="-1"></a>      <span class="at">model_id =</span> mod_id, <span class="at">moderator =</span> moderator, <span class="at">label =</span> mod_label,</span>
+<span id="cb18-193"><a href="#cb18-193" aria-hidden="true" tabindex="-1"></a>      <span class="at">type =</span> mod_type, <span class="at">n_rows =</span> <span class="dv">0</span>L, <span class="at">n_levels =</span> <span class="cn">NA_integer_</span>,</span>
+<span id="cb18-194"><a href="#cb18-194" aria-hidden="true" tabindex="-1"></a>      <span class="at">n_missing_excluded =</span> <span class="cn">NA_integer_</span>,</span>
+<span id="cb18-195"><a href="#cb18-195" aria-hidden="true" tabindex="-1"></a>      <span class="at">model_path =</span> <span class="cn">NA_character_</span>, <span class="at">status =</span> <span class="st">"skipped: variable absent"</span>,</span>
+<span id="cb18-196"><a href="#cb18-196" aria-hidden="true" tabindex="-1"></a>      <span class="at">notes =</span> <span class="st">"Moderator not found in dataset."</span>,</span>
+<span id="cb18-197"><a href="#cb18-197" aria-hidden="true" tabindex="-1"></a>      <span class="at">max_rhat =</span> <span class="cn">NA_real_</span>, <span class="at">min_bulk_ess =</span> <span class="cn">NA_real_</span>, <span class="at">min_tail_ess =</span> <span class="cn">NA_real_</span>,</span>
+<span id="cb18-198"><a href="#cb18-198" aria-hidden="true" tabindex="-1"></a>      <span class="at">n_divergent =</span> <span class="cn">NA_integer_</span>, <span class="at">max_treedepth_hits =</span> <span class="cn">NA_integer_</span></span>
+<span id="cb18-199"><a href="#cb18-199" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb18-200"><a href="#cb18-200" aria-hidden="true" tabindex="-1"></a>    <span class="cf">next</span></span>
+<span id="cb18-201"><a href="#cb18-201" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb18-202"><a href="#cb18-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-203"><a href="#cb18-203" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ── 2. Subset data for this moderator ─────────────────────────────────────</span></span>
+<span id="cb18-204"><a href="#cb18-204" aria-hidden="true" tabindex="-1"></a>  n_before     <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dat_es)</span>
+<span id="cb18-205"><a href="#cb18-205" aria-hidden="true" tabindex="-1"></a>  dat_model    <span class="ot">&lt;-</span> dat_es[<span class="sc">!</span><span class="fu">is.na</span>(dat_es[[moderator]]), ]</span>
+<span id="cb18-206"><a href="#cb18-206" aria-hidden="true" tabindex="-1"></a>  n_missing_ex <span class="ot">&lt;-</span> n_before <span class="sc">-</span> <span class="fu">nrow</span>(dat_model)</span>
+<span id="cb18-207"><a href="#cb18-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-208"><a href="#cb18-208" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (mod_type <span class="sc">==</span> <span class="st">"categorical"</span>) {</span>
+<span id="cb18-209"><a href="#cb18-209" aria-hidden="true" tabindex="-1"></a>    dat_model[[moderator]] <span class="ot">&lt;-</span> <span class="fu">droplevels</span>(<span class="fu">factor</span>(dat_model[[moderator]]))</span>
+<span id="cb18-210"><a href="#cb18-210" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb18-211"><a href="#cb18-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-212"><a href="#cb18-212" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Check sample size per level for categorical moderators</span></span>
+<span id="cb18-213"><a href="#cb18-213" aria-hidden="true" tabindex="-1"></a>  n_levels <span class="ot">&lt;-</span> <span class="cn">NA_integer_</span></span>
+<span id="cb18-214"><a href="#cb18-214" aria-hidden="true" tabindex="-1"></a>  level_counts <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb18-215"><a href="#cb18-215" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (mod_type <span class="sc">==</span> <span class="st">"categorical"</span>) {</span>
+<span id="cb18-216"><a href="#cb18-216" aria-hidden="true" tabindex="-1"></a>    level_counts <span class="ot">&lt;-</span> <span class="fu">table</span>(dat_model[[moderator]])</span>
+<span id="cb18-217"><a href="#cb18-217" aria-hidden="true" tabindex="-1"></a>    n_levels     <span class="ot">&lt;-</span> <span class="fu">length</span>(level_counts)</span>
+<span id="cb18-218"><a href="#cb18-218" aria-hidden="true" tabindex="-1"></a>    sparse       <span class="ot">&lt;-</span> level_counts[level_counts <span class="sc">&lt;</span> <span class="dv">5</span>]</span>
+<span id="cb18-219"><a href="#cb18-219" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">length</span>(sparse) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb18-220"><a href="#cb18-220" aria-hidden="true" tabindex="-1"></a>      <span class="fu">message</span>(<span class="st">"Sparse levels (&lt;5 obs) in "</span>, moderator, <span class="st">": "</span>,</span>
+<span id="cb18-221"><a href="#cb18-221" aria-hidden="true" tabindex="-1"></a>              <span class="fu">paste</span>(<span class="fu">names</span>(sparse), <span class="at">collapse =</span> <span class="st">", "</span>))</span>
+<span id="cb18-222"><a href="#cb18-222" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb18-223"><a href="#cb18-223" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">all</span>(level_counts <span class="sc">&lt;</span> <span class="dv">3</span>)) {</span>
+<span id="cb18-224"><a href="#cb18-224" aria-hidden="true" tabindex="-1"></a>      status_rows[[i]] <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb18-225"><a href="#cb18-225" aria-hidden="true" tabindex="-1"></a>        <span class="at">model_id =</span> mod_id, <span class="at">moderator =</span> moderator, <span class="at">label =</span> mod_label,</span>
+<span id="cb18-226"><a href="#cb18-226" aria-hidden="true" tabindex="-1"></a>        <span class="at">type =</span> mod_type, <span class="at">n_rows =</span> <span class="fu">nrow</span>(dat_model), <span class="at">n_levels =</span> n_levels,</span>
+<span id="cb18-227"><a href="#cb18-227" aria-hidden="true" tabindex="-1"></a>        <span class="at">n_missing_excluded =</span> n_missing_ex,</span>
+<span id="cb18-228"><a href="#cb18-228" aria-hidden="true" tabindex="-1"></a>        <span class="at">model_path =</span> <span class="cn">NA_character_</span>, <span class="at">status =</span> <span class="st">"skipped: too sparse"</span>,</span>
+<span id="cb18-229"><a href="#cb18-229" aria-hidden="true" tabindex="-1"></a>        <span class="at">notes =</span> <span class="st">"All levels have fewer than 3 observations."</span>,</span>
+<span id="cb18-230"><a href="#cb18-230" aria-hidden="true" tabindex="-1"></a>        <span class="at">max_rhat =</span> <span class="cn">NA_real_</span>, <span class="at">min_bulk_ess =</span> <span class="cn">NA_real_</span>, <span class="at">min_tail_ess =</span> <span class="cn">NA_real_</span>,</span>
+<span id="cb18-231"><a href="#cb18-231" aria-hidden="true" tabindex="-1"></a>        <span class="at">n_divergent =</span> <span class="cn">NA_integer_</span>, <span class="at">max_treedepth_hits =</span> <span class="cn">NA_integer_</span></span>
+<span id="cb18-232"><a href="#cb18-232" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb18-233"><a href="#cb18-233" aria-hidden="true" tabindex="-1"></a>      <span class="cf">next</span></span>
+<span id="cb18-234"><a href="#cb18-234" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb18-235"><a href="#cb18-235" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb18-236"><a href="#cb18-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-237"><a href="#cb18-237" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">nrow</span>(dat_model) <span class="sc">&lt;</span> <span class="dv">10</span>) {</span>
+<span id="cb18-238"><a href="#cb18-238" aria-hidden="true" tabindex="-1"></a>    status_rows[[i]] <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb18-239"><a href="#cb18-239" aria-hidden="true" tabindex="-1"></a>      <span class="at">model_id =</span> mod_id, <span class="at">moderator =</span> moderator, <span class="at">label =</span> mod_label,</span>
+<span id="cb18-240"><a href="#cb18-240" aria-hidden="true" tabindex="-1"></a>      <span class="at">type =</span> mod_type, <span class="at">n_rows =</span> <span class="fu">nrow</span>(dat_model), <span class="at">n_levels =</span> n_levels,</span>
+<span id="cb18-241"><a href="#cb18-241" aria-hidden="true" tabindex="-1"></a>      <span class="at">n_missing_excluded =</span> n_missing_ex,</span>
+<span id="cb18-242"><a href="#cb18-242" aria-hidden="true" tabindex="-1"></a>      <span class="at">model_path =</span> <span class="cn">NA_character_</span>, <span class="at">status =</span> <span class="st">"skipped: insufficient data"</span>,</span>
+<span id="cb18-243"><a href="#cb18-243" aria-hidden="true" tabindex="-1"></a>      <span class="at">notes =</span> <span class="fu">paste</span>(<span class="st">"Only"</span>, <span class="fu">nrow</span>(dat_model), <span class="st">"rows after missingness exclusion."</span>),</span>
+<span id="cb18-244"><a href="#cb18-244" aria-hidden="true" tabindex="-1"></a>      <span class="at">max_rhat =</span> <span class="cn">NA_real_</span>, <span class="at">min_bulk_ess =</span> <span class="cn">NA_real_</span>, <span class="at">min_tail_ess =</span> <span class="cn">NA_real_</span>,</span>
+<span id="cb18-245"><a href="#cb18-245" aria-hidden="true" tabindex="-1"></a>      <span class="at">n_divergent =</span> <span class="cn">NA_integer_</span>, <span class="at">max_treedepth_hits =</span> <span class="cn">NA_integer_</span></span>
+<span id="cb18-246"><a href="#cb18-246" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb18-247"><a href="#cb18-247" aria-hidden="true" tabindex="-1"></a>    <span class="cf">next</span></span>
+<span id="cb18-248"><a href="#cb18-248" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb18-249"><a href="#cb18-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-250"><a href="#cb18-250" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ── 3 &amp; 4. Align data to phylogeny, build V ─────────────────────────────────</span></span>
+<span id="cb18-251"><a href="#cb18-251" aria-hidden="true" tabindex="-1"></a>  <span class="co"># prepare_phylo_and_data() subsets A to species present in this model's data,</span></span>
+<span id="cb18-252"><a href="#cb18-252" aria-hidden="true" tabindex="-1"></a>  <span class="co"># filters dat_model to the intersection (so every sp_ncbi level is in A),</span></span>
+<span id="cb18-253"><a href="#cb18-253" aria-hidden="true" tabindex="-1"></a>  <span class="co"># rebuilds es_id_model sequentially, and constructs the diagonal V matrix.</span></span>
+<span id="cb18-254"><a href="#cb18-254" aria-hidden="true" tabindex="-1"></a>  dat_model <span class="ot">&lt;-</span> dat_model <span class="sc">|&gt;</span></span>
+<span id="cb18-255"><a href="#cb18-255" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">es_id_model =</span> <span class="fu">factor</span>(<span class="fu">seq_len</span>(dplyr<span class="sc">::</span><span class="fu">n</span>())))</span>
+<span id="cb18-256"><a href="#cb18-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-257"><a href="#cb18-257" aria-hidden="true" tabindex="-1"></a>  phylo     <span class="ot">&lt;-</span> <span class="fu">prepare_phylo_and_data</span>(dat_model, A_full, <span class="at">label =</span> mod_id)</span>
+<span id="cb18-258"><a href="#cb18-258" aria-hidden="true" tabindex="-1"></a>  dat_model <span class="ot">&lt;-</span> phylo<span class="sc">$</span>dat_model</span>
+<span id="cb18-259"><a href="#cb18-259" aria-hidden="true" tabindex="-1"></a>  A_mod     <span class="ot">&lt;-</span> phylo<span class="sc">$</span>A_mod</span>
+<span id="cb18-260"><a href="#cb18-260" aria-hidden="true" tabindex="-1"></a>  V         <span class="ot">&lt;-</span> phylo<span class="sc">$</span>V</span>
+<span id="cb18-261"><a href="#cb18-261" aria-hidden="true" tabindex="-1"></a>  has_phylo <span class="ot">&lt;-</span> phylo<span class="sc">$</span>has_phylo</span>
+<span id="cb18-262"><a href="#cb18-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-263"><a href="#cb18-263" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ── 5. Build formula and priors ───────────────────────────────────────────</span></span>
+<span id="cb18-264"><a href="#cb18-264" aria-hidden="true" tabindex="-1"></a>  formula <span class="ot">&lt;-</span> <span class="fu">build_ls_formula</span>(moderator, <span class="at">has_phylogeny =</span> has_phylo)</span>
+<span id="cb18-265"><a href="#cb18-265" aria-hidden="true" tabindex="-1"></a>  priors  <span class="ot">&lt;-</span> <span class="fu">build_ls_priors</span>(formula, dat_model, V, <span class="at">A =</span> A_mod)</span>
+<span id="cb18-266"><a href="#cb18-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-267"><a href="#cb18-267" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ── 5b. Verify constant(1) is correctly set before any fitting ────────────</span></span>
+<span id="cb18-268"><a href="#cb18-268" aria-hidden="true" tabindex="-1"></a>  prior_ok <span class="ot">&lt;-</span> <span class="fu">verify_esid_prior</span>(priors, <span class="at">model_name =</span> mod_id)</span>
+<span id="cb18-269"><a href="#cb18-269" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span>prior_ok) {</span>
+<span id="cb18-270"><a href="#cb18-270" aria-hidden="true" tabindex="-1"></a>    status_rows[[i]] <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb18-271"><a href="#cb18-271" aria-hidden="true" tabindex="-1"></a>      <span class="at">model_id =</span> mod_id, <span class="at">moderator =</span> moderator, <span class="at">label =</span> mod_label,</span>
+<span id="cb18-272"><a href="#cb18-272" aria-hidden="true" tabindex="-1"></a>      <span class="at">type =</span> mod_type, <span class="at">n_rows =</span> <span class="fu">nrow</span>(dat_model), <span class="at">n_levels =</span> n_levels,</span>
+<span id="cb18-273"><a href="#cb18-273" aria-hidden="true" tabindex="-1"></a>      <span class="at">n_missing_excluded =</span> n_missing_ex,</span>
+<span id="cb18-274"><a href="#cb18-274" aria-hidden="true" tabindex="-1"></a>      <span class="at">model_path =</span> <span class="cn">NA_character_</span>, <span class="at">status =</span> <span class="st">"skipped: prior check failed"</span>,</span>
+<span id="cb18-275"><a href="#cb18-275" aria-hidden="true" tabindex="-1"></a>      <span class="at">notes =</span> <span class="st">"constant(1) was not confirmed at coef=Intercept level for es_id_model."</span>,</span>
+<span id="cb18-276"><a href="#cb18-276" aria-hidden="true" tabindex="-1"></a>      <span class="at">max_rhat =</span> <span class="cn">NA_real_</span>, <span class="at">min_bulk_ess =</span> <span class="cn">NA_real_</span>, <span class="at">min_tail_ess =</span> <span class="cn">NA_real_</span>,</span>
+<span id="cb18-277"><a href="#cb18-277" aria-hidden="true" tabindex="-1"></a>      <span class="at">n_divergent =</span> <span class="cn">NA_integer_</span>, <span class="at">max_treedepth_hits =</span> <span class="cn">NA_integer_</span></span>
+<span id="cb18-278"><a href="#cb18-278" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb18-279"><a href="#cb18-279" aria-hidden="true" tabindex="-1"></a>    <span class="cf">next</span></span>
+<span id="cb18-280"><a href="#cb18-280" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb18-281"><a href="#cb18-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-282"><a href="#cb18-282" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ── 6. Fit or read ─────────────────────────────────────────────────────────</span></span>
+<span id="cb18-283"><a href="#cb18-283" aria-hidden="true" tabindex="-1"></a>  model_path_full <span class="ot">&lt;-</span> <span class="fu">file.path</span>(</span>
+<span id="cb18-284"><a href="#cb18-284" aria-hidden="true" tabindex="-1"></a>    here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"models"</span>),</span>
+<span id="cb18-285"><a href="#cb18-285" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(model_file, <span class="st">".rds"</span>)</span>
+<span id="cb18-286"><a href="#cb18-286" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb18-287"><a href="#cb18-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-288"><a href="#cb18-288" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>({</span>
+<span id="cb18-289"><a href="#cb18-289" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit_or_read_model</span>(</span>
+<span id="cb18-290"><a href="#cb18-290" aria-hidden="true" tabindex="-1"></a>      <span class="at">model_name =</span> model_file,</span>
+<span id="cb18-291"><a href="#cb18-291" aria-hidden="true" tabindex="-1"></a>      <span class="at">fit_fun    =</span> <span class="cf">function</span>() {</span>
+<span id="cb18-292"><a href="#cb18-292" aria-hidden="true" tabindex="-1"></a>        <span class="fu">fit_ls_model</span>(dat_model, formula, priors,</span>
+<span id="cb18-293"><a href="#cb18-293" aria-hidden="true" tabindex="-1"></a>                     <span class="at">V =</span> V, <span class="at">A =</span> A_mod,</span>
+<span id="cb18-294"><a href="#cb18-294" aria-hidden="true" tabindex="-1"></a>                     <span class="at">mcmc_args =</span> default_mcmc_args)</span>
+<span id="cb18-295"><a href="#cb18-295" aria-hidden="true" tabindex="-1"></a>      },</span>
+<span id="cb18-296"><a href="#cb18-296" aria-hidden="true" tabindex="-1"></a>      <span class="at">model_dir  =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"models"</span>),</span>
+<span id="cb18-297"><a href="#cb18-297" aria-hidden="true" tabindex="-1"></a>      <span class="at">refit      =</span> refit_models</span>
+<span id="cb18-298"><a href="#cb18-298" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb18-299"><a href="#cb18-299" aria-hidden="true" tabindex="-1"></a>  }, <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb18-300"><a href="#cb18-300" aria-hidden="true" tabindex="-1"></a>    <span class="fu">message</span>(<span class="st">"Model fitting failed for "</span>, moderator, <span class="st">": "</span>, <span class="fu">conditionMessage</span>(e))</span>
+<span id="cb18-301"><a href="#cb18-301" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NULL</span></span>
+<span id="cb18-302"><a href="#cb18-302" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb18-303"><a href="#cb18-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-304"><a href="#cb18-304" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ── 7. Extract summaries and diagnostics ──────────────────────────────────</span></span>
+<span id="cb18-305"><a href="#cb18-305" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(fit)) {</span>
+<span id="cb18-306"><a href="#cb18-306" aria-hidden="true" tabindex="-1"></a>    status_rows[[i]] <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb18-307"><a href="#cb18-307" aria-hidden="true" tabindex="-1"></a>      <span class="at">model_id =</span> mod_id, <span class="at">moderator =</span> moderator, <span class="at">label =</span> mod_label,</span>
+<span id="cb18-308"><a href="#cb18-308" aria-hidden="true" tabindex="-1"></a>      <span class="at">type =</span> mod_type, <span class="at">n_rows =</span> <span class="fu">nrow</span>(dat_model), <span class="at">n_levels =</span> n_levels,</span>
+<span id="cb18-309"><a href="#cb18-309" aria-hidden="true" tabindex="-1"></a>      <span class="at">n_missing_excluded =</span> n_missing_ex,</span>
+<span id="cb18-310"><a href="#cb18-310" aria-hidden="true" tabindex="-1"></a>      <span class="at">model_path =</span> model_path_full, <span class="at">status =</span> <span class="st">"failed"</span>,</span>
+<span id="cb18-311"><a href="#cb18-311" aria-hidden="true" tabindex="-1"></a>      <span class="at">notes =</span> <span class="st">"Model returned NULL (fitting error)."</span>,</span>
+<span id="cb18-312"><a href="#cb18-312" aria-hidden="true" tabindex="-1"></a>      <span class="at">max_rhat =</span> <span class="cn">NA_real_</span>, <span class="at">min_bulk_ess =</span> <span class="cn">NA_real_</span>, <span class="at">min_tail_ess =</span> <span class="cn">NA_real_</span>,</span>
+<span id="cb18-313"><a href="#cb18-313" aria-hidden="true" tabindex="-1"></a>      <span class="at">n_divergent =</span> <span class="cn">NA_integer_</span>, <span class="at">max_treedepth_hits =</span> <span class="cn">NA_integer_</span></span>
+<span id="cb18-314"><a href="#cb18-314" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb18-315"><a href="#cb18-315" aria-hidden="true" tabindex="-1"></a>    <span class="cf">next</span></span>
+<span id="cb18-316"><a href="#cb18-316" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb18-317"><a href="#cb18-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-318"><a href="#cb18-318" aria-hidden="true" tabindex="-1"></a>  fe   <span class="ot">&lt;-</span> <span class="fu">extract_fixed_effects</span>(fit, mod_id, moderator)</span>
+<span id="cb18-319"><a href="#cb18-319" aria-hidden="true" tabindex="-1"></a>  diag <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
+<span id="cb18-320"><a href="#cb18-320" aria-hidden="true" tabindex="-1"></a>    <span class="fu">extract_diagnostics</span>(fit, mod_id, moderator),</span>
+<span id="cb18-321"><a href="#cb18-321" aria-hidden="true" tabindex="-1"></a>    <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb18-322"><a href="#cb18-322" aria-hidden="true" tabindex="-1"></a>      <span class="fu">message</span>(<span class="st">"Diagnostics failed for "</span>, moderator, <span class="st">": "</span>, <span class="fu">conditionMessage</span>(e))</span>
+<span id="cb18-323"><a href="#cb18-323" aria-hidden="true" tabindex="-1"></a>      tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb18-324"><a href="#cb18-324" aria-hidden="true" tabindex="-1"></a>        <span class="at">model_id =</span> mod_id, <span class="at">moderator =</span> moderator,</span>
+<span id="cb18-325"><a href="#cb18-325" aria-hidden="true" tabindex="-1"></a>        <span class="at">max_rhat =</span> <span class="cn">NA_real_</span>, <span class="at">min_bulk_ess =</span> <span class="cn">NA_real_</span>,</span>
+<span id="cb18-326"><a href="#cb18-326" aria-hidden="true" tabindex="-1"></a>        <span class="at">min_tail_ess =</span> <span class="cn">NA_real_</span>, <span class="at">n_divergent =</span> <span class="cn">NA_integer_</span>,</span>
+<span id="cb18-327"><a href="#cb18-327" aria-hidden="true" tabindex="-1"></a>        <span class="at">max_treedepth_hits =</span> <span class="cn">NA_integer_</span></span>
+<span id="cb18-328"><a href="#cb18-328" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb18-329"><a href="#cb18-329" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb18-330"><a href="#cb18-330" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb18-331"><a href="#cb18-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-332"><a href="#cb18-332" aria-hidden="true" tabindex="-1"></a>  all_fe[[mod_id]]   <span class="ot">&lt;-</span> <span class="fu">split_location_scale</span>(fe)</span>
+<span id="cb18-333"><a href="#cb18-333" aria-hidden="true" tabindex="-1"></a>  all_diag[[mod_id]] <span class="ot">&lt;-</span> diag</span>
+<span id="cb18-334"><a href="#cb18-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-335"><a href="#cb18-335" aria-hidden="true" tabindex="-1"></a>  status_rows[[i]] <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb18-336"><a href="#cb18-336" aria-hidden="true" tabindex="-1"></a>    <span class="at">model_id           =</span> mod_id,</span>
+<span id="cb18-337"><a href="#cb18-337" aria-hidden="true" tabindex="-1"></a>    <span class="at">moderator          =</span> moderator,</span>
+<span id="cb18-338"><a href="#cb18-338" aria-hidden="true" tabindex="-1"></a>    <span class="at">label              =</span> mod_label,</span>
+<span id="cb18-339"><a href="#cb18-339" aria-hidden="true" tabindex="-1"></a>    <span class="at">type               =</span> mod_type,</span>
+<span id="cb18-340"><a href="#cb18-340" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_rows             =</span> <span class="fu">nrow</span>(dat_model),</span>
+<span id="cb18-341"><a href="#cb18-341" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_levels           =</span> n_levels,</span>
+<span id="cb18-342"><a href="#cb18-342" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_missing_excluded =</span> n_missing_ex,</span>
+<span id="cb18-343"><a href="#cb18-343" aria-hidden="true" tabindex="-1"></a>    <span class="at">model_path         =</span> model_path_full,</span>
+<span id="cb18-344"><a href="#cb18-344" aria-hidden="true" tabindex="-1"></a>    <span class="at">status             =</span> <span class="st">"fitted"</span>,</span>
+<span id="cb18-345"><a href="#cb18-345" aria-hidden="true" tabindex="-1"></a>    <span class="at">notes              =</span> <span class="st">""</span>,</span>
+<span id="cb18-346"><a href="#cb18-346" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_rhat           =</span> diag<span class="sc">$</span>max_rhat,</span>
+<span id="cb18-347"><a href="#cb18-347" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_bulk_ess       =</span> diag<span class="sc">$</span>min_bulk_ess,</span>
+<span id="cb18-348"><a href="#cb18-348" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_tail_ess       =</span> diag<span class="sc">$</span>min_tail_ess,</span>
+<span id="cb18-349"><a href="#cb18-349" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_divergent        =</span> diag<span class="sc">$</span>n_divergent,</span>
+<span id="cb18-350"><a href="#cb18-350" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_treedepth_hits =</span> diag<span class="sc">$</span>max_treedepth_hits</span>
+<span id="cb18-351"><a href="#cb18-351" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb18-352"><a href="#cb18-352" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb18-353"><a href="#cb18-353" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-354"><a href="#cb18-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-355"><a href="#cb18-355" aria-hidden="true" tabindex="-1"></a><span class="fu">## Assemble grid summaries</span></span>
+<span id="cb18-356"><a href="#cb18-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-357"><a href="#cb18-357" aria-hidden="true" tabindex="-1"></a><span class="in">```{r grid-assemble}</span></span>
+<span id="cb18-358"><a href="#cb18-358" aria-hidden="true" tabindex="-1"></a>grid_cache <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"tables"</span>, <span class="st">"grid_summary_cache.rds"</span>)</span>
+<span id="cb18-359"><a href="#cb18-359" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-360"><a href="#cb18-360" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (rebuild_grid) {</span>
+<span id="cb18-361"><a href="#cb18-361" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Persist what the loop above produced (also refreshes the CSVs + cache).</span></span>
+<span id="cb18-362"><a href="#cb18-362" aria-hidden="true" tabindex="-1"></a>  model_status <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(status_rows)</span>
+<span id="cb18-363"><a href="#cb18-363" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">write_csv</span>(model_status, here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"tables"</span>, <span class="st">"model_grid_status.csv"</span>))</span>
+<span id="cb18-364"><a href="#cb18-364" aria-hidden="true" tabindex="-1"></a>  summ     <span class="ot">&lt;-</span> <span class="fu">save_combined_summaries</span>(all_fe,  <span class="at">tables_dir =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"tables"</span>))</span>
+<span id="cb18-365"><a href="#cb18-365" aria-hidden="true" tabindex="-1"></a>  diag_tbl <span class="ot">&lt;-</span> <span class="fu">save_combined_diagnostics</span>(all_diag, <span class="at">tables_dir =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"tables"</span>))</span>
+<span id="cb18-366"><a href="#cb18-366" aria-hidden="true" tabindex="-1"></a>  loc_effects <span class="ot">&lt;-</span> summ<span class="sc">$</span>location; scl_effects <span class="ot">&lt;-</span> summ<span class="sc">$</span>scale</span>
+<span id="cb18-367"><a href="#cb18-367" aria-hidden="true" tabindex="-1"></a>  <span class="fu">saveRDS</span>(<span class="fu">list</span>(<span class="at">status =</span> model_status, <span class="at">location =</span> loc_effects,</span>
+<span id="cb18-368"><a href="#cb18-368" aria-hidden="true" tabindex="-1"></a>               <span class="at">scale =</span> scl_effects, <span class="at">diagnostics =</span> diag_tbl), grid_cache)</span>
+<span id="cb18-369"><a href="#cb18-369" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb18-370"><a href="#cb18-370" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Normal render: read the small precomputed cache — no 400 MB model is loaded.</span></span>
+<span id="cb18-371"><a href="#cb18-371" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pace_need</span>(grid_cache, <span class="st">"model grid summary cache"</span>)</span>
+<span id="cb18-372"><a href="#cb18-372" aria-hidden="true" tabindex="-1"></a>  g <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(grid_cache)</span>
+<span id="cb18-373"><a href="#cb18-373" aria-hidden="true" tabindex="-1"></a>  model_status <span class="ot">&lt;-</span> g<span class="sc">$</span>status; loc_effects <span class="ot">&lt;-</span> g<span class="sc">$</span>location</span>
+<span id="cb18-374"><a href="#cb18-374" aria-hidden="true" tabindex="-1"></a>  scl_effects  <span class="ot">&lt;-</span> g<span class="sc">$</span>scale;  diag_tbl    <span class="ot">&lt;-</span> g<span class="sc">$</span>diagnostics</span>
+<span id="cb18-375"><a href="#cb18-375" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb18-376"><a href="#cb18-376" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-377"><a href="#cb18-377" aria-hidden="true" tabindex="-1"></a>model_status <span class="ot">&lt;-</span> model_status <span class="sc">|&gt;</span></span>
+<span id="cb18-378"><a href="#cb18-378" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb18-379"><a href="#cb18-379" aria-hidden="true" tabindex="-1"></a>    <span class="at">status =</span> dplyr<span class="sc">::</span><span class="fu">if_else</span>(</span>
+<span id="cb18-380"><a href="#cb18-380" aria-hidden="true" tabindex="-1"></a>      model_id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"m08"</span>, <span class="st">"m10"</span>), <span class="st">"excluded: did not converge"</span>, status</span>
+<span id="cb18-381"><a href="#cb18-381" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb18-382"><a href="#cb18-382" aria-hidden="true" tabindex="-1"></a>    <span class="at">notes =</span> dplyr<span class="sc">::</span><span class="fu">case_when</span>(</span>
+<span id="cb18-383"><a href="#cb18-383" aria-hidden="true" tabindex="-1"></a>      model_id <span class="sc">==</span> <span class="st">"m08"</span> <span class="sc">~</span> <span class="st">"Corrected-data fit had max Rhat = 1.0143, minimum bulk ESS = 780, minimum tail ESS = 663, and zero divergences; moved to the appendix and excluded from reported estimates."</span>,</span>
+<span id="cb18-384"><a href="#cb18-384" aria-hidden="true" tabindex="-1"></a>      model_id <span class="sc">==</span> <span class="st">"m10"</span> <span class="sc">~</span> <span class="st">"Cleaned transformation-status refit had max Rhat = 1.0128 and minimum bulk ESS = 230; its result chapter and estimates are excluded."</span>,</span>
+<span id="cb18-385"><a href="#cb18-385" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> notes</span>
+<span id="cb18-386"><a href="#cb18-386" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb18-387"><a href="#cb18-387" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb18-388"><a href="#cb18-388" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(</span>
+<span id="cb18-389"><a href="#cb18-389" aria-hidden="true" tabindex="-1"></a>    tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb18-390"><a href="#cb18-390" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span>model_id, <span class="sc">~</span>moderator, <span class="sc">~</span>label, <span class="sc">~</span>type, <span class="sc">~</span>status, <span class="sc">~</span>notes, <span class="sc">~</span>max_rhat, <span class="sc">~</span>min_bulk_ess, <span class="sc">~</span>min_tail_ess, <span class="sc">~</span>n_divergent, <span class="sc">~</span>max_treedepth_hits,</span>
+<span id="cb18-391"><a href="#cb18-391" aria-hidden="true" tabindex="-1"></a>      <span class="st">"m06"</span>, <span class="st">"taxa"</span>, <span class="st">"Taxonomic group"</span>, <span class="st">"categorical"</span>, <span class="st">"excluded: did not converge"</span>, <span class="st">"Taxonomic grouping was redundant with the phylogenetic effect and did not reach a usable posterior in a reasonable time."</span>, <span class="cn">NA_real_</span>, <span class="cn">NA_real_</span>, <span class="cn">NA_real_</span>, <span class="cn">NA_integer_</span>, <span class="cn">NA_integer_</span>,</span>
+<span id="cb18-392"><a href="#cb18-392" aria-hidden="true" tabindex="-1"></a>      <span class="st">"m08"</span>, <span class="st">"env_change"</span>, <span class="st">"Environmental-change context"</span>, <span class="st">"categorical"</span>, <span class="st">"excluded: did not converge"</span>, <span class="st">"Corrected-data fit had max Rhat = 1.0143, minimum bulk ESS = 780, minimum tail ESS = 663, and zero divergences; moved to the appendix and excluded from reported estimates."</span>, <span class="fl">1.0143</span>, <span class="dv">780</span>, <span class="dv">663</span>, <span class="dv">0</span>L, <span class="dv">0</span>L,</span>
+<span id="cb18-393"><a href="#cb18-393" aria-hidden="true" tabindex="-1"></a>      <span class="st">"m09"</span>, <span class="st">"data_type"</span>, <span class="st">"Data type"</span>, <span class="st">"categorical"</span>, <span class="st">"excluded: did not converge"</span>, <span class="st">"The cleaned refit retained 5 divergent transitions after warmup; its result chapter and estimates are excluded."</span>, <span class="cn">NA_real_</span>, <span class="cn">NA_real_</span>, <span class="cn">NA_real_</span>, <span class="dv">5</span>L, <span class="cn">NA_integer_</span>,</span>
+<span id="cb18-394"><a href="#cb18-394" aria-hidden="true" tabindex="-1"></a>      <span class="st">"m10"</span>, <span class="st">"transf_data"</span>, <span class="st">"Transformation status"</span>, <span class="st">"categorical"</span>, <span class="st">"excluded: did not converge"</span>, <span class="st">"Cleaned transformation-status refit had max Rhat = 1.0128 and minimum bulk ESS = 230; its result chapter and estimates are excluded."</span>, <span class="fl">1.0128</span>, <span class="dv">230</span>, <span class="dv">363</span>, <span class="dv">0</span>L, <span class="dv">0</span>L,</span>
+<span id="cb18-395"><a href="#cb18-395" aria-hidden="true" tabindex="-1"></a>      <span class="st">"m12"</span>, <span class="st">"log10_years × disturbance"</span>, <span class="st">"Elapsed time (log10 years) × disturbance"</span>, <span class="st">"interaction"</span>, <span class="st">"excluded: interaction model"</span>, <span class="st">"Interaction models were removed from the reported book. The completed m12 fit also retained 4 divergent transitions after warmup."</span>, <span class="fl">1.01</span>, <span class="dv">293</span>, <span class="dv">486</span>, <span class="dv">4</span>L, <span class="cn">NA_integer_</span>,</span>
+<span id="cb18-396"><a href="#cb18-396" aria-hidden="true" tabindex="-1"></a>      <span class="st">"m13"</span>, <span class="st">"log10_generations × disturbance"</span>, <span class="st">"Elapsed time (log10 generations) × disturbance"</span>, <span class="st">"interaction"</span>, <span class="st">"excluded: interaction model"</span>, <span class="st">"Interaction models were removed from the reported book and no result chapter is presented."</span>, <span class="cn">NA_real_</span>, <span class="cn">NA_real_</span>, <span class="cn">NA_real_</span>, <span class="cn">NA_integer_</span>, <span class="cn">NA_integer_</span></span>
+<span id="cb18-397"><a href="#cb18-397" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb18-398"><a href="#cb18-398" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb18-399"><a href="#cb18-399" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(model_id)</span>
+<span id="cb18-400"><a href="#cb18-400" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-401"><a href="#cb18-401" aria-hidden="true" tabindex="-1"></a><span class="co"># Excluded models are documented in the status table but are not propagated</span></span>
+<span id="cb18-402"><a href="#cb18-402" aria-hidden="true" tabindex="-1"></a><span class="co"># into the reported effect tables or publication figures.</span></span>
+<span id="cb18-403"><a href="#cb18-403" aria-hidden="true" tabindex="-1"></a>excluded_model_ids <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"m06"</span>, <span class="st">"m08"</span>, <span class="st">"m09"</span>, <span class="st">"m10"</span>, <span class="st">"m12"</span>, <span class="st">"m13"</span>)</span>
+<span id="cb18-404"><a href="#cb18-404" aria-hidden="true" tabindex="-1"></a>loc_effects <span class="ot">&lt;-</span> loc_effects <span class="sc">|&gt;</span></span>
+<span id="cb18-405"><a href="#cb18-405" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span>model_id <span class="sc">%in%</span> excluded_model_ids)</span>
+<span id="cb18-406"><a href="#cb18-406" aria-hidden="true" tabindex="-1"></a>scl_effects <span class="ot">&lt;-</span> scl_effects <span class="sc">|&gt;</span></span>
+<span id="cb18-407"><a href="#cb18-407" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span>model_id <span class="sc">%in%</span> excluded_model_ids)</span>
 <span id="cb18-408"><a href="#cb18-408" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb18-409"><a href="#cb18-409" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-410"><a href="#cb18-410" aria-hidden="true" tabindex="-1"></a><span class="fu">## Convergence overview</span></span>
+<span id="cb18-410"><a href="#cb18-410" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model status table</span></span>
 <span id="cb18-411"><a href="#cb18-411" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-412"><a href="#cb18-412" aria-hidden="true" tabindex="-1"></a><span class="in">```{r convergence}</span></span>
-<span id="cb18-413"><a href="#cb18-413" aria-hidden="true" tabindex="-1"></a>model_status <span class="sc">|&gt;</span></span>
-<span id="cb18-414"><a href="#cb18-414" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(status <span class="sc">==</span> <span class="st">"fitted"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb18-415"><a href="#cb18-415" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(model_id, moderator, max_rhat, min_bulk_ess, n_divergent) <span class="sc">|&gt;</span></span>
-<span id="cb18-416"><a href="#cb18-416" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb18-417"><a href="#cb18-417" aria-hidden="true" tabindex="-1"></a>    <span class="at">rhat_ok =</span> dplyr<span class="sc">::</span><span class="fu">if_else</span>(max_rhat <span class="sc">&lt;=</span> <span class="fl">1.01</span>, <span class="st">"ok"</span>, <span class="st">"warn"</span>),</span>
-<span id="cb18-418"><a href="#cb18-418" aria-hidden="true" tabindex="-1"></a>    <span class="at">ess_ok  =</span> dplyr<span class="sc">::</span><span class="fu">if_else</span>(min_bulk_ess <span class="sc">&gt;=</span> <span class="dv">400</span>, <span class="st">"ok"</span>, <span class="st">"warn"</span>),</span>
-<span id="cb18-419"><a href="#cb18-419" aria-hidden="true" tabindex="-1"></a>    <span class="at">div_ok  =</span> dplyr<span class="sc">::</span><span class="fu">if_else</span>(n_divergent <span class="sc">&lt;</span> <span class="dv">10</span>, <span class="st">"ok"</span>, <span class="st">"warn"</span>)</span>
-<span id="cb18-420"><a href="#cb18-420" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb18-421"><a href="#cb18-421" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb18-412"><a href="#cb18-412" aria-hidden="true" tabindex="-1"></a>Models <span class="in">`m06`</span>, <span class="in">`m08`</span>, <span class="in">`m09`</span>, and <span class="in">`m10`</span> are excluded because they did not produce a reliable, converged posterior. The <span class="in">`m08`</span> diagnostics page is retained in the appendix for transparency. The interaction models (<span class="in">`m12`</span> and <span class="in">`m13`</span>) are also excluded from the reported book. None of these models contributes to the reported effect tables or publication figures.</span>
+<span id="cb18-413"><a href="#cb18-413" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-414"><a href="#cb18-414" aria-hidden="true" tabindex="-1"></a><span class="in">```{r status-table}</span></span>
+<span id="cb18-415"><a href="#cb18-415" aria-hidden="true" tabindex="-1"></a>model_status</span>
+<span id="cb18-416"><a href="#cb18-416" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-417"><a href="#cb18-417" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-418"><a href="#cb18-418" aria-hidden="true" tabindex="-1"></a><span class="fu">## Convergence overview</span></span>
+<span id="cb18-419"><a href="#cb18-419" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-420"><a href="#cb18-420" aria-hidden="true" tabindex="-1"></a><span class="in">```{r convergence}</span></span>
+<span id="cb18-421"><a href="#cb18-421" aria-hidden="true" tabindex="-1"></a>model_status <span class="sc">|&gt;</span></span>
+<span id="cb18-422"><a href="#cb18-422" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(status <span class="sc">==</span> <span class="st">"fitted"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb18-423"><a href="#cb18-423" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(model_id, moderator, max_rhat, min_bulk_ess, n_divergent) <span class="sc">|&gt;</span></span>
+<span id="cb18-424"><a href="#cb18-424" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb18-425"><a href="#cb18-425" aria-hidden="true" tabindex="-1"></a>    <span class="at">rhat_ok =</span> dplyr<span class="sc">::</span><span class="fu">if_else</span>(max_rhat <span class="sc">&lt;=</span> <span class="fl">1.01</span>, <span class="st">"ok"</span>, <span class="st">"warn"</span>),</span>
+<span id="cb18-426"><a href="#cb18-426" aria-hidden="true" tabindex="-1"></a>    <span class="at">ess_ok  =</span> dplyr<span class="sc">::</span><span class="fu">if_else</span>(min_bulk_ess <span class="sc">&gt;=</span> <span class="dv">400</span>, <span class="st">"ok"</span>, <span class="st">"warn"</span>),</span>
+<span id="cb18-427"><a href="#cb18-427" aria-hidden="true" tabindex="-1"></a>    <span class="at">div_ok  =</span> dplyr<span class="sc">::</span><span class="fu">if_else</span>(n_divergent <span class="sc">&lt;</span> <span class="dv">10</span>, <span class="st">"ok"</span>, <span class="st">"warn"</span>)</span>
+<span id="cb18-428"><a href="#cb18-428" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb18-429"><a href="#cb18-429" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

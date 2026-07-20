@@ -579,34 +579,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   Links: mu = identity; sigma = log 
 Formula: yi_lnM_safe ~ data_scale + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)) 
          sigma ~ data_scale
-   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7441) 
+   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7172) 
   Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
          total post-warmup draws = 8000
 
 Multilevel Hyperparameters:
-~es_id_model (Number of levels: 7441) 
+~es_id_model (Number of levels: 7172) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 sd(Intercept)     1.00      0.00     1.00     1.00   NA       NA       NA
 
-~ref_id (Number of levels: 266) 
+~ref_id (Number of levels: 254) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.75      0.04     0.67     0.84 1.00     2211     4158
+sd(Intercept)     0.74      0.04     0.66     0.83 1.00     1763     3024
 
-~sp_ncbi (Number of levels: 265) 
+~sp_ncbi (Number of levels: 253) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.71      0.16     0.42     1.04 1.00     1112     2097
+sd(Intercept)     0.75      0.17     0.43     1.12 1.00      842     1191
 
 Regression Coefficients:
                       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
-Intercept                -0.44      0.40    -1.24     0.36 1.00     3196
-sigma_Intercept          -0.89      0.09    -1.06    -0.72 1.00     1663
-data_scaleratio          -0.10      0.08    -0.25     0.05 1.00     3529
-sigma_data_scaleratio     0.31      0.09     0.13     0.48 1.00     1701
+Intercept                -0.40      0.42    -1.24     0.45 1.00     2362
+sigma_Intercept          -0.90      0.09    -1.09    -0.73 1.01     1503
+data_scaleratio          -0.17      0.08    -0.34    -0.01 1.00     2679
+sigma_data_scaleratio     0.32      0.09     0.15     0.51 1.01     1552
                       Tail_ESS
-Intercept                 4043
-sigma_Intercept           3074
-data_scaleratio           5484
-sigma_data_scaleratio     3365
+Intercept                 3387
+sigma_Intercept           2197
+data_scaleratio           4326
+sigma_data_scaleratio     2225
 
 Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -631,10 +631,10 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">interval - ratio</td>
-<td style="text-align: right;">0.099</td>
-<td style="text-align: right;">-0.053</td>
-<td style="text-align: right;">0.249</td>
+<td style="text-align: left; font-weight: bold;">interval - ratio</td>
+<td style="text-align: right; font-weight: bold;">0.174</td>
+<td style="text-align: right; font-weight: bold;">0.015</td>
+<td style="text-align: right; font-weight: bold;">0.339</td>
 </tr>
 </tbody>
 </table>
@@ -655,9 +655,9 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;">interval - ratio</td>
-<td style="text-align: right; font-weight: bold;">-0.305</td>
-<td style="text-align: right; font-weight: bold;">-0.475</td>
-<td style="text-align: right; font-weight: bold;">-0.127</td>
+<td style="text-align: right; font-weight: bold;">-0.322</td>
+<td style="text-align: right; font-weight: bold;">-0.507</td>
+<td style="text-align: right; font-weight: bold;">-0.142</td>
 </tr>
 </tbody>
 </table>

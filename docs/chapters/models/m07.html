@@ -579,34 +579,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   Links: mu = identity; sigma = log 
 Formula: yi_lnM_safe ~ genphen + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)) 
          sigma ~ genphen
-   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7455) 
+   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7186) 
   Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
          total post-warmup draws = 8000
 
 Multilevel Hyperparameters:
-~es_id_model (Number of levels: 7455) 
+~es_id_model (Number of levels: 7186) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 sd(Intercept)     1.00      0.00     1.00     1.00   NA       NA       NA
 
-~ref_id (Number of levels: 266) 
+~ref_id (Number of levels: 254) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.75      0.04     0.68     0.84 1.00     1700     2630
+sd(Intercept)     0.75      0.04     0.67     0.84 1.00     2141     4152
 
-~sp_ncbi (Number of levels: 265) 
+~sp_ncbi (Number of levels: 253) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.64      0.16     0.34     0.98 1.00      860     1847
+sd(Intercept)     0.68      0.18     0.35     1.05 1.00     1000     1839
 
 Regression Coefficients:
                         Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
-Intercept                  -0.43      0.38    -1.19     0.32 1.00     3229
-sigma_Intercept            -0.84      0.03    -0.89    -0.79 1.00     2078
-genphenPhenotypic          -0.17      0.07    -0.31    -0.03 1.00     3883
-sigma_genphenPhenotypic     0.34      0.03     0.28     0.40 1.00     2288
+Intercept                  -0.43      0.39    -1.21     0.37 1.00     3078
+sigma_Intercept            -0.84      0.03    -0.89    -0.78 1.00     2112
+genphenPhenotypic          -0.21      0.07    -0.35    -0.06 1.00     4355
+sigma_genphenPhenotypic     0.34      0.03     0.28     0.40 1.00     2544
                         Tail_ESS
-Intercept                   3900
-sigma_Intercept             4050
-genphenPhenotypic           5536
-sigma_genphenPhenotypic     4648
+Intercept                   3637
+sigma_Intercept             4409
+genphenPhenotypic           5428
+sigma_genphenPhenotypic     5319
 
 Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -632,9 +632,9 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;">Genetic - Phenotypic</td>
-<td style="text-align: right; font-weight: bold;">0.176</td>
-<td style="text-align: right; font-weight: bold;">0.029</td>
-<td style="text-align: right; font-weight: bold;">0.309</td>
+<td style="text-align: right; font-weight: bold;">0.211</td>
+<td style="text-align: right; font-weight: bold;">0.062</td>
+<td style="text-align: right; font-weight: bold;">0.353</td>
 </tr>
 </tbody>
 </table>
@@ -655,9 +655,9 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left; font-weight: bold;">Genetic - Phenotypic</td>
-<td style="text-align: right; font-weight: bold;">-0.341</td>
-<td style="text-align: right; font-weight: bold;">-0.4</td>
-<td style="text-align: right; font-weight: bold;">-0.283</td>
+<td style="text-align: right; font-weight: bold;">-0.338</td>
+<td style="text-align: right; font-weight: bold;">-0.394</td>
+<td style="text-align: right; font-weight: bold;">-0.275</td>
 </tr>
 </tbody>
 </table>
