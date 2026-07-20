@@ -111,6 +111,19 @@ save_plot <- function(p, stem, width = 9, height = 6) {
   message("Saved: ", stem)
 }
 
+# Sigma and absolute residuals are standard deviations/distances, never signed
+# quantities. Stop before plotting if a future edit accidentally puts them back
+# on the log-sigma scale or otherwise creates negative values.
+assert_nonnegative_scale <- function(data, columns, context) {
+  values <- unlist(data[columns], use.names = FALSE)
+  bad <- is.finite(values) & values < 0
+  if (any(bad)) {
+    stop(context, " contains negative scale values (minimum = ",
+         signif(min(values[bad]), 4), "). Scale panels must remain on the SD scale.")
+  }
+  invisible(data)
+}
+
 # ---- Model registry with PDF-derived labels -----------------------------------
 all_models <- list(
   list(id="m01", file="m01_ls_disturbance", moderator="disturbance",
@@ -231,9 +244,9 @@ if (file.exists(m00_path) &&
       ggplot2::aes(x = yi_lnM_safe, y = 1, size = precision),
       alpha = 0.20, shape = 21, fill = "#88CCEE", colour = "#0072B2",
       groupOnX = FALSE) +
-    ggplot2::geom_linerange(
+    ggplot2::geom_errorbar(
       ggplot2::aes(y = 1, xmin = int_lo, xmax = int_hi),
-      linewidth = 1.5, colour = "grey15") +
+      orientation = "y", width = 0.10, linewidth = 1.5, colour = "grey15") +
     ggplot2::geom_point(
       ggplot2::aes(x = int_est, y = 1),
       size = 5, shape = 21, fill = "white", colour = "grey10", stroke = 1.2) +
@@ -249,6 +262,10 @@ if (file.exists(m00_path) &&
 
   raw00_sig <- raw00 |>
     dplyr::mutate(abs_resid = abs(yi_lnM_safe - int_est))
+  assert_nonnegative_scale(raw00_sig, "abs_resid", "m00 raw residuals")
+  assert_nonnegative_scale(
+    data.frame(estimate = sig_est, lowerCL = sig_lo, upperCL = sig_hi),
+    c("estimate", "lowerCL", "upperCL"), "m00 sigma summary")
 
   p_m00_scl <- ggplot2::ggplot() +
     ggplot2::geom_vline(xintercept = 0, linetype = "dashed", colour = "grey50") +
@@ -259,9 +276,9 @@ if (file.exists(m00_path) &&
     ggplot2::geom_linerange(
       ggplot2::aes(y = 1, xmin = sig_lo, xmax = sig_hi),
       linewidth = 3, colour = "white") +
-    ggplot2::geom_linerange(
+    ggplot2::geom_errorbar(
       ggplot2::aes(y = 1, xmin = sig_lo, xmax = sig_hi),
-      linewidth = 1.5, colour = "grey15") +
+      orientation = "y", width = 0.10, linewidth = 1.5, colour = "grey15") +
     ggplot2::geom_point(
       ggplot2::aes(x = sig_est, y = 1),
       size = 5, shape = 21, fill = "white", colour = "grey10", stroke = 1.2) +
@@ -310,6 +327,8 @@ for (m in all_models) {
   if (m$type == "categorical") {
     ests     <- get_level_estimates(fit, m$moderator)
     sig_ests <- get_sig_estimates(fit, m$moderator, unique(raw$level))
+    assert_nonnegative_scale(sig_ests, c("estimate", "lowerCL", "upperCL"),
+                             paste0(m$id, " sigma summary"))
     pi_df    <- get_pred_interval(fit, m$moderator, unique(raw$level))
 
     if (!is.null(pi_df)) {
@@ -347,9 +366,9 @@ for (m in all_models) {
           ggplot2::geom_linerange(data = ests,
             ggplot2::aes(y = level, xmin = lowerPR, xmax = upperPR),
             linewidth = 0.4, colour = "grey40") } +
-      ggplot2::geom_linerange(data = ests,
+      ggplot2::geom_errorbar(data = ests,
         ggplot2::aes(y = level, xmin = lowerCL, xmax = upperCL),
-        linewidth = 1.5, colour = "grey15") +
+        orientation = "y", width = 0.16, linewidth = 1.5, colour = "grey15") +
       ggplot2::geom_point(data = ests,
         ggplot2::aes(x = estimate, y = level),
         size = 4, shape = 21, fill = "white", colour = "grey10", stroke = 1.2) +
@@ -369,6 +388,7 @@ for (m in all_models) {
       dplyr::mutate(
         abs_resid = abs(yi_lnM_safe - loc_est)
       )
+    assert_nonnegative_scale(raw_sig, "abs_resid", paste0(m$id, " raw residuals"))
 
     p_scl <- ggplot2::ggplot() +
       ggplot2::geom_vline(xintercept = 0, linetype = "dashed", colour = "grey50") +
@@ -379,9 +399,9 @@ for (m in all_models) {
       ggplot2::geom_linerange(data = sig_ests,
         ggplot2::aes(y = level, xmin = lowerCL, xmax = upperCL),
         linewidth = 3, colour = "white") +
-      ggplot2::geom_linerange(data = sig_ests,
+      ggplot2::geom_errorbar(data = sig_ests,
         ggplot2::aes(y = level, xmin = lowerCL, xmax = upperCL),
-        linewidth = 1.5, colour = "grey15") +
+        orientation = "y", width = 0.16, linewidth = 1.5, colour = "grey15") +
       ggplot2::geom_point(data = sig_ests,
         ggplot2::aes(x = estimate, y = level),
         size = 4, shape = 21, fill = "white", colour = "grey10", stroke = 1.2) +
@@ -427,6 +447,9 @@ for (m in all_models) {
                            xout = raw[[m$moderator]], rule = 2)$y
     raw_cont_sig <- raw |>
       dplyr::mutate(abs_resid = abs(yi_lnM_safe - raw_pred_loc))
+    assert_nonnegative_scale(raw_cont_sig, "abs_resid", paste0(m$id, " raw residuals"))
+    assert_nonnegative_scale(pred_sig, c("estimate", "lowerCL", "upperCL"),
+                             paste0(m$id, " sigma curve"))
 
     p_loc <- ggplot2::ggplot() +
       ggplot2::geom_hline(yintercept = lnm_ref, linetype = "dotted", colour = "grey72", linewidth = 0.45) +
