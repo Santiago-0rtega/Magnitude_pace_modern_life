@@ -1,5 +1,5 @@
 component,symbol,median,l95,u95
-Total,I2_total,96.6,95.7,97.5
-Between-study (reference),I2_between,43.5,30.6,56.1
-Phylogeny,I2_phylo,45.4,30.5,60.7
-Within-study (residual),I2_within,7.7,5.6,9.9
+Total,I2_total,96.6,95.5,97.7
+Between-study (reference),I2_between,37.3,23.8,52.4
+Phylogeny,I2_phylo,38.1,16.2,58.9
+Within-study (residual),I2_within,21,14.6,28.4

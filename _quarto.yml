@@ -37,7 +37,6 @@ book:
         - chapters/models/m04.qmd
         - chapters/models/m05.qmd
         - chapters/models/m07.qmd
-        - chapters/models/m08.qmd
         - chapters/models/m11.qmd
     - part: "Figures & Reproducibility"
       chapters:
@@ -45,6 +44,7 @@ book:
         - chapters/08_publication_figures.qmd
         - chapters/09_reproducibility.qmd
   appendices:
+    - chapters/models/m08.qmd
     - chapters/appendix/sensitivity_min_n.qmd
     - chapters/appendix/sensitivity_no_phylogeny.qmd
     - chapters/appendix/sensitivity_sys_id.qmd

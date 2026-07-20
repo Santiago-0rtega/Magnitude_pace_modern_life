@@ -369,19 +369,21 @@ if (rebuild_grid) {
 model_status <- model_status |>
   dplyr::mutate(
     status = dplyr::if_else(
-      model_id == "m10", "excluded: did not converge", status
+      model_id %in% c("m08", "m10"), "excluded: did not converge", status
     ),
-    notes = dplyr::if_else(
-      model_id == "m10",
-      "Cleaned transformation-status refit had max Rhat = 1.0128 and minimum bulk ESS = 230; its result chapter and estimates are excluded.",
-      notes
+    notes = dplyr::case_when(
+      model_id == "m08" ~ "Corrected-data fit had max Rhat = 1.0143, minimum bulk ESS = 780, minimum tail ESS = 663, and zero divergences; moved to the appendix and excluded from reported estimates.",
+      model_id == "m10" ~ "Cleaned transformation-status refit had max Rhat = 1.0128 and minimum bulk ESS = 230; its result chapter and estimates are excluded.",
+      TRUE ~ notes
     )
   ) |>
   dplyr::bind_rows(
     tibble::tribble(
       ~model_id, ~moderator, ~label, ~type, ~status, ~notes, ~max_rhat, ~min_bulk_ess, ~min_tail_ess, ~n_divergent, ~max_treedepth_hits,
       "m06", "taxa", "Taxonomic group", "categorical", "excluded: did not converge", "Taxonomic grouping was redundant with the phylogenetic effect and did not reach a usable posterior in a reasonable time.", NA_real_, NA_real_, NA_real_, NA_integer_, NA_integer_,
+      "m08", "env_change", "Environmental-change context", "categorical", "excluded: did not converge", "Corrected-data fit had max Rhat = 1.0143, minimum bulk ESS = 780, minimum tail ESS = 663, and zero divergences; moved to the appendix and excluded from reported estimates.", 1.0143, 780, 663, 0L, 0L,
       "m09", "data_type", "Data type", "categorical", "excluded: did not converge", "The cleaned refit retained 5 divergent transitions after warmup; its result chapter and estimates are excluded.", NA_real_, NA_real_, NA_real_, 5L, NA_integer_,
+      "m10", "transf_data", "Transformation status", "categorical", "excluded: did not converge", "Cleaned transformation-status refit had max Rhat = 1.0128 and minimum bulk ESS = 230; its result chapter and estimates are excluded.", 1.0128, 230, 363, 0L, 0L,
       "m12", "log10_years × disturbance", "Elapsed time (log10 years) × disturbance", "interaction", "excluded: interaction model", "Interaction models were removed from the reported book. The completed m12 fit also retained 4 divergent transitions after warmup.", 1.01, 293, 486, 4L, NA_integer_,
       "m13", "log10_generations × disturbance", "Elapsed time (log10 generations) × disturbance", "interaction", "excluded: interaction model", "Interaction models were removed from the reported book and no result chapter is presented.", NA_real_, NA_real_, NA_real_, NA_integer_, NA_integer_
     )
@@ -390,7 +392,7 @@ model_status <- model_status |>
 
 # Excluded models are documented in the status table but are not propagated
 # into the reported effect tables or publication figures.
-excluded_model_ids <- c("m06", "m09", "m10", "m12", "m13")
+excluded_model_ids <- c("m06", "m08", "m09", "m10", "m12", "m13")
 loc_effects <- loc_effects |>
   dplyr::filter(!model_id %in% excluded_model_ids)
 scl_effects <- scl_effects |>
@@ -399,7 +401,7 @@ scl_effects <- scl_effects |>
 
 ## Model status table
 
-Models `m06`, `m09`, and `m10` are excluded because they did not produce a reliable, converged posterior. The interaction models (`m12` and `m13`) are also excluded from the reported book. They remain listed here so that every attempted model and the reason for its exclusion are transparent, but they have no result chapters and do not contribute to the reported effect tables or publication figures.
+Models `m06`, `m08`, `m09`, and `m10` are excluded because they did not produce a reliable, converged posterior. The `m08` diagnostics page is retained in the appendix for transparency. The interaction models (`m12` and `m13`) are also excluded from the reported book. None of these models contributes to the reported effect tables or publication figures.
 
 ```{r status-table}
 model_status

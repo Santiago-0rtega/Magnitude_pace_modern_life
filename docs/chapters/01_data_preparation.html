@@ -478,14 +478,8 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/models/m08.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Environmental-change context</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../chapters/models/m11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Measurement scale</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Measurement scale</span></span></a>
   </div>
 </li>
       </ul>
@@ -502,19 +496,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/07_sensitivity_analyses.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Sensitivity analyses</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Sensitivity analyses</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/08_publication_figures.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Publication figures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Publication figures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/09_reproducibility.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Reproducibility</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Reproducibility</span></span></a>
   </div>
 </li>
       </ul>
@@ -530,20 +524,26 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../chapters/models/m08.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Excluded model: Environmental-change context</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../chapters/appendix/sensitivity_min_n.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Sensitivity A — Minimum sample size (N ≥ 40)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Sensitivity A — Minimum sample size (N ≥ 40)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/appendix/sensitivity_no_phylogeny.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Sensitivity B — No phylogenetic random effect</span></span></a>
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Sensitivity B — No phylogenetic random effect</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/appendix/sensitivity_sys_id.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Sensitivity C — Study-system (sys_id) random effect</span></span></a>
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Sensitivity C — Study-system (sys_id) random effect</span></span></a>
   </div>
 </li>
       </ul>
@@ -613,7 +613,7 @@ window.Quarto = {
 <li><code>read_proceed()</code> - read the raw PROCEED v6.2 rates database.</li>
 <li><code>clean_proceed()</code> - coerce grouping/categorical variables to factors.</li>
 <li><code>require_lnm_vars()</code> - keep contrasts with the two-group summary statistics required for <span class="math inline">\(\ln M\)</span>: means, standard deviations, and sample sizes for both groups.</li>
-<li><code>filter_generations(max_gen = 300)</code> - apply the generations &lt;= 300 filter; contrasts with missing generation time are retained.</li>
+<li><code>filter_generations(max_gen = 300)</code> - retain contrasts with a known, positive elapsed-generation value no greater than 300; missing generation information is excluded because eligibility cannot be established.</li>
 <li><code>add_derived_vars()</code> - add <code>n_total</code>, <code>log10_years</code>, <code>log10_generations</code>.</li>
 </ol>
 <div class="cell">
@@ -642,7 +642,7 @@ window.Quarto = {
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Read cached cleaned dataset: 7524 contrasts</code></pre>
+<pre><code>Read cached cleaned dataset: 7250 contrasts</code></pre>
 </div>
 </div>
 </section>
@@ -657,7 +657,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["design"],"name":[1],"type":["fct"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"Synchronic","2":"4926"},{"1":"Allochronic","2":"2598"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["design"],"name":[1],"type":["fct"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"Synchronic","2":"4697"},{"1":"Allochronic","2":"2553"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -673,11 +673,11 @@ window.Quarto = {
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 7,524
+<pre><code>Rows: 7,250
 Columns: 3
-$ n_total           &lt;dbl&gt; 41, 33, 41, 48, 47, 41, 37, 38, 46, 53, 52, 46, 42, …
-$ log10_years       &lt;dbl&gt; 2.089905, 2.089905, 2.089905, 2.089905, 2.089905, 2.…
-$ log10_generations &lt;dbl&gt; 2.089905, 2.089905, 2.089905, 2.089905, 2.089905, 2.…</code></pre>
+$ n_total           &lt;dbl&gt; 41, 33, 41, 48, 47, 41, 37, 38, 46, 53, 52, 46, 42, ~
+$ log10_years       &lt;dbl&gt; 2.089905, 2.089905, 2.089905, 2.089905, 2.089905, 2.~
+$ log10_generations &lt;dbl&gt; 2.089905, 2.089905, 2.089905, 2.089905, 2.089905, 2.~</code></pre>
 </div>
 </div>
 </section>
@@ -701,7 +701,7 @@ $ log10_generations &lt;dbl&gt; 2.089905, 2.089905, 2.089905, 2.089905, 2.089905
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["k"],"name":[1],"type":["int"],"align":["right"]},{"label":["n_studies"],"name":[2],"type":["int"],"align":["right"]},{"label":["n_systems"],"name":[3],"type":["int"],"align":["right"]},{"label":["n_species"],"name":[4],"type":["int"],"align":["right"]},{"label":["n_allochronic"],"name":[5],"type":["int"],"align":["right"]},{"label":["n_synchronic"],"name":[6],"type":["int"],"align":["right"]},{"label":["pct_has_gen"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["pct_has_years"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"7524","2":"268","3":"1588","4":"282","5":"2598","6":"4926","7":"96.4","8":"100"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["k"],"name":[1],"type":["int"],"align":["right"]},{"label":["n_studies"],"name":[2],"type":["int"],"align":["right"]},{"label":["n_systems"],"name":[3],"type":["int"],"align":["right"]},{"label":["n_species"],"name":[4],"type":["int"],"align":["right"]},{"label":["n_allochronic"],"name":[5],"type":["int"],"align":["right"]},{"label":["n_synchronic"],"name":[6],"type":["int"],"align":["right"]},{"label":["pct_has_gen"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["pct_has_years"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"7250","2":"256","3":"1543","4":"268","5":"2553","6":"4697","7":"100","8":"100"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -1218,7 +1218,7 @@ $ log10_generations &lt;dbl&gt; 2.089905, 2.089905, 2.089905, 2.089905, 2.089905
 <span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`read_proceed()`</span> - read the raw PROCEED v6.2 rates database.</span>
 <span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span><span class="in">`clean_proceed()`</span> - coerce grouping/categorical variables to factors.</span>
 <span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span><span class="in">`require_lnm_vars()`</span> - keep contrasts with the two-group summary statistics required for $\ln M$: means, standard deviations, and sample sizes for both groups.</span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span><span class="in">`filter_generations(max_gen = 300)`</span> - apply the generations &lt;= 300 filter; contrasts with missing generation time are retained.</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span><span class="in">`filter_generations(max_gen = 300)`</span> - retain contrasts with a known, positive elapsed-generation value no greater than 300; missing generation information is excluded because eligibility cannot be established.</span>
 <span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span><span class="in">`add_derived_vars()`</span> - add <span class="in">`n_total`</span>, <span class="in">`log10_years`</span>, <span class="in">`log10_generations`</span>.</span>
 <span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="in">```{r rebuild, eval=rebuild_clean_data}</span></span>

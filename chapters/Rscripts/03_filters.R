@@ -8,10 +8,11 @@ require_lnm_vars <- function(dat) {
     )
 }
 
-# Apply the primary generations filter where generation time is available
+# Apply the primary generations filter. Eligibility cannot be established when
+# elapsed generations are missing, so those rows are excluded.
 filter_generations <- function(dat, max_gen = 300) {
   dat |>
-    dplyr::filter(is.na(generations) | generations <= max_gen)
+    dplyr::filter(!is.na(generations), generations > 0, generations <= max_gen)
 }
 
 # Add derived variables needed for modelling

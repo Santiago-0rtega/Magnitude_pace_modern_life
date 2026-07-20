@@ -16,6 +16,16 @@ cb_cols <- c("#88CCEE","#CC6677","#DDCC77","#117733","#332288",
              "#6699CC","#888888","#E69F00","#56B4E9","#009E73",
              "#F0E442","#0072B2","#D55E00","#CC79A7","#999999")
 
+# Approximate large-sample conversion: |d| = sqrt(2) * exp(lnM).
+d_ref <- c(0.2, 0.5, 0.8)
+lnm_ref <- log(d_ref / sqrt(2))
+d_axis <- ggplot2::sec_axis(~ sqrt(2) * exp(.),
+  breaks = c(d_ref, sqrt(2)), labels = c("0.2", "0.5", "0.8", "1.41"),
+  name = "Approximate |d|")
+d_guide_caption <- paste0(
+  "Dotted guides: |d| = 0.2, 0.5, 0.8; dashed lnM = 0: |d| ≈ 1.41. ",
+  "Approximation assumes large, balanced, independent groups.")
+
 theme_orchard <- function() {
   ggplot2::theme_classic(base_size = 13) +
     ggplot2::theme(
@@ -219,7 +229,8 @@ if (file.exists(m00_path) &&
 
   # Location panel
   p_m00_loc <- ggplot2::ggplot() +
-    ggplot2::geom_vline(xintercept = 0, linetype = "dashed", colour = "grey50") +
+    ggplot2::geom_vline(xintercept = lnm_ref, linetype = "dotted", colour = "grey72", linewidth = 0.45) +
+    ggplot2::geom_vline(xintercept = 0, linetype = "dashed", colour = "grey40", linewidth = 0.65) +
     ggbeeswarm::geom_quasirandom(data = raw00,
       ggplot2::aes(x = yi_lnM_safe, y = 1, size = precision),
       alpha = 0.20, shape = 21, fill = "#88CCEE", colour = "#0072B2",
@@ -231,10 +242,11 @@ if (file.exists(m00_path) &&
       ggplot2::aes(x = int_est, y = 1),
       size = 5, shape = 21, fill = "white", colour = "grey10", stroke = 1.2) +
     ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.3, 4)) +
+    ggplot2::scale_x_continuous(sec.axis = d_axis) +
     ggplot2::scale_y_continuous(breaks = NULL) +
     ggplot2::labs(x = "Location effect (lnM)", y = NULL,
                   title = "Location -- Overall baseline (m00)",
-                  caption = cap) +
+                  caption = paste(cap, d_guide_caption, sep = "\n")) +
     theme_orchard()
 
   # Scale panel: within-overall residuals vs sigma intercept
@@ -331,7 +343,8 @@ for (m in all_models) {
 
     # ---- Location plot (orchaRd style) ----------------------------------------
     p_loc <- ggplot2::ggplot() +
-      ggplot2::geom_vline(xintercept = 0, linetype = "dashed", colour = "grey50") +
+      ggplot2::geom_vline(xintercept = lnm_ref, linetype = "dotted", colour = "grey72", linewidth = 0.45) +
+      ggplot2::geom_vline(xintercept = 0, linetype = "dashed", colour = "grey40", linewidth = 0.65) +
       ggbeeswarm::geom_quasirandom(data = raw,
         ggplot2::aes(x = yi_lnM_safe, y = level,
                      size = precision, colour = level, fill = level),
@@ -349,8 +362,10 @@ for (m in all_models) {
       ggplot2::scale_colour_manual(values = colors, guide = "none") +
       ggplot2::scale_fill_manual(values = colors, guide = "none") +
       ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.4, 4)) +
+      ggplot2::scale_x_continuous(sec.axis = d_axis) +
       ggplot2::labs(x = "Location effect (lnM)", y = NULL,
-                    title = paste("Location --", m$label)) +
+                    title = paste("Location --", m$label),
+                    caption = d_guide_caption) +
       theme_orchard()
 
     # ---- Scale plot with within-group residuals --------------------------------
@@ -420,7 +435,8 @@ for (m in all_models) {
       dplyr::mutate(abs_resid = abs(yi_lnM_safe - raw_pred_loc))
 
     p_loc <- ggplot2::ggplot() +
-      ggplot2::geom_hline(yintercept = 0, linetype = "dashed", colour = "grey50") +
+      ggplot2::geom_hline(yintercept = lnm_ref, linetype = "dotted", colour = "grey72", linewidth = 0.45) +
+      ggplot2::geom_hline(yintercept = 0, linetype = "dashed", colour = "grey40", linewidth = 0.65) +
       ggplot2::geom_point(data = raw,
         ggplot2::aes(x = .data[[m$moderator]], y = yi_lnM_safe, size = precision),
         alpha = 0.22, shape = 21, fill = "#88CCEE", colour = "#0072B2") +
@@ -431,8 +447,10 @@ for (m in all_models) {
         ggplot2::aes(x = .data[[m$moderator]], y = estimate),
         linewidth = 1.1, colour = "#0072B2") +
       ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.3, 4)) +
+      ggplot2::scale_y_continuous(sec.axis = d_axis) +
       ggplot2::labs(x = m$label, y = "lnM",
-                    title = paste("Location --", m$label)) +
+                    title = paste("Location --", m$label),
+                    caption = d_guide_caption) +
       theme_orchard()
 
     p_scl <- ggplot2::ggplot() +

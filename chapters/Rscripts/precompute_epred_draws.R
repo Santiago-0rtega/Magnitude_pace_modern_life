@@ -39,16 +39,8 @@ specs <- list(
        label="Phenotypic vs genetic study", ndraws=1000),
   list(id="m08", kind="categorical",  files="m08_ls_env_change",    mods="env_change",
        label="Environmental-change context", ndraws=1000),
-  list(id="m10", kind="categorical",  files="m10b_ls_transf_data_v2", mods="transf_data_v2",
-       label="Transformation status", ndraws=1000),
   list(id="m11", kind="categorical",  files="m11_ls_data_scale",    mods="data_scale",
-       label="Measurement scale", ndraws=1000),
-  list(id="m12", kind="interaction",  files="m12_ls_years_x_disturbance",
-       preds=c("log10_years","disturbance"),
-       label="Elapsed time (log10 years)", ndraws=400, n_grid=80),
-  list(id="m13", kind="interaction",  files="m13_ls_generations_x_disturbance",
-       preds=c("log10_generations","disturbance"),
-       label="Elapsed time (log10 generations)", ndraws=400, n_grid=80)
+       label="Measurement scale", ndraws=1000)
 )
 
 for (s in specs) {

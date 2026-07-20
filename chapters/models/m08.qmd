@@ -1,6 +1,12 @@
 ---
-title: "Environmental-change context"
+title: "Excluded model: Environmental-change context"
 ---
+
+::: {.callout-warning}
+## Excluded from the primary results
+
+This model did not meet the pre-specified convergence criterion after the corrected generation filter was applied (maximum $\hat{R}=1.0143$, minimum bulk ESS = 780, minimum tail ESS = 663, and zero divergent transitions). It is retained in the appendix for transparency but is excluded from the main results, combined effect tables, and publication figures. Estimates and plots below are diagnostic only and should not be interpreted as primary findings.
+:::
 
 ```{r setup, include=FALSE}
 source(here::here("chapters", "Rscripts", "14_epred_cache.R"))
