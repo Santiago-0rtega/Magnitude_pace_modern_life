@@ -262,9 +262,9 @@ if (file.exists(m00_path) &&
       ggplot2::aes(x = yi_lnM_safe, y = 1, size = precision),
       alpha = 0.20, shape = 21, fill = "#88CCEE", colour = "#0072B2",
       groupOnX = FALSE) +
-    ggplot2::geom_errorbar(
+    ggplot2::geom_linerange(
       ggplot2::aes(y = 1, xmin = int_lo, xmax = int_hi),
-      orientation = "y", width = 0.10, linewidth = 1.5, colour = "grey15") +
+      linewidth = 1.5, colour = "grey15") +
     ggplot2::geom_point(
       ggplot2::aes(x = int_est, y = 1),
       size = 5, shape = 21, fill = "white", colour = "grey10", stroke = 1.2) +
@@ -298,9 +298,9 @@ if (file.exists(m00_path) &&
     ggplot2::geom_linerange(
       ggplot2::aes(y = 1, xmin = sig_lo, xmax = sig_hi),
       linewidth = 3, colour = "white") +
-    ggplot2::geom_errorbar(
+    ggplot2::geom_linerange(
       ggplot2::aes(y = 1, xmin = sig_lo, xmax = sig_hi),
-      orientation = "y", width = 0.10, linewidth = 1.5, colour = "grey15") +
+      linewidth = 1.5, colour = "grey15") +
     ggplot2::geom_point(
       ggplot2::aes(x = sig_est, y = 1),
       size = 5, shape = 21, fill = "white", colour = "grey10", stroke = 1.2) +
@@ -382,9 +382,9 @@ for (m in all_models) {
           ggplot2::geom_linerange(data = ests,
             ggplot2::aes(y = level, xmin = lowerPR, xmax = upperPR),
             linewidth = 0.4, colour = "grey40") } +
-      ggplot2::geom_errorbar(data = ests,
+      ggplot2::geom_linerange(data = ests,
         ggplot2::aes(y = level, xmin = lowerCL, xmax = upperCL),
-        orientation = "y", width = 0.16, linewidth = 1.5, colour = "grey15") +
+        linewidth = 1.5, colour = "grey15") +
       ggplot2::geom_point(data = ests,
         ggplot2::aes(x = estimate, y = level),
         size = 4, shape = 21, fill = "white", colour = "grey10", stroke = 1.2) +
@@ -421,9 +421,9 @@ for (m in all_models) {
       ggplot2::geom_linerange(data = sig_ests,
         ggplot2::aes(y = level, xmin = lowerCL, xmax = upperCL),
         linewidth = 3, colour = "white") +
-      ggplot2::geom_errorbar(data = sig_ests,
+      ggplot2::geom_linerange(data = sig_ests,
         ggplot2::aes(y = level, xmin = lowerCL, xmax = upperCL),
-        orientation = "y", width = 0.16, linewidth = 1.5, colour = "grey15") +
+        linewidth = 1.5, colour = "grey15") +
       ggplot2::geom_point(data = sig_ests,
         ggplot2::aes(x = estimate, y = level),
         size = 4, shape = 21, fill = "white", colour = "grey10", stroke = 1.2) +
