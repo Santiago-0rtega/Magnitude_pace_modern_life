@@ -22,10 +22,6 @@ lnm_ref <- log(d_ref / sqrt(2))
 d_axis <- ggplot2::sec_axis(~ sqrt(2) * exp(.),
   breaks = c(d_ref, sqrt(2)), labels = c("0.2", "0.5", "0.8", "1.41"),
   name = "Approximate |d|")
-d_guide_caption <- paste0(
-  "Dotted guides: |d| = 0.2, 0.5, 0.8; dashed lnM = 0: |d| ≈ 1.41. ",
-  "Approximation assumes large, balanced, independent groups.")
-
 theme_orchard <- function() {
   ggplot2::theme_classic(base_size = 13) +
     ggplot2::theme(
@@ -244,9 +240,7 @@ if (file.exists(m00_path) &&
     ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.3, 4)) +
     ggplot2::scale_x_continuous(sec.axis = d_axis) +
     ggplot2::scale_y_continuous(breaks = NULL) +
-    ggplot2::labs(x = "Location effect (lnM)", y = NULL,
-                  title = "Location -- Overall baseline (m00)",
-                  caption = paste(cap, d_guide_caption, sep = "\n")) +
+    ggplot2::labs(x = "Location effect (lnM)", y = NULL, title = "A)") +
     theme_orchard()
 
   # Scale panel: within-overall residuals vs sigma intercept
@@ -273,14 +267,12 @@ if (file.exists(m00_path) &&
       size = 5, shape = 21, fill = "white", colour = "grey10", stroke = 1.2) +
     ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.3, 4)) +
     ggplot2::scale_y_continuous(breaks = NULL) +
-    ggplot2::labs(x = "residual lnM (SD)",
-                  y = NULL,
-                  title = "Scale -- Overall baseline (m00)",
-                  caption = sprintf("residual SD = %.3f [%.3f, %.3f]",
-                                    sig_est, sig_lo, sig_hi)) +
+    ggplot2::labs(x = "residual lnM (SD)", y = NULL, title = "B)") +
     theme_orchard()
 
-  p_m00_comb <- patchwork::wrap_plots(p_m00_loc, p_m00_scl, ncol = 1)
+  p_m00_comb <- patchwork::wrap_plots(
+    p_m00_loc, p_m00_scl, ncol = 1, guides = "collect"
+  ) & ggplot2::theme(legend.position = "bottom")
 
   save_plot(p_m00_loc,  "m00_orchard_location", width = 9, height = 4)
   save_plot(p_m00_scl,  "m00_orchard_scale",    width = 9, height = 4)
@@ -363,9 +355,7 @@ for (m in all_models) {
       ggplot2::scale_fill_manual(values = colors, guide = "none") +
       ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.4, 4)) +
       ggplot2::scale_x_continuous(sec.axis = d_axis) +
-      ggplot2::labs(x = "Location effect (lnM)", y = NULL,
-                    title = paste("Location --", m$label),
-                    caption = d_guide_caption) +
+      ggplot2::labs(x = "Location effect (lnM)", y = NULL, title = "A)") +
       theme_orchard()
 
     # ---- Scale plot with within-group residuals --------------------------------
@@ -396,12 +386,12 @@ for (m in all_models) {
       ggplot2::scale_colour_manual(values = colors, guide = "none") +
       ggplot2::scale_fill_manual(values = colors, guide = "none") +
       ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.4, 4)) +
-      ggplot2::labs(x = "residual lnM (SD)", y = NULL,
-                    title = paste("Scale --", m$label),
-                    caption = "Bubbles: absolute residual lnM, sized by precision. Trunk = predicted residual SD (sigma).") +
+      ggplot2::labs(x = "residual lnM (SD)", y = NULL, title = "B)") +
       theme_orchard()
 
-    p_comb <- patchwork::wrap_plots(p_loc, p_scl, ncol = 1)
+    p_comb <- patchwork::wrap_plots(
+      p_loc, p_scl, ncol = 1, guides = "collect"
+    ) & ggplot2::theme(legend.position = "bottom")
 
     h <- 2.5 + n_levels * 0.55
     save_plot(p_loc,  paste0(m$id, "_orchard_location"), width = 9, height = max(h, 5))
@@ -448,9 +438,7 @@ for (m in all_models) {
         linewidth = 1.1, colour = "#0072B2") +
       ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.3, 4)) +
       ggplot2::scale_y_continuous(sec.axis = d_axis) +
-      ggplot2::labs(x = m$label, y = "lnM",
-                    title = paste("Location --", m$label),
-                    caption = d_guide_caption) +
+      ggplot2::labs(x = m$label, y = "lnM", title = "A)") +
       theme_orchard()
 
     p_scl <- ggplot2::ggplot() +
@@ -464,12 +452,12 @@ for (m in all_models) {
         ggplot2::aes(x = .data[[m$moderator]], y = estimate),
         linewidth = 1.1, colour = "grey15") +
       ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.3, 4)) +
-      ggplot2::labs(x = m$label, y = "residual lnM (SD)",
-                    title = paste("Scale --", m$label),
-                    caption = "Bubbles: absolute residual lnM, sized by precision. Line/ribbon: predicted residual SD (sigma).") +
+      ggplot2::labs(x = m$label, y = "residual lnM (SD)", title = "B)") +
       theme_orchard()
 
-    p_comb <- patchwork::wrap_plots(p_loc, p_scl, ncol = 1)
+    p_comb <- patchwork::wrap_plots(
+      p_loc, p_scl, ncol = 1, guides = "collect"
+    ) & ggplot2::theme(legend.position = "bottom")
 
     save_plot(p_loc,  paste0(m$id, "_orchard_location"), width = 8, height = 5)
     save_plot(p_scl,  paste0(m$id, "_orchard_scale"),    width = 8, height = 4)
