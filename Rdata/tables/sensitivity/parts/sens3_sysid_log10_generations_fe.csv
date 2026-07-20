@@ -1,0 +1,5 @@
+model_id,moderator,submodel,term,estimate,est_error,q2_5,q97_5
+sens3_sysid_log10_generations,log10_generations,location,Intercept,-0.93724258689625,0.34746969337589606,-2.2058772499999995,-0.3399703000000005
+sens3_sysid_log10_generations,log10_generations,scale,sigma_Intercept,-0.558429202875,0.042370982484440975,-0.64530715,-0.4784666
+sens3_sysid_log10_generations,log10_generations,location,log10_generations,0.261143682875,0.03762575749910531,0.18713987499999998,0.33217195
+sens3_sysid_log10_generations,log10_generations,scale,sigma_log10_generations,-0.0727102263356875,0.02401580757786959,-0.1183336,-0.02393962750000003

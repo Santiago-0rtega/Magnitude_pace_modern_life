@@ -1,0 +1,15 @@
+model_id,moderator,submodel,term,estimate,est_error,q2_5,q97_5
+sens1_n40_disturbance,disturbance,location,Intercept,-1.0393275413275,0.3765493724279941,-1.7922457500000002,-0.3009547
+sens1_n40_disturbance,disturbance,scale,sigma_Intercept,-0.54992411675,0.09877400330497889,-0.74523015,-0.35803700000000005
+sens1_n40_disturbance,disturbance,location,disturbanceHunt_harv,-0.04397338659099375,0.32263383484433683,-0.679384675,0.5911315249999999
+sens1_n40_disturbance,disturbance,location,disturbanceIntroduction,0.261447041908375,0.31814330108155187,-0.363686525,0.8793865749999998
+sens1_n40_disturbance,disturbance,location,disturbanceLandscapechange,0.4564936865627125,0.3600445181708916,-0.22953365,1.1817905
+sens1_n40_disturbance,disturbance,location,disturbanceOther,-0.0668490418575375,0.3202618762786335,-0.6917713499999999,0.5618069749999999
+sens1_n40_disturbance,disturbance,location,disturbancePollution,0.539431562337,0.40848511073136556,-0.253599875,1.3293914999999998
+sens1_n40_disturbance,disturbance,location,disturbanceResponsetointroductions,0.5957164601824125,0.42037520980846366,-0.22494065,1.4231607499999999
+sens1_n40_disturbance,disturbance,scale,sigma_disturbanceHunt_harv,0.228389040640375,0.10305459334152409,0.027228275000000003,0.4313748249999999
+sens1_n40_disturbance,disturbance,scale,sigma_disturbanceIntroduction,-0.087434916287215,0.10096849727053502,-0.2815611,0.10917154999999995
+sens1_n40_disturbance,disturbance,scale,sigma_disturbanceLandscapechange,-0.43806983962375,0.1579191575368874,-0.7533409499999999,-0.13599057500000017
+sens1_n40_disturbance,disturbance,scale,sigma_disturbanceOther,0.108791865810225,0.10365585468242713,-0.09283206,0.31104125
+sens1_n40_disturbance,disturbance,scale,sigma_disturbancePollution,-0.320300997317375,0.21692340678726038,-0.762969225,0.08856922999999989
+sens1_n40_disturbance,disturbance,scale,sigma_disturbanceResponsetointroductions,0.13689164933685374,0.13128251502097177,-0.1157331,0.3951756499999999

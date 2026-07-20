@@ -1,0 +1,17 @@
+model_id,moderator,submodel,term,estimate,est_error,q2_5,q97_5
+sens2_nophylo_trait_type,trait_type,location,Intercept,-1.2931044230375,0.39940304238121055,-2.06393725,-0.5057737000000003
+sens2_nophylo_trait_type,trait_type,scale,sigma_Intercept,-0.35511361953425,0.2523649890806753,-0.8484025,0.1457691249999998
+sens2_nophylo_trait_type,trait_type,location,trait_typegrowth,0.738733109707225,0.4066438229866113,-0.064046995,1.534691
+sens2_nophylo_trait_type,trait_type,location,trait_typeotherLH,0.81451215168,0.40262333527535143,0.021922902500000004,1.6009604999999998
+sens2_nophylo_trait_type,trait_type,location,trait_typeothermorphology,0.6828151950996,0.40218289561258574,-0.11537849999999998,1.4594795
+sens2_nophylo_trait_type,trait_type,location,trait_typephenology,0.671589391834,0.42468407188961443,-0.16810624999999996,1.5090127500000001
+sens2_nophylo_trait_type,trait_type,location,trait_typephysio,0.6118694325175,0.40326889804414345,-0.188727225,1.3900882499999996
+sens2_nophylo_trait_type,trait_type,location,trait_typeresponse,1.10312182150025,0.43380751671524115,0.235096625,1.9566192499999997
+sens2_nophylo_trait_type,trait_type,location,trait_typesize,0.74417190381275,0.40231465753134055,-0.048809954999999974,1.5249407499999996
+sens2_nophylo_trait_type,trait_type,scale,sigma_trait_typegrowth,-0.9807815653375,0.30117292322692285,-1.5770755,-0.4041788
+sens2_nophylo_trait_type,trait_type,scale,sigma_trait_typeotherLH,-0.192459055766375,0.254364531236089,-0.690086175,0.3041230749999994
+sens2_nophylo_trait_type,trait_type,scale,sigma_trait_typeothermorphology,-0.509647205148625,0.2544692228673498,-1.0053115,-0.010450750000000062
+sens2_nophylo_trait_type,trait_type,scale,sigma_trait_typephenology,-0.34735517145025,0.2785011389788222,-0.89762985,0.20725737499999952
+sens2_nophylo_trait_type,trait_type,scale,sigma_trait_typephysio,-0.72226261330325,0.26879965078241025,-1.2480902500000002,-0.19714132500000003
+sens2_nophylo_trait_type,trait_type,scale,sigma_trait_typeresponse,-0.5548765287336125,0.3669323991879488,-1.29423075,0.15901227499999995
+sens2_nophylo_trait_type,trait_type,scale,sigma_trait_typesize,-0.05177808234683,0.25318937594449803,-0.54709045,0.44121834999999987

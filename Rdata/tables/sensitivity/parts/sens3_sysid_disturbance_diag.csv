@@ -1,0 +1,2 @@
+model_id,moderator,max_rhat,min_bulk_ess,min_tail_ess,n_divergent,max_treedepth_hits
+sens3_sysid_disturbance,disturbance,1.005422764239806,646.4318448006529,1311.2248257488188,21,0

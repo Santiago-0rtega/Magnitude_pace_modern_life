@@ -1,0 +1,5 @@
+model_id,moderator,submodel,term,estimate,est_error,q2_5,q97_5
+sens2_nophylo_genphen,genphen,location,Intercept,-0.492475060875,0.06415668449905987,-0.6134607,-0.36441860000000004
+sens2_nophylo_genphen,genphen,scale,sigma_Intercept,-0.8279857595,0.02645285135439575,-0.88129545,-0.7767767000000001
+sens2_nophylo_genphen,genphen,location,genphenPhenotypic,-0.198028481241125,0.06948404087296586,-0.33607,-0.06634534750000001
+sens2_nophylo_genphen,genphen,scale,sigma_genphenPhenotypic,0.336078159375,0.030496193233958645,0.27706615,0.39707982499999994

@@ -1,0 +1,15 @@
+model_id,moderator,submodel,term,estimate,est_error,q2_5,q97_5
+sens3_sysid_disturbance,disturbance,location,Intercept,-0.71443183608,0.2672772528297214,-1.223604,-0.1525801250000003
+sens3_sysid_disturbance,disturbance,scale,sigma_Intercept,-0.8036720055,0.11156488300011488,-1.0355387500000002,-0.5931288750000002
+sens3_sysid_disturbance,disturbance,location,disturbanceHunt_harv,-0.0373752206661375,0.24164109546131649,-0.51022065,0.42852052499999993
+sens3_sysid_disturbance,disturbance,location,disturbanceIntroduction,0.17720988978809124,0.2426970599176267,-0.300197875,0.6520908499999996
+sens3_sysid_disturbance,disturbance,location,disturbanceLandscapechange,0.1524028973261125,0.29557392990015924,-0.433451,0.7283971249999993
+sens3_sysid_disturbance,disturbance,location,disturbanceOther,-0.04347958231335,0.2375745684182744,-0.510013875,0.4196873499999999
+sens3_sysid_disturbance,disturbance,location,disturbancePollution,0.408979249214,0.30550730687333855,-0.19421482499999995,1.0117809999999998
+sens3_sysid_disturbance,disturbance,location,disturbanceResponsetointroductions,0.2585430898680875,0.32998772485451205,-0.40609207499999994,0.8916185999999997
+sens3_sysid_disturbance,disturbance,scale,sigma_disturbanceHunt_harv,0.332066455792375,0.11776489062699275,0.11009295,0.5703378499999999
+sens3_sysid_disturbance,disturbance,scale,sigma_disturbanceIntroduction,0.1268559259289875,0.11318081589089853,-0.086021505,0.3608195999999999
+sens3_sysid_disturbance,disturbance,scale,sigma_disturbanceLandscapechange,-0.331191236626125,0.16332934063806104,-0.6551616499999999,-0.016502012500000093
+sens3_sysid_disturbance,disturbance,scale,sigma_disturbanceOther,0.06683424834637,0.11833067323553804,-0.156596675,0.30860289999999996
+sens3_sysid_disturbance,disturbance,scale,sigma_disturbancePollution,-0.0691922874950125,0.17475766464336812,-0.40979212499999995,0.2743699499999999
+sens3_sysid_disturbance,disturbance,scale,sigma_disturbanceResponsetointroductions,0.3691435633495,0.1359434837300502,0.110095225,0.6426531499999999

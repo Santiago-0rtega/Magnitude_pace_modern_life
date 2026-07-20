@@ -1,0 +1,2 @@
+model_id,moderator,max_rhat,min_bulk_ess,min_tail_ess,n_divergent,max_treedepth_hits
+sens2_nophylo_design,design,1.0107148015286345,576.9592182043476,1348.641696075774,0,0

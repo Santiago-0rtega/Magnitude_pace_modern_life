@@ -1,0 +1,2 @@
+model_id,moderator,max_rhat,min_bulk_ess,min_tail_ess,n_divergent,max_treedepth_hits
+sens1_n40_env_change,env_change,1.01426078156852,543.3583179769107,723.5821007678488,0,0

@@ -1,0 +1,5 @@
+model_id,moderator,submodel,term,estimate,est_error,q2_5,q97_5
+sens2_nophylo_log10_years,log10_years,location,Intercept,-1.0577698245,0.08008602232892771,-1.2138255,-0.9014923750000001
+sens2_nophylo_log10_years,log10_years,scale,sigma_Intercept,-0.339756309,0.03797176872967371,-0.41263555,-0.26518537500000006
+sens2_nophylo_log10_years,log10_years,location,log10_years,0.29281878225,0.035783200082218754,0.22351202499999998,0.36325995
+sens2_nophylo_log10_years,log10_years,scale,sigma_log10_years,-0.1703118138375,0.024548422208663923,-0.21870007500000002,-0.12267752500000001

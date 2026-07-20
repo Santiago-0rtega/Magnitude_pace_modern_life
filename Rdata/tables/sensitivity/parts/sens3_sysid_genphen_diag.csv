@@ -1,0 +1,2 @@
+model_id,moderator,max_rhat,min_bulk_ess,min_tail_ess,n_divergent,max_treedepth_hits
+sens3_sysid_genphen,genphen,1.0062559643168165,742.1598979457561,1867.0816673930433,21,0

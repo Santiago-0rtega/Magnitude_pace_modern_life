@@ -1,0 +1,2 @@
+model_id,moderator,max_rhat,min_bulk_ess,min_tail_ess,n_divergent,max_treedepth_hits
+sens2_nophylo_trait_type,trait_type,1.0070423411874758,459.5112616627056,1130.273382263736,0,0

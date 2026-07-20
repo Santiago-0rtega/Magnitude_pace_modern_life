@@ -1,0 +1,2 @@
+model_id,moderator,max_rhat,min_bulk_ess,min_tail_ess,n_divergent,max_treedepth_hits
+sens2_nophylo_genphen,genphen,1.0068695535227175,359.29937137032834,718.7794996345472,0,0

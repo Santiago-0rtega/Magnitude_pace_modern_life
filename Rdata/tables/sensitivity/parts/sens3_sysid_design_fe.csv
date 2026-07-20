@@ -1,0 +1,5 @@
+model_id,moderator,submodel,term,estimate,est_error,q2_5,q97_5
+sens3_sysid_design,design,location,Intercept,-0.72345053860125,0.20329305053450303,-1.1572505,-0.29303317500000015
+sens3_sysid_design,design,scale,sigma_Intercept,-0.68847766425,0.03763205396653881,-0.76153395,-0.616435275
+sens3_sysid_design,design,location,designSynchronic,0.220362961814,0.08400319283924965,0.057199317500000006,0.38594302499999994
+sens3_sysid_design,design,scale,sigma_designSynchronic,0.014622659411195,0.04175375792168428,-0.06566962499999998,0.095304185

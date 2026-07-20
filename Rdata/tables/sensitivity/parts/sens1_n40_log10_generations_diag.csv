@@ -1,0 +1,2 @@
+model_id,moderator,max_rhat,min_bulk_ess,min_tail_ess,n_divergent,max_treedepth_hits
+sens1_n40_log10_generations,log10_generations,1.0072087935479928,644.5737677582252,1216.6774164572569,0,0

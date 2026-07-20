@@ -1,0 +1,2 @@
+model_id,moderator,max_rhat,min_bulk_ess,min_tail_ess,n_divergent,max_treedepth_hits
+sens2_nophylo_log10_years,log10_years,1.0099474718949335,488.78614579451636,839.3724236538689,0,0

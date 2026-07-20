@@ -1,0 +1,2 @@
+model_id,moderator,max_rhat,min_bulk_ess,min_tail_ess,n_divergent,max_treedepth_hits
+sens3_sysid_design,design,1.0193508572258747,570.5280353475719,1320.7251819632802,6,0

@@ -1,0 +1,15 @@
+model_id,moderator,submodel,term,estimate,est_error,q2_5,q97_5
+sens2_nophylo_disturbance,disturbance,location,Intercept,-0.69240207205,0.17148309433286327,-1.03011,-0.3587612250000002
+sens2_nophylo_disturbance,disturbance,scale,sigma_Intercept,-0.629825401,0.07919687940556526,-0.788080875,-0.4763181
+sens2_nophylo_disturbance,disturbance,location,disturbanceHunt_harv,-0.1202830073383725,0.17013102250218937,-0.44516157500000003,0.21395744999999974
+sens2_nophylo_disturbance,disturbance,location,disturbanceIntroduction,0.1307108290704625,0.18564977454558643,-0.22587600000000002,0.4921020249999998
+sens2_nophylo_disturbance,disturbance,location,disturbanceLandscapechange,0.3122969684975,0.22254558668759117,-0.125628375,0.7611799
+sens2_nophylo_disturbance,disturbance,location,disturbanceOther,-0.1415483789182875,0.16585005835708883,-0.4611976,0.18977059999999996
+sens2_nophylo_disturbance,disturbance,location,disturbancePollution,0.336321066559875,0.24853224868366472,-0.150829625,0.8307737999999999
+sens2_nophylo_disturbance,disturbance,location,disturbanceResponsetointroductions,0.2799758149153125,0.2890494376891599,-0.290897525,0.8454618999999999
+sens2_nophylo_disturbance,disturbance,scale,sigma_disturbanceHunt_harv,0.30771637790625,0.08457483194122836,0.14138942499999999,0.47259442499999993
+sens2_nophylo_disturbance,disturbance,scale,sigma_disturbanceIntroduction,-0.0463522100743875,0.08171607980067337,-0.205882825,0.11589347499999994
+sens2_nophylo_disturbance,disturbance,scale,sigma_disturbanceLandscapechange,-0.4863565693125,0.13946017234710228,-0.760838425,-0.21402302500000003
+sens2_nophylo_disturbance,disturbance,scale,sigma_disturbanceOther,0.09472418577580374,0.08438554003459528,-0.07007081,0.26475819999999994
+sens2_nophylo_disturbance,disturbance,scale,sigma_disturbancePollution,-0.243790058216925,0.15022271707155105,-0.547793025,0.04425232499999988
+sens2_nophylo_disturbance,disturbance,scale,sigma_disturbanceResponsetointroductions,0.194156044421625,0.10962762906139288,-0.018561187499999993,0.4105801999999996

@@ -1,0 +1,2 @@
+model_id,moderator,max_rhat,min_bulk_ess,min_tail_ess,n_divergent,max_treedepth_hits
+sens1_n40_trait_type,trait_type,1.0127444150551717,453.69311493826183,627.4891137304377,133,0

@@ -1,0 +1,5 @@
+model_id,moderator,submodel,term,estimate,est_error,q2_5,q97_5
+sens1_n40_genphen,genphen,location,Intercept,-0.695568299903875,0.2721112388657255,-1.2334427500000003,-0.12006140000000065
+sens1_n40_genphen,genphen,scale,sigma_Intercept,-0.79485679625,0.02989286504426776,-0.8527278,-0.735137925
+sens1_n40_genphen,genphen,location,genphenPhenotypic,-0.200705660227625,0.09396019821435919,-0.385142425,-0.017116820000000012
+sens1_n40_genphen,genphen,scale,sigma_genphenPhenotypic,0.357084209875,0.034566306087990495,0.2891069,0.424549125

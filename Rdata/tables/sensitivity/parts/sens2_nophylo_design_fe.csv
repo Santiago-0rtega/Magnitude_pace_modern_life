@@ -1,0 +1,5 @@
+model_id,moderator,submodel,term,estimate,est_error,q2_5,q97_5
+sens2_nophylo_design,design,location,Intercept,-0.816884191,0.0780511765204971,-0.97026885,-0.6633296
+sens2_nophylo_design,design,scale,sigma_Intercept,-0.4571537425,0.019783704637645408,-0.49571584999999996,-0.41825160000000006
+sens2_nophylo_design,design,location,designSynchronic,0.3203161994375,0.0804217366494181,0.1683008,0.4788476749999997
+sens2_nophylo_design,design,scale,sigma_designSynchronic,-0.21821634325,0.02642315720412227,-0.269509125,-0.16713602500000002

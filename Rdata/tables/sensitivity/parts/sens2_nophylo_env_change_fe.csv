@@ -1,0 +1,5 @@
+model_id,moderator,submodel,term,estimate,est_error,q2_5,q97_5
+sens2_nophylo_env_change,env_change,location,Intercept,-0.589367553875,0.05728121153565951,-0.699542275,-0.47423477500000005
+sens2_nophylo_env_change,env_change,scale,sigma_Intercept,-0.669765894625,0.01705823515483345,-0.703735825,-0.636647925
+sens2_nophylo_env_change,env_change,location,env_changeongoing,0.006074137895425,0.0877822522165314,-0.16433455,0.17891759999999993
+sens2_nophylo_env_change,env_change,scale,sigma_env_changeongoing,0.220067917,0.026576983674079013,0.16623907500000001,0.27171237499999995

@@ -254,7 +254,7 @@ if (file.exists(m00_path) &&
     ggplot2::geom_vline(xintercept = 0, linetype = "dashed", colour = "grey50") +
     ggbeeswarm::geom_quasirandom(data = raw00_sig,
       ggplot2::aes(x = abs_resid, y = 1, size = precision),
-      alpha = 0.20, shape = 21, fill = "#88CCEE", colour = "#0072B2",
+      alpha = 0.24, shape = 21, fill = "#E69F00", colour = "#D55E00",
       groupOnX = FALSE) +
     ggplot2::geom_linerange(
       ggplot2::aes(y = 1, xmin = sig_lo, xmax = sig_hi),
@@ -266,13 +266,15 @@ if (file.exists(m00_path) &&
       ggplot2::aes(x = sig_est, y = 1),
       size = 5, shape = 21, fill = "white", colour = "grey10", stroke = 1.2) +
     ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.3, 4)) +
+    ggplot2::scale_x_continuous(limits = c(0, NA), expand = ggplot2::expansion(mult = c(0, 0.05))) +
     ggplot2::scale_y_continuous(breaks = NULL) +
     ggplot2::labs(x = "residual lnM (SD)", y = NULL, title = "B)") +
     theme_orchard()
 
   p_m00_comb <- patchwork::wrap_plots(
-    p_m00_loc, p_m00_scl, ncol = 1, guides = "collect"
-  ) & ggplot2::theme(legend.position = "bottom")
+    p_m00_loc + ggplot2::theme(legend.position = "none"),
+    p_m00_scl, ncol = 1
+  )
 
   save_plot(p_m00_loc,  "m00_orchard_location", width = 9, height = 4)
   save_plot(p_m00_scl,  "m00_orchard_scale",    width = 9, height = 4)
@@ -386,12 +388,14 @@ for (m in all_models) {
       ggplot2::scale_colour_manual(values = colors, guide = "none") +
       ggplot2::scale_fill_manual(values = colors, guide = "none") +
       ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.4, 4)) +
+      ggplot2::scale_x_continuous(limits = c(0, NA), expand = ggplot2::expansion(mult = c(0, 0.05))) +
       ggplot2::labs(x = "residual lnM (SD)", y = NULL, title = "B)") +
       theme_orchard()
 
     p_comb <- patchwork::wrap_plots(
-      p_loc, p_scl, ncol = 1, guides = "collect"
-    ) & ggplot2::theme(legend.position = "bottom")
+      p_loc + ggplot2::theme(legend.position = "none"),
+      p_scl, ncol = 1
+    )
 
     h <- 2.5 + n_levels * 0.55
     save_plot(p_loc,  paste0(m$id, "_orchard_location"), width = 9, height = max(h, 5))
@@ -452,12 +456,14 @@ for (m in all_models) {
         ggplot2::aes(x = .data[[m$moderator]], y = estimate),
         linewidth = 1.1, colour = "grey15") +
       ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.3, 4)) +
+      ggplot2::scale_y_continuous(limits = c(0, NA), expand = ggplot2::expansion(mult = c(0, 0.05))) +
       ggplot2::labs(x = m$label, y = "residual lnM (SD)", title = "B)") +
       theme_orchard()
 
     p_comb <- patchwork::wrap_plots(
-      p_loc, p_scl, ncol = 1, guides = "collect"
-    ) & ggplot2::theme(legend.position = "bottom")
+      p_loc + ggplot2::theme(legend.position = "none"),
+      p_scl, ncol = 1
+    )
 
     save_plot(p_loc,  paste0(m$id, "_orchard_location"), width = 8, height = 5)
     save_plot(p_scl,  paste0(m$id, "_orchard_scale"),    width = 8, height = 4)
