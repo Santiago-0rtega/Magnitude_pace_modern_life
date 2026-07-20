@@ -250,10 +250,14 @@ if (file.exists(m00_path) &&
     ggplot2::geom_point(
       ggplot2::aes(x = int_est, y = 1),
       size = 5, shape = 21, fill = "white", colour = "grey10", stroke = 1.2) +
+    ggplot2::geom_segment(
+      data = data.frame(x = c(int_lo, int_hi)),
+      ggplot2::aes(x = x, xend = x, y = 0.90, yend = 1.10),
+      inherit.aes = FALSE, linewidth = 1.5, colour = "grey15") +
     ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.3, 4)) +
     ggplot2::scale_x_continuous(sec.axis = d_axis) +
     ggplot2::scale_y_continuous(breaks = NULL) +
-    ggplot2::labs(x = "Location effect (lnM)", y = NULL, title = "A)") +
+    ggplot2::labs(x = "lnM", y = NULL, title = "A)") +
     theme_orchard()
 
   # Scale panel: within-overall residuals vs sigma intercept
@@ -282,6 +286,10 @@ if (file.exists(m00_path) &&
     ggplot2::geom_point(
       ggplot2::aes(x = sig_est, y = 1),
       size = 5, shape = 21, fill = "white", colour = "grey10", stroke = 1.2) +
+    ggplot2::geom_segment(
+      data = data.frame(x = c(sig_lo, sig_hi)),
+      ggplot2::aes(x = x, xend = x, y = 0.90, yend = 1.10),
+      inherit.aes = FALSE, linewidth = 1.5, colour = "grey15") +
     ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.3, 4)) +
     ggplot2::scale_x_continuous(limits = c(0, NA), expand = ggplot2::expansion(mult = c(0, 0.05))) +
     ggplot2::scale_y_continuous(breaks = NULL) +
@@ -372,11 +380,17 @@ for (m in all_models) {
       ggplot2::geom_point(data = ests,
         ggplot2::aes(x = estimate, y = level),
         size = 4, shape = 21, fill = "white", colour = "grey10", stroke = 1.2) +
+      ggplot2::geom_point(data = ests,
+        ggplot2::aes(x = lowerCL, y = level),
+        inherit.aes = FALSE, shape = 124, size = 6, colour = "grey15") +
+      ggplot2::geom_point(data = ests,
+        ggplot2::aes(x = upperCL, y = level),
+        inherit.aes = FALSE, shape = 124, size = 6, colour = "grey15") +
       ggplot2::scale_colour_manual(values = colors, guide = "none") +
       ggplot2::scale_fill_manual(values = colors, guide = "none") +
       ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.4, 4)) +
       ggplot2::scale_x_continuous(sec.axis = d_axis) +
-      ggplot2::labs(x = "Location effect (lnM)", y = NULL, title = "A)") +
+      ggplot2::labs(x = "lnM", y = NULL, title = "A)") +
       theme_orchard()
 
     # ---- Scale plot with within-group residuals --------------------------------
@@ -405,6 +419,12 @@ for (m in all_models) {
       ggplot2::geom_point(data = sig_ests,
         ggplot2::aes(x = estimate, y = level),
         size = 4, shape = 21, fill = "white", colour = "grey10", stroke = 1.2) +
+      ggplot2::geom_point(data = sig_ests,
+        ggplot2::aes(x = lowerCL, y = level),
+        inherit.aes = FALSE, shape = 124, size = 6, colour = "grey15") +
+      ggplot2::geom_point(data = sig_ests,
+        ggplot2::aes(x = upperCL, y = level),
+        inherit.aes = FALSE, shape = 124, size = 6, colour = "grey15") +
       ggplot2::scale_colour_manual(values = colors, guide = "none") +
       ggplot2::scale_fill_manual(values = colors, guide = "none") +
       ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.4, 4)) +
