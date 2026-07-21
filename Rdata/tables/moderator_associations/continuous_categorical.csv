@@ -1,0 +1,11 @@
+estimate,statistic,p_value,continuous,categorical,continuous_label,categorical_label,n,groups,p_holm,stars,tile_label
+0.010643144148034037,77.68091304807534,1.4981697578054763e-18,log10_generations,data_scale,Elapsed generations,Measurement scale,7223,2,2.9963395156109525e-18,***,0.01***
+0.30872911762546246,3231.229931669542,0,log10_generations,design,Elapsed generations,Comparison design,7237,2,0,***,0.31***
+0.402187062002573,810.6806977723628,0,log10_generations,disturbance,Elapsed generations,Disturbance context,7237,7,0,***,0.40***
+0.03278886052036308,245.26951374077035,2.1669834845904584e-54,log10_generations,genphen,Elapsed generations,Study response,7237,2,8.667933938361833e-54,***,0.03***
+0.1940878053131888,248.7085448654315,0,log10_generations,trait_type,Elapsed generations,Trait type,7237,8,0,***,0.19***
+0.00813268851468151,59.2076612309896,1.6073287515354994e-14,log10_years,data_scale,Elapsed years,Measurement scale,7223,2,1.6073287515354994e-14,***,0.01***
+0.23168371953060676,2181.694900152145,0,log10_years,design,Elapsed years,Comparison design,7237,2,0,***,0.23***
+0.22601131742714775,351.8703097755935,0,log10_years,disturbance,Elapsed years,Disturbance context,7237,7,0,***,0.23***
+0.014161969250891922,103.93375416075746,3.0493310751562486e-24,log10_years,genphen,Elapsed years,Study response,7237,2,9.147993225468745e-24,***,0.01***
+0.06469861476883396,71.43706274014153,2.5711648942541867e-100,log10_years,trait_type,Elapsed years,Trait type,7237,8,1.2855824471270934e-99,***,0.06***

@@ -21,6 +21,7 @@ book:
         - chapters/01_data_preparation.qmd
         - chapters/02_lnm_effect_sizes.qmd
         - chapters/03_descriptive_summaries.qmd
+        - chapters/03b_moderator_associations.qmd
     - part: "Non-independence"
       chapters:
         - chapters/04_dependency_structure.qmd
