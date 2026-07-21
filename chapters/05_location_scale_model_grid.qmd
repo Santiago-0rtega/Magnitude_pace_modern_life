@@ -81,7 +81,7 @@ if (!is.null(A_full)) {
 # Apply the prepR4pcm name map to dat_es ONCE here, adding sp_ncbi_canonical.
 # prepare_phylo_and_data() will use this column to match rows to A.
 # Rows whose sp_ncbi had no canonical match get NA in sp_ncbi_canonical and
-# are excluded from the phylogenetic term (but not from other random effects).
+# are excluded from the complete primary-model dataset before fitting.
 if (!is.null(name_map)) {
   dat_es <- apply_phylo_name_map(dat_es, name_map)
   n_resolved <- sum(!is.na(dat_es$sp_ncbi_canonical))

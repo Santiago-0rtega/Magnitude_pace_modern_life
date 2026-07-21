@@ -924,7 +924,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>A_full     <span class="ot">&lt;-</span> phylo_out<span class="sc">$</span>A</span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>name_map   <span class="ot">&lt;-</span> phylo_out<span class="sc">$</span>name_map</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>tree_final <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(<span class="fu">readRDS</span>(tree_path), <span class="at">error =</span> <span class="cf">function</span>(e) <span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>tree_final <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(<span class="fu">readRDS</span>(tree_path), <span class="at">error =</span> <span class="cf">function</span>(e) <span class="cn">NULL</span>)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the current effect-size dataset for reported analysis counts. The cached</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co"># scaffold can contain tips from an earlier, larger data snapshot.</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>dat_es <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"effect_sizes"</span>, <span class="st">"proceed_lnm_safe.rds"</span>))</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>dat_mapped <span class="ot">&lt;-</span> <span class="fu">apply_phylo_name_map</span>(dat_es, name_map)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -933,48 +938,76 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>n_total      <span class="ot">&lt;-</span> <span class="fu">nrow</span>(name_map)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>n_resolved   <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(name_map<span class="sc">$</span>sp_ncbi_canonical) <span class="sc">&amp;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">nzchar</span>(name_map<span class="sc">$</span>sp_ncbi_canonical))</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>n_unresolved <span class="ot">&lt;-</span> n_total <span class="sc">-</span> n_resolved</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>n_tips       <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(tree_final)) <span class="fu">length</span>(tree_final<span class="sc">$</span>tip.label) <span class="cf">else</span> <span class="fu">nrow</span>(A_full)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">Metric =</span> <span class="fu">c</span>(</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Unique species names submitted"</span>,</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Reconciled to a canonical taxon"</span>,</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Unresolved (excluded from phylogenetic term)"</span>,</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Unique tips in pruned tree / rows in A"</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">N =</span> <span class="fu">c</span>(n_total, n_resolved, n_unresolved, n_tips),</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">%</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="fu">c</span>(n_total, n_resolved, n_unresolved, n_tips) <span class="sc">/</span> n_total, <span class="dv">1</span>)</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>raw_species <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">as.character</span>(dat_mapped<span class="sc">$</span>sp_ncbi))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>raw_species <span class="ot">&lt;-</span> raw_species[<span class="sc">!</span><span class="fu">is.na</span>(raw_species) <span class="sc">&amp;</span> <span class="fu">nzchar</span>(<span class="fu">trimws</span>(raw_species))]</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>current_map <span class="ot">&lt;-</span> name_map <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(sp_ncbi_original <span class="sc">%in%</span> raw_species)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>current_canonical <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">as.character</span>(dat_mapped<span class="sc">$</span>sp_ncbi_canonical))</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>current_canonical <span class="ot">&lt;-</span> current_canonical[</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="sc">!</span><span class="fu">is.na</span>(current_canonical) <span class="sc">&amp;</span> <span class="fu">nzchar</span>(current_canonical)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>n_current_names <span class="ot">&lt;-</span> <span class="fu">length</span>(raw_species)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>n_current_resolved_names <span class="ot">&lt;-</span> <span class="fu">sum</span>(</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="sc">!</span><span class="fu">is.na</span>(current_map<span class="sc">$</span>sp_ncbi_canonical) <span class="sc">&amp;</span> <span class="fu">nzchar</span>(current_map<span class="sc">$</span>sp_ncbi_canonical)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>n_current_unresolved_names <span class="ot">&lt;-</span> n_current_names <span class="sc">-</span> n_current_resolved_names</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>n_current_tips <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">intersect</span>(current_canonical, <span class="fu">rownames</span>(A_full)))</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>n_cached_tips <span class="ot">&lt;-</span> <span class="fu">nrow</span>(A_full)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">Metric =</span> <span class="fu">c</span>(</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Named species in current effect-size dataset"</span>,</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Current names reconciled by cached map"</span>,</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Current names unresolved"</span>,</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Canonical species used by current models"</span>,</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Contrasts used by current models"</span>,</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Contrasts excluded because species was unresolved"</span>,</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">"All tips in cached A matrix"</span>,</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Cached A tips unused by current dataset"</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">N =</span> <span class="fu">c</span>(</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    n_current_names, n_current_resolved_names, n_current_unresolved_names,</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    n_current_tips,</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(dat_mapped<span class="sc">$</span>sp_ncbi_canonical)),</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>(<span class="fu">is.na</span>(dat_mapped<span class="sc">$</span>sp_ncbi_canonical)),</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    n_cached_tips,</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">length</span>(<span class="fu">setdiff</span>(<span class="fu">rownames</span>(A_full), current_canonical))</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>  <span class="at">Denominator =</span> <span class="fu">c</span>(</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">"current species names"</span>, <span class="st">"current species names"</span>, <span class="st">"current species names"</span>,</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">"canonical species"</span>, <span class="st">"current contrasts"</span>, <span class="st">"current contrasts"</span>,</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cached scaffold"</span>, <span class="st">"cached scaffold"</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["Metric"],"name":[1],"type":["chr"],"align":["left"]},{"label":["N"],"name":[2],"type":["int"],"align":["right"]},{"label":["%"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Unique species names submitted","2":"281","3":"100.0"},{"1":"Reconciled to a canonical taxon","2":"274","3":"97.5"},{"1":"Unresolved (excluded from phylogenetic term)","2":"7","3":"2.5"},{"1":"Unique tips in pruned tree / rows in A","2":"265","3":"94.3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Metric"],"name":[1],"type":["chr"],"align":["left"]},{"label":["N"],"name":[2],"type":["int"],"align":["right"]},{"label":["Denominator"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"Named species in current effect-size dataset","2":"267","3":"current species names"},{"1":"Current names reconciled by cached map","2":"261","3":"current species names"},{"1":"Current names unresolved","2":"6","3":"current species names"},{"1":"Canonical species used by current models","2":"253","3":"canonical species"},{"1":"Contrasts used by current models","2":"7186","3":"current contrasts"},{"1":"Contrasts excluded because species was unresolved","2":"51","3":"current contrasts"},{"1":"All tips in cached A matrix","2":"265","3":"cached scaffold"},{"1":"Cached A tips unused by current dataset","2":"12","3":"cached scaffold"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
+<p>The first six rows describe the current analysis and match the species and contrast counts in the Dependency structure chapter. The final two rows describe the cached phylogenetic scaffold. It is larger because it retains tips for species no longer represented in the current effect-size dataset; unused tips are removed when <code>A</code> is subset for a model.</p>
 </section>
 <section id="unmatched-species" class="level2" data-number="7.6">
 <h2 data-number="7.6" class="anchored" data-anchor-id="unmatched-species"><span class="header-section-number">7.6</span> Unmatched species</h2>
-<p>These species names could not be reconciled to a tree tip at any stage of the cascade (exact, normalized, synonym via GNVerifier, or fuzzy) and are therefore excluded from the phylogenetic random effect. They are retained in every other random effect.</p>
+<p>These current species names could not be reconciled to a tree tip at any stage of the cached cascade (exact, normalized, synonym via GNVerifier, or fuzzy). Because primary models require the phylogenetic term, their contrasts are excluded from the complete fitted row set before model fitting.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(unmatched_path)) {</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(unmatched_path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"No unmatched-species file found — all species were resolved.</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(unmatched_path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(sp_ncbi_original <span class="sc">%in%</span> raw_species)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"No unmatched-species file found — all species were resolved.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["sp_ncbi_original"],"name":[1],"type":["chr"],"align":["left"]},{"label":["sp_ncbi_canonical"],"name":[2],"type":["lgl"],"align":["right"]}],"data":[{"1":"Drepanis coccinea","2":"NA"},{"1":"Pelophylax lessonae/ridibundus","2":"NA"},{"1":"Peromyscus leucopus noveboracensis","2":"NA"},{"1":"Neogale frenata","2":"NA"},{"1":"Neogale vison","2":"NA"},{"1":"Raphanus raphanistrum X Raphanus sativus","2":"NA"},{"1":"Eriocoma occidentalis","2":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["sp_ncbi_original"],"name":[1],"type":["chr"],"align":["left"]},{"label":["sp_ncbi_canonical"],"name":[2],"type":["lgl"],"align":["right"]}],"data":[{"1":"Drepanis coccinea","2":"NA"},{"1":"Pelophylax lessonae/ridibundus","2":"NA"},{"1":"Peromyscus<U+00A0>leucopus<U+00A0>noveboracensis","2":"NA"},{"1":"Neogale frenata","2":"NA"},{"1":"Neogale vison","2":"NA"},{"1":"Raphanus raphanistrum X Raphanus sativus","2":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -982,7 +1015,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="species-retained-but-absent-from-the-tree-star-species" class="level2" data-number="7.7">
 <h2 data-number="7.7" class="anchored" data-anchor-id="species-retained-but-absent-from-the-tree-star-species"><span class="header-section-number">7.7</span> Species retained but absent from the tree (“star” species)</h2>
-<p>A separate, smaller category of row loss can occur <em>inside</em> an individual model: a species can be reconciled to a canonical name (and so appear in <code>name_map</code>) but still be absent from the tree subset used to build <code>A</code> for a particular moderator’s data. <code>prepare_phylo_and_data()</code>, called once per model in the location–scale model grid, assigns these species zero phylogenetic correlation with every other species — a star-phylogeny contribution — rather than dropping them. See the Dependency structure chapter for the per-contrast accounting of this.</p>
+<p>A separate, smaller category of row loss can occur <em>inside</em> an individual model: a species can be reconciled to a canonical name (and so appear in <code>name_map</code>) but still be absent from the tree subset used to build <code>A</code> for a particular moderator’s data. <code>prepare_phylo_and_data()</code>, called once per model in the location–scale model grid, assigns these species zero phylogenetic correlation with every other species — a star-phylogeny contribution — rather than dropping them. See the Dependency structure chapter for the per-contrast accounting of this. This applies only to a non-missing canonical name absent from <code>A</code>; it does not apply to an unresolved original name. The current data contain 0 star species.</p>
 </section>
 <section id="phylogenetic-correlation-matrix-summary" class="level2" data-number="7.8">
 <h2 data-number="7.8" class="anchored" data-anchor-id="phylogenetic-correlation-matrix-summary"><span class="header-section-number">7.8</span> Phylogenetic correlation matrix — summary</h2>
@@ -993,7 +1026,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"A matrix dimensions:"</span>, <span class="fu">nrow</span>(A_full), <span class="st">"×"</span>, <span class="fu">ncol</span>(A_full), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>A matrix dimensions: 265 × 265 </code></pre>
+<pre><code>A matrix dimensions: 265 &lt;U+00D7&gt; 265 </code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -1876,63 +1909,103 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-385"><a href="#cb11-385" aria-hidden="true" tabindex="-1"></a>A_full     <span class="ot">&lt;-</span> phylo_out<span class="sc">$</span>A</span>
 <span id="cb11-386"><a href="#cb11-386" aria-hidden="true" tabindex="-1"></a>name_map   <span class="ot">&lt;-</span> phylo_out<span class="sc">$</span>name_map</span>
 <span id="cb11-387"><a href="#cb11-387" aria-hidden="true" tabindex="-1"></a>tree_final <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(<span class="fu">readRDS</span>(tree_path), <span class="at">error =</span> <span class="cf">function</span>(e) <span class="cn">NULL</span>)</span>
-<span id="cb11-388"><a href="#cb11-388" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-389"><a href="#cb11-389" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-390"><a href="#cb11-390" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reconciliation summary</span></span>
-<span id="cb11-391"><a href="#cb11-391" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-392"><a href="#cb11-392" aria-hidden="true" tabindex="-1"></a><span class="in">```{r reconciliation-summary}</span></span>
-<span id="cb11-393"><a href="#cb11-393" aria-hidden="true" tabindex="-1"></a>n_total      <span class="ot">&lt;-</span> <span class="fu">nrow</span>(name_map)</span>
-<span id="cb11-394"><a href="#cb11-394" aria-hidden="true" tabindex="-1"></a>n_resolved   <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(name_map<span class="sc">$</span>sp_ncbi_canonical) <span class="sc">&amp;</span></span>
-<span id="cb11-395"><a href="#cb11-395" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">nzchar</span>(name_map<span class="sc">$</span>sp_ncbi_canonical))</span>
-<span id="cb11-396"><a href="#cb11-396" aria-hidden="true" tabindex="-1"></a>n_unresolved <span class="ot">&lt;-</span> n_total <span class="sc">-</span> n_resolved</span>
-<span id="cb11-397"><a href="#cb11-397" aria-hidden="true" tabindex="-1"></a>n_tips       <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(tree_final)) <span class="fu">length</span>(tree_final<span class="sc">$</span>tip.label) <span class="cf">else</span> <span class="fu">nrow</span>(A_full)</span>
-<span id="cb11-398"><a href="#cb11-398" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-399"><a href="#cb11-399" aria-hidden="true" tabindex="-1"></a>tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb11-400"><a href="#cb11-400" aria-hidden="true" tabindex="-1"></a>  <span class="at">Metric =</span> <span class="fu">c</span>(</span>
-<span id="cb11-401"><a href="#cb11-401" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Unique species names submitted"</span>,</span>
-<span id="cb11-402"><a href="#cb11-402" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Reconciled to a canonical taxon"</span>,</span>
-<span id="cb11-403"><a href="#cb11-403" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Unresolved (excluded from phylogenetic term)"</span>,</span>
-<span id="cb11-404"><a href="#cb11-404" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Unique tips in pruned tree / rows in A"</span></span>
-<span id="cb11-405"><a href="#cb11-405" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb11-406"><a href="#cb11-406" aria-hidden="true" tabindex="-1"></a>  <span class="at">N =</span> <span class="fu">c</span>(n_total, n_resolved, n_unresolved, n_tips),</span>
-<span id="cb11-407"><a href="#cb11-407" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">%</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="fu">c</span>(n_total, n_resolved, n_unresolved, n_tips) <span class="sc">/</span> n_total, <span class="dv">1</span>)</span>
-<span id="cb11-408"><a href="#cb11-408" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb11-409"><a href="#cb11-409" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-410"><a href="#cb11-410" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-411"><a href="#cb11-411" aria-hidden="true" tabindex="-1"></a><span class="fu">## Unmatched species</span></span>
-<span id="cb11-412"><a href="#cb11-412" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-413"><a href="#cb11-413" aria-hidden="true" tabindex="-1"></a>These species names could not be reconciled to a tree tip at any stage of the</span>
-<span id="cb11-414"><a href="#cb11-414" aria-hidden="true" tabindex="-1"></a>cascade (exact, normalized, synonym via GNVerifier, or fuzzy) and are</span>
-<span id="cb11-415"><a href="#cb11-415" aria-hidden="true" tabindex="-1"></a>therefore excluded from the phylogenetic random effect. They are retained in</span>
-<span id="cb11-416"><a href="#cb11-416" aria-hidden="true" tabindex="-1"></a>every other random effect.</span>
-<span id="cb11-417"><a href="#cb11-417" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-418"><a href="#cb11-418" aria-hidden="true" tabindex="-1"></a><span class="in">```{r unmatched-table}</span></span>
-<span id="cb11-419"><a href="#cb11-419" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(unmatched_path)) {</span>
-<span id="cb11-420"><a href="#cb11-420" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(unmatched_path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb11-421"><a href="#cb11-421" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb11-422"><a href="#cb11-422" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"No unmatched-species file found — all species were resolved.</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb11-423"><a href="#cb11-423" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb11-424"><a href="#cb11-424" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-425"><a href="#cb11-425" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-426"><a href="#cb11-426" aria-hidden="true" tabindex="-1"></a><span class="fu">## Species retained but absent from the tree ("star" species)</span></span>
-<span id="cb11-427"><a href="#cb11-427" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-428"><a href="#cb11-428" aria-hidden="true" tabindex="-1"></a>A separate, smaller category of row loss can occur *inside* an individual</span>
-<span id="cb11-429"><a href="#cb11-429" aria-hidden="true" tabindex="-1"></a>model: a species can be reconciled to a canonical name (and so appear in</span>
-<span id="cb11-430"><a href="#cb11-430" aria-hidden="true" tabindex="-1"></a><span class="in">`name_map`</span>) but still be absent from the tree subset used to build <span class="in">`A`</span> for a</span>
-<span id="cb11-431"><a href="#cb11-431" aria-hidden="true" tabindex="-1"></a>particular moderator's data. <span class="in">`prepare_phylo_and_data()`</span>, called once per model</span>
-<span id="cb11-432"><a href="#cb11-432" aria-hidden="true" tabindex="-1"></a>in the location–scale model grid, assigns these species zero phylogenetic</span>
-<span id="cb11-433"><a href="#cb11-433" aria-hidden="true" tabindex="-1"></a>correlation with every other species — a star-phylogeny contribution — rather</span>
-<span id="cb11-434"><a href="#cb11-434" aria-hidden="true" tabindex="-1"></a>than dropping them. See the Dependency structure chapter for the per-contrast</span>
-<span id="cb11-435"><a href="#cb11-435" aria-hidden="true" tabindex="-1"></a>accounting of this.</span>
-<span id="cb11-436"><a href="#cb11-436" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-437"><a href="#cb11-437" aria-hidden="true" tabindex="-1"></a><span class="fu">## Phylogenetic correlation matrix — summary</span></span>
-<span id="cb11-438"><a href="#cb11-438" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-439"><a href="#cb11-439" aria-hidden="true" tabindex="-1"></a><span class="in">```{r a-matrix-summary}</span></span>
-<span id="cb11-440"><a href="#cb11-440" aria-hidden="true" tabindex="-1"></a>off_diag <span class="ot">&lt;-</span> A_full[<span class="fu">row</span>(A_full) <span class="sc">!=</span> <span class="fu">col</span>(A_full)]</span>
-<span id="cb11-441"><a href="#cb11-441" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"A matrix dimensions:"</span>, <span class="fu">nrow</span>(A_full), <span class="st">"×"</span>, <span class="fu">ncol</span>(A_full), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb11-442"><a href="#cb11-442" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Off-diagonal correlation range: ["</span>,</span>
-<span id="cb11-443"><a href="#cb11-443" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">min</span>(off_diag), <span class="dv">3</span>), <span class="st">", "</span>, <span class="fu">round</span>(<span class="fu">max</span>(off_diag), <span class="dv">3</span>), <span class="st">"]</span><span class="sc">\n</span><span class="st">"</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
-<span id="cb11-444"><a href="#cb11-444" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb11-388"><a href="#cb11-388" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-389"><a href="#cb11-389" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the current effect-size dataset for reported analysis counts. The cached</span></span>
+<span id="cb11-390"><a href="#cb11-390" aria-hidden="true" tabindex="-1"></a><span class="co"># scaffold can contain tips from an earlier, larger data snapshot.</span></span>
+<span id="cb11-391"><a href="#cb11-391" aria-hidden="true" tabindex="-1"></a>dat_es <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"effect_sizes"</span>, <span class="st">"proceed_lnm_safe.rds"</span>))</span>
+<span id="cb11-392"><a href="#cb11-392" aria-hidden="true" tabindex="-1"></a>dat_mapped <span class="ot">&lt;-</span> <span class="fu">apply_phylo_name_map</span>(dat_es, name_map)</span>
+<span id="cb11-393"><a href="#cb11-393" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-394"><a href="#cb11-394" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-395"><a href="#cb11-395" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reconciliation summary</span></span>
+<span id="cb11-396"><a href="#cb11-396" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-397"><a href="#cb11-397" aria-hidden="true" tabindex="-1"></a><span class="in">```{r reconciliation-summary}</span></span>
+<span id="cb11-398"><a href="#cb11-398" aria-hidden="true" tabindex="-1"></a>raw_species <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">as.character</span>(dat_mapped<span class="sc">$</span>sp_ncbi))</span>
+<span id="cb11-399"><a href="#cb11-399" aria-hidden="true" tabindex="-1"></a>raw_species <span class="ot">&lt;-</span> raw_species[<span class="sc">!</span><span class="fu">is.na</span>(raw_species) <span class="sc">&amp;</span> <span class="fu">nzchar</span>(<span class="fu">trimws</span>(raw_species))]</span>
+<span id="cb11-400"><a href="#cb11-400" aria-hidden="true" tabindex="-1"></a>current_map <span class="ot">&lt;-</span> name_map <span class="sc">|&gt;</span></span>
+<span id="cb11-401"><a href="#cb11-401" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(sp_ncbi_original <span class="sc">%in%</span> raw_species)</span>
+<span id="cb11-402"><a href="#cb11-402" aria-hidden="true" tabindex="-1"></a>current_canonical <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">as.character</span>(dat_mapped<span class="sc">$</span>sp_ncbi_canonical))</span>
+<span id="cb11-403"><a href="#cb11-403" aria-hidden="true" tabindex="-1"></a>current_canonical <span class="ot">&lt;-</span> current_canonical[</span>
+<span id="cb11-404"><a href="#cb11-404" aria-hidden="true" tabindex="-1"></a>  <span class="sc">!</span><span class="fu">is.na</span>(current_canonical) <span class="sc">&amp;</span> <span class="fu">nzchar</span>(current_canonical)</span>
+<span id="cb11-405"><a href="#cb11-405" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb11-406"><a href="#cb11-406" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-407"><a href="#cb11-407" aria-hidden="true" tabindex="-1"></a>n_current_names <span class="ot">&lt;-</span> <span class="fu">length</span>(raw_species)</span>
+<span id="cb11-408"><a href="#cb11-408" aria-hidden="true" tabindex="-1"></a>n_current_resolved_names <span class="ot">&lt;-</span> <span class="fu">sum</span>(</span>
+<span id="cb11-409"><a href="#cb11-409" aria-hidden="true" tabindex="-1"></a>  <span class="sc">!</span><span class="fu">is.na</span>(current_map<span class="sc">$</span>sp_ncbi_canonical) <span class="sc">&amp;</span> <span class="fu">nzchar</span>(current_map<span class="sc">$</span>sp_ncbi_canonical)</span>
+<span id="cb11-410"><a href="#cb11-410" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-411"><a href="#cb11-411" aria-hidden="true" tabindex="-1"></a>n_current_unresolved_names <span class="ot">&lt;-</span> n_current_names <span class="sc">-</span> n_current_resolved_names</span>
+<span id="cb11-412"><a href="#cb11-412" aria-hidden="true" tabindex="-1"></a>n_current_tips <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">intersect</span>(current_canonical, <span class="fu">rownames</span>(A_full)))</span>
+<span id="cb11-413"><a href="#cb11-413" aria-hidden="true" tabindex="-1"></a>n_cached_tips <span class="ot">&lt;-</span> <span class="fu">nrow</span>(A_full)</span>
+<span id="cb11-414"><a href="#cb11-414" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-415"><a href="#cb11-415" aria-hidden="true" tabindex="-1"></a>tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb11-416"><a href="#cb11-416" aria-hidden="true" tabindex="-1"></a>  <span class="at">Metric =</span> <span class="fu">c</span>(</span>
+<span id="cb11-417"><a href="#cb11-417" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Named species in current effect-size dataset"</span>,</span>
+<span id="cb11-418"><a href="#cb11-418" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Current names reconciled by cached map"</span>,</span>
+<span id="cb11-419"><a href="#cb11-419" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Current names unresolved"</span>,</span>
+<span id="cb11-420"><a href="#cb11-420" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Canonical species used by current models"</span>,</span>
+<span id="cb11-421"><a href="#cb11-421" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Contrasts used by current models"</span>,</span>
+<span id="cb11-422"><a href="#cb11-422" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Contrasts excluded because species was unresolved"</span>,</span>
+<span id="cb11-423"><a href="#cb11-423" aria-hidden="true" tabindex="-1"></a>    <span class="st">"All tips in cached A matrix"</span>,</span>
+<span id="cb11-424"><a href="#cb11-424" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Cached A tips unused by current dataset"</span></span>
+<span id="cb11-425"><a href="#cb11-425" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb11-426"><a href="#cb11-426" aria-hidden="true" tabindex="-1"></a>  <span class="at">N =</span> <span class="fu">c</span>(</span>
+<span id="cb11-427"><a href="#cb11-427" aria-hidden="true" tabindex="-1"></a>    n_current_names, n_current_resolved_names, n_current_unresolved_names,</span>
+<span id="cb11-428"><a href="#cb11-428" aria-hidden="true" tabindex="-1"></a>    n_current_tips,</span>
+<span id="cb11-429"><a href="#cb11-429" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(dat_mapped<span class="sc">$</span>sp_ncbi_canonical)),</span>
+<span id="cb11-430"><a href="#cb11-430" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>(<span class="fu">is.na</span>(dat_mapped<span class="sc">$</span>sp_ncbi_canonical)),</span>
+<span id="cb11-431"><a href="#cb11-431" aria-hidden="true" tabindex="-1"></a>    n_cached_tips,</span>
+<span id="cb11-432"><a href="#cb11-432" aria-hidden="true" tabindex="-1"></a>    <span class="fu">length</span>(<span class="fu">setdiff</span>(<span class="fu">rownames</span>(A_full), current_canonical))</span>
+<span id="cb11-433"><a href="#cb11-433" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb11-434"><a href="#cb11-434" aria-hidden="true" tabindex="-1"></a>  <span class="at">Denominator =</span> <span class="fu">c</span>(</span>
+<span id="cb11-435"><a href="#cb11-435" aria-hidden="true" tabindex="-1"></a>    <span class="st">"current species names"</span>, <span class="st">"current species names"</span>, <span class="st">"current species names"</span>,</span>
+<span id="cb11-436"><a href="#cb11-436" aria-hidden="true" tabindex="-1"></a>    <span class="st">"canonical species"</span>, <span class="st">"current contrasts"</span>, <span class="st">"current contrasts"</span>,</span>
+<span id="cb11-437"><a href="#cb11-437" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cached scaffold"</span>, <span class="st">"cached scaffold"</span></span>
+<span id="cb11-438"><a href="#cb11-438" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-439"><a href="#cb11-439" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-440"><a href="#cb11-440" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-441"><a href="#cb11-441" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-442"><a href="#cb11-442" aria-hidden="true" tabindex="-1"></a>The first six rows describe the current analysis and match the species and</span>
+<span id="cb11-443"><a href="#cb11-443" aria-hidden="true" tabindex="-1"></a>contrast counts in the Dependency structure chapter. The final two rows</span>
+<span id="cb11-444"><a href="#cb11-444" aria-hidden="true" tabindex="-1"></a>describe the cached phylogenetic scaffold. It is larger because it retains</span>
+<span id="cb11-445"><a href="#cb11-445" aria-hidden="true" tabindex="-1"></a>tips for species no longer represented in the current effect-size dataset;</span>
+<span id="cb11-446"><a href="#cb11-446" aria-hidden="true" tabindex="-1"></a>unused tips are removed when <span class="in">`A`</span> is subset for a model.</span>
+<span id="cb11-447"><a href="#cb11-447" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-448"><a href="#cb11-448" aria-hidden="true" tabindex="-1"></a><span class="fu">## Unmatched species</span></span>
+<span id="cb11-449"><a href="#cb11-449" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-450"><a href="#cb11-450" aria-hidden="true" tabindex="-1"></a>These current species names could not be reconciled to a tree tip at any stage</span>
+<span id="cb11-451"><a href="#cb11-451" aria-hidden="true" tabindex="-1"></a>of the cached cascade (exact, normalized, synonym via GNVerifier, or fuzzy).</span>
+<span id="cb11-452"><a href="#cb11-452" aria-hidden="true" tabindex="-1"></a>Because primary models require the phylogenetic term, their contrasts are</span>
+<span id="cb11-453"><a href="#cb11-453" aria-hidden="true" tabindex="-1"></a>excluded from the complete fitted row set before model fitting.</span>
+<span id="cb11-454"><a href="#cb11-454" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-455"><a href="#cb11-455" aria-hidden="true" tabindex="-1"></a><span class="in">```{r unmatched-table}</span></span>
+<span id="cb11-456"><a href="#cb11-456" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(unmatched_path)) {</span>
+<span id="cb11-457"><a href="#cb11-457" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(unmatched_path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-458"><a href="#cb11-458" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(sp_ncbi_original <span class="sc">%in%</span> raw_species)</span>
+<span id="cb11-459"><a href="#cb11-459" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb11-460"><a href="#cb11-460" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"No unmatched-species file found — all species were resolved.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb11-461"><a href="#cb11-461" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-462"><a href="#cb11-462" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-463"><a href="#cb11-463" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-464"><a href="#cb11-464" aria-hidden="true" tabindex="-1"></a><span class="fu">## Species retained but absent from the tree ("star" species)</span></span>
+<span id="cb11-465"><a href="#cb11-465" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-466"><a href="#cb11-466" aria-hidden="true" tabindex="-1"></a>A separate, smaller category of row loss can occur *inside* an individual</span>
+<span id="cb11-467"><a href="#cb11-467" aria-hidden="true" tabindex="-1"></a>model: a species can be reconciled to a canonical name (and so appear in</span>
+<span id="cb11-468"><a href="#cb11-468" aria-hidden="true" tabindex="-1"></a><span class="in">`name_map`</span>) but still be absent from the tree subset used to build <span class="in">`A`</span> for a</span>
+<span id="cb11-469"><a href="#cb11-469" aria-hidden="true" tabindex="-1"></a>particular moderator's data. <span class="in">`prepare_phylo_and_data()`</span>, called once per model</span>
+<span id="cb11-470"><a href="#cb11-470" aria-hidden="true" tabindex="-1"></a>in the location–scale model grid, assigns these species zero phylogenetic</span>
+<span id="cb11-471"><a href="#cb11-471" aria-hidden="true" tabindex="-1"></a>correlation with every other species — a star-phylogeny contribution — rather</span>
+<span id="cb11-472"><a href="#cb11-472" aria-hidden="true" tabindex="-1"></a>than dropping them. See the Dependency structure chapter for the per-contrast</span>
+<span id="cb11-473"><a href="#cb11-473" aria-hidden="true" tabindex="-1"></a>accounting of this. This applies only to a non-missing canonical name absent</span>
+<span id="cb11-474"><a href="#cb11-474" aria-hidden="true" tabindex="-1"></a>from <span class="in">`A`</span>; it does not apply to an unresolved original name. The current data</span>
+<span id="cb11-475"><a href="#cb11-475" aria-hidden="true" tabindex="-1"></a>contain <span class="in">`r length(setdiff(current_canonical, rownames(A_full)))`</span> star species.</span>
+<span id="cb11-476"><a href="#cb11-476" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-477"><a href="#cb11-477" aria-hidden="true" tabindex="-1"></a><span class="fu">## Phylogenetic correlation matrix — summary</span></span>
+<span id="cb11-478"><a href="#cb11-478" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-479"><a href="#cb11-479" aria-hidden="true" tabindex="-1"></a><span class="in">```{r a-matrix-summary}</span></span>
+<span id="cb11-480"><a href="#cb11-480" aria-hidden="true" tabindex="-1"></a>off_diag <span class="ot">&lt;-</span> A_full[<span class="fu">row</span>(A_full) <span class="sc">!=</span> <span class="fu">col</span>(A_full)]</span>
+<span id="cb11-481"><a href="#cb11-481" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"A matrix dimensions:"</span>, <span class="fu">nrow</span>(A_full), <span class="st">"×"</span>, <span class="fu">ncol</span>(A_full), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb11-482"><a href="#cb11-482" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Off-diagonal correlation range: ["</span>,</span>
+<span id="cb11-483"><a href="#cb11-483" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">min</span>(off_diag), <span class="dv">3</span>), <span class="st">", "</span>, <span class="fu">round</span>(<span class="fu">max</span>(off_diag), <span class="dv">3</span>), <span class="st">"]</span><span class="sc">\n</span><span class="st">"</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb11-484"><a href="#cb11-484" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

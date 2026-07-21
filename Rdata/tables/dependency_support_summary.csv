@@ -1,5 +1,5 @@
-Group,Relationship,Groups with only 1 match,Total groups,Only 1 match (%)
-sp_ncbi,systems per species,214,267,80.1
-sys_id,species per system,1543,1543,100
-ref_id,systems per reference,216,256,84.4
-sys_id,references per system,1504,1543,97.5
+Group,Relationship,Groups with only 1 match,Total groups,Only 1 match (%),Median matches,Maximum matches
+sp_ncbi,systems per species,198,253,78.3,1,379
+sys_id,species per system,1533,1533,100,1,1
+ref_id,systems per reference,215,254,84.6,1,1161
+sys_id,references per system,1494,1533,97.5,1,10

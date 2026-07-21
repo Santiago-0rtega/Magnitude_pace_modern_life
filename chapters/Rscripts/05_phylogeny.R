@@ -263,7 +263,8 @@ build_or_read_phylogeny <- function(
 
     # Build a lookup: sp_norm → canonical A-tip label.
     # Resolved species (in_x & in_y) get their sp_norm value as canonical (= tip label).
-    # Unresolved species get NA → prepare_phylo_and_data() will assign star correlation.
+    # Unresolved species get NA and are excluded before primary model fitting.
+    # Star correlation applies only to a non-missing canonical name absent from A.
     canonical_lookup <- stats::setNames(
       ifelse(data_rows$in_y, data_rows$name_x, NA_character_),
       data_rows$name_x

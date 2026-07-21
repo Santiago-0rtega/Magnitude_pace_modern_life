@@ -385,39 +385,77 @@ if (recompute_phylogeny) {
 A_full     <- phylo_out$A
 name_map   <- phylo_out$name_map
 tree_final <- tryCatch(readRDS(tree_path), error = function(e) NULL)
+
+# Use the current effect-size dataset for reported analysis counts. The cached
+# scaffold can contain tips from an earlier, larger data snapshot.
+dat_es <- readRDS(here::here("Rdata", "effect_sizes", "proceed_lnm_safe.rds"))
+dat_mapped <- apply_phylo_name_map(dat_es, name_map)
 ```
 
 ## Reconciliation summary
 
 ```{r reconciliation-summary}
-n_total      <- nrow(name_map)
-n_resolved   <- sum(!is.na(name_map$sp_ncbi_canonical) &
-                       nzchar(name_map$sp_ncbi_canonical))
-n_unresolved <- n_total - n_resolved
-n_tips       <- if (!is.null(tree_final)) length(tree_final$tip.label) else nrow(A_full)
+raw_species <- unique(as.character(dat_mapped$sp_ncbi))
+raw_species <- raw_species[!is.na(raw_species) & nzchar(trimws(raw_species))]
+current_map <- name_map |>
+  dplyr::filter(sp_ncbi_original %in% raw_species)
+current_canonical <- unique(as.character(dat_mapped$sp_ncbi_canonical))
+current_canonical <- current_canonical[
+  !is.na(current_canonical) & nzchar(current_canonical)
+]
+
+n_current_names <- length(raw_species)
+n_current_resolved_names <- sum(
+  !is.na(current_map$sp_ncbi_canonical) & nzchar(current_map$sp_ncbi_canonical)
+)
+n_current_unresolved_names <- n_current_names - n_current_resolved_names
+n_current_tips <- length(intersect(current_canonical, rownames(A_full)))
+n_cached_tips <- nrow(A_full)
 
 tibble::tibble(
   Metric = c(
-    "Unique species names submitted",
-    "Reconciled to a canonical taxon",
-    "Unresolved (excluded from phylogenetic term)",
-    "Unique tips in pruned tree / rows in A"
+    "Named species in current effect-size dataset",
+    "Current names reconciled by cached map",
+    "Current names unresolved",
+    "Canonical species used by current models",
+    "Contrasts used by current models",
+    "Contrasts excluded because species was unresolved",
+    "All tips in cached A matrix",
+    "Cached A tips unused by current dataset"
   ),
-  N = c(n_total, n_resolved, n_unresolved, n_tips),
-  `%` = round(100 * c(n_total, n_resolved, n_unresolved, n_tips) / n_total, 1)
+  N = c(
+    n_current_names, n_current_resolved_names, n_current_unresolved_names,
+    n_current_tips,
+    sum(!is.na(dat_mapped$sp_ncbi_canonical)),
+    sum(is.na(dat_mapped$sp_ncbi_canonical)),
+    n_cached_tips,
+    length(setdiff(rownames(A_full), current_canonical))
+  ),
+  Denominator = c(
+    "current species names", "current species names", "current species names",
+    "canonical species", "current contrasts", "current contrasts",
+    "cached scaffold", "cached scaffold"
+  )
 )
 ```
 
+The first six rows describe the current analysis and match the species and
+contrast counts in the Dependency structure chapter. The final two rows
+describe the cached phylogenetic scaffold. It is larger because it retains
+tips for species no longer represented in the current effect-size dataset;
+unused tips are removed when `A` is subset for a model.
+
 ## Unmatched species
 
-These species names could not be reconciled to a tree tip at any stage of the
-cascade (exact, normalized, synonym via GNVerifier, or fuzzy) and are
-therefore excluded from the phylogenetic random effect. They are retained in
-every other random effect.
+These current species names could not be reconciled to a tree tip at any stage
+of the cached cascade (exact, normalized, synonym via GNVerifier, or fuzzy).
+Because primary models require the phylogenetic term, their contrasts are
+excluded from the complete fitted row set before model fitting.
 
 ```{r unmatched-table}
 if (file.exists(unmatched_path)) {
-  readr::read_csv(unmatched_path, show_col_types = FALSE)
+  readr::read_csv(unmatched_path, show_col_types = FALSE) |>
+    dplyr::filter(sp_ncbi_original %in% raw_species)
 } else {
   cat("No unmatched-species file found — all species were resolved.\n")
 }
@@ -432,7 +470,9 @@ particular moderator's data. `prepare_phylo_and_data()`, called once per model
 in the location–scale model grid, assigns these species zero phylogenetic
 correlation with every other species — a star-phylogeny contribution — rather
 than dropping them. See the Dependency structure chapter for the per-contrast
-accounting of this.
+accounting of this. This applies only to a non-missing canonical name absent
+from `A`; it does not apply to an unresolved original name. The current data
+contain `r length(setdiff(current_canonical, rownames(A_full)))` star species.
 
 ## Phylogenetic correlation matrix — summary
 

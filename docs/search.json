@@ -360,7 +360,7 @@
     "href": "chapters/04_dependency_structure.html",
     "title": "6  Dependency structure",
     "section": "",
-    "text": "6.1 Load data\nCode\ndat_es &lt;- readRDS(here::here(\"Rdata\", \"effect_sizes\", \"proceed_lnm_safe.rds\"))",
+    "text": "6.1 Why dependency matters\nMultiple contrasts can share a paper, study system, or species. Treating them as independent would overstate the effective sample size and make uncertainty intervals too narrow. The location submodel represents three distinct sources of uncertainty or dependency:\nsys_id (study system) overlaps strongly with reference and species. The diagnostics below describe that overlap; sys_id is reserved for sensitivity analyses.",
     "crumbs": [
       "Non-independence",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Dependency structure</span>"
@@ -370,8 +370,8 @@
     "objectID": "chapters/04_dependency_structure.html#why-dependency-matters",
     "href": "chapters/04_dependency_structure.html#why-dependency-matters",
     "title": "6  Dependency structure",
-    "section": "6.2 Why dependency matters",
-    "text": "6.2 Why dependency matters\nMultiple contrasts in a meta-analysis often share a reference (same paper), a study system (same population or location), or a species. Ignoring this non-independence inflates effective sample size and narrows credible intervals inappropriately. Random effects in the location–scale model account for three sources of dependency:\n\nReference (ref_id) — contrasts from the same paper share design choices, sampling effort, and measurement protocol.\nPhylogenetic relatedness (sp_ncbi, via A) — species that share evolutionary history have correlated trait values.\nSampling variance (es_id_model, via V) — each contrast has a known estimation error (from SAFE) that is treated as a fixed component rather than estimated.\n\nsys_id (study system) is correlated with both ref_id and sp_ncbi in these data, which makes it hard to identify a separate system-level variance component. It is therefore reserved for sensitivity analyses.",
+    "section": "",
+    "text": "Reference (ref_id) — contrasts from the same paper share design choices, sampling effort, and measurement protocols.\nPhylogenetic relatedness (sp_ncbi, via A) — species that share evolutionary history have correlated intercepts.\nKnown sampling variance (es_id_model, via V) — each contrast has a SAFE sampling variance. Its group-level standard deviation is fixed to one, so this propagates known measurement uncertainty rather than estimating another clustering variance.",
     "crumbs": [
       "Non-independence",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Dependency structure</span>"
@@ -469,8 +469,8 @@
     "objectID": "chapters/04_dependency_structure.html#save-dependency-tables",
     "href": "chapters/04_dependency_structure.html#save-dependency-tables",
     "title": "6  Dependency structure",
-    "section": "6.11 Save dependency tables",
-    "text": "6.11 Save dependency tables\n\n\nCode\nreadr::write_csv(\n  nesting_tbl,\n  here::here(\"Rdata\", \"tables\", \"dependency_nesting_table.csv\")\n)\n\nreadr::write_csv(\n  support_table,\n  here::here(\"Rdata\", \"tables\", \"dependency_support_summary.csv\")\n)\n\ncat(\"Dependency tables saved.\\n\")\n\n\nDependency tables saved.",
+    "section": "6.8 Save dependency tables",
+    "text": "6.8 Save dependency tables\n\n\nCode\nreadr::write_csv(nesting_tbl,\n                 here::here(\"Rdata\", \"tables\", \"dependency_nesting_table.csv\"))\nreadr::write_csv(support_table,\n                 here::here(\"Rdata\", \"tables\", \"dependency_support_summary.csv\"))\nreadr::write_csv(dependency_flow,\n                 here::here(\"Rdata\", \"tables\", \"dependency_analysis_universe.csv\"))\n\ncat(\"Dependency tables saved.\\n\")\n\n\nDependency tables saved.",
     "crumbs": [
       "Non-independence",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Dependency structure</span>"
@@ -514,7 +514,7 @@
     "href": "chapters/04b_phylogeny.html#load-cached-phylogeny",
     "title": "7  Phylogenetic reconciliation",
     "section": "7.4 Load cached phylogeny",
-    "text": "7.4 Load cached phylogeny\n\n\nCode\ntree_path      &lt;- here::here(\"Rdata\", \"phylogeny\", \"proceed_tree.rds\")\nA_path         &lt;- here::here(\"Rdata\", \"phylogeny\", \"proceed_A_matrix.rds\")\nname_map_path  &lt;- here::here(\"Rdata\", \"phylogeny\", \"proceed_name_map.rds\")\nunmatched_path &lt;- here::here(\"Rdata\", \"phylogeny\", \"unmatched_species.csv\")\n\nif (recompute_phylogeny) {\n  dat_es &lt;- readRDS(here::here(\"Rdata\", \"effect_sizes\", \"proceed_lnm_safe.rds\"))\n  phylo_out &lt;- build_or_read_phylogeny(\n    species_vec = unique(as.character(dat_es$sp_ncbi)),\n    recompute   = TRUE\n  )\n} else {\n  pace_need(A_path,        \"phylogenetic correlation matrix\")\n  pace_need(name_map_path, \"phylogenetic name map\")\n  phylo_out &lt;- list(A = readRDS(A_path), name_map = readRDS(name_map_path))\n}\n\nA_full     &lt;- phylo_out$A\nname_map   &lt;- phylo_out$name_map\ntree_final &lt;- tryCatch(readRDS(tree_path), error = function(e) NULL)",
+    "text": "7.4 Load cached phylogeny\n\n\nCode\ntree_path      &lt;- here::here(\"Rdata\", \"phylogeny\", \"proceed_tree.rds\")\nA_path         &lt;- here::here(\"Rdata\", \"phylogeny\", \"proceed_A_matrix.rds\")\nname_map_path  &lt;- here::here(\"Rdata\", \"phylogeny\", \"proceed_name_map.rds\")\nunmatched_path &lt;- here::here(\"Rdata\", \"phylogeny\", \"unmatched_species.csv\")\n\nif (recompute_phylogeny) {\n  dat_es &lt;- readRDS(here::here(\"Rdata\", \"effect_sizes\", \"proceed_lnm_safe.rds\"))\n  phylo_out &lt;- build_or_read_phylogeny(\n    species_vec = unique(as.character(dat_es$sp_ncbi)),\n    recompute   = TRUE\n  )\n} else {\n  pace_need(A_path,        \"phylogenetic correlation matrix\")\n  pace_need(name_map_path, \"phylogenetic name map\")\n  phylo_out &lt;- list(A = readRDS(A_path), name_map = readRDS(name_map_path))\n}\n\nA_full     &lt;- phylo_out$A\nname_map   &lt;- phylo_out$name_map\ntree_final &lt;- tryCatch(readRDS(tree_path), error = function(e) NULL)\n\n# Use the current effect-size dataset for reported analysis counts. The cached\n# scaffold can contain tips from an earlier, larger data snapshot.\ndat_es &lt;- readRDS(here::here(\"Rdata\", \"effect_sizes\", \"proceed_lnm_safe.rds\"))\ndat_mapped &lt;- apply_phylo_name_map(dat_es, name_map)",
     "crumbs": [
       "Non-independence",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Phylogenetic reconciliation</span>"
@@ -525,7 +525,7 @@
     "href": "chapters/04b_phylogeny.html#reconciliation-summary",
     "title": "7  Phylogenetic reconciliation",
     "section": "7.5 Reconciliation summary",
-    "text": "7.5 Reconciliation summary\n\n\nCode\nn_total      &lt;- nrow(name_map)\nn_resolved   &lt;- sum(!is.na(name_map$sp_ncbi_canonical) &\n                       nzchar(name_map$sp_ncbi_canonical))\nn_unresolved &lt;- n_total - n_resolved\nn_tips       &lt;- if (!is.null(tree_final)) length(tree_final$tip.label) else nrow(A_full)\n\ntibble::tibble(\n  Metric = c(\n    \"Unique species names submitted\",\n    \"Reconciled to a canonical taxon\",\n    \"Unresolved (excluded from phylogenetic term)\",\n    \"Unique tips in pruned tree / rows in A\"\n  ),\n  N = c(n_total, n_resolved, n_unresolved, n_tips),\n  `%` = round(100 * c(n_total, n_resolved, n_unresolved, n_tips) / n_total, 1)\n)",
+    "text": "7.5 Reconciliation summary\n\n\nCode\nraw_species &lt;- unique(as.character(dat_mapped$sp_ncbi))\nraw_species &lt;- raw_species[!is.na(raw_species) & nzchar(trimws(raw_species))]\ncurrent_map &lt;- name_map |&gt;\n  dplyr::filter(sp_ncbi_original %in% raw_species)\ncurrent_canonical &lt;- unique(as.character(dat_mapped$sp_ncbi_canonical))\ncurrent_canonical &lt;- current_canonical[\n  !is.na(current_canonical) & nzchar(current_canonical)\n]\n\nn_current_names &lt;- length(raw_species)\nn_current_resolved_names &lt;- sum(\n  !is.na(current_map$sp_ncbi_canonical) & nzchar(current_map$sp_ncbi_canonical)\n)\nn_current_unresolved_names &lt;- n_current_names - n_current_resolved_names\nn_current_tips &lt;- length(intersect(current_canonical, rownames(A_full)))\nn_cached_tips &lt;- nrow(A_full)\n\ntibble::tibble(\n  Metric = c(\n    \"Named species in current effect-size dataset\",\n    \"Current names reconciled by cached map\",\n    \"Current names unresolved\",\n    \"Canonical species used by current models\",\n    \"Contrasts used by current models\",\n    \"Contrasts excluded because species was unresolved\",\n    \"All tips in cached A matrix\",\n    \"Cached A tips unused by current dataset\"\n  ),\n  N = c(\n    n_current_names, n_current_resolved_names, n_current_unresolved_names,\n    n_current_tips,\n    sum(!is.na(dat_mapped$sp_ncbi_canonical)),\n    sum(is.na(dat_mapped$sp_ncbi_canonical)),\n    n_cached_tips,\n    length(setdiff(rownames(A_full), current_canonical))\n  ),\n  Denominator = c(\n    \"current species names\", \"current species names\", \"current species names\",\n    \"canonical species\", \"current contrasts\", \"current contrasts\",\n    \"cached scaffold\", \"cached scaffold\"\n  )\n)\n\n\n\n  \n\n\n\nThe first six rows describe the current analysis and match the species and contrast counts in the Dependency structure chapter. The final two rows describe the cached phylogenetic scaffold. It is larger because it retains tips for species no longer represented in the current effect-size dataset; unused tips are removed when A is subset for a model.",
     "crumbs": [
       "Non-independence",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Phylogenetic reconciliation</span>"
@@ -536,7 +536,7 @@
     "href": "chapters/04b_phylogeny.html#unmatched-species",
     "title": "7  Phylogenetic reconciliation",
     "section": "7.6 Unmatched species",
-    "text": "7.6 Unmatched species\nThese species names could not be reconciled to a tree tip at any stage of the cascade (exact, normalized, synonym via GNVerifier, or fuzzy) and are therefore excluded from the phylogenetic random effect. They are retained in every other random effect.\n\n\nCode\nif (file.exists(unmatched_path)) {\n  readr::read_csv(unmatched_path, show_col_types = FALSE)\n} else {\n  cat(\"No unmatched-species file found — all species were resolved.\\n\")\n}",
+    "text": "7.6 Unmatched species\nThese current species names could not be reconciled to a tree tip at any stage of the cached cascade (exact, normalized, synonym via GNVerifier, or fuzzy). Because primary models require the phylogenetic term, their contrasts are excluded from the complete fitted row set before model fitting.\n\n\nCode\nif (file.exists(unmatched_path)) {\n  readr::read_csv(unmatched_path, show_col_types = FALSE) |&gt;\n    dplyr::filter(sp_ncbi_original %in% raw_species)\n} else {\n  cat(\"No unmatched-species file found — all species were resolved.\\n\")\n}",
     "crumbs": [
       "Non-independence",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Phylogenetic reconciliation</span>"
@@ -547,7 +547,7 @@
     "href": "chapters/04b_phylogeny.html#species-retained-but-absent-from-the-tree-star-species",
     "title": "7  Phylogenetic reconciliation",
     "section": "7.7 Species retained but absent from the tree (“star” species)",
-    "text": "7.7 Species retained but absent from the tree (“star” species)\nA separate, smaller category of row loss can occur inside an individual model: a species can be reconciled to a canonical name (and so appear in name_map) but still be absent from the tree subset used to build A for a particular moderator’s data. prepare_phylo_and_data(), called once per model in the location–scale model grid, assigns these species zero phylogenetic correlation with every other species — a star-phylogeny contribution — rather than dropping them. See the Dependency structure chapter for the per-contrast accounting of this.",
+    "text": "7.7 Species retained but absent from the tree (“star” species)\nA separate, smaller category of row loss can occur inside an individual model: a species can be reconciled to a canonical name (and so appear in name_map) but still be absent from the tree subset used to build A for a particular moderator’s data. prepare_phylo_and_data(), called once per model in the location–scale model grid, assigns these species zero phylogenetic correlation with every other species — a star-phylogeny contribution — rather than dropping them. See the Dependency structure chapter for the per-contrast accounting of this. This applies only to a non-missing canonical name absent from A; it does not apply to an unresolved original name. The current data contain 0 star species.",
     "crumbs": [
       "Non-independence",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Phylogenetic reconciliation</span>"
@@ -558,7 +558,7 @@
     "href": "chapters/04b_phylogeny.html#phylogenetic-correlation-matrix-summary",
     "title": "7  Phylogenetic reconciliation",
     "section": "7.8 Phylogenetic correlation matrix — summary",
-    "text": "7.8 Phylogenetic correlation matrix — summary\n\n\nCode\noff_diag &lt;- A_full[row(A_full) != col(A_full)]\ncat(\"A matrix dimensions:\", nrow(A_full), \"×\", ncol(A_full), \"\\n\")\n\n\nA matrix dimensions: 265 × 265 \n\n\nCode\ncat(\"Off-diagonal correlation range: [\",\n    round(min(off_diag), 3), \", \", round(max(off_diag), 3), \"]\\n\", sep = \"\")\n\n\nOff-diagonal correlation range: [0, 0.996]",
+    "text": "7.8 Phylogenetic correlation matrix — summary\n\n\nCode\noff_diag &lt;- A_full[row(A_full) != col(A_full)]\ncat(\"A matrix dimensions:\", nrow(A_full), \"×\", ncol(A_full), \"\\n\")\n\n\nA matrix dimensions: 265 &lt;U+00D7&gt; 265 \n\n\nCode\ncat(\"Off-diagonal correlation range: [\",\n    round(min(off_diag), 3), \", \", round(max(off_diag), 3), \"]\\n\", sep = \"\")\n\n\nOff-diagonal correlation range: [0, 0.996]",
     "crumbs": [
       "Non-independence",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Phylogenetic reconciliation</span>"
@@ -1156,6 +1156,72 @@
     "crumbs": [
       "Appendices",
       "<span class='chapter-number'>D</span>  <span class='chapter-title'>Sensitivity C — Study-system (sys_id) random effect</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/04_dependency_structure.html#load-and-align-the-analysis-universe",
+    "href": "chapters/04_dependency_structure.html#load-and-align-the-analysis-universe",
+    "title": "6  Dependency structure",
+    "section": "6.2 Load and align the analysis universe",
+    "text": "6.2 Load and align the analysis universe\n\n\nCode\ndat_es &lt;- readRDS(here::here(\"Rdata\", \"effect_sizes\", \"proceed_lnm_safe.rds\"))\nA_full &lt;- readRDS(here::here(\"Rdata\", \"phylogeny\", \"proceed_A_matrix.rds\"))\nname_map &lt;- readRDS(here::here(\"Rdata\", \"phylogeny\", \"proceed_name_map.rds\"))\ndat_mapped &lt;- apply_phylo_name_map(dat_es, name_map)\n\nhas_raw_name &lt;- !is.na(dat_mapped$sp_ncbi) &\n  nzchar(trimws(as.character(dat_mapped$sp_ncbi)))\nhas_canonical_name &lt;- !is.na(dat_mapped$sp_ncbi_canonical) &\n  nzchar(as.character(dat_mapped$sp_ncbi_canonical))\n\ncurrent_species &lt;- dat_mapped |&gt;\n  dplyr::filter(has_raw_name) |&gt;\n  dplyr::distinct(sp_ncbi, sp_ncbi_canonical) |&gt;\n  dplyr::mutate(\n    status = dplyr::if_else(\n      !is.na(sp_ncbi_canonical) & nzchar(as.character(sp_ncbi_canonical)),\n      \"Reconciled\", \"Unresolved\"\n    )\n  )\n\n\n\n6.2.1 Which species count?\nSpecies counts differ depending on whether they refer to raw database names, reconciled names, all tips in the cached phylogeny, or species actually used by the models. All dependency diagnostics below use the current model universe: contrasts with a canonical species name after applying the same cached reconciliation map used by the model grid.\n\n\nCode\ncurrent_canonical &lt;- unique(as.character(\n  dat_mapped$sp_ncbi_canonical[has_canonical_name]\n))\ncurrent_canonical &lt;- current_canonical[\n  !is.na(current_canonical) & nzchar(current_canonical)\n]\n\ndependency_flow &lt;- tibble::tibble(\n  Stage = c(\n    \"Effect-size dataset\",\n    \"Named species in current dataset\",\n    \"Current names reconciled by cached map\",\n    \"Canonical species used in diagnostics and models\",\n    \"Current names unresolved\",\n    \"Contrasts excluded because species was unresolved\",\n    \"All tips in cached A matrix\",\n    \"Cached A tips unused by current dataset\"\n  ),\n  Contrasts = c(\n    nrow(dat_mapped), NA, NA, sum(has_canonical_name), NA,\n    sum(has_raw_name & !has_canonical_name), NA, NA\n  ),\n  Species = c(\n    NA,\n    dplyr::n_distinct(dat_mapped$sp_ncbi[has_raw_name]),\n    sum(current_species$status == \"Reconciled\"),\n    length(current_canonical),\n    sum(current_species$status == \"Unresolved\"),\n    NA,\n    nrow(A_full),\n    length(setdiff(rownames(A_full), current_canonical))\n  )\n)\n\nknitr::kable(\n  dependency_flow,\n  caption = \"Flow from the current effect-size dataset to the species universe used in dependency diagnostics.\"\n)\n\n\n\nFlow from the current effect-size dataset to the species universe used in dependency diagnostics.\n\n\nStage\nContrasts\nSpecies\n\n\n\n\nEffect-size dataset\n7237\nNA\n\n\nNamed species in current dataset\nNA\n267\n\n\nCurrent names reconciled by cached map\nNA\n261\n\n\nCanonical species used in diagnostics and models\n7186\n253\n\n\nCurrent names unresolved\nNA\n6\n\n\nContrasts excluded because species was unresolved\n51\nNA\n\n\nAll tips in cached A matrix\nNA\n265\n\n\nCached A tips unused by current dataset\nNA\n12\n\n\n\n\n\nThe 253 canonical species reported here are the same current-analysis species reported in the Phylogenetic reconciliation chapter. The cached A matrix is larger because it retains tips for species no longer present in the current effect-size dataset. Unused tips do not enter a fitted model.",
+    "crumbs": [
+      "Non-independence",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Dependency structure</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/04_dependency_structure.html#build-the-dependency-dataset",
+    "href": "chapters/04_dependency_structure.html#build-the-dependency-dataset",
+    "title": "6  Dependency structure",
+    "section": "6.3 Build the dependency dataset",
+    "text": "6.3 Build the dependency dataset\n\n\nCode\ndat_re_diag &lt;- dat_mapped |&gt;\n  dplyr::filter(has_canonical_name) |&gt;\n  dplyr::transmute(\n    es_id_db = factor(es_id_db),\n    ref_id   = factor(ref_id),\n    sys_id   = factor(sys_id),\n    sp_ncbi  = factor(sp_ncbi_canonical)\n  ) |&gt;\n  tidyr::drop_na() |&gt;\n  droplevels()\n\ncat(\"Contrasts in current model universe:\", nrow(dat_re_diag), \"\\n\")\n\n\nContrasts in current model universe: 7186 \n\n\nCode\ncat(\"Canonical species in current model universe:\",\n    dplyr::n_distinct(dat_re_diag$sp_ncbi), \"\\n\")\n\n\nCanonical species in current model universe: 253",
+    "crumbs": [
+      "Non-independence",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Dependency structure</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/04_dependency_structure.html#pairwise-nesting-diagnostics",
+    "href": "chapters/04_dependency_structure.html#pairwise-nesting-diagnostics",
+    "title": "6  Dependency structure",
+    "section": "6.4 Pairwise nesting diagnostics",
+    "text": "6.4 Pairwise nesting diagnostics\nFor a pair A and B, “A nested in B” means every level of A occurs with exactly one level of B. The reverse relationship can differ, so both directions are reported.\n\n\nCode\ncheck_nesting &lt;- function(data, a, b) {\n  tmp &lt;- data |&gt;\n    dplyr::distinct(.data[[a]], .data[[b]]) |&gt;\n    dplyr::count(.data[[a]], name = \"n_unique_b\")\n\n  tibble::tibble(\n    factor_a = a,\n    factor_b = b,\n    n_levels_a = dplyr::n_distinct(data[[a]]),\n    n_levels_b = dplyr::n_distinct(data[[b]]),\n    min_unique_b_per_a = min(tmp$n_unique_b),\n    median_unique_b_per_a = stats::median(tmp$n_unique_b),\n    max_unique_b_per_a = max(tmp$n_unique_b),\n    prop_a_single_b = mean(tmp$n_unique_b == 1),\n    a_nested_in_b = all(tmp$n_unique_b == 1)\n  )\n}\n\ngroup_vars &lt;- c(\"es_id_db\", \"ref_id\", \"sys_id\", \"sp_ncbi\")\nnesting_tbl &lt;- purrr::map_dfr(group_vars, function(a) {\n  purrr::map_dfr(setdiff(group_vars, a), function(b) {\n    check_nesting(dat_re_diag, a, b)\n  })\n}) |&gt;\n  dplyr::arrange(dplyr::desc(a_nested_in_b), factor_a, factor_b)\n\n\n\n\nCode\nknitr::kable(nesting_tbl, digits = 2,\n             caption = \"Directed pairwise nesting diagnostics in the current model universe.\")\n\n\n\nDirected pairwise nesting diagnostics in the current model universe.\n\n\n\n\n\n\n\n\n\n\n\n\n\nfactor_a\nfactor_b\nn_levels_a\nn_levels_b\nmin_unique_b_per_a\nmedian_unique_b_per_a\nmax_unique_b_per_a\nprop_a_single_b\na_nested_in_b\n\n\n\n\nes_id_db\nref_id\n7186\n254\n1\n1\n1\n1.00\nTRUE\n\n\nes_id_db\nsp_ncbi\n7186\n253\n1\n1\n1\n1.00\nTRUE\n\n\nes_id_db\nsys_id\n7186\n1533\n1\n1\n1\n1.00\nTRUE\n\n\nsys_id\nsp_ncbi\n1533\n253\n1\n1\n1\n1.00\nTRUE\n\n\nref_id\nes_id_db\n254\n7186\n1\n8\n1284\n0.09\nFALSE\n\n\nref_id\nsp_ncbi\n254\n253\n1\n1\n64\n0.93\nFALSE\n\n\nref_id\nsys_id\n254\n1533\n1\n1\n1161\n0.85\nFALSE\n\n\nsp_ncbi\nes_id_db\n253\n7186\n1\n5\n1192\n0.27\nFALSE\n\n\nsp_ncbi\nref_id\n253\n254\n1\n1\n13\n0.79\nFALSE\n\n\nsp_ncbi\nsys_id\n253\n1533\n1\n1\n379\n0.78\nFALSE\n\n\nsys_id\nes_id_db\n1533\n7186\n1\n1\n1156\n0.77\nFALSE\n\n\nsys_id\nref_id\n1533\n254\n1\n1\n10\n0.97\nFALSE\n\n\n\n\n\n\n\nCode\nnesting_matrix &lt;- nesting_tbl |&gt;\n  dplyr::select(factor_a, factor_b, max_unique_b_per_a) |&gt;\n  tidyr::pivot_wider(names_from = factor_b, values_from = max_unique_b_per_a)\n\nknitr::kable(nesting_matrix,\n             caption = \"Maximum number of B levels observed within one A level. A value of one indicates complete nesting.\")\n\n\n\nMaximum number of B levels observed within one A level. A value of one indicates complete nesting.\n\n\nfactor_a\nref_id\nsp_ncbi\nsys_id\nes_id_db\n\n\n\n\nes_id_db\n1\n1\n1\nNA\n\n\nsys_id\n10\n1\nNA\n1156\n\n\nref_id\nNA\n64\n1161\n1284\n\n\nsp_ncbi\n13\nNA\n379\n1192",
+    "crumbs": [
+      "Non-independence",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Dependency structure</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/04_dependency_structure.html#support-for-the-system-identifier",
+    "href": "chapters/04_dependency_structure.html#support-for-the-system-identifier",
+    "title": "6  Dependency structure",
+    "section": "6.5 Support for the system identifier",
+    "text": "6.5 Support for the system identifier\n\n\nCode\nmake_link_summary &lt;- function(data, grouping_factor, linked_factor, label) {\n  data |&gt;\n    dplyr::distinct(.data[[grouping_factor]], .data[[linked_factor]]) |&gt;\n    dplyr::count(.data[[grouping_factor]], name = \"n_matches\") |&gt;\n    dplyr::summarise(\n      Group = grouping_factor,\n      Relationship = label,\n      `Groups with only 1 match` = sum(n_matches == 1),\n      `Total groups` = dplyr::n(),\n      `Only 1 match (%)` = round(100 * mean(n_matches == 1), 1),\n      `Median matches` = stats::median(n_matches),\n      `Maximum matches` = max(n_matches)\n    )\n}\n\nsupport_table &lt;- dplyr::bind_rows(\n  make_link_summary(dat_re_diag, \"sp_ncbi\", \"sys_id\", \"systems per species\"),\n  make_link_summary(dat_re_diag, \"sys_id\", \"sp_ncbi\", \"species per system\"),\n  make_link_summary(dat_re_diag, \"ref_id\", \"sys_id\", \"systems per reference\"),\n  make_link_summary(dat_re_diag, \"sys_id\", \"ref_id\", \"references per system\")\n)\n\nknitr::kable(support_table,\n             caption = \"Overlap of study systems with species and references.\")\n\n\n\nOverlap of study systems with species and references.\n\n\n\n\n\n\n\n\n\n\n\nGroup\nRelationship\nGroups with only 1 match\nTotal groups\nOnly 1 match (%)\nMedian matches\nMaximum matches\n\n\n\n\nsp_ncbi\nsystems per species\n198\n253\n78.3\n1\n379\n\n\nsys_id\nspecies per system\n1533\n1533\n100.0\n1\n1\n\n\nref_id\nsystems per reference\n215\n254\n84.6\n1\n1161\n\n\nsys_id\nreferences per system\n1494\n1533\n97.5\n1\n10\n\n\n\n\n\n\n\nCode\nsupport_long &lt;- dplyr::bind_rows(\n  dat_re_diag |&gt;\n    dplyr::distinct(sp_ncbi, sys_id) |&gt;\n    dplyr::count(sp_ncbi, name = \"n_systems\") |&gt;\n    dplyr::transmute(group = \"Species\", n_systems),\n  dat_re_diag |&gt;\n    dplyr::distinct(ref_id, sys_id) |&gt;\n    dplyr::count(ref_id, name = \"n_systems\") |&gt;\n    dplyr::transmute(group = \"Reference\", n_systems)\n)\n\nggplot2::ggplot(support_long, ggplot2::aes(x = n_systems, colour = group)) +\n  ggplot2::stat_ecdf(linewidth = 1.4) +\n  ggplot2::facet_wrap(~ group) +\n  ggplot2::scale_colour_manual(\n    values = c(Species = \"#257180\", Reference = \"#CB6040\"), guide = \"none\"\n  ) +\n  ggplot2::scale_x_log10(\n    breaks = c(1, 3, 10, 30, 100, 300, 1000),\n    labels = scales::comma\n  ) +\n  ggplot2::scale_y_continuous(labels = scales::percent) +\n  ggplot2::labs(x = \"Study systems per group (log scale)\",\n                y = \"Groups at or below this value\") +\n  ggplot2::theme_minimal(base_size = 15) +\n  ggplot2::theme(panel.grid.minor = ggplot2::element_blank(),\n                 strip.text = ggplot2::element_text(face = \"bold\"))\n\n\n\n\n\nCumulative distribution of linked study systems per species and reference. The logarithmic x-axis keeps both the majority of one-system groups and the few very large salmon datasets visible.",
+    "crumbs": [
+      "Non-independence",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Dependency structure</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/04_dependency_structure.html#species-excluded-at-reconciliation",
+    "href": "chapters/04_dependency_structure.html#species-excluded-at-reconciliation",
+    "title": "6  Dependency structure",
+    "section": "6.6 Species excluded at reconciliation",
+    "text": "6.6 Species excluded at reconciliation\nUnresolved names receive NA in sp_ncbi_canonical, and prepare_phylo_and_data() removes those contrasts before a primary phylogeny-adjusted model is fitted. A star contribution is used only for a resolved canonical species absent from A; there are currently 0 such species.\n\n\nCode\ncurrent_unresolved &lt;- current_species |&gt;\n  dplyr::filter(status == \"Unresolved\") |&gt;\n  dplyr::transmute(\n    Species = as.character(sp_ncbi),\n    Contrasts = purrr::map_int(\n      Species,\n      ~ sum(as.character(dat_mapped$sp_ncbi) == .x, na.rm = TRUE)\n    )\n  ) |&gt;\n  dplyr::arrange(dplyr::desc(Contrasts), Species)\n\nknitr::kable(current_unresolved,\n             caption = \"Unresolved species names in the current effect-size dataset.\")\n\n\n\nUnresolved species names in the current effect-size dataset.\n\n\nSpecies\nContrasts\n\n\n\n\nRaphanus raphanistrum X Raphanus sativus\n15\n\n\nPeromyscus&lt;U+00A0&gt;leucopus&lt;U+00A0&gt;noveboracensis\n14\n\n\nNeogale vison\n6\n\n\nPelophylax lessonae/ridibundus\n6\n\n\nDrepanis coccinea\n5\n\n\nNeogale frenata\n5",
+    "crumbs": [
+      "Non-independence",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Dependency structure</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/04_dependency_structure.html#random-effects-decision",
+    "href": "chapters/04_dependency_structure.html#random-effects-decision",
+    "title": "6  Dependency structure",
+    "section": "6.7 Random-effects decision",
+    "text": "6.7 Random-effects decision\nThe diagnostics show a crossed rather than purely hierarchical structure:\n\nes_id_db is the finest-grained identifier and is nested within the higher-level groupings.\nMost references contribute one study system, but some references span several systems.\nMost species occur in one system, although a few salmon species span hundreds of systems.\nEvery system belongs to one canonical species, and 97.5% of systems belong to one reference; the remaining systems connect multiple references.\n\nReference and phylogeny therefore represent distinct, estimable sources of dependence. Adding sys_id as a third group-level term would ask the model to separate variance among three strongly overlapping classifications, making variance components weakly identified. Primary models consequently include reference, phylogeny, and known sampling variance; sys_id is added only in the dedicated sensitivity analysis.",
+    "crumbs": [
+      "Non-independence",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Dependency structure</span>"
     ]
   }
 ]
