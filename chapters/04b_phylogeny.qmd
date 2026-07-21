@@ -19,6 +19,16 @@ matrix `A` derived from a tree of the analysed species. This chapter documents
 how that tree and `A` were built, and how species that could not be placed on
 the tree are handled.
 
+## Terms used in the species counts
+
+- **Input name**: a distinct `sp_ncbi` label in the current effect-size data.
+- **Resolved input name**: an input name successfully linked to a tree label.
+- **Canonical species**: a unique reconciled label used as a model grouping
+  level and as a row name when the phylogenetic matrix is subset.
+- **Cached `A` tip**: any row retained in the saved phylogenetic correlation
+  matrix. The cache can include species from an earlier data snapshot that are
+  absent from the current effect-size data.
+
 ## Building the tree and the correlation matrix
 
 Species names in PROCEED were matched to the Open Tree of Life synthetic tree
@@ -36,9 +46,9 @@ names using a four-stage cascade implemented in `prepR4pcm`:
    the name against external taxonomic databases for accepted synonyms
 4. **Fuzzy match** — approximate string matching for names still unresolved
 
-Species that cannot be resolved at any stage are excluded from the
-phylogenetic random effect (see [Unmatched species](#unmatched-species)
-below), but are **not** excluded from the rest of the model.
+Species that cannot be resolved at any stage receive no canonical label. Their
+contrasts are excluded from the complete primary-model dataset before fitting
+(see [Unmatched species](#unmatched-species) below).
 
 Multifurcations in the retrieved tree were randomly resolved into bifurcations
 with zero-length branches (`ape::multi2di`). Where branch lengths were not
@@ -48,7 +58,8 @@ phylogenetic correlation matrix under a Brownian-motion model of trait
 evolution (`prepR4pcm::pr_phylo_cor`, falling back to `ape::vcv.phylo` if
 unavailable).
 
-All of this logic lives in `R/05_phylogeny.R::build_or_read_phylogeny()`; this
+All of this logic lives in
+`chapters/Rscripts/05_phylogeny.R::build_or_read_phylogeny()`; this
 chapter only *reads* the cached result — rebuilding it requires network access
 to Open Tree of Life and GNVerifier and is not done automatically on render.
 
@@ -392,7 +403,7 @@ dat_es <- readRDS(here::here("Rdata", "effect_sizes", "proceed_lnm_safe.rds"))
 dat_mapped <- apply_phylo_name_map(dat_es, name_map)
 ```
 
-## Reconciliation summary
+## Reconciliation counts
 
 ```{r reconciliation-summary}
 raw_species <- unique(as.character(dat_mapped$sp_ncbi))
@@ -411,39 +422,76 @@ n_current_resolved_names <- sum(
 n_current_unresolved_names <- n_current_names - n_current_resolved_names
 n_current_tips <- length(intersect(current_canonical, rownames(A_full)))
 n_cached_tips <- nrow(A_full)
+n_names_combined <- n_current_resolved_names - length(current_canonical)
 
-tibble::tibble(
+current_counts <- tibble::tibble(
   Metric = c(
-    "Named species in current effect-size dataset",
-    "Current names reconciled by cached map",
-    "Current names unresolved",
-    "Canonical species used by current models",
+    "Distinct input names in current effect-size dataset",
+    "Input names successfully resolved",
+    "Input names unresolved",
+    "Additional resolved names combined under shared canonical labels",
+    "Unique canonical species used by current models",
     "Contrasts used by current models",
-    "Contrasts excluded because species was unresolved",
-    "All tips in cached A matrix",
-    "Cached A tips unused by current dataset"
+    "Contrasts excluded because their species name was unresolved"
   ),
   N = c(
     n_current_names, n_current_resolved_names, n_current_unresolved_names,
-    n_current_tips,
+    n_names_combined, n_current_tips,
     sum(!is.na(dat_mapped$sp_ncbi_canonical)),
-    sum(is.na(dat_mapped$sp_ncbi_canonical)),
-    n_cached_tips,
-    length(setdiff(rownames(A_full), current_canonical))
-  ),
-  Denominator = c(
-    "current species names", "current species names", "current species names",
-    "canonical species", "current contrasts", "current contrasts",
-    "cached scaffold", "cached scaffold"
+    sum(is.na(dat_mapped$sp_ncbi_canonical))
   )
+)
+
+scaffold_counts <- tibble::tibble(
+  Metric = c(
+    "All tips stored in cached A matrix",
+    "Cached A tips used by current dataset",
+    "Cached A tips not used by current dataset"
+  ),
+  N = c(
+    n_cached_tips,
+    n_current_tips,
+    length(setdiff(rownames(A_full), current_canonical))
+  )
+)
+
+knitr::kable(
+  current_counts,
+  caption = "Current-data reconciliation: 267 input labels become 253 model species."
+)
+
+knitr::kable(
+  scaffold_counts,
+  caption = "Cached phylogenetic scaffold: only 253 of its 265 tips are used by the current data."
 )
 ```
 
-The first six rows describe the current analysis and match the species and
-contrast counts in the Dependency structure chapter. The final two rows
-describe the cached phylogenetic scaffold. It is larger because it retains
-tips for species no longer represented in the current effect-size dataset;
-unused tips are removed when `A` is subset for a model.
+The count of 253 therefore describes the current model dataset. The count of
+265 describes the reusable cached matrix, not the current sample. The 12
+unused cached tips are removed when `A` is subset for a model.
+
+### Input names combined under canonical species
+
+```{r canonical-collapses}
+collapse_table <- current_map |>
+  dplyr::filter(
+    !is.na(sp_ncbi_canonical),
+    nzchar(sp_ncbi_canonical)
+  ) |>
+  dplyr::group_by(sp_ncbi_canonical) |>
+  dplyr::summarise(
+    `Input names` = paste(sort(sp_ncbi_original), collapse = "; "),
+    `Number of input names` = dplyr::n(),
+    .groups = "drop"
+  ) |>
+  dplyr::filter(`Number of input names` > 1) |>
+  dplyr::rename(`Canonical species` = sp_ncbi_canonical)
+
+knitr::kable(
+  collapse_table,
+  caption = "Resolved input labels that share a canonical species label."
+)
+```
 
 ## Unmatched species
 

@@ -16,8 +16,8 @@ sens_n40 <- sum(sens_dat$n_total >= 40, na.rm = TRUE)
 Protocol §3.7 (first analysis). `ln M` is estimated less stably when the two
 groups being compared are small, because the plug-in sampling variance can
 become unstable when between-group variation is small relative to within-group
-variation. To check that the main conclusions do not rest on poorly replicated
-contrasts, every included moderator model is refit after restricting the data
+variation. This sensitivity analysis refits every included moderator model
+after restricting the data
 to contrasts with total sample size $n_1 + n_2 \geq 40$ — **`r format(sens_n40, big.mark = ",")` of `r format(sens_total, big.mark = ",")`
 contrasts**. All other model structure (phylogeny, `ref_id`, priors, MCMC
 settings) is identical to the primary fit.

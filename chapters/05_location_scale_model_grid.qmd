@@ -24,7 +24,7 @@ rebuild_grid <- FALSE
 
 ## Overview
 
-This chapter fits (or reads) one independent location–scale meta-regression for each moderator in the registry. No multi-moderator model is fitted. The registry is defined in `R/06_model_registry.R`.
+This chapter fits (or reads) one independent location–scale meta-regression for each moderator in the registry. No multi-moderator model is fitted. The registry is defined in `chapters/Rscripts/06_model_registry.R`.
 
 ```{r show-registry}
 moderator_grid
@@ -32,7 +32,7 @@ moderator_grid
 
 ## Excluded moderators
 
-Two moderators were fit but are **excluded from the primary results** reported in this supplement. Both fits (and any refits) are retained in `outputs/models/` for reproducibility; their estimates are simply not carried into the grid status, effect-summary tables, or publication figures below.
+Moderators excluded from the primary results are listed below. Available fits are retained in `Rdata/models/`; their estimates are not carried into the reported effect tables or publication figures.
 
 ```{r excluded-registry}
 excluded_grid |> dplyr::select(model_id, moderator, label, reason)
@@ -412,7 +412,12 @@ scl_effects <- scl_effects |>
 Models `m06`, `m08`, `m09`, and `m10` are excluded because they did not produce a reliable, converged posterior. The `m08` diagnostics page is retained in the appendix for transparency. The interaction models (`m12` and `m13`) are also excluded from the reported book. None of these models contributes to the reported effect tables or publication figures.
 
 ```{r status-table}
-model_status
+model_status |>
+  dplyr::select(
+    model_id, label, n_rows, n_levels, n_missing_excluded, status,
+    max_rhat, min_bulk_ess, min_tail_ess, n_divergent,
+    max_treedepth_hits
+  )
 ```
 
 ## Convergence overview

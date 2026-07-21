@@ -72,9 +72,9 @@ significance_mark <- function(p) {
 }
 ```
 
-## Purpose and interpretation
+## Methods
 
-This chapter checks whether the moderators overlap strongly enough to complicate their separate interpretation. Association is measured on the scale appropriate to each pair: Pearson's *r* for two continuous variables, bias-corrected Cramér's *V* for two categorical variables, and the correlation ratio η² for a continuous variable grouped by a categorical variable. Values closer to one indicate stronger association; they do not imply causation.
+Association is measured on the scale appropriate to each pair: Pearson's *r* for two continuous variables, bias-corrected Cramér's *V* for two categorical variables, and the correlation ratio η² for a continuous variable grouped by a categorical variable.
 
 The tests below treat contrasts as rows and are therefore descriptive diagnostics rather than independent-observation causal tests. The study, system, and phylogenetic dependence handled by the meta-analytic models is not represented in these simple pairwise tests. Holm-adjusted *p*-values control multiplicity within this chapter.
 
@@ -136,7 +136,7 @@ p_continuous <- ggplot2::ggplot(
   ggplot2::geom_smooth(method = "lm", formula = y ~ x, se = TRUE,
                        colour = "#CB6040", fill = "#F2E5BF", linewidth = 1.3) +
   ggplot2::labs(
-    title = "Continuous moderators track a shared time scale",
+    title = "Elapsed years and elapsed generations",
     subtitle = continuous_label,
     x = expression(log[10]("elapsed years")),
     y = expression(log[10]("elapsed generations"))
@@ -208,8 +208,8 @@ p_categorical <- ggplot2::ggplot(
   ggplot2::scale_y_discrete(drop = FALSE) +
   ggplot2::coord_fixed() +
   ggplot2::labs(
-    title = "Overlap among categorical moderators",
-    subtitle = "Larger values indicate stronger association; blank cells are redundant comparisons",
+    title = "Categorical moderator associations",
+    subtitle = "Bias-corrected Cramer's V; blank cells are redundant comparisons",
     x = NULL, y = NULL
   ) +
   theme_association(15) +
@@ -280,7 +280,7 @@ p_mixed <- ggplot2::ggplot(
     limits = c(0, 1), name = expression(eta^2)
   ) +
   ggplot2::labs(
-    title = "Categorical moderators explain differing amounts of time-scale variation",
+    title = "Continuous-categorical moderator associations",
     subtitle = "Each cell is the proportion of continuous-moderator variance explained by group membership",
     x = NULL, y = NULL
   ) +
@@ -295,7 +295,3 @@ ggplot2::ggsave(file.path(figure_dir, "continuous_categorical.png"), p_mixed,
                 width = 14, height = 7.5, dpi = 320, bg = "white")
 p_mixed
 ```
-
-## Reading the diagnostics
-
-For screening purposes, effect-size magnitude is more informative than significance because the dataset contains thousands of contrasts. As rough descriptive guides, values near 0.1, 0.3, and 0.5 can be read as small, moderate, and large for *r* or Cramér's *V*. For η², values near 0.01, 0.06, and 0.14 are often described as small, moderate, and large. These are conventions rather than decision thresholds; substantive overlap, cell counts, and the dependency structure should guide model specification.

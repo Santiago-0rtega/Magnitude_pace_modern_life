@@ -586,7 +586,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Minimum total sample size (n₁ + n₂ ≥ 40)</td>
+<td style="text-align: left;">Minimum total sample size (nb + nb b % 40)</td>
 <td style="text-align: right;">7</td>
 <td style="text-align: left;">4 of 36</td>
 <td style="text-align: right;">1.015</td>
@@ -613,7 +613,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </div>
 </div>
-<p>All 21 expected sensitivity models have cached results. Removing the phylogenetic random effect produced the fewest changes relative to the primary fits. The minimum-sample-size and study-system analyses produced more changes, and their divergent transitions mean those differences should be interpreted alongside the model-specific diagnostics rather than as definitive reversals.</p>
 </section>
 <section id="detailed-results" class="level2" data-number="17.2">
 <h2 data-number="17.2" class="anchored" data-anchor-id="detailed-results"><span class="header-section-number">17.2</span> Detailed results</h2>
@@ -1130,25 +1129,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">sens_variant_summary_table</span>()</span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>All 21 expected sensitivity models have cached results. Removing the</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>phylogenetic random effect produced the fewest changes relative to the primary</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>fits. The minimum-sample-size and study-system analyses produced more changes,</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>and their divergent transitions mean those differences should be interpreted</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>alongside the model-specific diagnostics rather than as definitive reversals.</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="fu">## Detailed results</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>The appendices report every location and scale coefficient beside the matched</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>primary estimate, together with convergence diagnostics:</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Minimum total sample size (N &gt;= 40)</span><span class="co">](appendix/sensitivity_min_n.qmd)</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">No phylogenetic random effect</span><span class="co">](appendix/sensitivity_no_phylogeny.qmd)</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Study-system (`sys_id`) random effect</span><span class="co">](appendix/sensitivity_sys_id.qmd)</span></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>Rows marked **DIFFERS** identify coefficients whose sign or credible-interval</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>conclusion changes. The detailed tables use raw treatment-coded</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>coefficients so that each sensitivity estimate is compared like-for-like with</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>the corresponding primary fit.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## Detailed results</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>The appendices report every location and scale coefficient beside the matched</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>primary estimate, together with convergence diagnostics:</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Minimum total sample size (N &gt;= 40)</span><span class="co">](appendix/sensitivity_min_n.qmd)</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">No phylogenetic random effect</span><span class="co">](appendix/sensitivity_no_phylogeny.qmd)</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Study-system (`sys_id`) random effect</span><span class="co">](appendix/sensitivity_sys_id.qmd)</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>Rows marked **DIFFERS** identify coefficients whose sign or credible-interval</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>conclusion changes. The detailed tables use raw treatment-coded</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>coefficients so that each sensitivity estimate is compared like-for-like with</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>the corresponding primary fit.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

@@ -19,11 +19,11 @@ moderator_grid <- tibble::tribble(
 excluded_grid <- tibble::tribble(
   ~model_id, ~moderator,  ~label,             ~reason,
   "m06",     "taxa",      "Taxonomic group",
-    "Every collapsing scheme tried (taxa_v2, then a 3-group Vertebrate/Invertebrate/Plant split) still fit far more slowly than every other moderator model, and never reached a usable posterior in a computationally reasonable time. The taxonomic grouping is largely redundant with the phylogenetic random effect (1 | gr(sp_ncbi, cov = A)) already in every model, so the two terms likely compete for the same signal, producing a poorly identified, slow-mixing posterior rather than a genuine model failure. Excluded as computationally infeasible given this redundancy.",
+    "The original taxonomic fit and two collapsed-category refits did not complete within the allocated runtime. No converged posterior was available, so this moderator is excluded from reported estimates.",
   "m08",     "env_change", "Environmental-change context",
     "The corrected-data fit had max Rhat = 1.0143 and did not meet the pre-specified convergence criterion. It is excluded from primary results and retained only as a diagnostic appendix.",
   "m09",     "data_type", "Data type",
-    "The cleaned refit (m09b: index and temperature levels dropped, reference = linear) still returned 5/8000 (0.06%) divergent transitions after warmup. Although the rate is low, a divergence indicates the sampler could not fully explore the posterior in that region, so estimates from this model are not treated as reliable for reporting. Both the original (m09) and refit (m09b) fits are retained in outputs/models/ for reproducibility, but excluded from the primary results.",
+    "The cleaned refit returned 5/8000 divergent transitions after warmup and is excluded from reported estimates.",
   "m10",     "transf_data", "Transformation status",
     "The cleaned refit had max Rhat = 1.0128 and minimum bulk ESS = 230, so it did not meet the convergence criteria and is excluded from the reported results."
 )

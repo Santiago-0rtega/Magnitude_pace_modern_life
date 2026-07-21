@@ -574,7 +574,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>How the focal–reference comparison was constructed (e.g.&nbsp;spatial vs temporal).</p>
 <section id="model-summary" class="level2" data-number="11.1">
 <h2 data-number="11.1" class="anchored" data-anchor-id="model-summary"><span class="header-section-number">11.1</span> Model summary</h2>
-<p><code>summary()</code> is read from the pre-computed cache (<code>outputs/epred_draws/m02.rds</code>) — the full <code>brms</code> fit is never loaded at render.</p>
+<p><code>summary()</code> is read from <code>Rdata/epred_draws/m02.rds</code>; the full <code>brms</code> fit is not loaded at render.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -622,7 +622,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </section>
 <section id="pairwise-level-contrasts" class="level2" data-number="11.2">
 <h2 data-number="11.2" class="anchored" data-anchor-id="pairwise-level-contrasts"><span class="header-section-number">11.2</span> Pairwise level contrasts</h2>
-<p>Estimated marginal means and all pairwise level-vs-level contrasts for the location (mean lnM) and scale (residual heterogeneity) parts, read from the precomputed cache (<code>outputs/summaries/emmeans_contrasts_cache.rds</code>) — the full <code>brms</code> fit is never loaded at render.</p>
+<p>Estimated marginal means and pairwise contrasts are read from <code>Rdata/summaries/emmeans_contrasts_cache.rds</code>.</p>
 <p><strong>Location — pairwise contrasts (difference in mean lnM):</strong></p>
 <div class="cell">
 <div class="cell-output-display">
@@ -653,7 +653,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Contrast</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Estimate (logσ)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Estimate (logO)</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">Lower 95% HPD</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">Upper 95% HPD</th>
 </tr>
@@ -1429,7 +1429,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model summary</span></span>
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="in">`summary()`</span> is read from the pre-computed cache (<span class="in">`outputs/epred_draws/m02.rds`</span>) — the full <span class="in">`brms`</span> fit is never loaded at render.</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="in">`summary()`</span> is read from <span class="in">`Rdata/epred_draws/m02.rds`</span>; the full <span class="in">`brms`</span> fit is not loaded at render.</span>
 <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summary}</span></span>
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="fu">print_cache_summary</span>(cache)</span>
@@ -1437,7 +1437,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pairwise level contrasts</span></span>
 <span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>Estimated marginal means and all pairwise level-vs-level contrasts for the location (mean lnM) and scale (residual heterogeneity) parts, read from the precomputed cache (<span class="in">`outputs/summaries/emmeans_contrasts_cache.rds`</span>) — the full <span class="in">`brms`</span> fit is never loaded at render.</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>Estimated marginal means and pairwise contrasts are read from <span class="in">`Rdata/summaries/emmeans_contrasts_cache.rds`</span>.</span>
 <span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="in">```{r contrasts-setup, include=FALSE}</span></span>
 <span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"chapters"</span>, <span class="st">"Rscripts"</span>, <span class="st">"18_contrasts_cache.R"</span>))</span>

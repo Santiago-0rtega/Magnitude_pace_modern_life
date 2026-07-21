@@ -19,12 +19,6 @@ primary-model coefficient; intercepts are excluded from this count.
 sens_variant_summary_table()
 ```
 
-All 21 expected sensitivity models have cached results. Removing the
-phylogenetic random effect produced the fewest changes relative to the primary
-fits. The minimum-sample-size and study-system analyses produced more changes,
-and their divergent transitions mean those differences should be interpreted
-alongside the model-specific diagnostics rather than as definitive reversals.
-
 ## Detailed results
 
 The appendices report every location and scale coefficient beside the matched

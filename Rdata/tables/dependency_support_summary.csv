@@ -1,5 +1,5 @@
-Group,Relationship,Groups with only 1 match,Total groups,Only 1 match (%),Median matches,Maximum matches
-sp_ncbi,systems per species,198,253,78.3,1,379
-sys_id,species per system,1533,1533,100,1,1
-ref_id,systems per reference,215,254,84.6,1,1161
-sys_id,references per system,1494,1533,97.5,1,10
+Group A,Linked group B,Levels of A,Levels of B,A levels linked to one B,A levels linked to one B (%),Median B levels per A,Maximum B levels per A
+sp_ncbi,sys_id,253,1533,198,78.3,1,379
+sys_id,sp_ncbi,1533,253,1533,100,1,1
+ref_id,sys_id,254,1533,215,84.6,1,1161
+sys_id,ref_id,1533,254,1494,97.5,1,10

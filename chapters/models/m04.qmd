@@ -12,7 +12,7 @@ Continuous moderator: divergence as a function of elapsed time in generations (l
 
 ## Model summary
 
-`summary()` is read from the pre-computed cache (`outputs/epred_draws/m04.rds`) — the full `brms` fit is never loaded at render.
+`summary()` is read from `Rdata/epred_draws/m04.rds`; the full `brms` fit is not loaded at render.
 
 ```{r summary}
 print_cache_summary(cache)

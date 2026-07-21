@@ -12,7 +12,7 @@ How the focal–reference comparison was constructed (e.g. spatial vs temporal).
 
 ## Model summary
 
-`summary()` is read from the pre-computed cache (`outputs/epred_draws/m02.rds`) — the full `brms` fit is never loaded at render.
+`summary()` is read from `Rdata/epred_draws/m02.rds`; the full `brms` fit is not loaded at render.
 
 ```{r summary}
 print_cache_summary(cache)
@@ -20,7 +20,7 @@ print_cache_summary(cache)
 
 ## Pairwise level contrasts
 
-Estimated marginal means and all pairwise level-vs-level contrasts for the location (mean lnM) and scale (residual heterogeneity) parts, read from the precomputed cache (`outputs/summaries/emmeans_contrasts_cache.rds`) — the full `brms` fit is never loaded at render.
+Estimated marginal means and pairwise contrasts are read from `Rdata/summaries/emmeans_contrasts_cache.rds`.
 
 ```{r contrasts-setup, include=FALSE}
 source(here::here("chapters", "Rscripts", "18_contrasts_cache.R"))

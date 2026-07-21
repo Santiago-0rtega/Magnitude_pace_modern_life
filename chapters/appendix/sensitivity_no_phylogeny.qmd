@@ -17,9 +17,8 @@ is a pragmatic comparative tree, not a fully resolved, time-calibrated phylogeny
 (protocol §3.6): its topology is assembled from multiple sources, unresolved
 nodes are resolved algorithmically, and branch lengths are assigned by Grafen's
 method. This analysis refits each included moderator model with the phylogenetic
-term **removed**, keeping the `ref_id` study effect and everything else fixed, to
-check that conclusions do not depend strongly on that scaffold. The full dataset
-is used (no sample-size restriction).
+term **removed**, keeping the `ref_id` study effect and everything else fixed.
+The full dataset is used (no sample-size restriction).
 
 ## How it was fit
 

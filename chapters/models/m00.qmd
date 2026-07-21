@@ -12,7 +12,7 @@ The intercept-only model estimates the overall mean lnM and the baseline residua
 
 ## Model summary
 
-`summary()` is read from the pre-computed cache (`outputs/epred_draws/m00.rds`) — the full `brms` fit is never loaded at render.
+`summary()` is read from `Rdata/epred_draws/m00.rds`; the full `brms` fit is not loaded at render.
 
 ```{r summary}
 print_cache_summary(cache)
@@ -20,7 +20,7 @@ print_cache_summary(cache)
 
 ## Heterogeneity decomposition
 
-Location–scale $I^2$ from this intercept-only baseline, partitioned into between-study (reference), phylogenetic, and within-study (residual) components following the location–scale meta-analysis framework of Nakagawa et al. Read from the precomputed cache (`outputs/summaries/heterogeneity_m00.rds`); the full fit is never loaded at render.
+Location–scale $I^2$ from this intercept-only baseline, partitioned into between-study (reference), phylogenetic, and within-study (residual) components following the location–scale meta-analysis framework of Nakagawa et al. Values are read from `Rdata/summaries/heterogeneity_m00.rds`.
 
 ```{r het, echo=FALSE}
 source(here::here("chapters", "Rscripts", "18_contrasts_cache.R"))

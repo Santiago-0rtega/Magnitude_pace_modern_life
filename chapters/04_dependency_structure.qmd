@@ -8,92 +8,18 @@ source(here::here("chapters", "Rscripts", "01_paths.R"))
 source(here::here("chapters", "Rscripts", "05_phylogeny.R"))
 ```
 
-## Why dependency matters
-
-Multiple contrasts can share a paper, study system, or species. Treating them as independent would overstate the effective sample size and make uncertainty intervals too narrow. The location submodel represents three distinct sources of uncertainty or dependency:
-
-1. **Reference (`ref_id`)** — contrasts from the same paper share design choices, sampling effort, and measurement protocols.
-2. **Phylogenetic relatedness (`sp_ncbi`, via `A`)** — species that share evolutionary history have correlated intercepts.
-3. **Known sampling variance (`es_id_model`, via `V`)** — each contrast has a SAFE sampling variance. Its group-level standard deviation is fixed to one, so this propagates known measurement uncertainty rather than estimating another clustering variance.
-
-`sys_id` (study system) overlaps strongly with reference and species. The diagnostics below describe that overlap; `sys_id` is reserved for sensitivity analyses.
-
-## Load and align the analysis universe
+## Analysis counts
 
 ```{r load}
 dat_es <- readRDS(here::here("Rdata", "effect_sizes", "proceed_lnm_safe.rds"))
-A_full <- readRDS(here::here("Rdata", "phylogeny", "proceed_A_matrix.rds"))
 name_map <- readRDS(here::here("Rdata", "phylogeny", "proceed_name_map.rds"))
 dat_mapped <- apply_phylo_name_map(dat_es, name_map)
 
-has_raw_name <- !is.na(dat_mapped$sp_ncbi) &
-  nzchar(trimws(as.character(dat_mapped$sp_ncbi)))
-has_canonical_name <- !is.na(dat_mapped$sp_ncbi_canonical) &
-  nzchar(as.character(dat_mapped$sp_ncbi_canonical))
-
-current_species <- dat_mapped |>
-  dplyr::filter(has_raw_name) |>
-  dplyr::distinct(sp_ncbi, sp_ncbi_canonical) |>
-  dplyr::mutate(
-    status = dplyr::if_else(
-      !is.na(sp_ncbi_canonical) & nzchar(as.character(sp_ncbi_canonical)),
-      "Reconciled", "Unresolved"
-    )
-  )
-```
-
-### Which species count?
-
-Species counts differ depending on whether they refer to raw database names, reconciled names, all tips in the cached phylogeny, or species actually used by the models. All dependency diagnostics below use the **current model universe**: contrasts with a canonical species name after applying the same cached reconciliation map used by the model grid.
-
-```{r analysis-universe}
-current_canonical <- unique(as.character(
-  dat_mapped$sp_ncbi_canonical[has_canonical_name]
-))
-current_canonical <- current_canonical[
-  !is.na(current_canonical) & nzchar(current_canonical)
-]
-
-dependency_flow <- tibble::tibble(
-  Stage = c(
-    "Effect-size dataset",
-    "Named species in current dataset",
-    "Current names reconciled by cached map",
-    "Canonical species used in diagnostics and models",
-    "Current names unresolved",
-    "Contrasts excluded because species was unresolved",
-    "All tips in cached A matrix",
-    "Cached A tips unused by current dataset"
-  ),
-  Contrasts = c(
-    nrow(dat_mapped), NA, NA, sum(has_canonical_name), NA,
-    sum(has_raw_name & !has_canonical_name), NA, NA
-  ),
-  Species = c(
-    NA,
-    dplyr::n_distinct(dat_mapped$sp_ncbi[has_raw_name]),
-    sum(current_species$status == "Reconciled"),
-    length(current_canonical),
-    sum(current_species$status == "Unresolved"),
-    NA,
-    nrow(A_full),
-    length(setdiff(rownames(A_full), current_canonical))
-  )
-)
-
-knitr::kable(
-  dependency_flow,
-  caption = "Flow from the current effect-size dataset to the species universe used in dependency diagnostics."
-)
-```
-
-The `r length(current_canonical)` canonical species reported here are the same current-analysis species reported in the Phylogenetic reconciliation chapter. The cached `A` matrix is larger because it retains tips for species no longer present in the current effect-size dataset. Unused tips do not enter a fitted model.
-
-## Build the dependency dataset
-
-```{r diag-data}
 dat_re_diag <- dat_mapped |>
-  dplyr::filter(has_canonical_name) |>
+  dplyr::filter(
+    !is.na(sp_ncbi_canonical),
+    nzchar(as.character(sp_ncbi_canonical))
+  ) |>
   dplyr::transmute(
     es_id_db = factor(es_id_db),
     ref_id   = factor(ref_id),
@@ -103,156 +29,96 @@ dat_re_diag <- dat_mapped |>
   tidyr::drop_na() |>
   droplevels()
 
-cat("Contrasts in current model universe:", nrow(dat_re_diag), "\n")
-cat("Canonical species in current model universe:",
-    dplyr::n_distinct(dat_re_diag$sp_ncbi), "\n")
+analysis_counts <- tibble::tibble(
+  Unit = c(
+    "Contrasts",
+    "Effect-size identifiers",
+    "References",
+    "Study systems",
+    "Canonical species"
+  ),
+  N = c(
+    nrow(dat_re_diag),
+    dplyr::n_distinct(dat_re_diag$es_id_db),
+    dplyr::n_distinct(dat_re_diag$ref_id),
+    dplyr::n_distinct(dat_re_diag$sys_id),
+    dplyr::n_distinct(dat_re_diag$sp_ncbi)
+  )
+)
+
+knitr::kable(analysis_counts, caption = "Counts in the dependency dataset.")
 ```
 
-## Pairwise nesting diagnostics
+“Canonical species” means unique species labels after taxonomic reconciliation.
+The current data contain 261 resolved input names but 253 canonical species
+because eight additional subspecies or duplicate labels collapse into five
+shared species labels. The next chapter documents this reconciliation and
+distinguishes the 253 current species from the 265 tips stored in the cached
+phylogenetic matrix.
 
-For a pair *A* and *B*, “A nested in B” means every level of A occurs with exactly one level of B. The reverse relationship can differ, so both directions are reported.
+## Pairwise dependency
 
-```{r nesting-fun}
-check_nesting <- function(data, a, b) {
-  tmp <- data |>
-    dplyr::distinct(.data[[a]], .data[[b]]) |>
-    dplyr::count(.data[[a]], name = "n_unique_b")
+```{r dependency-table}
+summarise_links <- function(data, factor_a, factor_b) {
+  links <- data |>
+    dplyr::distinct(.data[[factor_a]], .data[[factor_b]]) |>
+    dplyr::count(.data[[factor_a]], name = "n_b")
 
   tibble::tibble(
-    factor_a = a,
-    factor_b = b,
-    n_levels_a = dplyr::n_distinct(data[[a]]),
-    n_levels_b = dplyr::n_distinct(data[[b]]),
-    min_unique_b_per_a = min(tmp$n_unique_b),
-    median_unique_b_per_a = stats::median(tmp$n_unique_b),
-    max_unique_b_per_a = max(tmp$n_unique_b),
-    prop_a_single_b = mean(tmp$n_unique_b == 1),
-    a_nested_in_b = all(tmp$n_unique_b == 1)
+    `Group A` = factor_a,
+    `Linked group B` = factor_b,
+    `Levels of A` = dplyr::n_distinct(data[[factor_a]]),
+    `Levels of B` = dplyr::n_distinct(data[[factor_b]]),
+    `A levels linked to one B` = sum(links$n_b == 1),
+    `A levels linked to one B (%)` = round(100 * mean(links$n_b == 1), 1),
+    `Median B levels per A` = stats::median(links$n_b),
+    `Maximum B levels per A` = max(links$n_b)
   )
 }
 
 group_vars <- c("es_id_db", "ref_id", "sys_id", "sp_ncbi")
-nesting_tbl <- purrr::map_dfr(group_vars, function(a) {
+
+dependency_table <- purrr::map_dfr(group_vars, function(a) {
   purrr::map_dfr(setdiff(group_vars, a), function(b) {
-    check_nesting(dat_re_diag, a, b)
+    summarise_links(dat_re_diag, a, b)
   })
-}) |>
-  dplyr::arrange(dplyr::desc(a_nested_in_b), factor_a, factor_b)
+})
+
+knitr::kable(
+  dependency_table,
+  digits = 1,
+  caption = "Counts and proportions for each directed pair of grouping variables."
+)
 ```
 
-```{r nesting-table}
-knitr::kable(nesting_tbl, digits = 2,
-             caption = "Directed pairwise nesting diagnostics in the current model universe.")
-```
+## Study-system relationships
 
-```{r nesting-matrix}
-nesting_matrix <- nesting_tbl |>
-  dplyr::select(factor_a, factor_b, max_unique_b_per_a) |>
-  tidyr::pivot_wider(names_from = factor_b, values_from = max_unique_b_per_a)
-
-knitr::kable(nesting_matrix,
-             caption = "Maximum number of B levels observed within one A level. A value of one indicates complete nesting.")
-```
-
-## Support for the system identifier
-
-```{r support-table}
-make_link_summary <- function(data, grouping_factor, linked_factor, label) {
-  data |>
-    dplyr::distinct(.data[[grouping_factor]], .data[[linked_factor]]) |>
-    dplyr::count(.data[[grouping_factor]], name = "n_matches") |>
-    dplyr::summarise(
-      Group = grouping_factor,
-      Relationship = label,
-      `Groups with only 1 match` = sum(n_matches == 1),
-      `Total groups` = dplyr::n(),
-      `Only 1 match (%)` = round(100 * mean(n_matches == 1), 1),
-      `Median matches` = stats::median(n_matches),
-      `Maximum matches` = max(n_matches)
-    )
-}
-
-support_table <- dplyr::bind_rows(
-  make_link_summary(dat_re_diag, "sp_ncbi", "sys_id", "systems per species"),
-  make_link_summary(dat_re_diag, "sys_id", "sp_ncbi", "species per system"),
-  make_link_summary(dat_re_diag, "ref_id", "sys_id", "systems per reference"),
-  make_link_summary(dat_re_diag, "sys_id", "ref_id", "references per system")
+```{r system-table}
+system_table <- dplyr::bind_rows(
+  summarise_links(dat_re_diag, "sp_ncbi", "sys_id"),
+  summarise_links(dat_re_diag, "sys_id", "sp_ncbi"),
+  summarise_links(dat_re_diag, "ref_id", "sys_id"),
+  summarise_links(dat_re_diag, "sys_id", "ref_id")
 )
 
-knitr::kable(support_table,
-             caption = "Overlap of study systems with species and references.")
-```
-
-```{r support-plots, fig.width=13, fig.height=6, fig.cap="Cumulative distribution of linked study systems per species and reference. The logarithmic x-axis keeps both the majority of one-system groups and the few very large salmon datasets visible."}
-support_long <- dplyr::bind_rows(
-  dat_re_diag |>
-    dplyr::distinct(sp_ncbi, sys_id) |>
-    dplyr::count(sp_ncbi, name = "n_systems") |>
-    dplyr::transmute(group = "Species", n_systems),
-  dat_re_diag |>
-    dplyr::distinct(ref_id, sys_id) |>
-    dplyr::count(ref_id, name = "n_systems") |>
-    dplyr::transmute(group = "Reference", n_systems)
+knitr::kable(
+  system_table,
+  digits = 1,
+  caption = "Counts and proportions linking study systems with species and references."
 )
-
-ggplot2::ggplot(support_long, ggplot2::aes(x = n_systems, colour = group)) +
-  ggplot2::stat_ecdf(linewidth = 1.4) +
-  ggplot2::facet_wrap(~ group) +
-  ggplot2::scale_colour_manual(
-    values = c(Species = "#257180", Reference = "#CB6040"), guide = "none"
-  ) +
-  ggplot2::scale_x_log10(
-    breaks = c(1, 3, 10, 30, 100, 300, 1000),
-    labels = scales::comma
-  ) +
-  ggplot2::scale_y_continuous(labels = scales::percent) +
-  ggplot2::labs(x = "Study systems per group (log scale)",
-                y = "Groups at or below this value") +
-  ggplot2::theme_minimal(base_size = 15) +
-  ggplot2::theme(panel.grid.minor = ggplot2::element_blank(),
-                 strip.text = ggplot2::element_text(face = "bold"))
 ```
 
-## Species excluded at reconciliation
-
-Unresolved names receive `NA` in `sp_ncbi_canonical`, and `prepare_phylo_and_data()` removes those contrasts before a primary phylogeny-adjusted model is fitted. A star contribution is used only for a **resolved canonical species absent from `A`**; there are currently `r length(setdiff(current_canonical, rownames(A_full)))` such species.
-
-```{r unresolved-current}
-current_unresolved <- current_species |>
-  dplyr::filter(status == "Unresolved") |>
-  dplyr::transmute(
-    Species = as.character(sp_ncbi),
-    Contrasts = purrr::map_int(
-      Species,
-      ~ sum(as.character(dat_mapped$sp_ncbi) == .x, na.rm = TRUE)
-    )
-  ) |>
-  dplyr::arrange(dplyr::desc(Contrasts), Species)
-
-knitr::kable(current_unresolved,
-             caption = "Unresolved species names in the current effect-size dataset.")
-```
-
-## Random-effects decision
-
-The diagnostics show a crossed rather than purely hierarchical structure:
-
-- `es_id_db` is the finest-grained identifier and is nested within the higher-level groupings.
-- Most references contribute one study system, but some references span several systems.
-- Most species occur in one system, although a few salmon species span hundreds of systems.
-- Every system belongs to one canonical species, and 97.5% of systems belong to one reference; the remaining systems connect multiple references.
-
-Reference and phylogeny therefore represent distinct, estimable sources of dependence. Adding `sys_id` as a third group-level term would ask the model to separate variance among three strongly overlapping classifications, making variance components weakly identified. Primary models consequently include reference, phylogeny, and known sampling variance; `sys_id` is added only in the dedicated sensitivity analysis.
-
-## Save dependency tables
-
-```{r save}
-readr::write_csv(nesting_tbl,
-                 here::here("Rdata", "tables", "dependency_nesting_table.csv"))
-readr::write_csv(support_table,
-                 here::here("Rdata", "tables", "dependency_support_summary.csv"))
-readr::write_csv(dependency_flow,
-                 here::here("Rdata", "tables", "dependency_analysis_universe.csv"))
-
-cat("Dependency tables saved.\n")
+```{r save, include=FALSE}
+readr::write_csv(
+  dependency_table,
+  here::here("Rdata", "tables", "dependency_nesting_table.csv")
+)
+readr::write_csv(
+  system_table,
+  here::here("Rdata", "tables", "dependency_support_summary.csv")
+)
+readr::write_csv(
+  analysis_counts,
+  here::here("Rdata", "tables", "dependency_analysis_universe.csv")
+)
 ```

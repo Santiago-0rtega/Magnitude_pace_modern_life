@@ -39,9 +39,17 @@ tryCatch(
 name_map_path <- here::here("Rdata", "phylogeny", "proceed_name_map.rds")
 if (file.exists(name_map_path)) {
   nm <- readRDS(name_map_path)
-  cat("Name-map entries:", nrow(nm), "\n")
-  cat("Resolved        :", sum(!is.na(nm$sp_ncbi_canonical)), "\n")
-  cat("Unresolved      :", sum( is.na(nm$sp_ncbi_canonical)), "\n")
+  dat <- readRDS(here::here("Rdata", "effect_sizes", "proceed_lnm_safe.rds"))
+  lookup <- stats::setNames(nm$sp_ncbi_canonical, nm$sp_ncbi_original)
+  raw <- unique(as.character(dat$sp_ncbi))
+  raw <- raw[!is.na(raw) & nzchar(trimws(raw))]
+  canonical <- unname(lookup[raw])
+  resolved <- !is.na(canonical) & nzchar(canonical)
+  cat("Current input names :", length(raw), "\n")
+  cat("Resolved names      :", sum(resolved), "\n")
+  cat("Unresolved names    :", sum(!resolved), "\n")
+  cat("Canonical species   :", dplyr::n_distinct(canonical[resolved]), "\n")
+  cat("Model contrasts     :", sum(!is.na(lookup[as.character(dat$sp_ncbi)])), "\n")
 } else {
   cat("Name map not found — phylogeny not yet built.\n")
 }
@@ -71,7 +79,7 @@ if (length(git_status) > 0) {
 
 ### Random seeds
 
-All SAFE lnM computations use `seed = 123`. All brms model fits use `seed = 123`. These seeds are set in `R/04_lnm_safe.R` and `R/08_fit_or_read_model.R` respectively.
+All SAFE lnM computations use `seed = 123`. All brms model fits use `seed = 123`. These seeds are set in `chapters/Rscripts/04_lnm_safe.R` and `chapters/Rscripts/08_fit_or_read_model.R` respectively.
 
 ### Path conventions
 
@@ -100,7 +108,7 @@ if (length(model_files) > 0) {
   ) |>
     dplyr::arrange(modified)
 } else {
-  cat("No cached model files found in outputs/models/.\n")
+  cat("No cached model files found in Rdata/models/.\n")
 }
 ```
 
@@ -116,6 +124,45 @@ if (file.exists(es_path)) {
   cat("Effect-size cache not found. Run chapter 02.\n")
 }
 ```
+
+### Rendered model-cache audit
+
+```{r rendered-cache-audit}
+rendered_ids <- c("m00", "m01", "m02", "m03", "m04", "m05", "m07", "m08", "m11")
+expected_n <- c(m00 = 7186L, m01 = 7186L, m02 = 7186L, m03 = 7186L,
+                m04 = 7186L, m05 = 7186L, m07 = 7186L, m08 = 7186L,
+                m11 = 7172L)
+
+cache_audit <- purrr::map_dfr(rendered_ids, function(id) {
+  path <- here::here("Rdata", "epred_draws", paste0(id, ".rds"))
+  cache <- readRDS(path)
+  summary_text <- paste(cache$summary_txt, collapse = " ")
+  match <- regmatches(
+    summary_text,
+    regexec("Number of observations: ([0-9]+)", summary_text)
+  )[[1]]
+  observed_n <- if (length(match) >= 2) as.integer(match[2]) else NA_integer_
+
+  tibble::tibble(
+    model = id,
+    source_fit = cache$source_fit,
+    cache_built = format(as.POSIXct(cache$meta$built, origin = "1970-01-01"),
+                         "%Y-%m-%d %H:%M:%S"),
+    observations_in_cache = observed_n,
+    expected_observations = unname(expected_n[id]),
+    sample_matches = observed_n == unname(expected_n[id])
+  )
+})
+
+knitr::kable(
+  cache_audit,
+  caption = "Posterior-prediction caches used by rendered model chapters."
+)
+```
+
+Only the model IDs in this audit are referenced by rendered result chapters.
+Legacy `m09` and `m10` epred caches are excluded from the book and are not used
+by any included chapter.
 
 ### How to render
 

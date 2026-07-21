@@ -606,7 +606,7 @@ window.Quarto = {
 <p>The intercept-only model estimates the overall mean lnM and the baseline residual heterogeneity (sigma), with no moderators — the reference against which every moderator model is compared.</p>
 <section id="model-summary" class="level2" data-number="9.1">
 <h2 data-number="9.1" class="anchored" data-anchor-id="model-summary"><span class="header-section-number">9.1</span> Model summary</h2>
-<p><code>summary()</code> is read from the pre-computed cache (<code>outputs/epred_draws/m00.rds</code>) — the full <code>brms</code> fit is never loaded at render.</p>
+<p><code>summary()</code> is read from <code>Rdata/epred_draws/m00.rds</code>; the full <code>brms</code> fit is not loaded at render.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -647,15 +647,15 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </section>
 <section id="heterogeneity-decomposition" class="level2" data-number="9.2">
 <h2 data-number="9.2" class="anchored" data-anchor-id="heterogeneity-decomposition"><span class="header-section-number">9.2</span> Heterogeneity decomposition</h2>
-<p>Location–scale <span class="math inline">\(I^2\)</span> from this intercept-only baseline, partitioned into between-study (reference), phylogenetic, and within-study (residual) components following the location–scale meta-analysis framework of Nakagawa et al.&nbsp;Read from the precomputed cache (<code>outputs/summaries/heterogeneity_m00.rds</code>); the full fit is never loaded at render.</p>
+<p>Location–scale <span class="math inline">\(I^2\)</span> from this intercept-only baseline, partitioned into between-study (reference), phylogenetic, and within-study (residual) components following the location–scale meta-analysis framework of Nakagawa et al.&nbsp;Values are read from <code>Rdata/summaries/heterogeneity_m00.rds</code>.</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="table caption-top table-sm table-striped small">
-<caption>Location–scale heterogeneity (I², %) with 95% credible intervals.</caption>
+<caption>Location<u>scale heterogeneity (I<u>, %) with 95% credible intervals.</u></u></caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Component</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">I² (%)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">IB2 (%)</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">Lower 95% CrI</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">Upper 95% CrI</th>
 </tr>
@@ -1388,7 +1388,7 @@ W = V^{-1}.
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model summary</span></span>
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="in">`summary()`</span> is read from the pre-computed cache (<span class="in">`outputs/epred_draws/m00.rds`</span>) — the full <span class="in">`brms`</span> fit is never loaded at render.</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="in">`summary()`</span> is read from <span class="in">`Rdata/epred_draws/m00.rds`</span>; the full <span class="in">`brms`</span> fit is not loaded at render.</span>
 <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summary}</span></span>
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="fu">print_cache_summary</span>(cache)</span>
@@ -1396,7 +1396,7 @@ W = V^{-1}.
 <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="fu">## Heterogeneity decomposition</span></span>
 <span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>Location–scale $I^2$ from this intercept-only baseline, partitioned into between-study (reference), phylogenetic, and within-study (residual) components following the location–scale meta-analysis framework of Nakagawa et al. Read from the precomputed cache (<span class="in">`outputs/summaries/heterogeneity_m00.rds`</span>); the full fit is never loaded at render.</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>Location–scale $I^2$ from this intercept-only baseline, partitioned into between-study (reference), phylogenetic, and within-study (residual) components following the location–scale meta-analysis framework of Nakagawa et al. Values are read from <span class="in">`Rdata/summaries/heterogeneity_m00.rds`</span>.</span>
 <span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="in">```{r het, echo=FALSE}</span></span>
 <span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"chapters"</span>, <span class="st">"Rscripts"</span>, <span class="st">"18_contrasts_cache.R"</span>))</span>

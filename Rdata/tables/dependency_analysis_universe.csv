@@ -1,9 +1,6 @@
-Stage,Contrasts,Species
-Effect-size dataset,7237,NA
-Named species in current dataset,NA,267
-Current names reconciled by cached map,NA,261
-Canonical species used in diagnostics and models,7186,253
-Current names unresolved,NA,6
-Contrasts excluded because species was unresolved,51,NA
-All tips in cached A matrix,NA,265
-Cached A tips unused by current dataset,NA,12
+Unit,N
+Contrasts,7186
+Effect-size identifiers,7186
+References,254
+Study systems,1533
+Canonical species,253
