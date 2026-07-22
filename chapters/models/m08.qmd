@@ -25,8 +25,14 @@ dat_model <- dat_es |> dplyr::filter(!is.na(env_change))
 phylo <- prepare_phylo_and_data(dat_model, A_full, fill_unmatched = TRUE)
 dat_model <- phylo$dat_model
 A <- phylo$A_mod
+formula <- brms::bf(
+  yi_lnM_safe ~ env_change + (1 | ref_id) +
+    (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)),
+  sigma ~ env_change
+)
+V <- phylo$V
 fit <- brms::brm(formula, data = dat_model,
-                 data2 = list(A = A, V = phylo$V))
+                 data2 = list(A = A, V = V))
 ```
 
 Type of environmental change driving the divergence.
