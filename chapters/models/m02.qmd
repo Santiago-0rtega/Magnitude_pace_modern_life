@@ -8,6 +8,21 @@ cache_dir <- here::here("Rdata", "epred_draws")
 cache     <- read_epred_cache("m02", cache_dir)
 ```
 
+## Phylogenetic covariance and model species
+
+This model contains **253 species** (7,186 contrasts). The phylogenetic correlation matrix was constructed and aligned to those species as follows; `brms` uses it in `(1 | gr(sp_ncbi, cov = A))`.
+
+```{r phylogenetic-covariance, eval=FALSE}
+A_full <- prepR4pcm::pr_phylo_cor(tree_final)
+# Fallback if needed: ape::vcv.phylo(tree_final, corr = TRUE)
+dat_model <- dat_es |> dplyr::filter(!is.na(design))
+phylo <- prepare_phylo_and_data(dat_model, A_full, fill_unmatched = TRUE)
+dat_model <- phylo$dat_model
+A <- phylo$A_mod
+fit <- brms::brm(formula, data = dat_model,
+                 data2 = list(A = A, V = phylo$V))
+```
+
 How the focal–reference comparison was constructed (e.g. spatial vs temporal).
 
 ## Model summary
