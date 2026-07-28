@@ -105,7 +105,17 @@ model_id <- "m02"
 model_file <- "m02_ls_design"
 moderator <- "design"
 moderator_label <- "Comparison design"
-label_map <- c("Allochronic" = "Allochronic (same pop., time series)", "Synchronic" = "Synchronic (diverged pops.)")
+label_map <- c("Allochronic" = "Allochronic", "Synchronic" = "Synchronic")
+
+# Approximate large-sample conversion: |d| = sqrt(2) * exp(lnM).
+d_ref <- c(0.2, 0.5, 0.8)
+lnm_ref <- log(d_ref / sqrt(2))
+d_axis <- ggplot2::sec_axis(
+  ~ sqrt(2) * exp(.),
+  breaks = c(d_ref, sqrt(2)),
+  labels = c("0.2", "0.5", "0.8", "1.41"),
+  name = "Approximate |d|"
+)
 
 out_dir <- here::here("Rdata", "figures", "publication", "orchard")
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
@@ -251,7 +261,8 @@ colors <- cb_cols[seq_len(n_levels)]
 names(colors) <- levels(ests$level)
 
 p_loc <- ggplot2::ggplot() +
-  ggplot2::geom_vline(xintercept = 0, linetype = "dashed", colour = "grey50") +
+  ggplot2::geom_vline(xintercept = lnm_ref, linetype = "dotted", colour = "grey72") +
+  ggplot2::geom_vline(xintercept = 0, linetype = "dashed", colour = "grey40") +
   ggbeeswarm::geom_quasirandom(
     data = raw,
     ggplot2::aes(x = yi_lnM_safe, y = level,
@@ -276,10 +287,11 @@ p_loc <- ggplot2::ggplot() +
   ggplot2::scale_colour_manual(values = colors, guide = "none") +
   ggplot2::scale_fill_manual(values = colors, guide = "none") +
   ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.4, 4)) +
+  ggplot2::scale_x_continuous(sec.axis = d_axis) +
   ggplot2::labs(
-    x = "Location effect (lnM)",
+    x = "lnM",
     y = NULL,
-    title = paste("Location --", moderator_label)
+    title = "A)"
   ) +
   theme_orchard()
 
@@ -316,7 +328,7 @@ p_scl <- ggplot2::ggplot() +
   ggplot2::labs(
     x = "residual lnM (SD)",
     y = NULL,
-    title = paste("Scale --", moderator_label),
+    title = "B)",
     caption = "Bubbles: absolute residual lnM, sized by precision. Trunk = predicted residual SD (sigma)."
   ) +
   theme_orchard()

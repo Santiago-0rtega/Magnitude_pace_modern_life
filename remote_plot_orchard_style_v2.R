@@ -139,8 +139,8 @@ all_models <- list(
   list(id="m02", file="m02_ls_design", moderator="design",
        label="Comparison design", type="categorical",
        lbl=c(
-         "Allochronic" = "Allochronic (same pop., time series)",
-         "Synchronic"  = "Synchronic (diverged pops.)"
+         "Allochronic" = "Allochronic",
+         "Synchronic"  = "Synchronic"
        )),
   list(id="m03", file="m03_ls_log10_years", moderator="log10_years",
        label="Elapsed time (log10 years)", type="continuous", lbl=NULL),
@@ -168,8 +168,8 @@ all_models <- list(
   list(id="m07", file="m07_ls_genphen", moderator="genphen",
        label="Phenotypic vs. genetic", type="categorical",
        lbl=c(
-         "Genetic"    = "Genetic (common garden / QG)",
-         "Phenotypic" = "Phenotypic (wild-measured)"
+         "Genetic"    = "Genetic",
+         "Phenotypic" = "Phenotypic"
        )),
   list(id="m08", file="m08_ls_env_change", moderator="env_change",
        label="Environmental-change context", type="categorical",
