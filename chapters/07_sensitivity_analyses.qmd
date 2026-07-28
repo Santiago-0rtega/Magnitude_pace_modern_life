@@ -84,11 +84,3 @@ completeness but excluded from the summary change count.
 Rows marked **DIFFERS** meet one of the two screening criteria above. Rows
 marked *consistent* do not; the label does not mean the estimates are
 numerically identical.
-
-## Secondary moderator sensitivity
-
-The [`data_scale` model (m11)](models/m11.qmd) compares traits recorded on
-interval and ratio measurement scales. Because measurement scale describes the
-source units rather than a biological moderator, m11 is not part of the primary
-moderator set. Its fitted model, diagnostics, contrasts, and figure are retained
-as a separate sensitivity analysis.

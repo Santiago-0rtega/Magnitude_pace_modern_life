@@ -502,26 +502,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/models/m11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Sensitivity moderator — Measurement scale (m11)</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../chapters/appendix/sensitivity_min_n.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Sensitivity A — Minimum sample size (N ≥ 40)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Sensitivity A — Minimum sample size (N ≥ 40)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/appendix/sensitivity_no_phylogeny.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Sensitivity B — No phylogenetic random effect</span></span></a>
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Sensitivity B — No phylogenetic random effect</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/appendix/sensitivity_sys_id.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Sensitivity C — Study-system (sys_id) random effect</span></span></a>
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Sensitivity C — Study-system (sys_id) random effect</span></span></a>
   </div>
 </li>
       </ul>
@@ -546,7 +540,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#output-assemble-grid-summaries" id="toc-output-assemble-grid-summaries" class="nav-link" data-scroll-target="#output-assemble-grid-summaries"><span class="header-section-number">8.5</span> Output: assemble grid summaries</a></li>
   <li><a href="#model-status-table" id="toc-model-status-table" class="nav-link" data-scroll-target="#model-status-table"><span class="header-section-number">8.6</span> Model status table</a></li>
   <li><a href="#convergence-overview" id="toc-convergence-overview" class="nav-link" data-scroll-target="#convergence-overview"><span class="header-section-number">8.7</span> Convergence overview</a></li>
-  <li><a href="#non-primary-model-attempts" id="toc-non-primary-model-attempts" class="nav-link" data-scroll-target="#non-primary-model-attempts"><span class="header-section-number">8.8</span> Non-primary model attempts</a></li>
+  <li><a href="#excluded-model-attempts" id="toc-excluded-model-attempts" class="nav-link" data-scroll-target="#excluded-model-attempts"><span class="header-section-number">8.8</span> Excluded model attempts</a></li>
   </ul>
 </nav>
     </div>
@@ -1047,30 +1041,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="non-primary-model-attempts" class="level2" data-number="8.8">
-<h2 data-number="8.8" class="anchored" data-anchor-id="non-primary-model-attempts"><span class="header-section-number">8.8</span> Non-primary model attempts</h2>
-<p>This is the only list of models outside the primary grid. Models <code>m09</code>, <code>m10</code>, and <code>m11</code> are separate models for three related data-description fields: <code>data_type</code>, <code>transf_data</code>, and <code>data_scale</code>. They are not submodels of one another. The simplified refits are <code>m09b</code> from <code>m09</code> and <code>m10b</code> from <code>m10</code>, similar to the collapsed-category attempts made for <code>m06</code>.</p>
+<section id="excluded-model-attempts" class="level2" data-number="8.8">
+<h2 data-number="8.8" class="anchored" data-anchor-id="excluded-model-attempts"><span class="header-section-number">8.8</span> Excluded model attempts</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>interaction_attempts <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>model_id, <span class="sc">~</span>moderator, <span class="sc">~</span>label, <span class="sc">~</span>reason,</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"m12"</span>, <span class="st">"log10_years × disturbance"</span>, <span class="st">"Years × disturbance interaction"</span>,</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Removed from the reported book. The completed fit retained 4 post-warmup divergences, with max Rhat 1.01, minimum bulk ESS 293, and minimum tail ESS 486."</span>,</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"m13"</span>, <span class="st">"log10_generations × disturbance"</span>, <span class="st">"Generations × disturbance interaction"</span>,</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Removed from the reported book; no result chapter is presented."</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(excluded_grid, interaction_attempts) <span class="sc">|&gt;</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(model_id, label, reason) <span class="sc">|&gt;</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Model"</span>, <span class="st">"Field"</span>, <span class="st">"Recorded status"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>excluded_grid <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(model_id, label, reason) <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Model"</span>, <span class="st">"Field"</span>, <span class="st">"Recorded status"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
 <col style="width: 2%">
-<col style="width: 17%">
-<col style="width: 80%">
+<col style="width: 11%">
+<col style="width: 85%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1099,21 +1084,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">m10</td>
 <td style="text-align: left;">Transformation status</td>
 <td style="text-align: left;">The original seven-level fit stopped because of memory limits. The simplified two-level m10b refit had max Rhat 1.0128, minimum bulk ESS 230, minimum tail ESS 363, and 0 divergences.</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">m11</td>
-<td style="text-align: left;">Measurement scale</td>
-<td style="text-align: left;">This separate model converged. It is retained as a sensitivity model because measurement scale records source units rather than a biological moderator.</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">m12</td>
-<td style="text-align: left;">Years &lt;U+00D7&gt; disturbance interaction</td>
-<td style="text-align: left;">Removed from the reported book. The completed fit retained 4 post-warmup divergences, with max Rhat 1.01, minimum bulk ESS 293, and minimum tail ESS 486.</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">m13</td>
-<td style="text-align: left;">Generations &lt;U+00D7&gt; disturbance interaction</td>
-<td style="text-align: left;">Removed from the reported book; no result chapter is presented.</td>
 </tr>
 </tbody>
 </table>
@@ -2036,27 +2006,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb18-430"><a href="#cb18-430" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb18-431"><a href="#cb18-431" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb18-432"><a href="#cb18-432" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-433"><a href="#cb18-433" aria-hidden="true" tabindex="-1"></a><span class="fu">## Non-primary model attempts</span></span>
+<span id="cb18-433"><a href="#cb18-433" aria-hidden="true" tabindex="-1"></a><span class="fu">## Excluded model attempts</span></span>
 <span id="cb18-434"><a href="#cb18-434" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-435"><a href="#cb18-435" aria-hidden="true" tabindex="-1"></a>This is the only list of models outside the primary grid. Models <span class="in">`m09`</span>, <span class="in">`m10`</span>,</span>
-<span id="cb18-436"><a href="#cb18-436" aria-hidden="true" tabindex="-1"></a>and <span class="in">`m11`</span> are separate models for three related data-description fields:</span>
-<span id="cb18-437"><a href="#cb18-437" aria-hidden="true" tabindex="-1"></a><span class="in">`data_type`</span>, <span class="in">`transf_data`</span>, and <span class="in">`data_scale`</span>. They are not submodels of one</span>
-<span id="cb18-438"><a href="#cb18-438" aria-hidden="true" tabindex="-1"></a>another. The simplified refits are <span class="in">`m09b`</span> from <span class="in">`m09`</span> and <span class="in">`m10b`</span> from <span class="in">`m10`</span>,</span>
-<span id="cb18-439"><a href="#cb18-439" aria-hidden="true" tabindex="-1"></a>similar to the collapsed-category attempts made for <span class="in">`m06`</span>.</span>
-<span id="cb18-440"><a href="#cb18-440" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-441"><a href="#cb18-441" aria-hidden="true" tabindex="-1"></a><span class="in">```{r non-primary-models}</span></span>
-<span id="cb18-442"><a href="#cb18-442" aria-hidden="true" tabindex="-1"></a>interaction_attempts <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
-<span id="cb18-443"><a href="#cb18-443" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>model_id, <span class="sc">~</span>moderator, <span class="sc">~</span>label, <span class="sc">~</span>reason,</span>
-<span id="cb18-444"><a href="#cb18-444" aria-hidden="true" tabindex="-1"></a>  <span class="st">"m12"</span>, <span class="st">"log10_years × disturbance"</span>, <span class="st">"Years × disturbance interaction"</span>,</span>
-<span id="cb18-445"><a href="#cb18-445" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Removed from the reported book. The completed fit retained 4 post-warmup divergences, with max Rhat 1.01, minimum bulk ESS 293, and minimum tail ESS 486."</span>,</span>
-<span id="cb18-446"><a href="#cb18-446" aria-hidden="true" tabindex="-1"></a>  <span class="st">"m13"</span>, <span class="st">"log10_generations × disturbance"</span>, <span class="st">"Generations × disturbance interaction"</span>,</span>
-<span id="cb18-447"><a href="#cb18-447" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Removed from the reported book; no result chapter is presented."</span></span>
-<span id="cb18-448"><a href="#cb18-448" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb18-449"><a href="#cb18-449" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-450"><a href="#cb18-450" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(excluded_grid, interaction_attempts) <span class="sc">|&gt;</span></span>
-<span id="cb18-451"><a href="#cb18-451" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(model_id, label, reason) <span class="sc">|&gt;</span></span>
-<span id="cb18-452"><a href="#cb18-452" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Model"</span>, <span class="st">"Field"</span>, <span class="st">"Recorded status"</span>))</span>
-<span id="cb18-453"><a href="#cb18-453" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb18-435"><a href="#cb18-435" aria-hidden="true" tabindex="-1"></a><span class="in">```{r non-primary-models}</span></span>
+<span id="cb18-436"><a href="#cb18-436" aria-hidden="true" tabindex="-1"></a>excluded_grid <span class="sc">|&gt;</span></span>
+<span id="cb18-437"><a href="#cb18-437" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(model_id, label, reason) <span class="sc">|&gt;</span></span>
+<span id="cb18-438"><a href="#cb18-438" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Model"</span>, <span class="st">"Field"</span>, <span class="st">"Recorded status"</span>))</span>
+<span id="cb18-439"><a href="#cb18-439" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

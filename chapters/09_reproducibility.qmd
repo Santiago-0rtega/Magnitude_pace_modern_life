@@ -219,10 +219,9 @@ if (file.exists(es_path)) {
 ### Prediction files used by model chapters
 
 ```{r rendered-cache-audit}
-rendered_ids <- c("m00", "m01", "m02", "m03", "m04", "m05", "m07", "m08", "m11")
+rendered_ids <- c("m00", "m01", "m02", "m03", "m04", "m05", "m07", "m08")
 expected_n <- c(m00 = 7186L, m01 = 7186L, m02 = 7186L, m03 = 7186L,
-                m04 = 7186L, m05 = 7186L, m07 = 7186L, m08 = 7186L,
-                m11 = 7172L)
+                m04 = 7186L, m05 = 7186L, m07 = 7186L, m08 = 7186L)
 cache_audit <- purrr::map_dfr(rendered_ids, function(id) {
   path <- here::here("Rdata", "epred_draws", paste0(id, ".rds"))
   if (!file.exists(path)) {

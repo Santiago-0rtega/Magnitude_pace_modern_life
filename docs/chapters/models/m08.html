@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>10&nbsp; Disturbance context – Supplementary material: Human disturbance and the magnitude of phenotypic divergence</title>
+<title>Appendix A — Excluded model: Environmental-change context – Supplementary material: Human disturbance and the magnitude of phenotypic divergence</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -68,8 +68,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../chapters/models/m02.html" rel="next">
-<link href="../../chapters/models/m00.html" rel="prev">
+<link href="../../chapters/appendix/sensitivity_min_n.html" rel="next">
+<link href="../../chapters/09_reproducibility.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -121,6 +121,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -296,7 +325,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/models/m00.html">Results — one chapter per model</a></li><li class="breadcrumb-item"><a href="../../chapters/models/m01.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Disturbance context</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/models/m08.html">Appendices</a></li><li class="breadcrumb-item"><a href="../../chapters/models/m08.html"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Excluded model: Environmental-change context</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -424,7 +453,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/models/m01.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../chapters/models/m01.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Disturbance context</span></span></a>
   </div>
 </li>
@@ -500,7 +529,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/models/m08.html" class="sidebar-item-text sidebar-link">
+  <a href="../../chapters/models/m08.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Excluded model: Environmental-change context</span></span></a>
   </div>
 </li>
@@ -534,12 +563,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#phylogenetic-covariance-and-model-species" id="toc-phylogenetic-covariance-and-model-species" class="nav-link active" data-scroll-target="#phylogenetic-covariance-and-model-species"><span class="header-section-number">10.1</span> Phylogenetic covariance and model species</a></li>
-  <li><a href="#model-summary" id="toc-model-summary" class="nav-link" data-scroll-target="#model-summary"><span class="header-section-number">10.2</span> Model summary</a></li>
-  <li><a href="#pairwise-level-contrasts" id="toc-pairwise-level-contrasts" class="nav-link" data-scroll-target="#pairwise-level-contrasts"><span class="header-section-number">10.3</span> Pairwise level contrasts</a></li>
-  <li><a href="#orchard-like-model-figure" id="toc-orchard-like-model-figure" class="nav-link" data-scroll-target="#orchard-like-model-figure"><span class="header-section-number">10.4</span> Orchard-like model figure</a>
+  <li><a href="#phylogenetic-covariance-and-model-species" id="toc-phylogenetic-covariance-and-model-species" class="nav-link active" data-scroll-target="#phylogenetic-covariance-and-model-species"><span class="header-section-number">A.1</span> Phylogenetic covariance and model species</a></li>
+  <li><a href="#model-summary" id="toc-model-summary" class="nav-link" data-scroll-target="#model-summary"><span class="header-section-number">A.2</span> Model summary</a></li>
+  <li><a href="#pairwise-level-contrasts" id="toc-pairwise-level-contrasts" class="nav-link" data-scroll-target="#pairwise-level-contrasts"><span class="header-section-number">A.3</span> Pairwise level contrasts</a></li>
+  <li><a href="#orchard-like-model-figure" id="toc-orchard-like-model-figure" class="nav-link" data-scroll-target="#orchard-like-model-figure"><span class="header-section-number">A.4</span> Orchard-like model figure</a>
   <ul class="collapse">
-  <li><a href="#editable-plotting-code" id="toc-editable-plotting-code" class="nav-link" data-scroll-target="#editable-plotting-code"><span class="header-section-number">10.4.1</span> Editable plotting code</a></li>
+  <li><a href="#editable-plotting-code" id="toc-editable-plotting-code" class="nav-link" data-scroll-target="#editable-plotting-code"><span class="header-section-number">A.4.1</span> Editable plotting code</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -548,9 +577,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/models/m00.html">Results — one chapter per model</a></li><li class="breadcrumb-item"><a href="../../chapters/models/m01.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Disturbance context</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/models/m08.html">Appendices</a></li><li class="breadcrumb-item"><a href="../../chapters/models/m08.html"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Excluded model: Environmental-change context</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Disturbance context</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title">Appendix A — Excluded model: Environmental-change context</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -567,47 +596,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="workflow">
-<div>
-<p><strong>Input</strong> Saved prediction and summary files.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<div>
-<p><strong>Action</strong> Read the model record and build its figure.</p>
-</div>
-<div>
-<p><strong>Output</strong> Model table, checks, and plot.</p>
-</div>
-<div>
-<p><strong>Next</strong> Continue to the next model chapter.</p>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Excluded from the primary results
 </div>
 </div>
-<section id="phylogenetic-covariance-and-model-species" class="level2" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="phylogenetic-covariance-and-model-species"><span class="header-section-number">10.1</span> Phylogenetic covariance and model species</h2>
+<div class="callout-body-container callout-body">
+<p>This model did not meet the pre-specified convergence criterion after the corrected generation filter was applied (maximum <span class="math inline">\(\hat{R}=1.0143\)</span>, minimum bulk ESS = 780, minimum tail ESS = 663, and zero divergent transitions). It is retained in the appendix and excluded from the main result tables and publication figures. The estimates and plots below are labelled as diagnostics.</p>
+</div>
+</div>
+<section id="phylogenetic-covariance-and-model-species" class="level2" data-number="A.1">
+<h2 data-number="A.1" class="anchored" data-anchor-id="phylogenetic-covariance-and-model-species"><span class="header-section-number">A.1</span> Phylogenetic covariance and model species</h2>
 <p>This model contains <strong>253 species</strong> (7,186 contrasts). The phylogenetic correlation matrix was constructed and aligned to those species as follows; <code>brms</code> uses it in <code>(1 | gr(sp_ncbi, cov = A))</code>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>A_full <span class="ot">&lt;-</span> prepR4pcm<span class="sc">::</span><span class="fu">pr_phylo_cor</span>(tree_final)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Fallback if needed: ape::vcv.phylo(tree_final, corr = TRUE)</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>dat_model <span class="ot">&lt;-</span> dat_es <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(disturbance))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>dat_model <span class="ot">&lt;-</span> dat_es <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(env_change))</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>phylo <span class="ot">&lt;-</span> <span class="fu">prepare_phylo_and_data</span>(dat_model, A_full, <span class="at">fill_unmatched =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>dat_model <span class="ot">&lt;-</span> phylo<span class="sc">$</span>dat_model</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> phylo<span class="sc">$</span>A_mod</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>formula <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">bf</span>(</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  yi_lnM_safe <span class="sc">~</span> disturbance <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> ref_id) <span class="sc">+</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  yi_lnM_safe <span class="sc">~</span> env_change <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> ref_id) <span class="sc">+</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span> <span class="sc">|</span> <span class="fu">gr</span>(sp_ncbi, <span class="at">cov =</span> A)) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> <span class="fu">gr</span>(es_id_model, <span class="at">cov =</span> V)),</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  sigma <span class="sc">~</span> disturbance</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  sigma <span class="sc">~</span> env_change</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> phylo<span class="sc">$</span>V</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">brm</span>(formula, <span class="at">data =</span> dat_model,</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data2 =</span> <span class="fu">list</span>(<span class="at">A =</span> A, <span class="at">V =</span> V))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p><strong>Reference level</strong>: Climate change. Coefficients contrast each disturbance type against it.</p>
+<p>Type of environmental change driving the divergence.</p>
 </section>
-<section id="model-summary" class="level2" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="model-summary"><span class="header-section-number">10.2</span> Model summary</h2>
-<p><code>summary()</code> is read from <code>Rdata/epred_draws/m01.rds</code>; the full <code>brms</code> fit is not loaded at render.</p>
+<section id="model-summary" class="level2" data-number="A.2">
+<h2 data-number="A.2" class="anchored" data-anchor-id="model-summary"><span class="header-section-number">A.2</span> Model summary</h2>
+<p><code>summary()</code> is read from <code>Rdata/epred_draws/m08.rds</code>; the full <code>brms</code> fit is not loaded at render.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -616,8 +644,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: gaussian 
   Links: mu = identity; sigma = log 
-Formula: yi_lnM_safe ~ disturbance + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)) 
-         sigma ~ disturbance
+Formula: yi_lnM_safe ~ env_change + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)) 
+         sigma ~ env_change
    Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7186) 
   Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
          total post-warmup draws = 8000
@@ -629,43 +657,23 @@ sd(Intercept)     1.00      0.00     1.00     1.00   NA       NA       NA
 
 ~ref_id (Number of levels: 254) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.75      0.04     0.67     0.84 1.00     2130     3591
+sd(Intercept)     0.75      0.04     0.67     0.83 1.00     2209     3870
 
 ~sp_ncbi (Number of levels: 253) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.67      0.20     0.32     1.07 1.01      727     1704
+sd(Intercept)     0.67      0.19     0.32     1.05 1.01      780      663
 
 Regression Coefficients:
-                                         Estimate Est.Error l-95% CI u-95% CI
-Intercept                                   -0.53      0.42    -1.34     0.32
-sigma_Intercept                             -0.69      0.09    -0.87    -0.53
-disturbanceHunt_harv                        -0.28      0.18    -0.63     0.08
-disturbanceIntroduction                      0.01      0.20    -0.38     0.40
-disturbanceLandscapechange                   0.21      0.24    -0.25     0.67
-disturbanceOther                            -0.28      0.17    -0.62     0.06
-disturbancePollution                         0.17      0.28    -0.38     0.73
-disturbanceResponsetointroductions           0.10      0.31    -0.50     0.69
-sigma_disturbanceHunt_harv                   0.36      0.09     0.19     0.55
-sigma_disturbanceIntroduction                0.02      0.09    -0.15     0.20
-sigma_disturbanceLandscapechange            -0.43      0.15    -0.74    -0.14
-sigma_disturbanceOther                       0.14      0.09    -0.04     0.33
-sigma_disturbancePollution                  -0.18      0.16    -0.49     0.12
-sigma_disturbanceResponsetointroductions     0.26      0.12     0.03     0.49
-                                         Rhat Bulk_ESS Tail_ESS
-Intercept                                1.00     3271     3897
-sigma_Intercept                          1.00     1625     2782
-disturbanceHunt_harv                     1.00     2118     3592
-disturbanceIntroduction                  1.00     1841     2877
-disturbanceLandscapechange               1.00     2085     3246
-disturbanceOther                         1.00     2124     3482
-disturbancePollution                     1.00     2072     3441
-disturbanceResponsetointroductions       1.00     2344     3623
-sigma_disturbanceHunt_harv               1.00     1800     3256
-sigma_disturbanceIntroduction            1.00     1600     2867
-sigma_disturbanceLandscapechange         1.00      967     2278
-sigma_disturbanceOther                   1.00     1898     3308
-sigma_disturbancePollution               1.00     1152     2489
-sigma_disturbanceResponsetointroductions 1.00     2096     3469
+                        Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
+Intercept                  -0.57      0.37    -1.32     0.17 1.00     4755
+sigma_Intercept            -0.67      0.02    -0.71    -0.64 1.00     3738
+env_changeongoing           0.06      0.10    -0.13     0.25 1.00     4587
+sigma_env_changeongoing     0.21      0.03     0.16     0.27 1.00     4508
+                        Tail_ESS
+Intercept                   4891
+sigma_Intercept             5241
+env_changeongoing           5844
+sigma_env_changeongoing     5969
 
 Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -673,8 +681,8 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
 </section>
-<section id="pairwise-level-contrasts" class="level2" data-number="10.3">
-<h2 data-number="10.3" class="anchored" data-anchor-id="pairwise-level-contrasts"><span class="header-section-number">10.3</span> Pairwise level contrasts</h2>
+<section id="pairwise-level-contrasts" class="level2" data-number="A.3">
+<h2 data-number="A.3" class="anchored" data-anchor-id="pairwise-level-contrasts"><span class="header-section-number">A.3</span> Pairwise level contrasts</h2>
 <p>Estimated marginal means and pairwise contrasts are read from <code>Rdata/summaries/emmeans_contrasts_cache.rds</code>.</p>
 <p><strong>Location — pairwise contrasts (difference in mean lnM):</strong></p>
 <div class="cell">
@@ -690,130 +698,10 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Climate change - Hunt_harv</td>
-<td style="text-align: right;">0.274</td>
-<td style="text-align: right;">-0.074</td>
-<td style="text-align: right;">0.634</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Climate change - Introduction</td>
-<td style="text-align: right;">-0.007</td>
-<td style="text-align: right;">-0.388</td>
-<td style="text-align: right;">0.391</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Climate change - Landscape change</td>
-<td style="text-align: right;">-0.206</td>
-<td style="text-align: right;">-0.659</td>
-<td style="text-align: right;">0.262</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Climate change - Other</td>
-<td style="text-align: right;">0.280</td>
-<td style="text-align: right;">-0.072</td>
-<td style="text-align: right;">0.613</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Climate change - Pollution</td>
-<td style="text-align: right;">-0.175</td>
-<td style="text-align: right;">-0.739</td>
-<td style="text-align: right;">0.366</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Climate change - Response to introductions</td>
-<td style="text-align: right;">-0.097</td>
-<td style="text-align: right;">-0.699</td>
-<td style="text-align: right;">0.492</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left; font-weight: bold;">Hunt_harv - Introduction</td>
-<td style="text-align: right; font-weight: bold;">-0.282</td>
-<td style="text-align: right; font-weight: bold;">-0.550</td>
-<td style="text-align: right; font-weight: bold;">-0.035</td>
-</tr>
-<tr class="even">
-<td style="text-align: left; font-weight: bold;">Hunt_harv - Landscape change</td>
-<td style="text-align: right; font-weight: bold;">-0.483</td>
-<td style="text-align: right; font-weight: bold;">-0.827</td>
-<td style="text-align: right; font-weight: bold;">-0.132</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Hunt_harv - Other</td>
-<td style="text-align: right;">0.004</td>
-<td style="text-align: right;">-0.076</td>
-<td style="text-align: right;">0.089</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Hunt_harv - Pollution</td>
-<td style="text-align: right;">-0.450</td>
-<td style="text-align: right;">-0.915</td>
-<td style="text-align: right;">0.025</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Hunt_harv - Response to introductions</td>
-<td style="text-align: right;">-0.373</td>
-<td style="text-align: right;">-0.891</td>
-<td style="text-align: right;">0.119</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Introduction - Landscape change</td>
-<td style="text-align: right;">-0.199</td>
-<td style="text-align: right;">-0.533</td>
-<td style="text-align: right;">0.149</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left; font-weight: bold;">Introduction - Other</td>
-<td style="text-align: right; font-weight: bold;">0.285</td>
-<td style="text-align: right; font-weight: bold;">0.043</td>
-<td style="text-align: right; font-weight: bold;">0.541</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Introduction - Pollution</td>
-<td style="text-align: right;">-0.168</td>
-<td style="text-align: right;">-0.574</td>
-<td style="text-align: right;">0.273</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Introduction - Response to introductions</td>
-<td style="text-align: right;">-0.089</td>
-<td style="text-align: right;">-0.569</td>
-<td style="text-align: right;">0.376</td>
-</tr>
-<tr class="even">
-<td style="text-align: left; font-weight: bold;">Landscape change - Other</td>
-<td style="text-align: right; font-weight: bold;">0.488</td>
-<td style="text-align: right; font-weight: bold;">0.160</td>
-<td style="text-align: right; font-weight: bold;">0.836</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Landscape change - Pollution</td>
-<td style="text-align: right;">0.030</td>
-<td style="text-align: right;">-0.470</td>
-<td style="text-align: right;">0.538</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Landscape change - Response to introductions</td>
-<td style="text-align: right;">0.109</td>
-<td style="text-align: right;">-0.450</td>
-<td style="text-align: right;">0.666</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Other - Pollution</td>
-<td style="text-align: right;">-0.454</td>
-<td style="text-align: right;">-0.919</td>
-<td style="text-align: right;">0.015</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Other - Response to introductions</td>
-<td style="text-align: right;">-0.378</td>
-<td style="text-align: right;">-0.898</td>
-<td style="text-align: right;">0.112</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Pollution - Response to introductions</td>
-<td style="text-align: right;">0.078</td>
-<td style="text-align: right;">-0.536</td>
-<td style="text-align: right;">0.664</td>
+<td style="text-align: left;">novel - ongoing</td>
+<td style="text-align: right;">-0.059</td>
+<td style="text-align: right;">-0.242</td>
+<td style="text-align: right;">0.139</td>
 </tr>
 </tbody>
 </table>
@@ -833,156 +721,36 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Climate change - Introduction</td>
-<td style="text-align: right;">-0.015</td>
-<td style="text-align: right;">-0.192</td>
-<td style="text-align: right;">0.159</td>
-</tr>
-<tr class="even">
-<td style="text-align: left; font-weight: bold;">Climate change - Response to introductions</td>
-<td style="text-align: right; font-weight: bold;">-0.256</td>
-<td style="text-align: right; font-weight: bold;">-0.489</td>
-<td style="text-align: right; font-weight: bold;">-0.032</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Climate change - Other</td>
-<td style="text-align: right;">-0.138</td>
-<td style="text-align: right;">-0.317</td>
-<td style="text-align: right;">0.046</td>
-</tr>
-<tr class="even">
-<td style="text-align: left; font-weight: bold;">Climate change - Landscape change</td>
-<td style="text-align: right; font-weight: bold;">0.431</td>
-<td style="text-align: right; font-weight: bold;">0.148</td>
-<td style="text-align: right; font-weight: bold;">0.742</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Climate change - Pollution</td>
-<td style="text-align: right;">0.184</td>
-<td style="text-align: right;">-0.112</td>
-<td style="text-align: right;">0.493</td>
-</tr>
-<tr class="even">
-<td style="text-align: left; font-weight: bold;">Climate change - Hunt_harv</td>
-<td style="text-align: right; font-weight: bold;">-0.365</td>
-<td style="text-align: right; font-weight: bold;">-0.550</td>
-<td style="text-align: right; font-weight: bold;">-0.186</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left; font-weight: bold;">Introduction - Response to introductions</td>
-<td style="text-align: right; font-weight: bold;">-0.241</td>
-<td style="text-align: right; font-weight: bold;">-0.386</td>
-<td style="text-align: right; font-weight: bold;">-0.085</td>
-</tr>
-<tr class="even">
-<td style="text-align: left; font-weight: bold;">Introduction - Other</td>
-<td style="text-align: right; font-weight: bold;">-0.123</td>
-<td style="text-align: right; font-weight: bold;">-0.190</td>
-<td style="text-align: right; font-weight: bold;">-0.053</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left; font-weight: bold;">Introduction - Landscape change</td>
-<td style="text-align: right; font-weight: bold;">0.447</td>
-<td style="text-align: right; font-weight: bold;">0.222</td>
-<td style="text-align: right; font-weight: bold;">0.703</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Introduction - Pollution</td>
-<td style="text-align: right;">0.199</td>
-<td style="text-align: right;">-0.051</td>
-<td style="text-align: right;">0.452</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left; font-weight: bold;">Introduction - Hunt_harv</td>
-<td style="text-align: right; font-weight: bold;">-0.350</td>
-<td style="text-align: right; font-weight: bold;">-0.420</td>
-<td style="text-align: right; font-weight: bold;">-0.278</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Response to introductions - Other</td>
-<td style="text-align: right;">0.118</td>
-<td style="text-align: right;">-0.038</td>
-<td style="text-align: right;">0.276</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left; font-weight: bold;">Response to introductions - Landscape change</td>
-<td style="text-align: right; font-weight: bold;">0.687</td>
-<td style="text-align: right; font-weight: bold;">0.406</td>
-<td style="text-align: right; font-weight: bold;">0.962</td>
-</tr>
-<tr class="even">
-<td style="text-align: left; font-weight: bold;">Response to introductions - Pollution</td>
-<td style="text-align: right; font-weight: bold;">0.440</td>
-<td style="text-align: right; font-weight: bold;">0.163</td>
-<td style="text-align: right; font-weight: bold;">0.742</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Response to introductions - Hunt_harv</td>
-<td style="text-align: right;">-0.109</td>
-<td style="text-align: right;">-0.272</td>
-<td style="text-align: right;">0.050</td>
-</tr>
-<tr class="even">
-<td style="text-align: left; font-weight: bold;">Other - Landscape change</td>
-<td style="text-align: right; font-weight: bold;">0.570</td>
-<td style="text-align: right; font-weight: bold;">0.334</td>
-<td style="text-align: right; font-weight: bold;">0.819</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left; font-weight: bold;">Other - Pollution</td>
-<td style="text-align: right; font-weight: bold;">0.322</td>
-<td style="text-align: right; font-weight: bold;">0.066</td>
-<td style="text-align: right; font-weight: bold;">0.581</td>
-</tr>
-<tr class="even">
-<td style="text-align: left; font-weight: bold;">Other - Hunt_harv</td>
-<td style="text-align: right; font-weight: bold;">-0.227</td>
-<td style="text-align: right; font-weight: bold;">-0.311</td>
-<td style="text-align: right; font-weight: bold;">-0.144</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Landscape change - Pollution</td>
-<td style="text-align: right;">-0.248</td>
-<td style="text-align: right;">-0.589</td>
-<td style="text-align: right;">0.088</td>
-</tr>
-<tr class="even">
-<td style="text-align: left; font-weight: bold;">Landscape change - Hunt_harv</td>
-<td style="text-align: right; font-weight: bold;">-0.796</td>
-<td style="text-align: right; font-weight: bold;">-1.047</td>
-<td style="text-align: right; font-weight: bold;">-0.558</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left; font-weight: bold;">Pollution - Hunt_harv</td>
-<td style="text-align: right; font-weight: bold;">-0.549</td>
-<td style="text-align: right; font-weight: bold;">-0.804</td>
-<td style="text-align: right; font-weight: bold;">-0.294</td>
+<td style="text-align: left; font-weight: bold;">novel - ongoing</td>
+<td style="text-align: right; font-weight: bold;">-0.214</td>
+<td style="text-align: right; font-weight: bold;">-0.268</td>
+<td style="text-align: right; font-weight: bold;">-0.162</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 </section>
-<section id="orchard-like-model-figure" class="level2" data-number="10.4">
-<h2 data-number="10.4" class="anchored" data-anchor-id="orchard-like-model-figure"><span class="header-section-number">10.4</span> Orchard-like model figure</h2>
+<section id="orchard-like-model-figure" class="level2" data-number="A.4">
+<h2 data-number="A.4" class="anchored" data-anchor-id="orchard-like-model-figure"><span class="header-section-number">A.4</span> Orchard-like model figure</h2>
 <p>The orchard-style figure is read from <code>outputs/figures/publication/orchard/</code>. The complete editable code used to build this plot is shown below.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>, <span class="st">"orchard"</span>, <span class="st">"m01_orchard_combined.png"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>, <span class="st">"orchard"</span>, <span class="st">"m08_orchard_combined.png"</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="../../Rdata/figures/publication/orchard/m01_orchard_combined.png" class="img-fluid figure-img" width="864"></p>
+<p><img src="../../Rdata/figures/publication/orchard/m08_orchard_combined.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
 </div>
 </div>
-<section id="editable-plotting-code" class="level3" data-number="10.4.1">
-<h3 data-number="10.4.1" class="anchored" data-anchor-id="editable-plotting-code"><span class="header-section-number">10.4.1</span> Editable plotting code</h3>
+<section id="editable-plotting-code" class="level3" data-number="A.4.1">
+<h3 data-number="A.4.1" class="anchored" data-anchor-id="editable-plotting-code"><span class="header-section-number">A.4.1</span> Editable plotting code</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -993,11 +761,11 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggbeeswarm)</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>model_id <span class="ot">&lt;-</span> <span class="st">"m01"</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>model_file <span class="ot">&lt;-</span> <span class="st">"m01_ls_disturbance"</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>moderator <span class="ot">&lt;-</span> <span class="st">"disturbance"</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>moderator_label <span class="ot">&lt;-</span> <span class="st">"Disturbance context"</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>label_map <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Climate change"</span> <span class="ot">=</span> <span class="st">"Climate change"</span>, <span class="st">"Hunt_harv"</span> <span class="ot">=</span> <span class="st">"Hunting / harvesting"</span>, <span class="st">"Introduction"</span> <span class="ot">=</span> <span class="st">"Introduction"</span>, <span class="st">"Landscapechange"</span> <span class="ot">=</span> <span class="st">"Landscape change"</span>, <span class="st">"Other"</span> <span class="ot">=</span> <span class="st">"Other (in situ natural variation)"</span>, <span class="st">"Pollution"</span> <span class="ot">=</span> <span class="st">"Pollution"</span>, <span class="st">"Responsetointroductions"</span> <span class="ot">=</span> <span class="st">"Response to introductions"</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>model_id <span class="ot">&lt;-</span> <span class="st">"m08"</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>model_file <span class="ot">&lt;-</span> <span class="st">"m08_ls_env_change"</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>moderator <span class="ot">&lt;-</span> <span class="st">"env_change"</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>moderator_label <span class="ot">&lt;-</span> <span class="st">"Environmental-change context"</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>label_map <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"novel"</span> <span class="ot">=</span> <span class="st">"Novel (defined start point)"</span>, <span class="st">"ongoing"</span> <span class="ot">=</span> <span class="st">"Ongoing (measured within)"</span>)</span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>out_dir <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>, <span class="st">"orchard"</span>)</span>
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(out_dir, <span class="at">recursive =</span> <span class="cn">TRUE</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
@@ -1698,345 +1466,335 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../chapters/models/m00.html" class="pagination-link" aria-label="Intercept-only baseline">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Intercept-only baseline</span></span>
+      <a href="../../chapters/09_reproducibility.html" class="pagination-link" aria-label="Reproduce this analysis">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Reproduce this analysis</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../chapters/models/m02.html" class="pagination-link" aria-label="Comparison design">
-        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Comparison design</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../chapters/appendix/sensitivity_min_n.html" class="pagination-link" aria-label="Sensitivity A — Minimum sample size (N ≥ 40)">
+        <span class="nav-page-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Sensitivity A — Minimum sample size (N ≥ 40)</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Disturbance context"</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Excluded model: Environmental-change context"</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>::: {.workflow}</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>::: {}</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>**Input**</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>Saved prediction and summary files.</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>::: {}</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>**Action**</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>Read the model record and build its figure.</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Excluded from the primary results</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>This model did not meet the pre-specified convergence criterion after the</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>corrected generation filter was applied (maximum $\hat{R}=1.0143$, minimum bulk</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>ESS = 780, minimum tail ESS = 663, and zero divergent transitions). It is</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>retained in the appendix and excluded from the main result tables and</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>publication figures. The estimates and plots below are labelled as diagnostics.</span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>::: {}</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>**Output**</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>Model table, checks, and plot.</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>::: {}</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>**Next**</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>Continue to the next model chapter.</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"chapters"</span>, <span class="st">"Rscripts"</span>, <span class="st">"14_epred_cache.R"</span>))</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>cache_dir <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"epred_draws"</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>cache     <span class="ot">&lt;-</span> <span class="fu">read_epred_cache</span>(<span class="st">"m08"</span>, cache_dir)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="fu">## Phylogenetic covariance and model species</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>This model contains **253 species** (7,186 contrasts). The phylogenetic correlation matrix was constructed and aligned to those species as follows; <span class="in">`brms`</span> uses it in <span class="in">`(1 | gr(sp_ncbi, cov = A))`</span>.</span>
 <span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"chapters"</span>, <span class="st">"Rscripts"</span>, <span class="st">"14_epred_cache.R"</span>))</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>cache_dir <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"epred_draws"</span>)</span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>cache     <span class="ot">&lt;-</span> <span class="fu">read_epred_cache</span>(<span class="st">"m01"</span>, cache_dir)</span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## Phylogenetic covariance and model species</span></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>This model contains **253 species** (7,186 contrasts). The phylogenetic correlation matrix was constructed and aligned to those species as follows; <span class="in">`brms`</span> uses it in <span class="in">`(1 | gr(sp_ncbi, cov = A))`</span>.</span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="in">```{r phylogenetic-covariance, eval=FALSE}</span></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>A_full <span class="ot">&lt;-</span> prepR4pcm<span class="sc">::</span><span class="fu">pr_phylo_cor</span>(tree_final)</span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Fallback if needed: ape::vcv.phylo(tree_final, corr = TRUE)</span></span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>dat_model <span class="ot">&lt;-</span> dat_es <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(disturbance))</span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>phylo <span class="ot">&lt;-</span> <span class="fu">prepare_phylo_and_data</span>(dat_model, A_full, <span class="at">fill_unmatched =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>dat_model <span class="ot">&lt;-</span> phylo<span class="sc">$</span>dat_model</span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> phylo<span class="sc">$</span>A_mod</span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>formula <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">bf</span>(</span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>  yi_lnM_safe <span class="sc">~</span> disturbance <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> ref_id) <span class="sc">+</span></span>
-<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span> <span class="sc">|</span> <span class="fu">gr</span>(sp_ncbi, <span class="at">cov =</span> A)) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> <span class="fu">gr</span>(es_id_model, <span class="at">cov =</span> V)),</span>
-<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>  sigma <span class="sc">~</span> disturbance</span>
-<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> phylo<span class="sc">$</span>V</span>
-<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">brm</span>(formula, <span class="at">data =</span> dat_model,</span>
-<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data2 =</span> <span class="fu">list</span>(<span class="at">A =</span> A, <span class="at">V =</span> V))</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="in">```{r phylogenetic-covariance, eval=FALSE}</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>A_full <span class="ot">&lt;-</span> prepR4pcm<span class="sc">::</span><span class="fu">pr_phylo_cor</span>(tree_final)</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Fallback if needed: ape::vcv.phylo(tree_final, corr = TRUE)</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>dat_model <span class="ot">&lt;-</span> dat_es <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(env_change))</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>phylo <span class="ot">&lt;-</span> <span class="fu">prepare_phylo_and_data</span>(dat_model, A_full, <span class="at">fill_unmatched =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>dat_model <span class="ot">&lt;-</span> phylo<span class="sc">$</span>dat_model</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> phylo<span class="sc">$</span>A_mod</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>formula <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">bf</span>(</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>  yi_lnM_safe <span class="sc">~</span> env_change <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> ref_id) <span class="sc">+</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span> <span class="sc">|</span> <span class="fu">gr</span>(sp_ncbi, <span class="at">cov =</span> A)) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> <span class="fu">gr</span>(es_id_model, <span class="at">cov =</span> V)),</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>  sigma <span class="sc">~</span> env_change</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> phylo<span class="sc">$</span>V</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">brm</span>(formula, <span class="at">data =</span> dat_model,</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data2 =</span> <span class="fu">list</span>(<span class="at">A =</span> A, <span class="at">V =</span> V))</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>Type of environmental change driving the divergence.</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model summary</span></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a><span class="in">`summary()`</span> is read from <span class="in">`Rdata/epred_draws/m08.rds`</span>; the full <span class="in">`brms`</span> fit is not loaded at render.</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summary}</span></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a><span class="fu">print_cache_summary</span>(cache)</span>
 <span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>**Reference level**: Climate change. Coefficients contrast each disturbance type against it.</span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pairwise level contrasts</span></span>
 <span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model summary</span></span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>Estimated marginal means and pairwise contrasts are read from <span class="in">`Rdata/summaries/emmeans_contrasts_cache.rds`</span>.</span>
 <span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a><span class="in">`summary()`</span> is read from <span class="in">`Rdata/epred_draws/m01.rds`</span>; the full <span class="in">`brms`</span> fit is not loaded at render.</span>
-<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summary}</span></span>
-<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a><span class="fu">print_cache_summary</span>(cache)</span>
-<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pairwise level contrasts</span></span>
-<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>Estimated marginal means and pairwise contrasts are read from <span class="in">`Rdata/summaries/emmeans_contrasts_cache.rds`</span>.</span>
-<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a><span class="in">```{r contrasts-setup, include=FALSE}</span></span>
-<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"chapters"</span>, <span class="st">"Rscripts"</span>, <span class="st">"18_contrasts_cache.R"</span>))</span>
-<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>cc <span class="ot">&lt;-</span> <span class="fu">read_contrasts_cache</span>(<span class="st">"m01"</span>)</span>
-<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>**Location — pairwise contrasts (difference in mean lnM):**</span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a><span class="in">```{r contrasts-setup, include=FALSE}</span></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"chapters"</span>, <span class="st">"Rscripts"</span>, <span class="st">"18_contrasts_cache.R"</span>))</span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>cc <span class="ot">&lt;-</span> <span class="fu">read_contrasts_cache</span>(<span class="st">"m08"</span>)</span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>**Location — pairwise contrasts (difference in mean lnM):**</span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a><span class="in">```{r loc-contrasts, echo=FALSE}</span></span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a><span class="fu">kable_contrasts</span>(<span class="fu">format_location_contrasts</span>(cc))</span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>**Scale — pairwise contrasts (log-σ; positive ⇒ greater residual heterogeneity):**</span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a><span class="in">```{r scl-contrasts, echo=FALSE}</span></span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a><span class="fu">kable_contrasts</span>(<span class="fu">format_scale_contrasts</span>(cc))</span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a><span class="in">```{r loc-contrasts, echo=FALSE}</span></span>
-<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a><span class="fu">kable_contrasts</span>(<span class="fu">format_location_contrasts</span>(cc))</span>
-<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a><span class="fu">## Orchard-like model figure</span></span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a>The orchard-style figure is read from <span class="in">`outputs/figures/publication/orchard/`</span>. The complete editable code used to build this plot is shown below.</span>
 <span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>**Scale — pairwise contrasts (log-σ; positive ⇒ greater residual heterogeneity):**</span>
-<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a><span class="in">```{r scl-contrasts, echo=FALSE}</span></span>
-<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a><span class="fu">kable_contrasts</span>(<span class="fu">format_scale_contrasts</span>(cc))</span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a><span class="in">```{r figure, fig.width=8, fig.height=9}</span></span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(</span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>  here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>, <span class="st">"orchard"</span>, <span class="st">"m08_orchard_combined.png"</span>)</span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a><span class="fu">## Orchard-like model figure</span></span>
-<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>The orchard-style figure is read from <span class="in">`outputs/figures/publication/orchard/`</span>. The complete editable code used to build this plot is shown below.</span>
-<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a><span class="in">```{r figure, fig.width=8, fig.height=9}</span></span>
-<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(</span>
-<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a>  here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>, <span class="st">"orchard"</span>, <span class="st">"m01_orchard_combined.png"</span>)</span>
-<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a><span class="fu">### Editable plotting code</span></span>
-<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a><span class="in">```{r build-orchard-m01, eval=FALSE}</span></span>
-<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
-<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brms)</span>
-<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidybayes)</span>
-<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggbeeswarm)</span>
-<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a>model_id <span class="ot">&lt;-</span> <span class="st">"m01"</span></span>
-<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a>model_file <span class="ot">&lt;-</span> <span class="st">"m01_ls_disturbance"</span></span>
-<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a>moderator <span class="ot">&lt;-</span> <span class="st">"disturbance"</span></span>
-<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a>moderator_label <span class="ot">&lt;-</span> <span class="st">"Disturbance context"</span></span>
-<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a>label_map <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Climate change"</span> <span class="ot">=</span> <span class="st">"Climate change"</span>, <span class="st">"Hunt_harv"</span> <span class="ot">=</span> <span class="st">"Hunting / harvesting"</span>, <span class="st">"Introduction"</span> <span class="ot">=</span> <span class="st">"Introduction"</span>, <span class="st">"Landscapechange"</span> <span class="ot">=</span> <span class="st">"Landscape change"</span>, <span class="st">"Other"</span> <span class="ot">=</span> <span class="st">"Other (in situ natural variation)"</span>, <span class="st">"Pollution"</span> <span class="ot">=</span> <span class="st">"Pollution"</span>, <span class="st">"Responsetointroductions"</span> <span class="ot">=</span> <span class="st">"Response to introductions"</span>)</span>
-<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-108"><a href="#cb6-108" aria-hidden="true" tabindex="-1"></a>out_dir <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>, <span class="st">"orchard"</span>)</span>
-<span id="cb6-109"><a href="#cb6-109" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(out_dir, <span class="at">recursive =</span> <span class="cn">TRUE</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb6-110"><a href="#cb6-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-111"><a href="#cb6-111" aria-hidden="true" tabindex="-1"></a>dat_es <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"effect_sizes"</span>, <span class="st">"proceed_lnm_safe.rds"</span>))</span>
-<span id="cb6-112"><a href="#cb6-112" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"models"</span>, <span class="fu">paste0</span>(model_file, <span class="st">".rds"</span>)))</span>
-<span id="cb6-113"><a href="#cb6-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-114"><a href="#cb6-114" aria-hidden="true" tabindex="-1"></a>cb_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#88CCEE"</span>, <span class="st">"#CC6677"</span>, <span class="st">"#DDCC77"</span>, <span class="st">"#117733"</span>, <span class="st">"#332288"</span>,</span>
-<span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a>             <span class="st">"#AA4499"</span>, <span class="st">"#44AA99"</span>, <span class="st">"#999933"</span>, <span class="st">"#882255"</span>, <span class="st">"#661100"</span>,</span>
-<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a>             <span class="st">"#6699CC"</span>, <span class="st">"#888888"</span>, <span class="st">"#E69F00"</span>, <span class="st">"#56B4E9"</span>, <span class="st">"#009E73"</span>,</span>
-<span id="cb6-117"><a href="#cb6-117" aria-hidden="true" tabindex="-1"></a>             <span class="st">"#F0E442"</span>, <span class="st">"#0072B2"</span>, <span class="st">"#D55E00"</span>, <span class="st">"#CC79A7"</span>, <span class="st">"#999999"</span>)</span>
-<span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-119"><a href="#cb6-119" aria-hidden="true" tabindex="-1"></a>theme_orchard <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb6-120"><a href="#cb6-120" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">13</span>) <span class="sc">+</span></span>
-<span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">theme</span>(</span>
-<span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.text.y        =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>),</span>
-<span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.title.x       =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
-<span id="cb6-124"><a href="#cb6-124" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.ticks.y       =</span> ggplot2<span class="sc">::</span><span class="fu">element_blank</span>(),</span>
-<span id="cb6-125"><a href="#cb6-125" aria-hidden="true" tabindex="-1"></a>      <span class="at">panel.grid.major.x =</span> ggplot2<span class="sc">::</span><span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"grey92"</span>),</span>
-<span id="cb6-126"><a href="#cb6-126" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.position    =</span> <span class="st">"bottom"</span>,</span>
-<span id="cb6-127"><a href="#cb6-127" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.title       =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
-<span id="cb6-128"><a href="#cb6-128" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.title         =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">13</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb6-129"><a href="#cb6-129" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.caption       =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>, <span class="at">colour =</span> <span class="st">"grey50"</span>)</span>
-<span id="cb6-130"><a href="#cb6-130" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb6-131"><a href="#cb6-131" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-132"><a href="#cb6-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-133"><a href="#cb6-133" aria-hidden="true" tabindex="-1"></a>apply_labels <span class="ot">&lt;-</span> <span class="cf">function</span>(x, lbl_map) {</span>
-<span id="cb6-134"><a href="#cb6-134" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(lbl_map)) <span class="fu">return</span>(x)</span>
-<span id="cb6-135"><a href="#cb6-135" aria-hidden="true" tabindex="-1"></a>  lbl_map <span class="ot">&lt;-</span> lbl_map[<span class="sc">!</span><span class="fu">is.na</span>(<span class="fu">names</span>(lbl_map))]</span>
-<span id="cb6-136"><a href="#cb6-136" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ifelse</span>(x <span class="sc">%in%</span> <span class="fu">names</span>(lbl_map), lbl_map[x], x)</span>
-<span id="cb6-137"><a href="#cb6-137" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-138"><a href="#cb6-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-139"><a href="#cb6-139" aria-hidden="true" tabindex="-1"></a>get_level_estimates <span class="ot">&lt;-</span> <span class="cf">function</span>(fit, moderator) {</span>
-<span id="cb6-140"><a href="#cb6-140" aria-hidden="true" tabindex="-1"></a>  fe <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">fixef</span>(fit)</span>
-<span id="cb6-141"><a href="#cb6-141" aria-hidden="true" tabindex="-1"></a>  beta <span class="ot">&lt;-</span> fe[, <span class="st">"Estimate"</span>]</span>
-<span id="cb6-142"><a href="#cb6-142" aria-hidden="true" tabindex="-1"></a>  lower <span class="ot">&lt;-</span> fe[, <span class="st">"Q2.5"</span>]</span>
-<span id="cb6-143"><a href="#cb6-143" aria-hidden="true" tabindex="-1"></a>  upper <span class="ot">&lt;-</span> fe[, <span class="st">"Q97.5"</span>]</span>
-<span id="cb6-144"><a href="#cb6-144" aria-hidden="true" tabindex="-1"></a>  intercept <span class="ot">&lt;-</span> beta[<span class="st">"Intercept"</span>]</span>
-<span id="cb6-145"><a href="#cb6-145" aria-hidden="true" tabindex="-1"></a>  intercept_lo <span class="ot">&lt;-</span> lower[<span class="st">"Intercept"</span>]</span>
-<span id="cb6-146"><a href="#cb6-146" aria-hidden="true" tabindex="-1"></a>  intercept_hi <span class="ot">&lt;-</span> upper[<span class="st">"Intercept"</span>]</span>
-<span id="cb6-147"><a href="#cb6-147" aria-hidden="true" tabindex="-1"></a>  pat <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"^"</span>, moderator)</span>
-<span id="cb6-148"><a href="#cb6-148" aria-hidden="true" tabindex="-1"></a>  rows <span class="ot">&lt;-</span> <span class="fu">grep</span>(pat, <span class="fu">names</span>(beta))</span>
-<span id="cb6-149"><a href="#cb6-149" aria-hidden="true" tabindex="-1"></a>  ref_level <span class="ot">&lt;-</span> <span class="fu">levels</span>(<span class="fu">factor</span>(fit<span class="sc">$</span>data[[moderator]]))[<span class="dv">1</span>]</span>
-<span id="cb6-150"><a href="#cb6-150" aria-hidden="true" tabindex="-1"></a>  out <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb6-151"><a href="#cb6-151" aria-hidden="true" tabindex="-1"></a>    <span class="at">level =</span> ref_level,</span>
-<span id="cb6-152"><a href="#cb6-152" aria-hidden="true" tabindex="-1"></a>    <span class="at">estimate =</span> intercept,</span>
-<span id="cb6-153"><a href="#cb6-153" aria-hidden="true" tabindex="-1"></a>    <span class="at">lowerCL =</span> intercept_lo,</span>
-<span id="cb6-154"><a href="#cb6-154" aria-hidden="true" tabindex="-1"></a>    <span class="at">upperCL =</span> intercept_hi</span>
-<span id="cb6-155"><a href="#cb6-155" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb6-156"><a href="#cb6-156" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (r <span class="cf">in</span> rows) {</span>
-<span id="cb6-157"><a href="#cb6-157" aria-hidden="true" tabindex="-1"></a>    lvl <span class="ot">&lt;-</span> <span class="fu">sub</span>(pat, <span class="st">""</span>, <span class="fu">names</span>(beta)[r])</span>
-<span id="cb6-158"><a href="#cb6-158" aria-hidden="true" tabindex="-1"></a>    out <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(out, tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb6-159"><a href="#cb6-159" aria-hidden="true" tabindex="-1"></a>      <span class="at">level =</span> lvl,</span>
-<span id="cb6-160"><a href="#cb6-160" aria-hidden="true" tabindex="-1"></a>      <span class="at">estimate =</span> intercept <span class="sc">+</span> beta[r],</span>
-<span id="cb6-161"><a href="#cb6-161" aria-hidden="true" tabindex="-1"></a>      <span class="at">lowerCL =</span> intercept <span class="sc">+</span> lower[r],</span>
-<span id="cb6-162"><a href="#cb6-162" aria-hidden="true" tabindex="-1"></a>      <span class="at">upperCL =</span> intercept <span class="sc">+</span> upper[r]</span>
-<span id="cb6-163"><a href="#cb6-163" aria-hidden="true" tabindex="-1"></a>    ))</span>
-<span id="cb6-164"><a href="#cb6-164" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb6-165"><a href="#cb6-165" aria-hidden="true" tabindex="-1"></a>  out</span>
-<span id="cb6-166"><a href="#cb6-166" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-167"><a href="#cb6-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-168"><a href="#cb6-168" aria-hidden="true" tabindex="-1"></a>get_sig_estimates <span class="ot">&lt;-</span> <span class="cf">function</span>(fit, moderator, <span class="at">levels_vec =</span> <span class="cn">NULL</span>) {</span>
-<span id="cb6-169"><a href="#cb6-169" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(levels_vec)) {</span>
-<span id="cb6-170"><a href="#cb6-170" aria-hidden="true" tabindex="-1"></a>    levels_vec <span class="ot">&lt;-</span> <span class="fu">levels</span>(<span class="fu">factor</span>(fit<span class="sc">$</span>data[[moderator]]))</span>
-<span id="cb6-171"><a href="#cb6-171" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb6-172"><a href="#cb6-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-173"><a href="#cb6-173" aria-hidden="true" tabindex="-1"></a>  nd <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> levels_vec, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb6-174"><a href="#cb6-174" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(nd)[<span class="dv">1</span>] <span class="ot">&lt;-</span> moderator</span>
-<span id="cb6-175"><a href="#cb6-175" aria-hidden="true" tabindex="-1"></a>  nd[[<span class="st">"es_id_model"</span>]] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb6-176"><a href="#cb6-176" aria-hidden="true" tabindex="-1"></a>  nd[[<span class="st">"ref_id"</span>]] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb6-177"><a href="#cb6-177" aria-hidden="true" tabindex="-1"></a>  nd[[<span class="st">"sp_ncbi"</span>]] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb6-178"><a href="#cb6-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-179"><a href="#cb6-179" aria-hidden="true" tabindex="-1"></a>  tidybayes<span class="sc">::</span><span class="fu">epred_draws</span>(</span>
-<span id="cb6-180"><a href="#cb6-180" aria-hidden="true" tabindex="-1"></a>    fit, <span class="at">newdata =</span> nd, <span class="at">re_formula =</span> <span class="cn">NA</span>, <span class="at">dpar =</span> <span class="cn">TRUE</span>, <span class="at">ndraws =</span> <span class="dv">1000</span></span>
-<span id="cb6-181"><a href="#cb6-181" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb6-182"><a href="#cb6-182" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">group_by</span>(.data[[moderator]]) <span class="sc">|&gt;</span></span>
-<span id="cb6-183"><a href="#cb6-183" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
-<span id="cb6-184"><a href="#cb6-184" aria-hidden="true" tabindex="-1"></a>      <span class="at">estimate =</span> <span class="fu">median</span>(sigma),</span>
-<span id="cb6-185"><a href="#cb6-185" aria-hidden="true" tabindex="-1"></a>      <span class="at">lowerCL =</span> <span class="fu">quantile</span>(sigma, <span class="fl">0.025</span>),</span>
-<span id="cb6-186"><a href="#cb6-186" aria-hidden="true" tabindex="-1"></a>      <span class="at">upperCL =</span> <span class="fu">quantile</span>(sigma, <span class="fl">0.975</span>),</span>
-<span id="cb6-187"><a href="#cb6-187" aria-hidden="true" tabindex="-1"></a>      <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb6-188"><a href="#cb6-188" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb6-189"><a href="#cb6-189" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">level =</span> dplyr<span class="sc">::</span><span class="fu">all_of</span>(moderator))</span>
-<span id="cb6-190"><a href="#cb6-190" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-191"><a href="#cb6-191" aria-hidden="true" tabindex="-1"></a>get_pred_interval <span class="ot">&lt;-</span> <span class="cf">function</span>(fit, moderator, levels_vec) {</span>
-<span id="cb6-192"><a href="#cb6-192" aria-hidden="true" tabindex="-1"></a>  nd <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> levels_vec, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb6-193"><a href="#cb6-193" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(nd)[<span class="dv">1</span>] <span class="ot">&lt;-</span> moderator</span>
-<span id="cb6-194"><a href="#cb6-194" aria-hidden="true" tabindex="-1"></a>  nd[[<span class="st">"es_id_model"</span>]] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb6-195"><a href="#cb6-195" aria-hidden="true" tabindex="-1"></a>  nd[[<span class="st">"ref_id"</span>]] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb6-196"><a href="#cb6-196" aria-hidden="true" tabindex="-1"></a>  nd[[<span class="st">"sp_ncbi"</span>]] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb6-197"><a href="#cb6-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-198"><a href="#cb6-198" aria-hidden="true" tabindex="-1"></a>  pp <span class="ot">&lt;-</span> tidybayes<span class="sc">::</span><span class="fu">add_predicted_draws</span>(nd, fit, <span class="at">re_formula =</span> <span class="cn">NA</span>, <span class="at">ndraws =</span> <span class="dv">1000</span>)</span>
-<span id="cb6-199"><a href="#cb6-199" aria-hidden="true" tabindex="-1"></a>  pp <span class="sc">|&gt;</span></span>
-<span id="cb6-200"><a href="#cb6-200" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">group_by</span>(.data[[moderator]]) <span class="sc">|&gt;</span></span>
-<span id="cb6-201"><a href="#cb6-201" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
-<span id="cb6-202"><a href="#cb6-202" aria-hidden="true" tabindex="-1"></a>      <span class="at">lowerPR =</span> <span class="fu">quantile</span>(.prediction, <span class="fl">0.025</span>),</span>
-<span id="cb6-203"><a href="#cb6-203" aria-hidden="true" tabindex="-1"></a>      <span class="at">upperPR =</span> <span class="fu">quantile</span>(.prediction, <span class="fl">0.975</span>),</span>
-<span id="cb6-204"><a href="#cb6-204" aria-hidden="true" tabindex="-1"></a>      <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb6-205"><a href="#cb6-205" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb6-206"><a href="#cb6-206" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">level =</span> dplyr<span class="sc">::</span><span class="fu">all_of</span>(moderator))</span>
-<span id="cb6-207"><a href="#cb6-207" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-208"><a href="#cb6-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-209"><a href="#cb6-209" aria-hidden="true" tabindex="-1"></a>save_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(p, stem, <span class="at">width =</span> <span class="dv">9</span>, <span class="at">height =</span> <span class="dv">6</span>) {</span>
-<span id="cb6-210"><a href="#cb6-210" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggsave</span>(<span class="fu">file.path</span>(out_dir, <span class="fu">paste0</span>(stem, <span class="st">".pdf"</span>)), p,</span>
-<span id="cb6-211"><a href="#cb6-211" aria-hidden="true" tabindex="-1"></a>                  <span class="at">width =</span> width, <span class="at">height =</span> height, <span class="at">device =</span> cairo_pdf)</span>
-<span id="cb6-212"><a href="#cb6-212" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggsave</span>(<span class="fu">file.path</span>(out_dir, <span class="fu">paste0</span>(stem, <span class="st">".png"</span>)), p,</span>
-<span id="cb6-213"><a href="#cb6-213" aria-hidden="true" tabindex="-1"></a>                  <span class="at">width =</span> width, <span class="at">height =</span> height, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">type =</span> <span class="st">"cairo"</span>)</span>
-<span id="cb6-214"><a href="#cb6-214" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-215"><a href="#cb6-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-216"><a href="#cb6-216" aria-hidden="true" tabindex="-1"></a>raw_source <span class="ot">&lt;-</span> <span class="cf">if</span> (moderator <span class="sc">%in%</span> <span class="fu">names</span>(dat_es)) dat_es <span class="cf">else</span> fit<span class="sc">$</span>data</span>
-<span id="cb6-217"><a href="#cb6-217" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="st">"vi_lnM_safe"</span> <span class="sc">%in%</span> <span class="fu">names</span>(raw_source) <span class="sc">&amp;&amp;</span></span>
-<span id="cb6-218"><a href="#cb6-218" aria-hidden="true" tabindex="-1"></a>    <span class="st">"es_id_model"</span> <span class="sc">%in%</span> <span class="fu">names</span>(raw_source) <span class="sc">&amp;&amp;</span></span>
-<span id="cb6-219"><a href="#cb6-219" aria-hidden="true" tabindex="-1"></a>    <span class="st">"es_id_model"</span> <span class="sc">%in%</span> <span class="fu">names</span>(dat_es)) {</span>
-<span id="cb6-220"><a href="#cb6-220" aria-hidden="true" tabindex="-1"></a>  raw_source <span class="ot">&lt;-</span> raw_source <span class="sc">|&gt;</span></span>
-<span id="cb6-221"><a href="#cb6-221" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">left_join</span>(</span>
-<span id="cb6-222"><a href="#cb6-222" aria-hidden="true" tabindex="-1"></a>      dat_es <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">select</span>(es_id_model, vi_lnM_safe),</span>
-<span id="cb6-223"><a href="#cb6-223" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">"es_id_model"</span></span>
-<span id="cb6-224"><a href="#cb6-224" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb6-225"><a href="#cb6-225" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-226"><a href="#cb6-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-227"><a href="#cb6-227" aria-hidden="true" tabindex="-1"></a>raw <span class="ot">&lt;-</span> raw_source[<span class="sc">!</span><span class="fu">is.na</span>(raw_source[[moderator]]), ] <span class="sc">|&gt;</span></span>
-<span id="cb6-228"><a href="#cb6-228" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb6-229"><a href="#cb6-229" aria-hidden="true" tabindex="-1"></a>    <span class="at">level =</span> <span class="fu">as.character</span>(.data[[moderator]]),</span>
-<span id="cb6-230"><a href="#cb6-230" aria-hidden="true" tabindex="-1"></a>    <span class="at">precision =</span> <span class="dv">1</span> <span class="sc">/</span> <span class="fu">sqrt</span>(vi_lnM_safe)</span>
-<span id="cb6-231"><a href="#cb6-231" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb6-232"><a href="#cb6-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-233"><a href="#cb6-233" aria-hidden="true" tabindex="-1"></a>ests <span class="ot">&lt;-</span> <span class="fu">get_level_estimates</span>(fit, moderator)</span>
-<span id="cb6-234"><a href="#cb6-234" aria-hidden="true" tabindex="-1"></a>sig_ests <span class="ot">&lt;-</span> <span class="fu">get_sig_estimates</span>(fit, moderator, <span class="fu">unique</span>(raw<span class="sc">$</span>level))</span>
-<span id="cb6-235"><a href="#cb6-235" aria-hidden="true" tabindex="-1"></a>pi_df <span class="ot">&lt;-</span> <span class="fu">get_pred_interval</span>(fit, moderator, <span class="fu">unique</span>(raw<span class="sc">$</span>level))</span>
-<span id="cb6-236"><a href="#cb6-236" aria-hidden="true" tabindex="-1"></a>ests <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">left_join</span>(ests, pi_df, <span class="at">by =</span> <span class="st">"level"</span>)</span>
-<span id="cb6-237"><a href="#cb6-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-238"><a href="#cb6-238" aria-hidden="true" tabindex="-1"></a>ests<span class="sc">$</span>level <span class="ot">&lt;-</span> <span class="fu">apply_labels</span>(ests<span class="sc">$</span>level, label_map)</span>
-<span id="cb6-239"><a href="#cb6-239" aria-hidden="true" tabindex="-1"></a>sig_ests<span class="sc">$</span>level <span class="ot">&lt;-</span> <span class="fu">apply_labels</span>(sig_ests<span class="sc">$</span>level, label_map)</span>
-<span id="cb6-240"><a href="#cb6-240" aria-hidden="true" tabindex="-1"></a>raw<span class="sc">$</span>level <span class="ot">&lt;-</span> <span class="fu">apply_labels</span>(raw<span class="sc">$</span>level, label_map)</span>
-<span id="cb6-241"><a href="#cb6-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-242"><a href="#cb6-242" aria-hidden="true" tabindex="-1"></a>lev_order <span class="ot">&lt;-</span> ests<span class="sc">$</span>level[<span class="fu">order</span>(ests<span class="sc">$</span>estimate)]</span>
-<span id="cb6-243"><a href="#cb6-243" aria-hidden="true" tabindex="-1"></a>ests<span class="sc">$</span>level <span class="ot">&lt;-</span> <span class="fu">factor</span>(ests<span class="sc">$</span>level, <span class="at">levels =</span> lev_order)</span>
-<span id="cb6-244"><a href="#cb6-244" aria-hidden="true" tabindex="-1"></a>sig_ests<span class="sc">$</span>level <span class="ot">&lt;-</span> <span class="fu">factor</span>(sig_ests<span class="sc">$</span>level, <span class="at">levels =</span> lev_order)</span>
-<span id="cb6-245"><a href="#cb6-245" aria-hidden="true" tabindex="-1"></a>raw<span class="sc">$</span>level <span class="ot">&lt;-</span> <span class="fu">factor</span>(raw<span class="sc">$</span>level, <span class="at">levels =</span> lev_order)</span>
-<span id="cb6-246"><a href="#cb6-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-247"><a href="#cb6-247" aria-hidden="true" tabindex="-1"></a>n_levels <span class="ot">&lt;-</span> <span class="fu">nlevels</span>(ests<span class="sc">$</span>level)</span>
-<span id="cb6-248"><a href="#cb6-248" aria-hidden="true" tabindex="-1"></a>colors <span class="ot">&lt;-</span> cb_cols[<span class="fu">seq_len</span>(n_levels)]</span>
-<span id="cb6-249"><a href="#cb6-249" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(colors) <span class="ot">&lt;-</span> <span class="fu">levels</span>(ests<span class="sc">$</span>level)</span>
-<span id="cb6-250"><a href="#cb6-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-251"><a href="#cb6-251" aria-hidden="true" tabindex="-1"></a>p_loc <span class="ot">&lt;-</span> ggplot2<span class="sc">::</span><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb6-252"><a href="#cb6-252" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">colour =</span> <span class="st">"grey50"</span>) <span class="sc">+</span></span>
-<span id="cb6-253"><a href="#cb6-253" aria-hidden="true" tabindex="-1"></a>  ggbeeswarm<span class="sc">::</span><span class="fu">geom_quasirandom</span>(</span>
-<span id="cb6-254"><a href="#cb6-254" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> raw,</span>
-<span id="cb6-255"><a href="#cb6-255" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> yi_lnM_safe, <span class="at">y =</span> level,</span>
-<span id="cb6-256"><a href="#cb6-256" aria-hidden="true" tabindex="-1"></a>                 <span class="at">size =</span> precision, <span class="at">colour =</span> level, <span class="at">fill =</span> level),</span>
-<span id="cb6-257"><a href="#cb6-257" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.30</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">groupOnX =</span> <span class="cn">FALSE</span></span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a><span class="fu">### Editable plotting code</span></span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a><span class="in">```{r build-orchard-m08, eval=FALSE}</span></span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brms)</span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidybayes)</span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggbeeswarm)</span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a>model_id <span class="ot">&lt;-</span> <span class="st">"m08"</span></span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a>model_file <span class="ot">&lt;-</span> <span class="st">"m08_ls_env_change"</span></span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a>moderator <span class="ot">&lt;-</span> <span class="st">"env_change"</span></span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a>moderator_label <span class="ot">&lt;-</span> <span class="st">"Environmental-change context"</span></span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a>label_map <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"novel"</span> <span class="ot">=</span> <span class="st">"Novel (defined start point)"</span>, <span class="st">"ongoing"</span> <span class="ot">=</span> <span class="st">"Ongoing (measured within)"</span>)</span>
+<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a>out_dir <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>, <span class="st">"orchard"</span>)</span>
+<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(out_dir, <span class="at">recursive =</span> <span class="cn">TRUE</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a>dat_es <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"effect_sizes"</span>, <span class="st">"proceed_lnm_safe.rds"</span>))</span>
+<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"models"</span>, <span class="fu">paste0</span>(model_file, <span class="st">".rds"</span>)))</span>
+<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a>cb_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#88CCEE"</span>, <span class="st">"#CC6677"</span>, <span class="st">"#DDCC77"</span>, <span class="st">"#117733"</span>, <span class="st">"#332288"</span>,</span>
+<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a>             <span class="st">"#AA4499"</span>, <span class="st">"#44AA99"</span>, <span class="st">"#999933"</span>, <span class="st">"#882255"</span>, <span class="st">"#661100"</span>,</span>
+<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a>             <span class="st">"#6699CC"</span>, <span class="st">"#888888"</span>, <span class="st">"#E69F00"</span>, <span class="st">"#56B4E9"</span>, <span class="st">"#009E73"</span>,</span>
+<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a>             <span class="st">"#F0E442"</span>, <span class="st">"#0072B2"</span>, <span class="st">"#D55E00"</span>, <span class="st">"#CC79A7"</span>, <span class="st">"#999999"</span>)</span>
+<span id="cb6-108"><a href="#cb6-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-109"><a href="#cb6-109" aria-hidden="true" tabindex="-1"></a>theme_orchard <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb6-110"><a href="#cb6-110" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">13</span>) <span class="sc">+</span></span>
+<span id="cb6-111"><a href="#cb6-111" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">theme</span>(</span>
+<span id="cb6-112"><a href="#cb6-112" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.text.y        =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>),</span>
+<span id="cb6-113"><a href="#cb6-113" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.title.x       =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb6-114"><a href="#cb6-114" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.ticks.y       =</span> ggplot2<span class="sc">::</span><span class="fu">element_blank</span>(),</span>
+<span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a>      <span class="at">panel.grid.major.x =</span> ggplot2<span class="sc">::</span><span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"grey92"</span>),</span>
+<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.position    =</span> <span class="st">"bottom"</span>,</span>
+<span id="cb6-117"><a href="#cb6-117" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.title       =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.title         =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">13</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb6-119"><a href="#cb6-119" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.caption       =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>, <span class="at">colour =</span> <span class="st">"grey50"</span>)</span>
+<span id="cb6-120"><a href="#cb6-120" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a>apply_labels <span class="ot">&lt;-</span> <span class="cf">function</span>(x, lbl_map) {</span>
+<span id="cb6-124"><a href="#cb6-124" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(lbl_map)) <span class="fu">return</span>(x)</span>
+<span id="cb6-125"><a href="#cb6-125" aria-hidden="true" tabindex="-1"></a>  lbl_map <span class="ot">&lt;-</span> lbl_map[<span class="sc">!</span><span class="fu">is.na</span>(<span class="fu">names</span>(lbl_map))]</span>
+<span id="cb6-126"><a href="#cb6-126" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ifelse</span>(x <span class="sc">%in%</span> <span class="fu">names</span>(lbl_map), lbl_map[x], x)</span>
+<span id="cb6-127"><a href="#cb6-127" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-128"><a href="#cb6-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-129"><a href="#cb6-129" aria-hidden="true" tabindex="-1"></a>get_level_estimates <span class="ot">&lt;-</span> <span class="cf">function</span>(fit, moderator) {</span>
+<span id="cb6-130"><a href="#cb6-130" aria-hidden="true" tabindex="-1"></a>  fe <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">fixef</span>(fit)</span>
+<span id="cb6-131"><a href="#cb6-131" aria-hidden="true" tabindex="-1"></a>  beta <span class="ot">&lt;-</span> fe[, <span class="st">"Estimate"</span>]</span>
+<span id="cb6-132"><a href="#cb6-132" aria-hidden="true" tabindex="-1"></a>  lower <span class="ot">&lt;-</span> fe[, <span class="st">"Q2.5"</span>]</span>
+<span id="cb6-133"><a href="#cb6-133" aria-hidden="true" tabindex="-1"></a>  upper <span class="ot">&lt;-</span> fe[, <span class="st">"Q97.5"</span>]</span>
+<span id="cb6-134"><a href="#cb6-134" aria-hidden="true" tabindex="-1"></a>  intercept <span class="ot">&lt;-</span> beta[<span class="st">"Intercept"</span>]</span>
+<span id="cb6-135"><a href="#cb6-135" aria-hidden="true" tabindex="-1"></a>  intercept_lo <span class="ot">&lt;-</span> lower[<span class="st">"Intercept"</span>]</span>
+<span id="cb6-136"><a href="#cb6-136" aria-hidden="true" tabindex="-1"></a>  intercept_hi <span class="ot">&lt;-</span> upper[<span class="st">"Intercept"</span>]</span>
+<span id="cb6-137"><a href="#cb6-137" aria-hidden="true" tabindex="-1"></a>  pat <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"^"</span>, moderator)</span>
+<span id="cb6-138"><a href="#cb6-138" aria-hidden="true" tabindex="-1"></a>  rows <span class="ot">&lt;-</span> <span class="fu">grep</span>(pat, <span class="fu">names</span>(beta))</span>
+<span id="cb6-139"><a href="#cb6-139" aria-hidden="true" tabindex="-1"></a>  ref_level <span class="ot">&lt;-</span> <span class="fu">levels</span>(<span class="fu">factor</span>(fit<span class="sc">$</span>data[[moderator]]))[<span class="dv">1</span>]</span>
+<span id="cb6-140"><a href="#cb6-140" aria-hidden="true" tabindex="-1"></a>  out <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb6-141"><a href="#cb6-141" aria-hidden="true" tabindex="-1"></a>    <span class="at">level =</span> ref_level,</span>
+<span id="cb6-142"><a href="#cb6-142" aria-hidden="true" tabindex="-1"></a>    <span class="at">estimate =</span> intercept,</span>
+<span id="cb6-143"><a href="#cb6-143" aria-hidden="true" tabindex="-1"></a>    <span class="at">lowerCL =</span> intercept_lo,</span>
+<span id="cb6-144"><a href="#cb6-144" aria-hidden="true" tabindex="-1"></a>    <span class="at">upperCL =</span> intercept_hi</span>
+<span id="cb6-145"><a href="#cb6-145" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-146"><a href="#cb6-146" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (r <span class="cf">in</span> rows) {</span>
+<span id="cb6-147"><a href="#cb6-147" aria-hidden="true" tabindex="-1"></a>    lvl <span class="ot">&lt;-</span> <span class="fu">sub</span>(pat, <span class="st">""</span>, <span class="fu">names</span>(beta)[r])</span>
+<span id="cb6-148"><a href="#cb6-148" aria-hidden="true" tabindex="-1"></a>    out <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(out, tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb6-149"><a href="#cb6-149" aria-hidden="true" tabindex="-1"></a>      <span class="at">level =</span> lvl,</span>
+<span id="cb6-150"><a href="#cb6-150" aria-hidden="true" tabindex="-1"></a>      <span class="at">estimate =</span> intercept <span class="sc">+</span> beta[r],</span>
+<span id="cb6-151"><a href="#cb6-151" aria-hidden="true" tabindex="-1"></a>      <span class="at">lowerCL =</span> intercept <span class="sc">+</span> lower[r],</span>
+<span id="cb6-152"><a href="#cb6-152" aria-hidden="true" tabindex="-1"></a>      <span class="at">upperCL =</span> intercept <span class="sc">+</span> upper[r]</span>
+<span id="cb6-153"><a href="#cb6-153" aria-hidden="true" tabindex="-1"></a>    ))</span>
+<span id="cb6-154"><a href="#cb6-154" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-155"><a href="#cb6-155" aria-hidden="true" tabindex="-1"></a>  out</span>
+<span id="cb6-156"><a href="#cb6-156" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-157"><a href="#cb6-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-158"><a href="#cb6-158" aria-hidden="true" tabindex="-1"></a>get_sig_estimates <span class="ot">&lt;-</span> <span class="cf">function</span>(fit, moderator, <span class="at">levels_vec =</span> <span class="cn">NULL</span>) {</span>
+<span id="cb6-159"><a href="#cb6-159" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(levels_vec)) {</span>
+<span id="cb6-160"><a href="#cb6-160" aria-hidden="true" tabindex="-1"></a>    levels_vec <span class="ot">&lt;-</span> <span class="fu">levels</span>(<span class="fu">factor</span>(fit<span class="sc">$</span>data[[moderator]]))</span>
+<span id="cb6-161"><a href="#cb6-161" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-162"><a href="#cb6-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-163"><a href="#cb6-163" aria-hidden="true" tabindex="-1"></a>  nd <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> levels_vec, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-164"><a href="#cb6-164" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(nd)[<span class="dv">1</span>] <span class="ot">&lt;-</span> moderator</span>
+<span id="cb6-165"><a href="#cb6-165" aria-hidden="true" tabindex="-1"></a>  nd[[<span class="st">"es_id_model"</span>]] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb6-166"><a href="#cb6-166" aria-hidden="true" tabindex="-1"></a>  nd[[<span class="st">"ref_id"</span>]] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb6-167"><a href="#cb6-167" aria-hidden="true" tabindex="-1"></a>  nd[[<span class="st">"sp_ncbi"</span>]] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb6-168"><a href="#cb6-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-169"><a href="#cb6-169" aria-hidden="true" tabindex="-1"></a>  tidybayes<span class="sc">::</span><span class="fu">epred_draws</span>(</span>
+<span id="cb6-170"><a href="#cb6-170" aria-hidden="true" tabindex="-1"></a>    fit, <span class="at">newdata =</span> nd, <span class="at">re_formula =</span> <span class="cn">NA</span>, <span class="at">dpar =</span> <span class="cn">TRUE</span>, <span class="at">ndraws =</span> <span class="dv">1000</span></span>
+<span id="cb6-171"><a href="#cb6-171" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb6-172"><a href="#cb6-172" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">group_by</span>(.data[[moderator]]) <span class="sc">|&gt;</span></span>
+<span id="cb6-173"><a href="#cb6-173" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
+<span id="cb6-174"><a href="#cb6-174" aria-hidden="true" tabindex="-1"></a>      <span class="at">estimate =</span> <span class="fu">median</span>(sigma),</span>
+<span id="cb6-175"><a href="#cb6-175" aria-hidden="true" tabindex="-1"></a>      <span class="at">lowerCL =</span> <span class="fu">quantile</span>(sigma, <span class="fl">0.025</span>),</span>
+<span id="cb6-176"><a href="#cb6-176" aria-hidden="true" tabindex="-1"></a>      <span class="at">upperCL =</span> <span class="fu">quantile</span>(sigma, <span class="fl">0.975</span>),</span>
+<span id="cb6-177"><a href="#cb6-177" aria-hidden="true" tabindex="-1"></a>      <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb6-178"><a href="#cb6-178" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb6-179"><a href="#cb6-179" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">level =</span> dplyr<span class="sc">::</span><span class="fu">all_of</span>(moderator))</span>
+<span id="cb6-180"><a href="#cb6-180" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-181"><a href="#cb6-181" aria-hidden="true" tabindex="-1"></a>get_pred_interval <span class="ot">&lt;-</span> <span class="cf">function</span>(fit, moderator, levels_vec) {</span>
+<span id="cb6-182"><a href="#cb6-182" aria-hidden="true" tabindex="-1"></a>  nd <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> levels_vec, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-183"><a href="#cb6-183" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(nd)[<span class="dv">1</span>] <span class="ot">&lt;-</span> moderator</span>
+<span id="cb6-184"><a href="#cb6-184" aria-hidden="true" tabindex="-1"></a>  nd[[<span class="st">"es_id_model"</span>]] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb6-185"><a href="#cb6-185" aria-hidden="true" tabindex="-1"></a>  nd[[<span class="st">"ref_id"</span>]] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb6-186"><a href="#cb6-186" aria-hidden="true" tabindex="-1"></a>  nd[[<span class="st">"sp_ncbi"</span>]] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb6-187"><a href="#cb6-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-188"><a href="#cb6-188" aria-hidden="true" tabindex="-1"></a>  pp <span class="ot">&lt;-</span> tidybayes<span class="sc">::</span><span class="fu">add_predicted_draws</span>(nd, fit, <span class="at">re_formula =</span> <span class="cn">NA</span>, <span class="at">ndraws =</span> <span class="dv">1000</span>)</span>
+<span id="cb6-189"><a href="#cb6-189" aria-hidden="true" tabindex="-1"></a>  pp <span class="sc">|&gt;</span></span>
+<span id="cb6-190"><a href="#cb6-190" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">group_by</span>(.data[[moderator]]) <span class="sc">|&gt;</span></span>
+<span id="cb6-191"><a href="#cb6-191" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
+<span id="cb6-192"><a href="#cb6-192" aria-hidden="true" tabindex="-1"></a>      <span class="at">lowerPR =</span> <span class="fu">quantile</span>(.prediction, <span class="fl">0.025</span>),</span>
+<span id="cb6-193"><a href="#cb6-193" aria-hidden="true" tabindex="-1"></a>      <span class="at">upperPR =</span> <span class="fu">quantile</span>(.prediction, <span class="fl">0.975</span>),</span>
+<span id="cb6-194"><a href="#cb6-194" aria-hidden="true" tabindex="-1"></a>      <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb6-195"><a href="#cb6-195" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb6-196"><a href="#cb6-196" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">level =</span> dplyr<span class="sc">::</span><span class="fu">all_of</span>(moderator))</span>
+<span id="cb6-197"><a href="#cb6-197" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-198"><a href="#cb6-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-199"><a href="#cb6-199" aria-hidden="true" tabindex="-1"></a>save_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(p, stem, <span class="at">width =</span> <span class="dv">9</span>, <span class="at">height =</span> <span class="dv">6</span>) {</span>
+<span id="cb6-200"><a href="#cb6-200" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggsave</span>(<span class="fu">file.path</span>(out_dir, <span class="fu">paste0</span>(stem, <span class="st">".pdf"</span>)), p,</span>
+<span id="cb6-201"><a href="#cb6-201" aria-hidden="true" tabindex="-1"></a>                  <span class="at">width =</span> width, <span class="at">height =</span> height, <span class="at">device =</span> cairo_pdf)</span>
+<span id="cb6-202"><a href="#cb6-202" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggsave</span>(<span class="fu">file.path</span>(out_dir, <span class="fu">paste0</span>(stem, <span class="st">".png"</span>)), p,</span>
+<span id="cb6-203"><a href="#cb6-203" aria-hidden="true" tabindex="-1"></a>                  <span class="at">width =</span> width, <span class="at">height =</span> height, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">type =</span> <span class="st">"cairo"</span>)</span>
+<span id="cb6-204"><a href="#cb6-204" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-205"><a href="#cb6-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-206"><a href="#cb6-206" aria-hidden="true" tabindex="-1"></a>raw_source <span class="ot">&lt;-</span> <span class="cf">if</span> (moderator <span class="sc">%in%</span> <span class="fu">names</span>(dat_es)) dat_es <span class="cf">else</span> fit<span class="sc">$</span>data</span>
+<span id="cb6-207"><a href="#cb6-207" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="st">"vi_lnM_safe"</span> <span class="sc">%in%</span> <span class="fu">names</span>(raw_source) <span class="sc">&amp;&amp;</span></span>
+<span id="cb6-208"><a href="#cb6-208" aria-hidden="true" tabindex="-1"></a>    <span class="st">"es_id_model"</span> <span class="sc">%in%</span> <span class="fu">names</span>(raw_source) <span class="sc">&amp;&amp;</span></span>
+<span id="cb6-209"><a href="#cb6-209" aria-hidden="true" tabindex="-1"></a>    <span class="st">"es_id_model"</span> <span class="sc">%in%</span> <span class="fu">names</span>(dat_es)) {</span>
+<span id="cb6-210"><a href="#cb6-210" aria-hidden="true" tabindex="-1"></a>  raw_source <span class="ot">&lt;-</span> raw_source <span class="sc">|&gt;</span></span>
+<span id="cb6-211"><a href="#cb6-211" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">left_join</span>(</span>
+<span id="cb6-212"><a href="#cb6-212" aria-hidden="true" tabindex="-1"></a>      dat_es <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">select</span>(es_id_model, vi_lnM_safe),</span>
+<span id="cb6-213"><a href="#cb6-213" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="st">"es_id_model"</span></span>
+<span id="cb6-214"><a href="#cb6-214" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-215"><a href="#cb6-215" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-216"><a href="#cb6-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-217"><a href="#cb6-217" aria-hidden="true" tabindex="-1"></a>raw <span class="ot">&lt;-</span> raw_source[<span class="sc">!</span><span class="fu">is.na</span>(raw_source[[moderator]]), ] <span class="sc">|&gt;</span></span>
+<span id="cb6-218"><a href="#cb6-218" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb6-219"><a href="#cb6-219" aria-hidden="true" tabindex="-1"></a>    <span class="at">level =</span> <span class="fu">as.character</span>(.data[[moderator]]),</span>
+<span id="cb6-220"><a href="#cb6-220" aria-hidden="true" tabindex="-1"></a>    <span class="at">precision =</span> <span class="dv">1</span> <span class="sc">/</span> <span class="fu">sqrt</span>(vi_lnM_safe)</span>
+<span id="cb6-221"><a href="#cb6-221" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-222"><a href="#cb6-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-223"><a href="#cb6-223" aria-hidden="true" tabindex="-1"></a>ests <span class="ot">&lt;-</span> <span class="fu">get_level_estimates</span>(fit, moderator)</span>
+<span id="cb6-224"><a href="#cb6-224" aria-hidden="true" tabindex="-1"></a>sig_ests <span class="ot">&lt;-</span> <span class="fu">get_sig_estimates</span>(fit, moderator, <span class="fu">unique</span>(raw<span class="sc">$</span>level))</span>
+<span id="cb6-225"><a href="#cb6-225" aria-hidden="true" tabindex="-1"></a>pi_df <span class="ot">&lt;-</span> <span class="fu">get_pred_interval</span>(fit, moderator, <span class="fu">unique</span>(raw<span class="sc">$</span>level))</span>
+<span id="cb6-226"><a href="#cb6-226" aria-hidden="true" tabindex="-1"></a>ests <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">left_join</span>(ests, pi_df, <span class="at">by =</span> <span class="st">"level"</span>)</span>
+<span id="cb6-227"><a href="#cb6-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-228"><a href="#cb6-228" aria-hidden="true" tabindex="-1"></a>ests<span class="sc">$</span>level <span class="ot">&lt;-</span> <span class="fu">apply_labels</span>(ests<span class="sc">$</span>level, label_map)</span>
+<span id="cb6-229"><a href="#cb6-229" aria-hidden="true" tabindex="-1"></a>sig_ests<span class="sc">$</span>level <span class="ot">&lt;-</span> <span class="fu">apply_labels</span>(sig_ests<span class="sc">$</span>level, label_map)</span>
+<span id="cb6-230"><a href="#cb6-230" aria-hidden="true" tabindex="-1"></a>raw<span class="sc">$</span>level <span class="ot">&lt;-</span> <span class="fu">apply_labels</span>(raw<span class="sc">$</span>level, label_map)</span>
+<span id="cb6-231"><a href="#cb6-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-232"><a href="#cb6-232" aria-hidden="true" tabindex="-1"></a>lev_order <span class="ot">&lt;-</span> ests<span class="sc">$</span>level[<span class="fu">order</span>(ests<span class="sc">$</span>estimate)]</span>
+<span id="cb6-233"><a href="#cb6-233" aria-hidden="true" tabindex="-1"></a>ests<span class="sc">$</span>level <span class="ot">&lt;-</span> <span class="fu">factor</span>(ests<span class="sc">$</span>level, <span class="at">levels =</span> lev_order)</span>
+<span id="cb6-234"><a href="#cb6-234" aria-hidden="true" tabindex="-1"></a>sig_ests<span class="sc">$</span>level <span class="ot">&lt;-</span> <span class="fu">factor</span>(sig_ests<span class="sc">$</span>level, <span class="at">levels =</span> lev_order)</span>
+<span id="cb6-235"><a href="#cb6-235" aria-hidden="true" tabindex="-1"></a>raw<span class="sc">$</span>level <span class="ot">&lt;-</span> <span class="fu">factor</span>(raw<span class="sc">$</span>level, <span class="at">levels =</span> lev_order)</span>
+<span id="cb6-236"><a href="#cb6-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-237"><a href="#cb6-237" aria-hidden="true" tabindex="-1"></a>n_levels <span class="ot">&lt;-</span> <span class="fu">nlevels</span>(ests<span class="sc">$</span>level)</span>
+<span id="cb6-238"><a href="#cb6-238" aria-hidden="true" tabindex="-1"></a>colors <span class="ot">&lt;-</span> cb_cols[<span class="fu">seq_len</span>(n_levels)]</span>
+<span id="cb6-239"><a href="#cb6-239" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(colors) <span class="ot">&lt;-</span> <span class="fu">levels</span>(ests<span class="sc">$</span>level)</span>
+<span id="cb6-240"><a href="#cb6-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-241"><a href="#cb6-241" aria-hidden="true" tabindex="-1"></a>p_loc <span class="ot">&lt;-</span> ggplot2<span class="sc">::</span><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb6-242"><a href="#cb6-242" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">colour =</span> <span class="st">"grey50"</span>) <span class="sc">+</span></span>
+<span id="cb6-243"><a href="#cb6-243" aria-hidden="true" tabindex="-1"></a>  ggbeeswarm<span class="sc">::</span><span class="fu">geom_quasirandom</span>(</span>
+<span id="cb6-244"><a href="#cb6-244" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> raw,</span>
+<span id="cb6-245"><a href="#cb6-245" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> yi_lnM_safe, <span class="at">y =</span> level,</span>
+<span id="cb6-246"><a href="#cb6-246" aria-hidden="true" tabindex="-1"></a>                 <span class="at">size =</span> precision, <span class="at">colour =</span> level, <span class="at">fill =</span> level),</span>
+<span id="cb6-247"><a href="#cb6-247" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.30</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">groupOnX =</span> <span class="cn">FALSE</span></span>
+<span id="cb6-248"><a href="#cb6-248" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-249"><a href="#cb6-249" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_linerange</span>(</span>
+<span id="cb6-250"><a href="#cb6-250" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> ests,</span>
+<span id="cb6-251"><a href="#cb6-251" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">y =</span> level, <span class="at">xmin =</span> lowerPR, <span class="at">xmax =</span> upperPR),</span>
+<span id="cb6-252"><a href="#cb6-252" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">0.4</span>, <span class="at">colour =</span> <span class="st">"grey40"</span></span>
+<span id="cb6-253"><a href="#cb6-253" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-254"><a href="#cb6-254" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_linerange</span>(</span>
+<span id="cb6-255"><a href="#cb6-255" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> ests,</span>
+<span id="cb6-256"><a href="#cb6-256" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">y =</span> level, <span class="at">xmin =</span> lowerCL, <span class="at">xmax =</span> upperCL),</span>
+<span id="cb6-257"><a href="#cb6-257" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">1.5</span>, <span class="at">colour =</span> <span class="st">"grey15"</span></span>
 <span id="cb6-258"><a href="#cb6-258" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb6-259"><a href="#cb6-259" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_linerange</span>(</span>
+<span id="cb6-259"><a href="#cb6-259" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_point</span>(</span>
 <span id="cb6-260"><a href="#cb6-260" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> ests,</span>
-<span id="cb6-261"><a href="#cb6-261" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">y =</span> level, <span class="at">xmin =</span> lowerPR, <span class="at">xmax =</span> upperPR),</span>
-<span id="cb6-262"><a href="#cb6-262" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">0.4</span>, <span class="at">colour =</span> <span class="st">"grey40"</span></span>
+<span id="cb6-261"><a href="#cb6-261" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> estimate, <span class="at">y =</span> level),</span>
+<span id="cb6-262"><a href="#cb6-262" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">4</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">colour =</span> <span class="st">"grey10"</span>, <span class="at">stroke =</span> <span class="fl">1.2</span></span>
 <span id="cb6-263"><a href="#cb6-263" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb6-264"><a href="#cb6-264" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_linerange</span>(</span>
-<span id="cb6-265"><a href="#cb6-265" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> ests,</span>
-<span id="cb6-266"><a href="#cb6-266" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">y =</span> level, <span class="at">xmin =</span> lowerCL, <span class="at">xmax =</span> upperCL),</span>
-<span id="cb6-267"><a href="#cb6-267" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">1.5</span>, <span class="at">colour =</span> <span class="st">"grey15"</span></span>
-<span id="cb6-268"><a href="#cb6-268" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb6-269"><a href="#cb6-269" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_point</span>(</span>
-<span id="cb6-270"><a href="#cb6-270" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> ests,</span>
-<span id="cb6-271"><a href="#cb6-271" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> estimate, <span class="at">y =</span> level),</span>
-<span id="cb6-272"><a href="#cb6-272" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">4</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">colour =</span> <span class="st">"grey10"</span>, <span class="at">stroke =</span> <span class="fl">1.2</span></span>
-<span id="cb6-273"><a href="#cb6-273" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb6-274"><a href="#cb6-274" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">scale_colour_manual</span>(<span class="at">values =</span> colors, <span class="at">guide =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb6-275"><a href="#cb6-275" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colors, <span class="at">guide =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb6-276"><a href="#cb6-276" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">scale_size_continuous</span>(<span class="at">name =</span> <span class="st">"Precision (1/SE)"</span>, <span class="at">range =</span> <span class="fu">c</span>(<span class="fl">0.4</span>, <span class="dv">4</span>)) <span class="sc">+</span></span>
-<span id="cb6-277"><a href="#cb6-277" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(</span>
-<span id="cb6-278"><a href="#cb6-278" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Location effect (lnM)"</span>,</span>
-<span id="cb6-279"><a href="#cb6-279" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span>,</span>
-<span id="cb6-280"><a href="#cb6-280" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Location --"</span>, moderator_label)</span>
-<span id="cb6-281"><a href="#cb6-281" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb6-282"><a href="#cb6-282" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_orchard</span>()</span>
-<span id="cb6-283"><a href="#cb6-283" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-284"><a href="#cb6-284" aria-hidden="true" tabindex="-1"></a>raw_sig <span class="ot">&lt;-</span> raw <span class="sc">|&gt;</span></span>
-<span id="cb6-285"><a href="#cb6-285" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(dplyr<span class="sc">::</span><span class="fu">select</span>(ests, level, <span class="at">loc_est =</span> estimate), <span class="at">by =</span> <span class="st">"level"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb6-286"><a href="#cb6-286" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">abs_resid =</span> <span class="fu">abs</span>(yi_lnM_safe <span class="sc">-</span> loc_est))</span>
-<span id="cb6-287"><a href="#cb6-287" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-288"><a href="#cb6-288" aria-hidden="true" tabindex="-1"></a>p_scl <span class="ot">&lt;-</span> ggplot2<span class="sc">::</span><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb6-289"><a href="#cb6-289" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">colour =</span> <span class="st">"grey50"</span>) <span class="sc">+</span></span>
-<span id="cb6-290"><a href="#cb6-290" aria-hidden="true" tabindex="-1"></a>  ggbeeswarm<span class="sc">::</span><span class="fu">geom_quasirandom</span>(</span>
-<span id="cb6-291"><a href="#cb6-291" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> raw_sig,</span>
-<span id="cb6-292"><a href="#cb6-292" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> abs_resid, <span class="at">y =</span> level,</span>
-<span id="cb6-293"><a href="#cb6-293" aria-hidden="true" tabindex="-1"></a>                 <span class="at">size =</span> precision, <span class="at">colour =</span> level, <span class="at">fill =</span> level),</span>
-<span id="cb6-294"><a href="#cb6-294" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.30</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">groupOnX =</span> <span class="cn">FALSE</span></span>
+<span id="cb6-264"><a href="#cb6-264" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">scale_colour_manual</span>(<span class="at">values =</span> colors, <span class="at">guide =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb6-265"><a href="#cb6-265" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colors, <span class="at">guide =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb6-266"><a href="#cb6-266" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">scale_size_continuous</span>(<span class="at">name =</span> <span class="st">"Precision (1/SE)"</span>, <span class="at">range =</span> <span class="fu">c</span>(<span class="fl">0.4</span>, <span class="dv">4</span>)) <span class="sc">+</span></span>
+<span id="cb6-267"><a href="#cb6-267" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(</span>
+<span id="cb6-268"><a href="#cb6-268" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Location effect (lnM)"</span>,</span>
+<span id="cb6-269"><a href="#cb6-269" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span>,</span>
+<span id="cb6-270"><a href="#cb6-270" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Location --"</span>, moderator_label)</span>
+<span id="cb6-271"><a href="#cb6-271" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-272"><a href="#cb6-272" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_orchard</span>()</span>
+<span id="cb6-273"><a href="#cb6-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-274"><a href="#cb6-274" aria-hidden="true" tabindex="-1"></a>raw_sig <span class="ot">&lt;-</span> raw <span class="sc">|&gt;</span></span>
+<span id="cb6-275"><a href="#cb6-275" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(dplyr<span class="sc">::</span><span class="fu">select</span>(ests, level, <span class="at">loc_est =</span> estimate), <span class="at">by =</span> <span class="st">"level"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-276"><a href="#cb6-276" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">abs_resid =</span> <span class="fu">abs</span>(yi_lnM_safe <span class="sc">-</span> loc_est))</span>
+<span id="cb6-277"><a href="#cb6-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-278"><a href="#cb6-278" aria-hidden="true" tabindex="-1"></a>p_scl <span class="ot">&lt;-</span> ggplot2<span class="sc">::</span><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb6-279"><a href="#cb6-279" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">colour =</span> <span class="st">"grey50"</span>) <span class="sc">+</span></span>
+<span id="cb6-280"><a href="#cb6-280" aria-hidden="true" tabindex="-1"></a>  ggbeeswarm<span class="sc">::</span><span class="fu">geom_quasirandom</span>(</span>
+<span id="cb6-281"><a href="#cb6-281" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> raw_sig,</span>
+<span id="cb6-282"><a href="#cb6-282" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> abs_resid, <span class="at">y =</span> level,</span>
+<span id="cb6-283"><a href="#cb6-283" aria-hidden="true" tabindex="-1"></a>                 <span class="at">size =</span> precision, <span class="at">colour =</span> level, <span class="at">fill =</span> level),</span>
+<span id="cb6-284"><a href="#cb6-284" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.30</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">groupOnX =</span> <span class="cn">FALSE</span></span>
+<span id="cb6-285"><a href="#cb6-285" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-286"><a href="#cb6-286" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_linerange</span>(</span>
+<span id="cb6-287"><a href="#cb6-287" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> sig_ests,</span>
+<span id="cb6-288"><a href="#cb6-288" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">y =</span> level, <span class="at">xmin =</span> lowerCL, <span class="at">xmax =</span> upperCL),</span>
+<span id="cb6-289"><a href="#cb6-289" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="dv">3</span>, <span class="at">colour =</span> <span class="st">"white"</span></span>
+<span id="cb6-290"><a href="#cb6-290" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-291"><a href="#cb6-291" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_linerange</span>(</span>
+<span id="cb6-292"><a href="#cb6-292" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> sig_ests,</span>
+<span id="cb6-293"><a href="#cb6-293" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">y =</span> level, <span class="at">xmin =</span> lowerCL, <span class="at">xmax =</span> upperCL),</span>
+<span id="cb6-294"><a href="#cb6-294" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">1.5</span>, <span class="at">colour =</span> <span class="st">"grey15"</span></span>
 <span id="cb6-295"><a href="#cb6-295" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb6-296"><a href="#cb6-296" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_linerange</span>(</span>
+<span id="cb6-296"><a href="#cb6-296" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_point</span>(</span>
 <span id="cb6-297"><a href="#cb6-297" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> sig_ests,</span>
-<span id="cb6-298"><a href="#cb6-298" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">y =</span> level, <span class="at">xmin =</span> lowerCL, <span class="at">xmax =</span> upperCL),</span>
-<span id="cb6-299"><a href="#cb6-299" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="dv">3</span>, <span class="at">colour =</span> <span class="st">"white"</span></span>
+<span id="cb6-298"><a href="#cb6-298" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> estimate, <span class="at">y =</span> level),</span>
+<span id="cb6-299"><a href="#cb6-299" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">4</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">colour =</span> <span class="st">"grey10"</span>, <span class="at">stroke =</span> <span class="fl">1.2</span></span>
 <span id="cb6-300"><a href="#cb6-300" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb6-301"><a href="#cb6-301" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_linerange</span>(</span>
-<span id="cb6-302"><a href="#cb6-302" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> sig_ests,</span>
-<span id="cb6-303"><a href="#cb6-303" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">y =</span> level, <span class="at">xmin =</span> lowerCL, <span class="at">xmax =</span> upperCL),</span>
-<span id="cb6-304"><a href="#cb6-304" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">1.5</span>, <span class="at">colour =</span> <span class="st">"grey15"</span></span>
-<span id="cb6-305"><a href="#cb6-305" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb6-306"><a href="#cb6-306" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_point</span>(</span>
-<span id="cb6-307"><a href="#cb6-307" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> sig_ests,</span>
-<span id="cb6-308"><a href="#cb6-308" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> estimate, <span class="at">y =</span> level),</span>
-<span id="cb6-309"><a href="#cb6-309" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">4</span>, <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">colour =</span> <span class="st">"grey10"</span>, <span class="at">stroke =</span> <span class="fl">1.2</span></span>
-<span id="cb6-310"><a href="#cb6-310" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb6-311"><a href="#cb6-311" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">scale_colour_manual</span>(<span class="at">values =</span> colors, <span class="at">guide =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb6-312"><a href="#cb6-312" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colors, <span class="at">guide =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb6-313"><a href="#cb6-313" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">scale_size_continuous</span>(<span class="at">name =</span> <span class="st">"Precision (1/SE)"</span>, <span class="at">range =</span> <span class="fu">c</span>(<span class="fl">0.4</span>, <span class="dv">4</span>)) <span class="sc">+</span></span>
-<span id="cb6-314"><a href="#cb6-314" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(</span>
-<span id="cb6-315"><a href="#cb6-315" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"residual lnM (SD)"</span>,</span>
-<span id="cb6-316"><a href="#cb6-316" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span>,</span>
-<span id="cb6-317"><a href="#cb6-317" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Scale --"</span>, moderator_label),</span>
-<span id="cb6-318"><a href="#cb6-318" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Bubbles: absolute residual lnM, sized by precision. Trunk = predicted residual SD (sigma)."</span></span>
-<span id="cb6-319"><a href="#cb6-319" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb6-320"><a href="#cb6-320" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_orchard</span>()</span>
-<span id="cb6-321"><a href="#cb6-321" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-322"><a href="#cb6-322" aria-hidden="true" tabindex="-1"></a>p_comb <span class="ot">&lt;-</span> patchwork<span class="sc">::</span><span class="fu">wrap_plots</span>(p_loc, p_scl, <span class="at">ncol =</span> <span class="dv">1</span>)</span>
-<span id="cb6-323"><a href="#cb6-323" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-324"><a href="#cb6-324" aria-hidden="true" tabindex="-1"></a>height_single <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fl">2.5</span> <span class="sc">+</span> n_levels <span class="sc">*</span> <span class="fl">0.55</span>, <span class="dv">5</span>)</span>
-<span id="cb6-325"><a href="#cb6-325" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p_loc, <span class="fu">paste0</span>(model_id, <span class="st">"_orchard_location"</span>), <span class="at">width =</span> <span class="dv">9</span>, <span class="at">height =</span> height_single)</span>
-<span id="cb6-326"><a href="#cb6-326" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p_scl, <span class="fu">paste0</span>(model_id, <span class="st">"_orchard_scale"</span>), <span class="at">width =</span> <span class="dv">9</span>, <span class="at">height =</span> height_single)</span>
-<span id="cb6-327"><a href="#cb6-327" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p_comb, <span class="fu">paste0</span>(model_id, <span class="st">"_orchard_combined"</span>), <span class="at">width =</span> <span class="dv">9</span>, <span class="at">height =</span> <span class="fu">max</span>(height_single <span class="sc">*</span> <span class="fl">1.9</span>, <span class="dv">10</span>))</span>
-<span id="cb6-328"><a href="#cb6-328" aria-hidden="true" tabindex="-1"></a>p_comb</span>
-<span id="cb6-329"><a href="#cb6-329" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb6-301"><a href="#cb6-301" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">scale_colour_manual</span>(<span class="at">values =</span> colors, <span class="at">guide =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb6-302"><a href="#cb6-302" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colors, <span class="at">guide =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb6-303"><a href="#cb6-303" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">scale_size_continuous</span>(<span class="at">name =</span> <span class="st">"Precision (1/SE)"</span>, <span class="at">range =</span> <span class="fu">c</span>(<span class="fl">0.4</span>, <span class="dv">4</span>)) <span class="sc">+</span></span>
+<span id="cb6-304"><a href="#cb6-304" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(</span>
+<span id="cb6-305"><a href="#cb6-305" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"residual lnM (SD)"</span>,</span>
+<span id="cb6-306"><a href="#cb6-306" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span>,</span>
+<span id="cb6-307"><a href="#cb6-307" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Scale --"</span>, moderator_label),</span>
+<span id="cb6-308"><a href="#cb6-308" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Bubbles: absolute residual lnM, sized by precision. Trunk = predicted residual SD (sigma)."</span></span>
+<span id="cb6-309"><a href="#cb6-309" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-310"><a href="#cb6-310" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_orchard</span>()</span>
+<span id="cb6-311"><a href="#cb6-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-312"><a href="#cb6-312" aria-hidden="true" tabindex="-1"></a>p_comb <span class="ot">&lt;-</span> patchwork<span class="sc">::</span><span class="fu">wrap_plots</span>(p_loc, p_scl, <span class="at">ncol =</span> <span class="dv">1</span>)</span>
+<span id="cb6-313"><a href="#cb6-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-314"><a href="#cb6-314" aria-hidden="true" tabindex="-1"></a>height_single <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fl">2.5</span> <span class="sc">+</span> n_levels <span class="sc">*</span> <span class="fl">0.55</span>, <span class="dv">5</span>)</span>
+<span id="cb6-315"><a href="#cb6-315" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p_loc, <span class="fu">paste0</span>(model_id, <span class="st">"_orchard_location"</span>), <span class="at">width =</span> <span class="dv">9</span>, <span class="at">height =</span> height_single)</span>
+<span id="cb6-316"><a href="#cb6-316" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p_scl, <span class="fu">paste0</span>(model_id, <span class="st">"_orchard_scale"</span>), <span class="at">width =</span> <span class="dv">9</span>, <span class="at">height =</span> height_single)</span>
+<span id="cb6-317"><a href="#cb6-317" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p_comb, <span class="fu">paste0</span>(model_id, <span class="st">"_orchard_combined"</span>), <span class="at">width =</span> <span class="dv">9</span>, <span class="at">height =</span> <span class="fu">max</span>(height_single <span class="sc">*</span> <span class="fl">1.9</span>, <span class="dv">10</span>))</span>
+<span id="cb6-318"><a href="#cb6-318" aria-hidden="true" tabindex="-1"></a>p_comb</span>
+<span id="cb6-319"><a href="#cb6-319" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

@@ -23,7 +23,5 @@ excluded_grid <- tibble::tribble(
   "m09",     "data_type", "Data type",
     "The original fit had bulk ESS near 350 for sigma terms. The simplified m09b refit removed two sparse levels but retained 5 of 8000 post-warmup divergent transitions.",
   "m10",     "transf_data", "Transformation status",
-    "The original seven-level fit stopped because of memory limits. The simplified two-level m10b refit had max Rhat 1.0128, minimum bulk ESS 230, minimum tail ESS 363, and 0 divergences.",
-  "m11",     "data_scale", "Measurement scale",
-    "This separate model converged. It is retained as a sensitivity model because measurement scale records source units rather than a biological moderator."
+    "The original seven-level fit stopped because of memory limits. The simplified two-level m10b refit had max Rhat 1.0128, minimum bulk ESS 230, minimum tail ESS 363, and 0 divergences."
 )

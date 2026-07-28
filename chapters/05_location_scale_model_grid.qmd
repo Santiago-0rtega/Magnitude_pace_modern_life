@@ -430,24 +430,10 @@ model_status |>
   )
 ```
 
-## Non-primary model attempts
-
-This is the only list of models outside the primary grid. Models `m09`, `m10`,
-and `m11` are separate models for three related data-description fields:
-`data_type`, `transf_data`, and `data_scale`. They are not submodels of one
-another. The simplified refits are `m09b` from `m09` and `m10b` from `m10`,
-similar to the collapsed-category attempts made for `m06`.
+## Excluded model attempts
 
 ```{r non-primary-models}
-interaction_attempts <- tibble::tribble(
-  ~model_id, ~moderator, ~label, ~reason,
-  "m12", "log10_years × disturbance", "Years × disturbance interaction",
-    "Removed from the reported book. The completed fit retained 4 post-warmup divergences, with max Rhat 1.01, minimum bulk ESS 293, and minimum tail ESS 486.",
-  "m13", "log10_generations × disturbance", "Generations × disturbance interaction",
-    "Removed from the reported book; no result chapter is presented."
-)
-
-dplyr::bind_rows(excluded_grid, interaction_attempts) |>
+excluded_grid |>
   dplyr::select(model_id, label, reason) |>
   knitr::kable(col.names = c("Model", "Field", "Recorded status"))
 ```
