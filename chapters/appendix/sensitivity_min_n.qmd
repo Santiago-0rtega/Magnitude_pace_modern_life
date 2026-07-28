@@ -11,26 +11,31 @@ sens_total <- nrow(sens_dat)
 sens_n40 <- sum(sens_dat$n_total >= 40, na.rm = TRUE)
 ```
 
-## What this tests
+## Recorded change
 
-Protocol §3.7 (first analysis). `ln M` is estimated less stably when the two
-groups being compared are small, because the plug-in sampling variance can
-become unstable when between-group variation is small relative to within-group
-variation. This sensitivity analysis refits every included moderator model
-after restricting the data
-to contrasts with total sample size $n_1 + n_2 \geq 40$ — **`r format(sens_n40, big.mark = ",")` of `r format(sens_total, big.mark = ",")`
-contrasts**. All other model structure (phylogeny, `ref_id`, priors, MCMC
-settings) is identical to the primary fit.
+Small samples can make `ln M` and its plug-in sampling variance less stable.
+Following protocol §3.7, we therefore retained only contrasts with total sample
+size $n_1 + n_2 \geq 40$.
 
-## How it was fit
+::: {.callout-note title="What changed—and what did not"}
+**Changed:** the analysis includes **`r format(sens_n40, big.mark = ",")` of
+`r format(sens_total, big.mark = ",")` contrasts** after applying the sample-size
+threshold.
 
-Fit on the compute server (`totoro`), not at render. Each model uses 4 chains ×
-4,000 iterations (2,000 warmup), `adapt_delta = 0.97`, `max_treedepth = 15`,
-`cmdstanr`. The book reads the cached summary tables only.
+**Unchanged:** the moderator definitions, phylogenetic effect, `ref_id` effect,
+priors, and MCMC settings match the primary models.
+:::
+
+## Model specification
+
+Models were fit on the compute server (`totoro`), not while rendering this
+book. Each model uses 4 chains × 4,000 iterations (2,000 warmup),
+`adapt_delta = 0.97`, `max_treedepth = 15`, and the `cmdstanr` backend. This
+chapter reads cached summary tables only.
 
 ```{r how-fit, eval=FALSE}
 dat_n40 <- dat_es |> dplyr::filter(n_total >= 40)
-phylo   <- prepare_phylo_and_data(dat_mod, A_full)          # phylogeny retained
+phylo   <- prepare_phylo_and_data(dat_mod, A_full)
 formula <- build_ls_formula(moderator, has_phylogeny = phylo$has_phylo)
 fit     <- fit_ls_model(
   phylo$dat_model, formula,
@@ -48,21 +53,23 @@ sens_diagnostics_table(variant)
 `r sens_diagnostic_flags(variant)`
 :::
 
-## Reading the tables
+## Overall comparison
 
-Each moderator is shown as a raw location–scale coefficient table on the model's
-default treatment coding: the **Intercept** row is the reference-level value and
-each other row is the difference from that reference. The matched **primary**
-coefficient is shown alongside. The **Stability** column compares the two: it
-reads *consistent* when the sensitivity and primary coefficients share sign and
-the same 95% credible-interval conclusion (both exclude or both include zero),
-and **DIFFERS** otherwise.
+The comparison label uses a fixed rule: **DIFFERS** means that the posterior
+median changed sign or that the 95% credible interval changed between including
+and excluding zero. *Consistent* means neither occurred; it does not mean the
+two estimates are identical. Intercepts are omitted from the overall count.
 
 ```{r stability-line, echo=FALSE, results='asis'}
 cat("**Overall:** ", sens_stability_summary(variant), "\n")
 ```
 
-## Results by moderator
+## Paired estimates by moderator
+
+Each table reports raw treatment-coded coefficients for the location
+(mean `ln M`) and scale (log-SD) submodels. See the
+[sensitivity overview](../07_sensitivity_analyses.qmd#how-to-read-the-detailed-results)
+for column definitions.
 
 ```{r results, echo=FALSE, results='asis'}
 sens_all_moderator_tables(variant)

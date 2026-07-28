@@ -1,20 +1,177 @@
 ---
-title: "Reproducibility"
+title: "Reproduce this analysis"
 ---
 
-## Computational environment {#sec-reproducibility}
+::: {.workflow}
+::: {}
+**Input**
+The complete project folder.
+:::
+::: {}
+**Action**
+Install software, choose a route, and render.
+:::
+::: {}
+**Output**
+The web book and an environment record.
+:::
+::: {}
+**Next**
+Check every item in the final checklist.
+:::
+:::
+
+## Before you start {#sec-reproducibility}
+
+This chapter gives the setup steps in order. Run all commands from the project
+folder. Use the **quick route** to rebuild the web book from saved results. Use
+the **full route** to calculate the effect sizes and fit the models again.
+
+::: {.callout-important title="Use the project folder"}
+Open `Magnitude_pace_modern_life.Rproj` before running R code. Do not change the
+folder names. The code uses `here::here()` to find files from the project root.
+:::
+
+## Step 1 — Get the project
+
+Download the repository from GitHub or clone it with Git:
+
+```bash
+git clone https://github.com/Santiago-0rtega/Magnitude_pace_modern_life.git
+cd Magnitude_pace_modern_life
+```
+
+Keep the `data/`, `Rdata/`, `chapters/`, and `_quarto.yml` paths unchanged.
+
+## Step 2 — Install R packages
+
+The project checks one package list in `chapters/Rscripts/00_packages.R`. The
+list includes every non-base R package named in the book and analysis scripts,
+including `ggbeeswarm` and `patchwork`.
+
+```r
+cran_packages <- c(
+  "ape", "bayesplot", "brms", "cli", "cmdstanr", "coda", "dplyr",
+  "emmeans", "ggbeeswarm", "ggplot2", "here", "httr2", "janitor",
+  "kableExtra", "knitr", "orchaRd", "patchwork", "posterior", "purrr",
+  "quarto", "readr", "remotes", "rotl", "scales", "sessioninfo", "stringr", "tibble",
+  "tidybayes", "tidyr", "tidyverse"
+)
+install.packages(setdiff(cran_packages, rownames(installed.packages())))
+```
+
+Install `prepR4pcm` from its source repository:
+
+```r
+install.packages("remotes")
+remotes::install_github("itchyshin/prepR4pcm")
+```
+
+Check the complete project list:
+
+```r
+source(here::here("chapters", "Rscripts", "00_packages.R"))
+```
+
+No message means that the package check passed.
+
+## Step 3 — Install CmdStan
+
+The Bayesian models use CmdStan through `cmdstanr`.
+
+```r
+cmdstanr::install_cmdstan(cores = max(1, parallel::detectCores() - 1))
+cmdstanr::cmdstan_version()
+```
+
+The model scripts use CPU chains. A GPU is not required.
+
+## Step 4 — Choose a route
+
+### Quick route: render saved results
+
+Confirm that the main saved files exist:
+
+```r
+required_files <- c(
+  "Rdata/data_clean/proceed_clean_filtered.rds",
+  "Rdata/effect_sizes/proceed_lnm_safe.rds",
+  "Rdata/phylogeny/proceed_A_matrix.rds",
+  "Rdata/tables/grid_summary_cache.rds"
+)
+missing_files <- required_files[!file.exists(required_files)]
+if (length(missing_files)) stop("Missing: ", paste(missing_files, collapse = ", "))
+```
+
+Then move to Step 6.
+
+### Full route: rebuild analysis files
+
+Run the work in this order:
+
+1. [Prepare the data](01_data_preparation.qmd).
+2. [Calculate SAFE lnM](02_lnm_effect_sizes.qmd).
+3. [Build the dependency structure](04_dependency_structure.qmd).
+4. [Build and align the phylogeny](04b_phylogeny.qmd).
+5. [Fit the model grid](05_location_scale_model_grid.qmd).
+6. Run the precompute scripts in Step 5 below.
+7. [Create the publication figures](08_publication_figures.qmd).
+
+The rendered book is read-only. Rebuild large files with the analysis scripts,
+not during a normal book render.
+
+## Step 5 — Prepare small files for the book
+
+After fitting models, run these scripts from the project root and in this order:
+
+```bash
+Rscript chapters/Rscripts/precompute_grid_summaries.R
+Rscript chapters/Rscripts/precompute_epred_draws.R
+Rscript chapters/Rscripts/precompute_emmeans_contrasts.R
+Rscript chapters/Rscripts/precompute_heterogeneity.R
+```
+
+These scripts convert large fitted models into small tables and prediction
+files. The model chapters read the small files.
+
+## Step 6 — Render the web book
+
+```r
+quarto::quarto_render()
+```
+
+The website is written to `docs/`. Open `docs/index.html` to read the local
+copy. Missing saved results cause an error instead of starting a long fit.
+
+## Step 7 — Record the exact environment
+
+### Package inventory
 
 ```{r setup}
 source(here::here("chapters", "Rscripts", "00_packages.R"))
 ```
 
-### R and package versions
+```{r package-inventory}
+package_versions <- tibble::tibble(
+  package = project_packages,
+  version = vapply(project_packages, function(x) {
+    if (requireNamespace(x, quietly = TRUE)) {
+      as.character(utils::packageVersion(x))
+    } else {
+      "not installed"
+    }
+  }, character(1))
+)
+knitr::kable(package_versions, col.names = c("Package", "Version"))
+```
+
+### R and platform
 
 ```{r session-info}
 sessioninfo::session_info()
 ```
 
-### CmdStan version
+### CmdStan
 
 ```{r cmdstan-version}
 tryCatch(
@@ -23,55 +180,16 @@ tryCatch(
 )
 ```
 
-### prepR4pcm version
-
-```{r prepR4pcm-version}
-tryCatch(
-  cat("prepR4pcm version:",
-      as.character(utils::packageVersion("prepR4pcm")), "\n"),
-  error = function(e) cat("prepR4pcm not installed:", conditionMessage(e), "\n")
-)
-```
-
-### Phylogeny reconciliation summary
-
-```{r phylo-recon-summary}
-name_map_path <- here::here("Rdata", "phylogeny", "proceed_name_map.rds")
-if (file.exists(name_map_path)) {
-  nm <- readRDS(name_map_path)
-  dat <- readRDS(here::here("Rdata", "effect_sizes", "proceed_lnm_safe.rds"))
-  lookup <- stats::setNames(nm$sp_ncbi_canonical, nm$sp_ncbi_original)
-  raw <- unique(as.character(dat$sp_ncbi))
-  raw <- raw[!is.na(raw) & nzchar(trimws(raw))]
-  canonical <- unname(lookup[raw])
-  resolved <- !is.na(canonical) & nzchar(canonical)
-  cat("Current input names :", length(raw), "\n")
-  cat("Resolved names      :", sum(resolved), "\n")
-  cat("Unresolved names    :", sum(!resolved), "\n")
-  cat("Canonical species   :", dplyr::n_distinct(canonical[resolved]), "\n")
-  cat("Model contrasts     :", sum(!is.na(lookup[as.character(dat$sp_ncbi)])), "\n")
-} else {
-  cat("Name map not found — phylogeny not yet built.\n")
-}
-```
-
-### Git information
+### Git commit
 
 ```{r git-info}
-git_hash <- tryCatch(
-  system("git rev-parse HEAD", intern = TRUE),
-  error   = function(e) "git not available"
-)
-
-git_status <- tryCatch(
-  system("git status --short", intern = TRUE),
-  error   = function(e) character(0)
-)
-
+git_hash <- tryCatch(system("git rev-parse HEAD", intern = TRUE),
+                     error = function(e) "git not available")
+git_status <- tryCatch(system("git status --short", intern = TRUE),
+                       error = function(e) character(0))
 cat("Commit hash:", git_hash, "\n\n")
-if (length(git_status) > 0) {
-  cat("Uncommitted changes:\n")
-  cat(paste(git_status, collapse = "\n"), "\n")
+if (length(git_status)) {
+  cat("Uncommitted changes:\n", paste(git_status, collapse = "\n"), "\n")
 } else {
   cat("Working tree clean.\n")
 }
@@ -79,100 +197,55 @@ if (length(git_status) > 0) {
 
 ### Random seeds
 
-All SAFE lnM computations use `seed = 123`. All brms model fits use `seed = 123`. These seeds are set in `chapters/Rscripts/04_lnm_safe.R` and `chapters/Rscripts/08_fit_or_read_model.R` respectively.
+SAFE lnM calculations use `seed = 123`. Model fits use `seed = 123`. The seeds
+are set in `chapters/Rscripts/04_lnm_safe.R` and
+`chapters/Rscripts/08_fit_or_read_model.R`.
 
-### Path conventions
+## Step 8 — Check saved results
 
-All paths are constructed with `here::here()` relative to the project root. The project root is determined by the presence of `_quarto.yml` and `Magnitude_pace_modern_life.Rproj`.
-
-```{r here-root}
-cat("Project root:", here::here(), "\n")
-```
-
-### Model cache inventory
-
-```{r model-cache}
-model_files <- list.files(
-  here::here("Rdata", "models"),
-  pattern = "\\.rds$",
-  recursive = TRUE,
-  full.names = TRUE
-)
-
-if (length(model_files) > 0) {
-  tibble::tibble(
-    path     = model_files,
-    filename = basename(model_files),
-    size_mb  = round(file.size(model_files) / 1024^2, 2),
-    modified = file.mtime(model_files)
-  ) |>
-    dplyr::arrange(modified)
-} else {
-  cat("No cached model files found in Rdata/models/.\n")
-}
-```
-
-### Effect-size cache
+### Effect-size file
 
 ```{r es-cache}
 es_path <- here::here("Rdata", "effect_sizes", "proceed_lnm_safe.rds")
 if (file.exists(es_path)) {
-  cat("Effect-size cache:", es_path, "\n")
+  cat("File:", es_path, "\n")
   cat("Size:", round(file.size(es_path) / 1024^2, 2), "MB\n")
   cat("Modified:", format(file.mtime(es_path)), "\n")
 } else {
-  cat("Effect-size cache not found. Run chapter 02.\n")
+  cat("Missing. Complete Step 4, item 2.\n")
 }
 ```
 
-### Rendered model-cache audit
+### Prediction files used by model chapters
 
 ```{r rendered-cache-audit}
 rendered_ids <- c("m00", "m01", "m02", "m03", "m04", "m05", "m07", "m08", "m11")
 expected_n <- c(m00 = 7186L, m01 = 7186L, m02 = 7186L, m03 = 7186L,
                 m04 = 7186L, m05 = 7186L, m07 = 7186L, m08 = 7186L,
                 m11 = 7172L)
-
 cache_audit <- purrr::map_dfr(rendered_ids, function(id) {
   path <- here::here("Rdata", "epred_draws", paste0(id, ".rds"))
+  if (!file.exists(path)) {
+    return(tibble::tibble(model = id, file = "missing", observations = NA_integer_,
+                          expected = unname(expected_n[id]), matches = FALSE))
+  }
   cache <- readRDS(path)
   summary_text <- paste(cache$summary_txt, collapse = " ")
-  match <- regmatches(
-    summary_text,
-    regexec("Number of observations: ([0-9]+)", summary_text)
-  )[[1]]
+  match <- regmatches(summary_text,
+                      regexec("Number of observations: ([0-9]+)", summary_text))[[1]]
   observed_n <- if (length(match) >= 2) as.integer(match[2]) else NA_integer_
-
-  tibble::tibble(
-    model = id,
-    source_fit = cache$source_fit,
-    cache_built = format(as.POSIXct(cache$meta$built, origin = "1970-01-01"),
-                         "%Y-%m-%d %H:%M:%S"),
-    observations_in_cache = observed_n,
-    expected_observations = unname(expected_n[id]),
-    sample_matches = observed_n == unname(expected_n[id])
-  )
+  tibble::tibble(model = id, file = "found", observations = observed_n,
+                 expected = unname(expected_n[id]),
+                 matches = !is.na(observed_n) && observed_n == unname(expected_n[id]))
 })
-
-knitr::kable(
-  cache_audit,
-  caption = "Posterior-prediction caches used by rendered model chapters."
-)
+knitr::kable(cache_audit, caption = "Saved prediction files used by this book.")
 ```
 
-Only the model IDs in this audit are referenced by rendered result chapters.
-Legacy `m09` and `m10` epred caches are excluded from the book and are not used
-by any included chapter.
-
-### How to render
-
-```r
-# Default: reads all caches
-quarto::quarto_render()
-
-# Recompute effect sizes (set in 02_lnm_effect_sizes.qmd)
-# recompute_effect_sizes <- TRUE
-
-# Refit all models (set in 05_location_scale_model_grid.qmd)
-# refit_models <- TRUE
-```
+::: {.callout-tip title="Reproducibility checklist"}
+- The package check completes.
+- CmdStan reports a version.
+- The required saved files are present.
+- Every prediction-file row says `found` and `TRUE`.
+- `quarto::quarto_render()` writes `docs/index.html`.
+- The commit hash and any uncommitted changes are recorded above.
+:::

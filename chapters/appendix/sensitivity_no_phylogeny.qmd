@@ -8,7 +8,7 @@ source(here::here("chapters", "Rscripts", "19_sensitivity_tables.R"))
 variant <- "sens2_nophylo"
 ```
 
-## What this tests
+## Recorded change
 
 The primary models place a phylogenetic random effect
 `(1 | gr(sp_ncbi, cov = A))` on every species-level intercept, using a
@@ -16,17 +16,23 @@ correlation matrix `A` derived from an Open Tree of Life scaffold. That scaffold
 is a pragmatic comparative tree, not a fully resolved, time-calibrated phylogeny
 (protocol §3.6): its topology is assembled from multiple sources, unresolved
 nodes are resolved algorithmically, and branch lengths are assigned by Grafen's
-method. This analysis refits each included moderator model with the phylogenetic
-term **removed**, keeping the `ref_id` study effect and everything else fixed.
-The full dataset is used (no sample-size restriction).
+method.
 
-## How it was fit
+::: {.callout-note title="What changed—and what did not"}
+**Changed:** the phylogenetic random effect was removed.
 
-Fit on `totoro`, not at render — 4 chains × 4,000 iterations (2,000 warmup),
-`adapt_delta = 0.97`, `max_treedepth = 15`, `cmdstanr`.
+**Unchanged:** the full dataset, moderator definitions, `ref_id` effect, priors,
+and MCMC settings match the primary models.
+:::
+
+## Model specification
+
+Models were fit on `totoro`, not while rendering this book: 4 chains × 4,000
+iterations (2,000 warmup), `adapt_delta = 0.97`, `max_treedepth = 15`, and the
+`cmdstanr` backend.
 
 ```{r how-fit, eval=FALSE}
-formula <- build_ls_formula(moderator, has_phylogeny = FALSE)   # drop (1 | gr(sp_ncbi, cov = A))
+formula <- build_ls_formula(moderator, has_phylogeny = FALSE)
 V       <- diag(dat_mod$vi_lnM_safe)
 fit     <- fit_ls_model(
   dat_mod, formula,
@@ -40,21 +46,27 @@ fit     <- fit_ls_model(
 sens_diagnostics_table(variant)
 ```
 
+::: {.callout-warning}
 `r sens_diagnostic_flags(variant)`
+:::
 
-## Reading the tables
+## Overall comparison
 
-Raw location–scale coefficients on treatment coding: the **Intercept** row is the
-reference-level value, each other row the difference from it. The matched
-**primary** (phylogeny-included) coefficient is shown alongside, and the
-**Stability** column reads *consistent* when the two share sign and the same 95%
-credible-interval conclusion, **DIFFERS** otherwise.
+The comparison label uses a fixed rule: **DIFFERS** means that the posterior
+median changed sign or that the 95% credible interval changed between including
+and excluding zero. *Consistent* means neither occurred; it does not mean the
+two estimates are identical. Intercepts are omitted from the overall count.
 
 ```{r stability-line, echo=FALSE, results='asis'}
 cat("**Overall:** ", sens_stability_summary(variant), "\n")
 ```
 
-## Results by moderator
+## Paired estimates by moderator
+
+Each table reports raw treatment-coded coefficients for the location
+(mean `ln M`) and scale (log-SD) submodels. See the
+[sensitivity overview](../07_sensitivity_analyses.qmd#how-to-read-the-detailed-results)
+for column definitions.
 
 ```{r results, echo=FALSE, results='asis'}
 sens_all_moderator_tables(variant)

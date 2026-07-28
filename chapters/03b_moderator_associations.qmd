@@ -2,6 +2,25 @@
 title: "Associations among moderators"
 ---
 
+::: {.workflow}
+::: {}
+**Input**
+Saved SAFE lnM dataset.
+:::
+::: {}
+**Action**
+Calculate pairwise association statistics.
+:::
+::: {}
+**Output**
+Three CSV tables and three plots.
+:::
+::: {}
+**Next**
+Build the dependency data.
+:::
+:::
+
 ```{r setup}
 source(here::here("chapters", "Rscripts", "00_packages.R"))
 
@@ -72,11 +91,13 @@ significance_mark <- function(p) {
 }
 ```
 
-## Methods
+## Action: association calculations
 
 Association is measured on the scale appropriate to each pair: Pearson's *r* for two continuous variables, bias-corrected Cramér's *V* for two categorical variables, and the correlation ratio η² for a continuous variable grouped by a categorical variable.
 
-The tests below treat contrasts as rows and are therefore descriptive diagnostics rather than independent-observation causal tests. The study, system, and phylogenetic dependence handled by the meta-analytic models is not represented in these simple pairwise tests. Holm-adjusted *p*-values control multiplicity within this chapter.
+The calculations treat contrasts as rows. They do not include the study,
+system, or phylogenetic structures used later in the models. The reported
+adjusted *p*-values use the Holm method within this chapter.
 
 ```{r load-data}
 dat_es <- readRDS(here::here("Rdata", "effect_sizes", "proceed_lnm_safe.rds"))

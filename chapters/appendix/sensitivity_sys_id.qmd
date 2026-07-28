@@ -8,29 +8,37 @@ source(here::here("chapters", "Rscripts", "19_sensitivity_tables.R"))
 variant <- "sens3_sysid"
 ```
 
-## What this tests
+## Recorded change
 
-Protocol §3.7 (final analysis) and §3.5. Contrasts from the same study system
-may be non-independent because they share a population, location, disturbance
-history, or research programme. The primary model captures study-level
-dependence through `ref_id` and shared ancestry through the phylogeny, but does
-**not** include a separate study-system term, because `sys_id`, `ref_id`, and
-species identity are strongly associated in PROCEED — most systems map to a
-single species and often a single source — so including all three risks poorly
-identified variance components. This analysis adds `(1 | sys_id)` to each
-included moderator model and reports the outcome explicitly, per the protocol's
-commitment to flag weak identifiability rather than interpret confounded
-components separately. The full dataset is used.
+Under protocol §§3.5 and 3.7, contrasts from the same study system may be
+non-independent because they share a population, location, disturbance history,
+or research programme. The primary model captures study-level dependence
+through `ref_id` and shared ancestry through the phylogeny, but does not include
+a separate study-system term. In PROCEED, `sys_id`, `ref_id`, and species
+identity are strongly associated. Most systems map to one species and often one
+source, so fitting all three grouping structures can make their variance
+components difficult to distinguish.
 
-## How it was fit
+::: {.callout-note title="What changed—and what did not"}
+**Changed:** a study-system random intercept, `(1 | sys_id)`, was added.
 
-Fit on `totoro`, not at render — 4 chains × 4,000 iterations (2,000 warmup),
-`adapt_delta = 0.97`, `max_treedepth = 15`, `cmdstanr`.
+**Unchanged:** the full dataset, moderator definitions, phylogenetic effect,
+`ref_id` effect, priors, and MCMC settings match the primary models.
+
+The comparison uses the fixed-effect tables. The three variance components are
+not reported separately.
+:::
+
+## Model specification
+
+Models were fit on `totoro`, not while rendering this book: 4 chains × 4,000
+iterations (2,000 warmup), `adapt_delta = 0.97`, `max_treedepth = 15`, and the
+`cmdstanr` backend.
 
 ```{r how-fit, eval=FALSE}
 phylo   <- prepare_phylo_and_data(dat_mod, A_full)
 formula <- build_ls_formula(moderator, has_phylogeny = phylo$has_phylo,
-                            has_sys_id = TRUE)              # + (1 | sys_id)
+                            has_sys_id = TRUE)
 fit     <- fit_ls_model(
   phylo$dat_model, formula,
   build_ls_priors(formula, phylo$dat_model, phylo$V, A = phylo$A_mod),
@@ -47,19 +55,23 @@ sens_diagnostics_table(variant)
 `r sens_diagnostic_flags(variant)`
 :::
 
-## Reading the tables
+## Overall comparison
 
-Raw location–scale coefficients on treatment coding: the **Intercept** row is the
-reference-level value, each other row the difference from it. The matched
-**primary** (no `sys_id`) coefficient is shown alongside, and the **Stability**
-column reads *consistent* when the two share sign and the same 95%
-credible-interval conclusion, **DIFFERS** otherwise.
+The comparison label uses a fixed rule: **DIFFERS** means that the posterior
+median changed sign or that the 95% credible interval changed between including
+and excluding zero. *Consistent* means neither occurred; it does not mean the
+two estimates are identical. Intercepts are omitted from the overall count.
 
 ```{r stability-line, echo=FALSE, results='asis'}
 cat("**Overall:** ", sens_stability_summary(variant), "\n")
 ```
 
-## Results by moderator
+## Paired estimates by moderator
+
+Each table reports raw treatment-coded coefficients for the location
+(mean `ln M`) and scale (log-SD) submodels. See the
+[sensitivity overview](../07_sensitivity_analyses.qmd#how-to-read-the-detailed-results)
+for column definitions.
 
 ```{r results, echo=FALSE, results='asis'}
 sens_all_moderator_tables(variant)

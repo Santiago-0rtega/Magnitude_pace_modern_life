@@ -10,13 +10,45 @@ This computational supplement accompanies the manuscript:
 
 It documents every analytical step, from data import to final figures, in a reproducible Quarto book. All code is written in R and all models are fitted with **brms** using the **cmdstanr** backend.
 
+::: {.hero-note}
+### Reproduce the analysis in order
+
+Start with the prepared data, calculate the effect sizes, build the dependency
+objects, check the model grid, and create the figures. Each chapter states its
+input, action, and saved output.
+
+[Start with data preparation](chapters/01_data_preparation.qmd){.btn .btn-primary}
+[Set up the software](chapters/09_reproducibility.qmd){.btn .btn-outline-primary}
+:::
+
+## Tutorial map
+
+| Step | Chapter | Main output |
+|---:|---|---|
+| 1 | [Prepare the data](chapters/01_data_preparation.qmd) | Clean analysis data |
+| 2 | [Calculate lnM](chapters/02_lnm_effect_sizes.qmd) | Effect sizes and sampling variances |
+| 3 | [Check the data](chapters/03_descriptive_summaries.qmd) | Descriptive tables and plots |
+| 4 | [Build dependency objects](chapters/04_dependency_structure.qmd) | Sampling and phylogenetic matrices |
+| 5 | [Run the model grid](chapters/05_location_scale_model_grid.qmd) | Fitted models and summaries |
+| 6 | [Create final figures](chapters/08_publication_figures.qmd) | Publication figures |
+| 7 | [Record the environment](chapters/09_reproducibility.qmd) | Versions, files, and render checks |
+
+::: {.callout-tip title="Two ways to follow the tutorial"}
+**Quick route:** use the saved files in `Rdata/` and render the book.
+
+**Full route:** rebuild each saved file in chapter order. Model fitting requires
+more time and memory than rendering the saved results.
+:::
+
 ## The PROCEED database
 
 The analyses use the **PROCEED v6.2** database of rates of evolutionary and phenotypic change. Each row represents one contrast between two populations or time points, with the raw summary statistics (means, standard deviations, sample sizes) needed to compute $\ln M$.
 
 ## Purpose of lnM
 
-The effect size used in this book is $\ln M$, which describes the magnitude of separation between two groups without retaining the direction of the difference. Its definition, interpretation, and SAFE estimation are introduced once in @sec-lnm-measures.
+The effect size used in this book is $\ln M$, which records the magnitude of
+separation between two groups without retaining direction. Its formula and SAFE
+calculation are given in @sec-lnm-measures.
 
 ## Location-scale meta-regression
 
@@ -29,9 +61,12 @@ bf(
 )
 ```
 
-The **location submodel** asks whether a moderator predicts the *average* log magnitude of phenotypic divergence ($\overline{\ln M}$). The **scale submodel** asks whether the same moderator predicts the *residual variation* - the degree to which divergence is consistent (low $\sigma_{\ln M}$) or heterogeneous (high $\sigma_{\ln M}$) after accounting for the location effect.
+The **location submodel** contains coefficients for the expected value of
+$\ln M$. The **scale submodel** contains coefficients for the residual standard
+deviation, $\sigma_{\ln M}$.
 
-**One independent model per moderator.** No large multi-moderator model is fitted. This ensures that each moderator's effect is estimated from all data available for that moderator, and that no moderator's influence is masked by collinearity with others.
+**One independent model per moderator.** No multi-moderator model is fitted.
+Each model uses the rows with complete data for its moderator.
 
 ## Random effects
 
@@ -43,11 +78,15 @@ Every main model includes:
 
 `sys_id` (study system) is reserved for sensitivity analyses because it is highly associated with `ref_id` and `sp_ncbi` and can make variance components hard to identify.
 
-## Caching and reproducibility
+## Saved files and reproducibility
 
-Heavy computations are cached as `.rds` files in `outputs/`. The book reads cached files by default. To recompute:
+Long computations are saved as `.rds` files in `Rdata/`. The book reads these
+files by default. This makes a normal render fast and prevents model fitting from
+starting by accident. To rebuild files, follow the full route in the
+[Reproducibility chapter](chapters/09_reproducibility.qmd).
 
 - **Effect sizes:** set `recompute_effect_sizes <- TRUE` in `02_lnm_effect_sizes.qmd`.
 - **Models:** set `refit_models <- TRUE` in `05_location_scale_model_grid.qmd`.
 
-Package versions, CmdStan version, and a git commit hash are recorded in @sec-reproducibility.
+Package versions, the CmdStan version, and the git commit are recorded in
+@sec-reproducibility.

@@ -2,33 +2,93 @@
 title: "Sensitivity analyses"
 ---
 
+::: {.workflow}
+::: {}
+**Input**
+Primary and sensitivity summary tables.
+:::
+::: {}
+**Action**
+Apply the recorded comparison rule.
+:::
+::: {}
+**Output**
+Status counts and paired coefficient tables.
+:::
+::: {}
+**Next**
+Create final figures.
+:::
+:::
+
 ```{r setup, include=FALSE}
 source(here::here("chapters", "Rscripts", "00_packages.R"))
 source(here::here("chapters", "Rscripts", "19_sensitivity_tables.R"))
 ```
 
-## Model status and overall results
+## Comparison setup
 
-The three prespecified sensitivity analyses were run for each of the seven
-moderators included in the primary model set. The table below is generated from
-the synced model summaries rather than entered by hand. A changed coefficient
-is one whose sign or 95% credible-interval conclusion differs from its matched
-primary-model coefficient; intercepts are excluded from this count.
+The seven moderator models were repeated under three prespecified alternatives:
+
+| Analysis | Recorded change | Fixed comparison |
+|---|---|---|
+| Minimum sample size | Keep only contrasts with $n_1 + n_2 \geq 40$ | Matching primary model |
+| No phylogeny | Remove the phylogenetic random effect | Matching primary model |
+| Study-system effect | Add a `sys_id` random intercept | Matching primary model |
+
+Each analysis changes **one feature at a time**. The response, moderator
+definitions, priors, study-level (`ref_id`) effect, and MCMC settings otherwise
+match the corresponding comparison model. The no-phylogeny analysis necessarily omits the
+phylogenetic effect; the minimum-sample-size analysis necessarily uses fewer
+contrasts.
+
+## At-a-glance results
+
+The table below is generated from the latest synced model summaries. “Models
+available” should equal seven for a complete analysis. “Changed coefficients”
+excludes intercepts and counts a coefficient when either:
+
+1. its posterior median changes sign; or
+2. its 95% credible interval changes from including zero to excluding zero, or
+   vice versa.
+
+This rule creates the displayed `DIFFERS` and `consistent` labels. The paired
+estimates are also printed in the appendices.
 
 ```{r sensitivity-summary, echo=FALSE}
 sens_variant_summary_table()
 ```
 
-## Detailed results
+## Output columns
 
-The appendices report every location and scale coefficient beside the matched
-primary estimate, together with convergence diagnostics:
+Each appendix begins with the exact model change and its convergence
+diagnostics, then places every sensitivity coefficient beside the corresponding
+primary coefficient:
 
-- [Minimum total sample size (N >= 40)](appendix/sensitivity_min_n.qmd)
+- [Minimum total sample size ($n_1 + n_2 \geq 40$)](appendix/sensitivity_min_n.qmd)
 - [No phylogenetic random effect](appendix/sensitivity_no_phylogeny.qmd)
 - [Study-system (`sys_id`) random effect](appendix/sensitivity_sys_id.qmd)
 
-Rows marked **DIFFERS** identify coefficients whose sign or credible-interval
-conclusion changes. The detailed tables use raw treatment-coded
-coefficients so that each sensitivity estimate is compared like-for-like with
-the corresponding primary fit.
+The tables contain two submodels:
+
+- **Location (mean lnM):** effects on the expected magnitude of divergence.
+- **Scale (log-SD):** effects on between-observation variability, expressed on
+  the log standard-deviation scale.
+
+These are raw treatment-coded coefficients, not marginal means. For categorical
+moderators, the intercept is the reference-level estimate and every other
+coefficient is a difference from that reference. For continuous moderators,
+the non-intercept coefficient is the slope. Intercepts are shown for
+completeness but excluded from the summary change count.
+
+Rows marked **DIFFERS** meet one of the two screening criteria above. Rows
+marked *consistent* do not; the label does not mean the estimates are
+numerically identical.
+
+## Secondary moderator sensitivity
+
+The [`data_scale` model (m11)](models/m11.qmd) compares traits recorded on
+interval and ratio measurement scales. Because measurement scale describes the
+source units rather than a biological moderator, m11 is not part of the primary
+moderator set. Its fitted model, diagnostics, contrasts, and figure are retained
+as a separate sensitivity analysis.

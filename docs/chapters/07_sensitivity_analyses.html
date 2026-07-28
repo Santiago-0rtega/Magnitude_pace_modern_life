@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>17&nbsp; Sensitivity analyses – Supplementary material: Human disturbance and the magnitude of phenotypic divergence</title>
+<title>16&nbsp; Sensitivity analyses – Supplementary material: Human disturbance and the magnitude of phenotypic divergence</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -69,7 +69,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../chapters/08_publication_figures.html" rel="next">
-<link href="../chapters/models/m11.html" rel="prev">
+<link href="../chapters/models/m07.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -81,9 +81,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-9e3e5b9121e68b3f077afb32f2c64d95.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-acff971833d9769290026d534105daaa.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-9e3e5b9121e68b3f077afb32f2c64d95.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-2bfa60b48c717769bc159b1b9b30548b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-7b9bf1b571463bc340f59e58accdfa9b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-2bfa60b48c717769bc159b1b9b30548b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -121,7 +121,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -295,7 +325,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/07_sensitivity_analyses.html">Figures &amp; Reproducibility</a></li><li class="breadcrumb-item"><a href="../chapters/07_sensitivity_analyses.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Sensitivity analyses</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/07_sensitivity_analyses.html">Figures &amp; Reproducibility</a></li><li class="breadcrumb-item"><a href="../chapters/07_sensitivity_analyses.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Sensitivity analyses</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -457,12 +487,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Phenotypic vs genetic study</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/models/m11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Measurement scale</span></span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -477,19 +501,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/07_sensitivity_analyses.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Sensitivity analyses</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Sensitivity analyses</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/08_publication_figures.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Publication figures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Publication figures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/09_reproducibility.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Reproducibility</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Reproduce this analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -511,20 +535,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../chapters/models/m11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Sensitivity moderator — Measurement scale (m11)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../chapters/appendix/sensitivity_min_n.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Sensitivity A — Minimum sample size (N ≥ 40)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Sensitivity A — Minimum sample size (N ≥ 40)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/appendix/sensitivity_no_phylogeny.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Sensitivity B — No phylogenetic random effect</span></span></a>
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Sensitivity B — No phylogenetic random effect</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/appendix/sensitivity_sys_id.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Sensitivity C — Study-system (sys_id) random effect</span></span></a>
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Sensitivity C — Study-system (sys_id) random effect</span></span></a>
   </div>
 </li>
       </ul>
@@ -539,8 +569,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#model-status-and-overall-results" id="toc-model-status-and-overall-results" class="nav-link active" data-scroll-target="#model-status-and-overall-results"><span class="header-section-number">17.1</span> Model status and overall results</a></li>
-  <li><a href="#detailed-results" id="toc-detailed-results" class="nav-link" data-scroll-target="#detailed-results"><span class="header-section-number">17.2</span> Detailed results</a></li>
+  <li><a href="#comparison-setup" id="toc-comparison-setup" class="nav-link active" data-scroll-target="#comparison-setup"><span class="header-section-number">16.1</span> Comparison setup</a></li>
+  <li><a href="#at-a-glance-results" id="toc-at-a-glance-results" class="nav-link" data-scroll-target="#at-a-glance-results"><span class="header-section-number">16.2</span> At-a-glance results</a></li>
+  <li><a href="#output-columns" id="toc-output-columns" class="nav-link" data-scroll-target="#output-columns"><span class="header-section-number">16.3</span> Output columns</a></li>
+  <li><a href="#secondary-moderator-sensitivity" id="toc-secondary-moderator-sensitivity" class="nav-link" data-scroll-target="#secondary-moderator-sensitivity"><span class="header-section-number">16.4</span> Secondary moderator sensitivity</a></li>
   </ul>
 </nav>
     </div>
@@ -548,9 +580,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/07_sensitivity_analyses.html">Figures &amp; Reproducibility</a></li><li class="breadcrumb-item"><a href="../chapters/07_sensitivity_analyses.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Sensitivity analyses</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/07_sensitivity_analyses.html">Figures &amp; Reproducibility</a></li><li class="breadcrumb-item"><a href="../chapters/07_sensitivity_analyses.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Sensitivity analyses</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Sensitivity analyses</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Sensitivity analyses</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -567,9 +599,64 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="model-status-and-overall-results" class="level2" data-number="17.1">
-<h2 data-number="17.1" class="anchored" data-anchor-id="model-status-and-overall-results"><span class="header-section-number">17.1</span> Model status and overall results</h2>
-<p>The three prespecified sensitivity analyses were run for each of the seven moderators included in the primary model set. The table below is generated from the synced model summaries rather than entered by hand. A changed coefficient is one whose sign or 95% credible-interval conclusion differs from its matched primary-model coefficient; intercepts are excluded from this count.</p>
+<div class="workflow">
+<div>
+<p><strong>Input</strong> Primary and sensitivity summary tables.</p>
+</div>
+<div>
+<p><strong>Action</strong> Apply the recorded comparison rule.</p>
+</div>
+<div>
+<p><strong>Output</strong> Status counts and paired coefficient tables.</p>
+</div>
+<div>
+<p><strong>Next</strong> Create final figures.</p>
+</div>
+</div>
+<section id="comparison-setup" class="level2" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="comparison-setup"><span class="header-section-number">16.1</span> Comparison setup</h2>
+<p>The seven moderator models were repeated under three prespecified alternatives:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Analysis</th>
+<th>Recorded change</th>
+<th>Fixed comparison</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Minimum sample size</td>
+<td>Keep only contrasts with <span class="math inline">\(n_1 + n_2 \geq 40\)</span></td>
+<td>Matching primary model</td>
+</tr>
+<tr class="even">
+<td>No phylogeny</td>
+<td>Remove the phylogenetic random effect</td>
+<td>Matching primary model</td>
+</tr>
+<tr class="odd">
+<td>Study-system effect</td>
+<td>Add a <code>sys_id</code> random intercept</td>
+<td>Matching primary model</td>
+</tr>
+</tbody>
+</table>
+<p>Each analysis changes <strong>one feature at a time</strong>. The response, moderator definitions, priors, study-level (<code>ref_id</code>) effect, and MCMC settings otherwise match the corresponding comparison model. The no-phylogeny analysis necessarily omits the phylogenetic effect; the minimum-sample-size analysis necessarily uses fewer contrasts.</p>
+</section>
+<section id="at-a-glance-results" class="level2" data-number="16.2">
+<h2 data-number="16.2" class="anchored" data-anchor-id="at-a-glance-results"><span class="header-section-number">16.2</span> At-a-glance results</h2>
+<p>The table below is generated from the latest synced model summaries. “Models available” should equal seven for a complete analysis. “Changed coefficients” excludes intercepts and counts a coefficient when either:</p>
+<ol type="1">
+<li>its posterior median changes sign; or</li>
+<li>its 95% credible interval changes from including zero to excluding zero, or vice versa.</li>
+</ol>
+<p>This rule creates the displayed <code>DIFFERS</code> and <code>consistent</code> labels. The paired estimates are also printed in the appendices.</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="table table-striped table-condensed caption-top table-sm small">
@@ -614,15 +701,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="detailed-results" class="level2" data-number="17.2">
-<h2 data-number="17.2" class="anchored" data-anchor-id="detailed-results"><span class="header-section-number">17.2</span> Detailed results</h2>
-<p>The appendices report every location and scale coefficient beside the matched primary estimate, together with convergence diagnostics:</p>
+<section id="output-columns" class="level2" data-number="16.3">
+<h2 data-number="16.3" class="anchored" data-anchor-id="output-columns"><span class="header-section-number">16.3</span> Output columns</h2>
+<p>Each appendix begins with the exact model change and its convergence diagnostics, then places every sensitivity coefficient beside the corresponding primary coefficient:</p>
 <ul>
-<li><a href="../chapters/appendix/sensitivity_min_n.html">Minimum total sample size (N &gt;= 40)</a></li>
+<li><a href="../chapters/appendix/sensitivity_min_n.html">Minimum total sample size (<span class="math inline">\(n_1 + n_2 \geq 40\)</span>)</a></li>
 <li><a href="../chapters/appendix/sensitivity_no_phylogeny.html">No phylogenetic random effect</a></li>
 <li><a href="../chapters/appendix/sensitivity_sys_id.html">Study-system (<code>sys_id</code>) random effect</a></li>
 </ul>
-<p>Rows marked <strong>DIFFERS</strong> identify coefficients whose sign or credible-interval conclusion changes. The detailed tables use raw treatment-coded coefficients so that each sensitivity estimate is compared like-for-like with the corresponding primary fit.</p>
+<p>The tables contain two submodels:</p>
+<ul>
+<li><strong>Location (mean lnM):</strong> effects on the expected magnitude of divergence.</li>
+<li><strong>Scale (log-SD):</strong> effects on between-observation variability, expressed on the log standard-deviation scale.</li>
+</ul>
+<p>These are raw treatment-coded coefficients, not marginal means. For categorical moderators, the intercept is the reference-level estimate and every other coefficient is a difference from that reference. For continuous moderators, the non-intercept coefficient is the slope. Intercepts are shown for completeness but excluded from the summary change count.</p>
+<p>Rows marked <strong>DIFFERS</strong> meet one of the two screening criteria above. Rows marked <em>consistent</em> do not; the label does not mean the estimates are numerically identical.</p>
+</section>
+<section id="secondary-moderator-sensitivity" class="level2" data-number="16.4">
+<h2 data-number="16.4" class="anchored" data-anchor-id="secondary-moderator-sensitivity"><span class="header-section-number">16.4</span> Secondary moderator sensitivity</h2>
+<p>The <a href="../chapters/models/m11.html"><code>data_scale</code> model (m11)</a> compares traits recorded on interval and ratio measurement scales. Because measurement scale describes the source units rather than a biological moderator, m11 is not part of the primary moderator set. Its fitted model, diagnostics, contrasts, and figure are retained as a separate sensitivity analysis.</p>
 
 
 <!-- -->
@@ -1098,13 +1195,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../chapters/models/m11.html" class="pagination-link" aria-label="Measurement scale">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Measurement scale</span></span>
+      <a href="../chapters/models/m07.html" class="pagination-link" aria-label="Phenotypic vs genetic study">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Phenotypic vs genetic study</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../chapters/08_publication_figures.html" class="pagination-link" aria-label="Publication figures">
-        <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Publication figures</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Publication figures</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
@@ -1112,36 +1209,96 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Sensitivity analyses"</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"chapters"</span>, <span class="st">"Rscripts"</span>, <span class="st">"00_packages.R"</span>))</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"chapters"</span>, <span class="st">"Rscripts"</span>, <span class="st">"19_sensitivity_tables.R"</span>))</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model status and overall results</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>The three prespecified sensitivity analyses were run for each of the seven</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>moderators included in the primary model set. The table below is generated from</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>the synced model summaries rather than entered by hand. A changed coefficient</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>is one whose sign or 95% credible-interval conclusion differs from its matched</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>primary-model coefficient; intercepts are excluded from this count.</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="in">```{r sensitivity-summary, echo=FALSE}</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">sens_variant_summary_table</span>()</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## Detailed results</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>::: {.workflow}</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>::: {}</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>**Input**</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>Primary and sensitivity summary tables.</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>::: {}</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>**Action**</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>Apply the recorded comparison rule.</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>::: {}</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>**Output**</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>Status counts and paired coefficient tables.</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>::: {}</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>**Next**</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>Create final figures.</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>The appendices report every location and scale coefficient beside the matched</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>primary estimate, together with convergence diagnostics:</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Minimum total sample size (N &gt;= 40)</span><span class="co">](appendix/sensitivity_min_n.qmd)</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">No phylogenetic random effect</span><span class="co">](appendix/sensitivity_no_phylogeny.qmd)</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Study-system (`sys_id`) random effect</span><span class="co">](appendix/sensitivity_sys_id.qmd)</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"chapters"</span>, <span class="st">"Rscripts"</span>, <span class="st">"00_packages.R"</span>))</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"chapters"</span>, <span class="st">"Rscripts"</span>, <span class="st">"19_sensitivity_tables.R"</span>))</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">## Comparison setup</span></span>
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>Rows marked **DIFFERS** identify coefficients whose sign or credible-interval</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>conclusion changes. The detailed tables use raw treatment-coded</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>coefficients so that each sensitivity estimate is compared like-for-like with</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>the corresponding primary fit.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>The seven moderator models were repeated under three prespecified alternatives:</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Analysis <span class="pp">|</span> Recorded change <span class="pp">|</span> Fixed comparison <span class="pp">|</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Minimum sample size <span class="pp">|</span> Keep only contrasts with $n_1 + n_2 \geq 40$ <span class="pp">|</span> Matching primary model <span class="pp">|</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> No phylogeny <span class="pp">|</span> Remove the phylogenetic random effect <span class="pp">|</span> Matching primary model <span class="pp">|</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Study-system effect <span class="pp">|</span> Add a <span class="in">`sys_id`</span> random intercept <span class="pp">|</span> Matching primary model <span class="pp">|</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>Each analysis changes **one feature at a time**. The response, moderator</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>definitions, priors, study-level (<span class="in">`ref_id`</span>) effect, and MCMC settings otherwise</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>match the corresponding comparison model. The no-phylogeny analysis necessarily omits the</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>phylogenetic effect; the minimum-sample-size analysis necessarily uses fewer</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>contrasts.</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="fu">## At-a-glance results</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>The table below is generated from the latest synced model summaries. “Models</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>available” should equal seven for a complete analysis. “Changed coefficients”</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>excludes intercepts and counts a coefficient when either:</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>its posterior median changes sign; or</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>its 95% credible interval changes from including zero to excluding zero, or</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>   vice versa.</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>This rule creates the displayed <span class="in">`DIFFERS`</span> and <span class="in">`consistent`</span> labels. The paired</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>estimates are also printed in the appendices.</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="in">```{r sensitivity-summary, echo=FALSE}</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="fu">sens_variant_summary_table</span>()</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="fu">## Output columns</span></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>Each appendix begins with the exact model change and its convergence</span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>diagnostics, then places every sensitivity coefficient beside the corresponding</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>primary coefficient:</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Minimum total sample size ($n_1 + n_2 \geq 40$)</span><span class="co">](appendix/sensitivity_min_n.qmd)</span></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">No phylogenetic random effect</span><span class="co">](appendix/sensitivity_no_phylogeny.qmd)</span></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Study-system (`sys_id`) random effect</span><span class="co">](appendix/sensitivity_sys_id.qmd)</span></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>The tables contain two submodels:</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Location (mean lnM):** effects on the expected magnitude of divergence.</span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Scale (log-SD):** effects on between-observation variability, expressed on</span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>  the log standard-deviation scale.</span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>These are raw treatment-coded coefficients, not marginal means. For categorical</span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>moderators, the intercept is the reference-level estimate and every other</span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a>coefficient is a difference from that reference. For continuous moderators,</span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a>the non-intercept coefficient is the slope. Intercepts are shown for</span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a>completeness but excluded from the summary change count.</span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>Rows marked **DIFFERS** meet one of the two screening criteria above. Rows</span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>marked *consistent* do not; the label does not mean the estimates are</span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a>numerically identical.</span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a><span class="fu">## Secondary moderator sensitivity</span></span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>The <span class="co">[</span><span class="ot">`data_scale` model (m11)</span><span class="co">](models/m11.qmd)</span> compares traits recorded on</span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a>interval and ratio measurement scales. Because measurement scale describes the</span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a>source units rather than a biological moderator, m11 is not part of the primary</span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a>moderator set. Its fitted model, diagnostics, contrasts, and figure are retained</span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a>as a separate sensitivity analysis.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

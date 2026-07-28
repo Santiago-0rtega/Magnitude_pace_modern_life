@@ -2,6 +2,26 @@
 title: "Intercept-only baseline"
 ---
 
+::: {.workflow}
+::: {}
+**Input**
+Saved prediction and summary files.
+:::
+::: {}
+**Action**
+Read the model record and build its figure.
+:::
+::: {}
+**Output**
+Model table, checks, and plot.
+:::
+::: {}
+**Next**
+Continue to the next model chapter.
+:::
+:::
+
+
 ```{r setup, include=FALSE}
 source(here::here("chapters", "Rscripts", "14_epred_cache.R"))
 cache_dir <- here::here("Rdata", "epred_draws")

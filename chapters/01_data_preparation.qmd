@@ -2,6 +2,25 @@
 title: "Data preparation"
 ---
 
+::: {.workflow}
+::: {}
+**Input**
+`data/PROCEEDv6.2_RatesDB.csv`
+:::
+::: {}
+**Action**
+Clean fields, apply filters, and add derived columns.
+:::
+::: {}
+**Output**
+`Rdata/data_clean/proceed_clean_filtered.rds`
+:::
+::: {}
+**Next**
+Calculate SAFE lnM effect sizes.
+:::
+:::
+
 ```{r setup}
 source(here::here("chapters", "Rscripts", "00_packages.R"))
 source(here::here("chapters", "Rscripts", "01_paths.R"))
@@ -16,9 +35,11 @@ rebuild_clean_data <- FALSE
 clean_path <- here::here("Rdata", "data_clean", "proceed_clean_filtered.rds")
 ```
 
-This chapter produces the cleaned, filtered contrast dataset (`proceed_clean_filtered.rds`) used throughout the book. By default it **reads the cached file**; the cleaning pipeline below is documentation and only executes when `rebuild_clean_data <- TRUE`.
+This chapter produces the cleaned, filtered contrast dataset used throughout
+the book. A normal render reads the saved file. The rebuild chunk runs only
+when `rebuild_clean_data <- TRUE`.
 
-## Cleaning & filtering pipeline
+## Action: clean and filter
 
 The steps applied when (re)building the dataset:
 
@@ -39,7 +60,7 @@ saveRDS(dat_lnm_input, clean_path)
 cat("Rebuilt and saved cleaned dataset:", nrow(dat_lnm_input), "contrasts\n")
 ```
 
-## Load the cleaned dataset
+## Check: load the saved dataset
 
 ```{r load}
 if (!rebuild_clean_data) {
@@ -64,7 +85,7 @@ dplyr::glimpse(
 )
 ```
 
-## Dataset summary
+## Output: dataset summary
 
 ```{r summary}
 dat_lnm_input |>

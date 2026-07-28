@@ -2,6 +2,25 @@
 title: "Publication figures"
 ---
 
+::: {.workflow}
+::: {}
+**Input**
+Saved model status and coefficient tables.
+:::
+::: {}
+**Action**
+Build and save one figure set per fitted moderator.
+:::
+::: {}
+**Output**
+PNG and PDF files in `Rdata/figures/`.
+:::
+::: {}
+**Next**
+Run the reproducibility checks.
+:::
+:::
+
 ```{r setup}
 source(here::here("chapters", "Rscripts", "00_packages.R"))
 source(here::here("chapters", "Rscripts", "01_paths.R"))
@@ -10,7 +29,8 @@ source(here::here("chapters", "Rscripts", "11_plotting_orchard_like.R"))
 source(here::here("chapters", "Rscripts", "12_save_figures.R"))
 ```
 
-This chapter reads cached model results and generates publication-ready figures. No models are fitted here.
+This chapter reads saved model results and generates figures. It does not fit
+models.
 
 ```{r load-tables}
 status_file <- here::here("Rdata", "tables", "model_grid_status.csv")
@@ -28,7 +48,7 @@ fitted_ids <- if (!is.null(model_status)) {
 cat("Models with figures to generate:", length(fitted_ids), "\n")
 ```
 
-## Generate figures per moderator
+## Action: generate figures per moderator
 
 ```{r figure-loop}
 for (i in seq_len(nrow(moderator_grid))) {
@@ -122,7 +142,7 @@ for (i in seq_len(nrow(moderator_grid))) {
 cat("Figure generation complete.\n")
 ```
 
-## Figure inventory
+## Output: figure inventory
 
 ```{r figure-inventory}
 png_files <- list.files(here::here("Rdata", "figures", "png"), pattern = "\\.png$")

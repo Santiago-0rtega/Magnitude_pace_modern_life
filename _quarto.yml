@@ -6,6 +6,7 @@ project:
 
 book:
   title: "Supplementary material: Human disturbance and the magnitude of phenotypic divergence"
+  subtitle: "A step-by-step reproducible analysis"
   author: "TBA"
   date: today
   repo-url: https://github.com/Santiago-0rtega/Magnitude_pace_modern_life
@@ -14,6 +15,7 @@ book:
   sidebar:
     style: floating
     collapse-level: 2
+    search: true
   chapters:
     - index.qmd
     - part: "Data & Effect Sizes"
@@ -38,7 +40,6 @@ book:
         - chapters/models/m04.qmd
         - chapters/models/m05.qmd
         - chapters/models/m07.qmd
-        - chapters/models/m11.qmd
     - part: "Figures & Reproducibility"
       chapters:
         - chapters/07_sensitivity_analyses.qmd
@@ -46,6 +47,7 @@ book:
         - chapters/09_reproducibility.qmd
   appendices:
     - chapters/models/m08.qmd
+    - chapters/models/m11.qmd
     - chapters/appendix/sensitivity_min_n.qmd
     - chapters/appendix/sensitivity_no_phylogeny.qmd
     - chapters/appendix/sensitivity_sys_id.qmd
@@ -66,6 +68,14 @@ format:
     fig-dpi: 150
     link-external-icon: true
     smooth-scroll: true
+    css: styles.css
+    code-copy: true
+    anchor-sections: true
+    grid:
+      sidebar-width: 290px
+      body-width: 900px
+      margin-width: 260px
+      gutter-width: 1.5rem
 
 crossref:
   fig-prefix: "Fig."

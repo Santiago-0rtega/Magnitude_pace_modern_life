@@ -2,6 +2,25 @@
 title: "Descriptive summaries"
 ---
 
+::: {.workflow}
+::: {}
+**Input**
+Saved SAFE lnM dataset.
+:::
+::: {}
+**Action**
+Count rows and draw data-distribution plots.
+:::
+::: {}
+**Output**
+Descriptive tables, plots, and CSV files.
+:::
+::: {}
+**Next**
+Check associations among moderators.
+:::
+:::
+
 ```{r setup}
 source(here::here("chapters", "Rscripts", "00_packages.R"))
 source(here::here("chapters", "Rscripts", "01_paths.R"))
@@ -51,14 +70,14 @@ plot_count_donut <- function(dat, var, title, palette = NULL) {
 }
 ```
 
-## Load effect-size dataset
+## Input: load effect-size dataset
 
 ```{r load}
 dat_es <- readRDS(here::here("Rdata", "effect_sizes", "proceed_lnm_safe.rds"))
 cat("Contrasts:", nrow(dat_es), "\n")
 ```
 
-## Overview counts
+## Check: overview counts
 
 ```{r overview}
 dat_es |>
@@ -74,7 +93,7 @@ dat_es |>
 
 ## Counts by moderator
 
-The following tables keep the exact counts visible. The donut plots below them provide a faster visual read of the main design and moderator composition.
+The tables report the exact counts. The plots display the same category totals.
 
 ```{r by-disturbance}
 dat_es |> dplyr::count(disturbance, sort = TRUE)

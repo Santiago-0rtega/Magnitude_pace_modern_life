@@ -2,13 +2,32 @@
 title: "Dependency structure"
 ---
 
+::: {.workflow}
+::: {}
+**Input**
+Effect sizes and reconciled species names.
+:::
+::: {}
+**Action**
+Count links among effect sizes, references, systems, and species.
+:::
+::: {}
+**Output**
+Dependency tables used to define grouping terms.
+:::
+::: {}
+**Next**
+Check the phylogenetic matrix.
+:::
+:::
+
 ```{r setup}
 source(here::here("chapters", "Rscripts", "00_packages.R"))
 source(here::here("chapters", "Rscripts", "01_paths.R"))
 source(here::here("chapters", "Rscripts", "05_phylogeny.R"))
 ```
 
-## Analysis counts
+## Input: build the dependency dataset
 
 ```{r load}
 dat_es <- readRDS(here::here("Rdata", "effect_sizes", "proceed_lnm_safe.rds"))
@@ -56,7 +75,7 @@ shared species labels. The next chapter documents this reconciliation and
 distinguishes the 253 current species from the 265 tips stored in the cached
 phylogenetic matrix.
 
-## Pairwise dependency
+## Action: count pairwise links
 
 ```{r dependency-table}
 summarise_links <- function(data, factor_a, factor_b) {

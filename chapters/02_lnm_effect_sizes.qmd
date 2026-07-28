@@ -2,6 +2,25 @@
 title: "lnM effect sizes (SAFE)"
 ---
 
+::: {.workflow}
+::: {}
+**Input**
+Clean contrast data from Step 1.
+:::
+::: {}
+**Action**
+Calculate SAFE lnM and its sampling variance.
+:::
+::: {}
+**Output**
+`Rdata/effect_sizes/proceed_lnm_safe.rds`
+:::
+::: {}
+**Next**
+Describe the effect-size dataset.
+:::
+:::
+
 ```{r setup}
 source(here::here("chapters", "Rscripts", "00_packages.R"))
 source(here::here("chapters", "Rscripts", "01_paths.R"))
@@ -12,9 +31,11 @@ source(here::here("chapters", "Rscripts", "15_render_guard.R"))   # read-only: n
 recompute_effect_sizes <- FALSE
 ```
 
-## What lnM measures {#sec-lnm-measures}
+## Definition of lnM {#sec-lnm-measures}
 
-This chapter computes the effect size used throughout the book: $\ln M$, the log magnitude of separation between two groups. The key idea is to measure how far apart two group means are without retaining the sign of the difference. This is useful here because human disturbance can push traits in different directions across systems, while the biological question is often about the magnitude of phenotypic divergence.
+This chapter computes $\ln M$, the log ratio of the estimated between-group
+standard deviation to the pooled within-group standard deviation. The formula
+does not retain the direction of the difference between group means.
 
 For a two-group comparison with observed summaries $(\bar{X}_1, s_1, n_1)$ and $(\bar{X}_2, s_2, n_2)$, the analytic definition begins with the one-way ANOVA mean squares:
 
@@ -48,21 +69,26 @@ $$
 where $s_B$ is the square root of the between-component variance and $s_W$ is the pooled within-group standard deviation. The sign of $\ln M$ is therefore not the direction of trait change. Instead:
 
 - $\ln M > 0$ means the estimated between-component standard deviation is larger than the within-group standard deviation.
-- $\ln M = 0$ means the estimated between- and within-group components are not markedly different in scale; it should not be interpreted as evidence that the underlying components are exactly equal.
+- $\ln M = 0$ means the two estimated components have a ratio of one.
 - $\ln M < 0$ means the estimated between-component standard deviation is smaller than the within-group standard deviation.
 
-Because $s_B^2$ subtracts $MS_W$ from $MS_B$, $\ln M = 0$ is not equivalent to "small" separation. For large, balanced independent groups it corresponds approximately to $d = \sqrt{2}$, or about $1.4$, on the standardized mean-difference scale.
+For large, balanced independent groups, $\ln M = 0$ corresponds approximately
+to $d = \sqrt{2}$, or about 1.4, on the standardized mean-difference scale.
 
-This differs from taking an absolute value of a signed effect size such as $|d|$ or $|\ln RR|$. Absolute-value transformations fold sampling error around zero, which can inflate small and noisy effects. The lnM paper develops $\ln M$ so that magnitude can be analysed directly with standard meta-analytic and meta-regression tools.
+This calculation differs from taking an absolute value of a signed effect size
+such as $|d|$ or $|\ln RR|$. The SAFE code below calculates $\ln M$ directly.
 
-## Why SAFE is used here
+## SAFE calculation
 
-Analytic $\ln M$ is built from ANOVA mean-square components. That construction is intuitive, but it has two practical problems for large ecological databases:
+The analytic calculation has two numerical limits:
 
 - Sampling variance can become very large when $MS_B$ is close to $MS_W$.
 - The plug-in estimate is undefined when $MS_B \le MS_W$, because $s_B^2$ is then zero or negative.
 
-The SAFE estimator used below follows the paper's simulation-based approach. For each contrast, it repeatedly draws plausible values of the group means and standard deviations from their finite-sample distributions, transforms each valid draw with $MS_B^\ast > MS_W^\ast$ to $\ln M^\ast$, and then summarizes the resulting bootstrap distribution. This gives a finite bias-corrected estimate and sampling variance for contrasts that would otherwise be unstable or undefined.
+The SAFE estimator repeatedly draws values of the group means and standard
+deviations from their finite-sample distributions. It transforms each draw with
+$MS_B^\ast > MS_W^\ast$ to $\ln M^\ast$, then saves the bias-corrected estimate
+and sampling variance.
 
 The book uses the cached SAFE results by default. Recomputing all contrasts is intentionally opt-in because the Monte Carlo step is slow.
 
@@ -108,11 +134,13 @@ dat_es |>
   )
 ```
 
-This table is a quick range check, not an inferential result. The median and range of `yi_lnM_safe` describe observed magnitudes on the log scale; the variance columns describe how precisely each contrast estimates its own magnitude.
+This table records the median and range of `yi_lnM_safe` and
+`vi_lnM_safe`.
 
 ## SAFE diagnostics
 
-SAFE only summarizes valid simulation draws, so the retained-draw diagnostics are important. A low retained percentage means many simulated draws landed in the region where the between-group component was non-positive; those contrasts are still usable, but their uncertainty should be interpreted with care.
+SAFE summarizes valid simulation draws. The retained percentage records the
+share of draws for which the between-group component was positive.
 
 ```{r safe-diag}
 safe_diag <- readr::read_csv(

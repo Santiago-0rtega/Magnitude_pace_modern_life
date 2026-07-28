@@ -2,6 +2,25 @@
 title: "Phylogenetic reconciliation"
 ---
 
+::: {.workflow}
+::: {}
+**Input**
+Species names from the effect-size data.
+:::
+::: {}
+**Action**
+Reconcile names and align the saved tree matrix.
+:::
+::: {}
+**Output**
+Tree, name map, and correlation matrix in `Rdata/phylogeny/`.
+:::
+::: {}
+**Next**
+Prepare the model grid.
+:::
+:::
+
 ```{r setup}
 source(here::here("chapters", "Rscripts", "00_packages.R"))
 source(here::here("chapters", "Rscripts", "01_paths.R"))
@@ -9,15 +28,11 @@ source(here::here("chapters", "Rscripts", "05_phylogeny.R"))
 source(here::here("chapters", "Rscripts", "15_render_guard.R"))   # read-only: never rebuild the phylogeny here
 ```
 
-## Why a phylogenetic random effect
+## Role of the phylogenetic matrix
 
-Species that share evolutionary history tend to share trait values for reasons
-unrelated to the moderators in these models. The phylogenetic random effect
-`(1 | gr(sp_ncbi, cov = A))`, included in every main location–scale model,
-accounts for this by letting species-level intercepts covary according to a
-matrix `A` derived from a tree of the analysed species. This chapter documents
-how that tree and `A` were built, and how species that could not be placed on
-the tree are handled.
+The main models include `(1 | gr(sp_ncbi, cov = A))`. The matrix `A` contains
+pairwise phylogenetic correlations from the saved tree. This chapter records
+how the tree and matrix were built and which species names were retained.
 
 ## Terms used in the species counts
 

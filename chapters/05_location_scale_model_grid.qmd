@@ -2,6 +2,25 @@
 title: "Location–scale model grid"
 ---
 
+::: {.workflow}
+::: {}
+**Input**
+Effect sizes, sampling covariance, and phylogenetic matrix.
+:::
+::: {}
+**Action**
+Read saved model summaries or fit models in a separate run.
+:::
+::: {}
+**Output**
+Model status, coefficient, and diagnostic tables.
+:::
+::: {}
+**Next**
+Open the chapter for each fitted model.
+:::
+:::
+
 ```{r setup}
 source(here::here("chapters", "Rscripts", "00_packages.R"))
 source(here::here("chapters", "Rscripts", "01_paths.R"))
@@ -17,7 +36,7 @@ source(here::here("chapters", "Rscripts", "15_render_guard.R"))   # read-only: n
 refit_models <- FALSE
 
 # The grid status + combined effect tables are pre-computed (precompute_grid_summaries.R)
-# into outputs/tables/grid_summary_cache.rds so the book never loads a 400 MB model.
+# into Rdata/tables/grid_summary_cache.rds so the book never loads a 400 MB model.
 # Set TRUE only to regenerate them by loading every model (slow).
 rebuild_grid <- FALSE
 ```
@@ -25,6 +44,15 @@ rebuild_grid <- FALSE
 ## Overview
 
 This chapter fits (or reads) one independent location–scale meta-regression for each moderator in the registry. No multi-moderator model is fitted. The registry is defined in `chapters/Rscripts/06_model_registry.R`.
+
+::: {.callout-important title="Render and fitting are separate tasks"}
+**Normal book render:** keep `refit_models <- FALSE` and
+`rebuild_grid <- FALSE`. The chapter reads saved results.
+
+**Model-fitting run:** use the fitting scripts on a compute machine. After the
+fits finish, run `precompute_grid_summaries.R`, then render the book. A normal
+render must not start model fitting.
+:::
 
 ```{r show-registry}
 moderator_grid
@@ -38,7 +66,7 @@ Moderators excluded from the primary results are listed below. Available fits ar
 excluded_grid |> dplyr::select(model_id, moderator, label, reason)
 ```
 
-## Load data and phylogeny
+## Input: load data and phylogeny
 
 ```{r load-data}
 dat_es <- readRDS(here::here("Rdata", "effect_sizes", "proceed_lnm_safe.rds"))
@@ -123,7 +151,7 @@ covariance matrix. Consequently, the elapsed-years and elapsed-generations
 models share the maximum fitted sample size (7,186 contrasts); the 51 unmatched
 contrasts are excluded from every phylogeny-adjusted primary model.
 
-## Fit or read models
+## Action: fit or read models
 
 ### Covariance matrices used by the model
 
@@ -352,7 +380,7 @@ for (i in seq_len(nrow(moderator_grid))) {
 }
 ```
 
-## Assemble grid summaries
+## Output: assemble grid summaries
 
 ```{r grid-assemble}
 grid_cache <- here::here("Rdata", "tables", "grid_summary_cache.rds")
