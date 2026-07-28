@@ -47,7 +47,7 @@ fit     <- fit_ls_model(
 
 ## Convergence diagnostics
 
-```{r diagnostics, echo=FALSE}
+```{r diagnostics}
 sens_diagnostics_table(variant)
 ```
 
@@ -62,7 +62,7 @@ median changed sign or that the 95% credible interval changed between including
 and excluding zero. *Consistent* means neither occurred; it does not mean the
 two estimates are identical. Intercepts are omitted from the overall count.
 
-```{r stability-line, echo=FALSE, results='asis'}
+```{r stability-line, results='asis'}
 cat("**Overall:** ", sens_stability_summary(variant), "\n")
 ```
 
@@ -73,6 +73,6 @@ Each table reports raw treatment-coded coefficients for the location
 [sensitivity overview](../07_sensitivity_analyses.qmd#how-to-read-the-detailed-results)
 for column definitions.
 
-```{r results, echo=FALSE, results='asis'}
+```{r results, results='asis'}
 sens_all_moderator_tables(variant)
 ```

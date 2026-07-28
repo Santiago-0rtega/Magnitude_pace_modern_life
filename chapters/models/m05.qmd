@@ -63,26 +63,28 @@ print_cache_summary(cache)
 
 Estimated marginal means and pairwise contrasts are read from `Rdata/summaries/emmeans_contrasts_cache.rds`.
 
-```{r contrasts-setup, include=FALSE}
+{{< include ../includes/pairwise_contrasts_generation.qmd >}}
+
+```{r contrasts-setup}
 source(here::here("chapters", "Rscripts", "18_contrasts_cache.R"))
 cc <- read_contrasts_cache("m05")
 ```
 
 **Location — pairwise contrasts (difference in mean lnM):**
 
-```{r loc-contrasts, echo=FALSE}
+```{r loc-contrasts}
 kable_contrasts(format_location_contrasts(cc))
 ```
 
 **Scale — pairwise contrasts (log-σ; positive ⇒ greater residual heterogeneity):**
 
-```{r scl-contrasts, echo=FALSE}
+```{r scl-contrasts}
 kable_contrasts(format_scale_contrasts(cc))
 ```
 
 ## Orchard-like model figure
 
-The orchard-style figure is read from `outputs/figures/publication/orchard/`. The complete editable code used to build this plot is shown below.
+The orchard-style figure is read from `Rdata/figures/publication/orchard/`. The complete editable code used to build this plot is shown below.
 
 ```{r figure, fig.width=8, fig.height=9}
 knitr::include_graphics(

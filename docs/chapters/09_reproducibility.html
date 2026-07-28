@@ -675,12 +675,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="step-5-prepare-small-files-for-the-book" class="level2" data-number="18.6">
 <h2 data-number="18.6" class="anchored" data-anchor-id="step-5-prepare-small-files-for-the-book"><span class="header-section-number">18.6</span> Step 5 — Prepare small files for the book</h2>
-<p>After fitting models, run these scripts from the project root and in this order:</p>
+<p>The compute server uses <code>outputs/</code> as its working output folder. The web book uses <code>Rdata/</code> as its local, read-only mirror. After fitting models, run these scripts from the compute-project root and in this order:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> chapters/Rscripts/precompute_grid_summaries.R</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> chapters/Rscripts/precompute_epred_draws.R</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> chapters/Rscripts/precompute_emmeans_contrasts.R</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> chapters/Rscripts/precompute_heterogeneity.R</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>These scripts convert large fitted models into small tables and prediction files. The model chapters read the small files.</p>
+<p>These scripts convert large fitted models into small tables and prediction files.</p>
+<p>Copy the completed folders from the compute server to the matching book paths:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Compute server</th>
+<th>Web-book project</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>outputs/epred_draws/</code></td>
+<td><code>Rdata/epred_draws/</code></td>
+</tr>
+<tr class="even">
+<td><code>outputs/summaries/</code></td>
+<td><code>Rdata/summaries/</code></td>
+</tr>
+<tr class="odd">
+<td><code>outputs/tables/</code></td>
+<td><code>Rdata/tables/</code></td>
+</tr>
+<tr class="even">
+<td><code>outputs/figures/</code></td>
+<td><code>Rdata/figures/</code></td>
+</tr>
+</tbody>
+</table>
+<p>Replace the matching files in <code>Rdata/</code> only after every compute script finishes. The model chapters read the copied files; they never read <code>outputs/</code>.</p>
 </section>
 <section id="step-6-render-the-web-book" class="level2" data-number="18.7">
 <h2 data-number="18.7" class="anchored" data-anchor-id="step-6-render-the-web-book"><span class="header-section-number">18.7</span> Step 6 — Render the web book</h2>
@@ -1012,7 +1040,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Commit hash:"</span>, git_hash, <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Commit hash: 0751077f9bdb30679fbb54a95ad3927b49fcd7ff </code></pre>
+<pre><code>Commit hash: 3516b99bf4544442c7ac6a985e18506b7b6443f5 </code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -1024,8 +1052,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Uncommitted changes:
-  M ../README.md
- M ../Rdata/figures/pdf/m01_disturbance_location.pdf
+  M ../Rdata/figures/pdf/m01_disturbance_location.pdf
  M ../Rdata/figures/pdf/m01_disturbance_location_scale_combined.pdf
  M ../Rdata/figures/pdf/m01_disturbance_scale.pdf
  M ../Rdata/figures/pdf/m02_design_location.pdf
@@ -1043,11 +1070,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  M ../Rdata/figures/pdf/m07_genphen_location.pdf
  M ../Rdata/figures/pdf/m07_genphen_location_scale_combined.pdf
  M ../Rdata/figures/pdf/m07_genphen_scale.pdf
- M ../_quarto.yml
- M 05_location_scale_model_grid.qmd
+ M 03_descriptive_summaries.qmd
  M 07_sensitivity_analyses.qmd
  M 09_reproducibility.qmd
- M Rscripts/06_model_registry.R
+ M Rscripts/19_sensitivity_tables.R
+ M Rscripts/precompute_emmeans_contrasts.R
+ M Rscripts/precompute_epred_draws.R
+ M Rscripts/precompute_grid_summaries.R
+ M Rscripts/precompute_heterogeneity.R
+ M appendix/sensitivity_min_n.qmd
+ M appendix/sensitivity_no_phylogeny.qmd
+ M appendix/sensitivity_sys_id.qmd
+ M models/m00.qmd
+ M models/m01.qmd
+ M models/m02.qmd
+ M models/m03.qmd
+ M models/m04.qmd
+ M models/m05.qmd
+ M models/m07.qmd
+ M models/m08.qmd
  D ../docs/.nojekyll
  D ../docs/Rdata/figures/publication/orchard/m00_orchard_combined.png
  D ../docs/Rdata/figures/publication/orchard/m01_orchard_combined.png
@@ -1056,6 +1097,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  D ../docs/Rdata/figures/publication/orchard/m04_orchard_combined.png
  D ../docs/Rdata/figures/publication/orchard/m05_orchard_combined.png
  D ../docs/Rdata/figures/publication/orchard/m07_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard/m08_orchard_combined.png
  D ../docs/chapters/01_data_preparation.html
  D ../docs/chapters/02_lnm_effect_sizes.html
  D ../docs/chapters/03_descriptive_summaries.html
@@ -1075,7 +1117,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  D ../docs/chapters/04b_phylogeny.html
  D ../docs/chapters/05_location_scale_model_grid.html
  D ../docs/chapters/07_sensitivity_analyses.html
+ D ../docs/chapters/08_publication_figures.html
  D ../docs/chapters/09_reproducibility.html
+ D ../docs/chapters/appendix/sensitivity_min_n.html
+ D ../docs/chapters/appendix/sensitivity_no_phylogeny.html
+ D ../docs/chapters/appendix/sensitivity_sys_id.html
  D ../docs/chapters/models/m00.html
  D ../docs/chapters/models/m01.html
  D ../docs/chapters/models/m02.html
@@ -1083,6 +1129,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  D ../docs/chapters/models/m04.html
  D ../docs/chapters/models/m05.html
  D ../docs/chapters/models/m07.html
+ D ../docs/chapters/models/m08.html
  D ../docs/index.html
  D ../docs/search.json
  D ../docs/site_libs/bootstrap/bootstrap-2bfa60b48c717769bc159b1b9b30548b.min.css
@@ -1121,6 +1168,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 ?? 07_sensitivity_analyses.html
 ?? 08_publication_figures.html
 ?? 09_reproducibility.rmarkdown
+?? includes/
 ?? models/m00.html
 ?? models/m01.html
 ?? models/m02.html
@@ -1889,132 +1937,146 @@ Modified: 2026-07-20 15:38:24 </code></pre>
 <span id="cb22-122"><a href="#cb22-122" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-123"><a href="#cb22-123" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 5 — Prepare small files for the book</span></span>
 <span id="cb22-124"><a href="#cb22-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-125"><a href="#cb22-125" aria-hidden="true" tabindex="-1"></a>After fitting models, run these scripts from the project root and in this order:</span>
-<span id="cb22-126"><a href="#cb22-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-127"><a href="#cb22-127" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb22-128"><a href="#cb22-128" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> chapters/Rscripts/precompute_grid_summaries.R</span>
-<span id="cb22-129"><a href="#cb22-129" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> chapters/Rscripts/precompute_epred_draws.R</span>
-<span id="cb22-130"><a href="#cb22-130" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> chapters/Rscripts/precompute_emmeans_contrasts.R</span>
-<span id="cb22-131"><a href="#cb22-131" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> chapters/Rscripts/precompute_heterogeneity.R</span>
-<span id="cb22-132"><a href="#cb22-132" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-133"><a href="#cb22-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-134"><a href="#cb22-134" aria-hidden="true" tabindex="-1"></a>These scripts convert large fitted models into small tables and prediction</span>
-<span id="cb22-135"><a href="#cb22-135" aria-hidden="true" tabindex="-1"></a>files. The model chapters read the small files.</span>
-<span id="cb22-136"><a href="#cb22-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-137"><a href="#cb22-137" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 6 — Render the web book</span></span>
+<span id="cb22-125"><a href="#cb22-125" aria-hidden="true" tabindex="-1"></a>The compute server uses <span class="in">`outputs/`</span> as its working output folder. The web book</span>
+<span id="cb22-126"><a href="#cb22-126" aria-hidden="true" tabindex="-1"></a>uses <span class="in">`Rdata/`</span> as its local, read-only mirror. After fitting models, run these</span>
+<span id="cb22-127"><a href="#cb22-127" aria-hidden="true" tabindex="-1"></a>scripts from the compute-project root and in this order:</span>
+<span id="cb22-128"><a href="#cb22-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-129"><a href="#cb22-129" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb22-130"><a href="#cb22-130" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> chapters/Rscripts/precompute_grid_summaries.R</span>
+<span id="cb22-131"><a href="#cb22-131" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> chapters/Rscripts/precompute_epred_draws.R</span>
+<span id="cb22-132"><a href="#cb22-132" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> chapters/Rscripts/precompute_emmeans_contrasts.R</span>
+<span id="cb22-133"><a href="#cb22-133" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> chapters/Rscripts/precompute_heterogeneity.R</span>
+<span id="cb22-134"><a href="#cb22-134" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-135"><a href="#cb22-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-136"><a href="#cb22-136" aria-hidden="true" tabindex="-1"></a>These scripts convert large fitted models into small tables and prediction</span>
+<span id="cb22-137"><a href="#cb22-137" aria-hidden="true" tabindex="-1"></a>files.</span>
 <span id="cb22-138"><a href="#cb22-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-139"><a href="#cb22-139" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb22-140"><a href="#cb22-140" aria-hidden="true" tabindex="-1"></a>quarto<span class="sc">::</span><span class="fu">quarto_render</span>()</span>
-<span id="cb22-141"><a href="#cb22-141" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-142"><a href="#cb22-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-143"><a href="#cb22-143" aria-hidden="true" tabindex="-1"></a>The website is written to <span class="in">`docs/`</span>. Open <span class="in">`docs/index.html`</span> to read the local</span>
-<span id="cb22-144"><a href="#cb22-144" aria-hidden="true" tabindex="-1"></a>copy. Missing saved results cause an error instead of starting a long fit.</span>
-<span id="cb22-145"><a href="#cb22-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-146"><a href="#cb22-146" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 7 — Record the exact environment</span></span>
+<span id="cb22-139"><a href="#cb22-139" aria-hidden="true" tabindex="-1"></a>Copy the completed folders from the compute server to the matching book paths:</span>
+<span id="cb22-140"><a href="#cb22-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-141"><a href="#cb22-141" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Compute server <span class="pp">|</span> Web-book project <span class="pp">|</span></span>
+<span id="cb22-142"><a href="#cb22-142" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|</span></span>
+<span id="cb22-143"><a href="#cb22-143" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`outputs/epred_draws/`</span> <span class="pp">|</span> <span class="in">`Rdata/epred_draws/`</span> <span class="pp">|</span></span>
+<span id="cb22-144"><a href="#cb22-144" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`outputs/summaries/`</span> <span class="pp">|</span> <span class="in">`Rdata/summaries/`</span> <span class="pp">|</span></span>
+<span id="cb22-145"><a href="#cb22-145" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`outputs/tables/`</span> <span class="pp">|</span> <span class="in">`Rdata/tables/`</span> <span class="pp">|</span></span>
+<span id="cb22-146"><a href="#cb22-146" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`outputs/figures/`</span> <span class="pp">|</span> <span class="in">`Rdata/figures/`</span> <span class="pp">|</span></span>
 <span id="cb22-147"><a href="#cb22-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-148"><a href="#cb22-148" aria-hidden="true" tabindex="-1"></a><span class="fu">### Package inventory</span></span>
-<span id="cb22-149"><a href="#cb22-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-150"><a href="#cb22-150" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup}</span></span>
-<span id="cb22-151"><a href="#cb22-151" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"chapters"</span>, <span class="st">"Rscripts"</span>, <span class="st">"00_packages.R"</span>))</span>
-<span id="cb22-152"><a href="#cb22-152" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-153"><a href="#cb22-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-154"><a href="#cb22-154" aria-hidden="true" tabindex="-1"></a><span class="in">```{r package-inventory}</span></span>
-<span id="cb22-155"><a href="#cb22-155" aria-hidden="true" tabindex="-1"></a>package_versions <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb22-156"><a href="#cb22-156" aria-hidden="true" tabindex="-1"></a>  <span class="at">package =</span> project_packages,</span>
-<span id="cb22-157"><a href="#cb22-157" aria-hidden="true" tabindex="-1"></a>  <span class="at">version =</span> <span class="fu">vapply</span>(project_packages, <span class="cf">function</span>(x) {</span>
-<span id="cb22-158"><a href="#cb22-158" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">requireNamespace</span>(x, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
-<span id="cb22-159"><a href="#cb22-159" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.character</span>(utils<span class="sc">::</span><span class="fu">packageVersion</span>(x))</span>
-<span id="cb22-160"><a href="#cb22-160" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
-<span id="cb22-161"><a href="#cb22-161" aria-hidden="true" tabindex="-1"></a>      <span class="st">"not installed"</span></span>
-<span id="cb22-162"><a href="#cb22-162" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb22-163"><a href="#cb22-163" aria-hidden="true" tabindex="-1"></a>  }, <span class="fu">character</span>(<span class="dv">1</span>))</span>
-<span id="cb22-164"><a href="#cb22-164" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb22-165"><a href="#cb22-165" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(package_versions, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Package"</span>, <span class="st">"Version"</span>))</span>
+<span id="cb22-148"><a href="#cb22-148" aria-hidden="true" tabindex="-1"></a>Replace the matching files in <span class="in">`Rdata/`</span> only after every compute script finishes.</span>
+<span id="cb22-149"><a href="#cb22-149" aria-hidden="true" tabindex="-1"></a>The model chapters read the copied files; they never read <span class="in">`outputs/`</span>.</span>
+<span id="cb22-150"><a href="#cb22-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-151"><a href="#cb22-151" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 6 — Render the web book</span></span>
+<span id="cb22-152"><a href="#cb22-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-153"><a href="#cb22-153" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-154"><a href="#cb22-154" aria-hidden="true" tabindex="-1"></a>quarto<span class="sc">::</span><span class="fu">quarto_render</span>()</span>
+<span id="cb22-155"><a href="#cb22-155" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-156"><a href="#cb22-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-157"><a href="#cb22-157" aria-hidden="true" tabindex="-1"></a>The website is written to <span class="in">`docs/`</span>. Open <span class="in">`docs/index.html`</span> to read the local</span>
+<span id="cb22-158"><a href="#cb22-158" aria-hidden="true" tabindex="-1"></a>copy. Missing saved results cause an error instead of starting a long fit.</span>
+<span id="cb22-159"><a href="#cb22-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-160"><a href="#cb22-160" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 7 — Record the exact environment</span></span>
+<span id="cb22-161"><a href="#cb22-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-162"><a href="#cb22-162" aria-hidden="true" tabindex="-1"></a><span class="fu">### Package inventory</span></span>
+<span id="cb22-163"><a href="#cb22-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-164"><a href="#cb22-164" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup}</span></span>
+<span id="cb22-165"><a href="#cb22-165" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"chapters"</span>, <span class="st">"Rscripts"</span>, <span class="st">"00_packages.R"</span>))</span>
 <span id="cb22-166"><a href="#cb22-166" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb22-167"><a href="#cb22-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-168"><a href="#cb22-168" aria-hidden="true" tabindex="-1"></a><span class="fu">### R and platform</span></span>
-<span id="cb22-169"><a href="#cb22-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-170"><a href="#cb22-170" aria-hidden="true" tabindex="-1"></a><span class="in">```{r session-info}</span></span>
-<span id="cb22-171"><a href="#cb22-171" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span>
-<span id="cb22-172"><a href="#cb22-172" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-173"><a href="#cb22-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-174"><a href="#cb22-174" aria-hidden="true" tabindex="-1"></a><span class="fu">### CmdStan</span></span>
-<span id="cb22-175"><a href="#cb22-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-176"><a href="#cb22-176" aria-hidden="true" tabindex="-1"></a><span class="in">```{r cmdstan-version}</span></span>
-<span id="cb22-177"><a href="#cb22-177" aria-hidden="true" tabindex="-1"></a><span class="fu">tryCatch</span>(</span>
-<span id="cb22-178"><a href="#cb22-178" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"CmdStan version:"</span>, cmdstanr<span class="sc">::</span><span class="fu">cmdstan_version</span>(), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>),</span>
-<span id="cb22-179"><a href="#cb22-179" aria-hidden="true" tabindex="-1"></a>  <span class="at">error =</span> <span class="cf">function</span>(e) <span class="fu">cat</span>(<span class="st">"CmdStan not available:"</span>, <span class="fu">conditionMessage</span>(e), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb22-180"><a href="#cb22-180" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb22-181"><a href="#cb22-181" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-182"><a href="#cb22-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-183"><a href="#cb22-183" aria-hidden="true" tabindex="-1"></a><span class="fu">### Git commit</span></span>
-<span id="cb22-184"><a href="#cb22-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-185"><a href="#cb22-185" aria-hidden="true" tabindex="-1"></a><span class="in">```{r git-info}</span></span>
-<span id="cb22-186"><a href="#cb22-186" aria-hidden="true" tabindex="-1"></a>git_hash <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(<span class="fu">system</span>(<span class="st">"git rev-parse HEAD"</span>, <span class="at">intern =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb22-187"><a href="#cb22-187" aria-hidden="true" tabindex="-1"></a>                     <span class="at">error =</span> <span class="cf">function</span>(e) <span class="st">"git not available"</span>)</span>
-<span id="cb22-188"><a href="#cb22-188" aria-hidden="true" tabindex="-1"></a>git_status <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(<span class="fu">system</span>(<span class="st">"git status --short"</span>, <span class="at">intern =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb22-189"><a href="#cb22-189" aria-hidden="true" tabindex="-1"></a>                       <span class="at">error =</span> <span class="cf">function</span>(e) <span class="fu">character</span>(<span class="dv">0</span>))</span>
-<span id="cb22-190"><a href="#cb22-190" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Commit hash:"</span>, git_hash, <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
-<span id="cb22-191"><a href="#cb22-191" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(git_status)) {</span>
-<span id="cb22-192"><a href="#cb22-192" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Uncommitted changes:</span><span class="sc">\n</span><span class="st">"</span>, <span class="fu">paste</span>(git_status, <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb22-193"><a href="#cb22-193" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb22-194"><a href="#cb22-194" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Working tree clean.</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb22-195"><a href="#cb22-195" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb22-196"><a href="#cb22-196" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-197"><a href="#cb22-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-198"><a href="#cb22-198" aria-hidden="true" tabindex="-1"></a><span class="fu">### Random seeds</span></span>
-<span id="cb22-199"><a href="#cb22-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-200"><a href="#cb22-200" aria-hidden="true" tabindex="-1"></a>SAFE lnM calculations use <span class="in">`seed = 123`</span>. Model fits use <span class="in">`seed = 123`</span>. The seeds</span>
-<span id="cb22-201"><a href="#cb22-201" aria-hidden="true" tabindex="-1"></a>are set in <span class="in">`chapters/Rscripts/04_lnm_safe.R`</span> and</span>
-<span id="cb22-202"><a href="#cb22-202" aria-hidden="true" tabindex="-1"></a><span class="in">`chapters/Rscripts/08_fit_or_read_model.R`</span>.</span>
-<span id="cb22-203"><a href="#cb22-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-204"><a href="#cb22-204" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 8 — Check saved results</span></span>
-<span id="cb22-205"><a href="#cb22-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-206"><a href="#cb22-206" aria-hidden="true" tabindex="-1"></a><span class="fu">### Effect-size file</span></span>
-<span id="cb22-207"><a href="#cb22-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-208"><a href="#cb22-208" aria-hidden="true" tabindex="-1"></a><span class="in">```{r es-cache}</span></span>
-<span id="cb22-209"><a href="#cb22-209" aria-hidden="true" tabindex="-1"></a>es_path <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"effect_sizes"</span>, <span class="st">"proceed_lnm_safe.rds"</span>)</span>
-<span id="cb22-210"><a href="#cb22-210" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(es_path)) {</span>
-<span id="cb22-211"><a href="#cb22-211" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"File:"</span>, es_path, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb22-212"><a href="#cb22-212" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Size:"</span>, <span class="fu">round</span>(<span class="fu">file.size</span>(es_path) <span class="sc">/</span> <span class="dv">1024</span><span class="sc">^</span><span class="dv">2</span>, <span class="dv">2</span>), <span class="st">"MB</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb22-213"><a href="#cb22-213" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Modified:"</span>, <span class="fu">format</span>(<span class="fu">file.mtime</span>(es_path)), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb22-214"><a href="#cb22-214" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb22-215"><a href="#cb22-215" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Missing. Complete Step 4, item 2.</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb22-216"><a href="#cb22-216" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb22-217"><a href="#cb22-217" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-218"><a href="#cb22-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-219"><a href="#cb22-219" aria-hidden="true" tabindex="-1"></a><span class="fu">### Prediction files used by model chapters</span></span>
-<span id="cb22-220"><a href="#cb22-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-221"><a href="#cb22-221" aria-hidden="true" tabindex="-1"></a><span class="in">```{r rendered-cache-audit}</span></span>
-<span id="cb22-222"><a href="#cb22-222" aria-hidden="true" tabindex="-1"></a>rendered_ids <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"m00"</span>, <span class="st">"m01"</span>, <span class="st">"m02"</span>, <span class="st">"m03"</span>, <span class="st">"m04"</span>, <span class="st">"m05"</span>, <span class="st">"m07"</span>, <span class="st">"m08"</span>)</span>
-<span id="cb22-223"><a href="#cb22-223" aria-hidden="true" tabindex="-1"></a>expected_n <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">m00 =</span> <span class="dv">7186</span>L, <span class="at">m01 =</span> <span class="dv">7186</span>L, <span class="at">m02 =</span> <span class="dv">7186</span>L, <span class="at">m03 =</span> <span class="dv">7186</span>L,</span>
-<span id="cb22-224"><a href="#cb22-224" aria-hidden="true" tabindex="-1"></a>                <span class="at">m04 =</span> <span class="dv">7186</span>L, <span class="at">m05 =</span> <span class="dv">7186</span>L, <span class="at">m07 =</span> <span class="dv">7186</span>L, <span class="at">m08 =</span> <span class="dv">7186</span>L)</span>
-<span id="cb22-225"><a href="#cb22-225" aria-hidden="true" tabindex="-1"></a>cache_audit <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_dfr</span>(rendered_ids, <span class="cf">function</span>(id) {</span>
-<span id="cb22-226"><a href="#cb22-226" aria-hidden="true" tabindex="-1"></a>  path <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"epred_draws"</span>, <span class="fu">paste0</span>(id, <span class="st">".rds"</span>))</span>
-<span id="cb22-227"><a href="#cb22-227" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(path)) {</span>
-<span id="cb22-228"><a href="#cb22-228" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(tibble<span class="sc">::</span><span class="fu">tibble</span>(<span class="at">model =</span> id, <span class="at">file =</span> <span class="st">"missing"</span>, <span class="at">observations =</span> <span class="cn">NA_integer_</span>,</span>
-<span id="cb22-229"><a href="#cb22-229" aria-hidden="true" tabindex="-1"></a>                          <span class="at">expected =</span> <span class="fu">unname</span>(expected_n[id]), <span class="at">matches =</span> <span class="cn">FALSE</span>))</span>
-<span id="cb22-230"><a href="#cb22-230" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb22-231"><a href="#cb22-231" aria-hidden="true" tabindex="-1"></a>  cache <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(path)</span>
-<span id="cb22-232"><a href="#cb22-232" aria-hidden="true" tabindex="-1"></a>  summary_text <span class="ot">&lt;-</span> <span class="fu">paste</span>(cache<span class="sc">$</span>summary_txt, <span class="at">collapse =</span> <span class="st">" "</span>)</span>
-<span id="cb22-233"><a href="#cb22-233" aria-hidden="true" tabindex="-1"></a>  match <span class="ot">&lt;-</span> <span class="fu">regmatches</span>(summary_text,</span>
-<span id="cb22-234"><a href="#cb22-234" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">regexec</span>(<span class="st">"Number of observations: ([0-9]+)"</span>, summary_text))[[<span class="dv">1</span>]]</span>
-<span id="cb22-235"><a href="#cb22-235" aria-hidden="true" tabindex="-1"></a>  observed_n <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">length</span>(match) <span class="sc">&gt;=</span> <span class="dv">2</span>) <span class="fu">as.integer</span>(match[<span class="dv">2</span>]) <span class="cf">else</span> <span class="cn">NA_integer_</span></span>
-<span id="cb22-236"><a href="#cb22-236" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">tibble</span>(<span class="at">model =</span> id, <span class="at">file =</span> <span class="st">"found"</span>, <span class="at">observations =</span> observed_n,</span>
-<span id="cb22-237"><a href="#cb22-237" aria-hidden="true" tabindex="-1"></a>                 <span class="at">expected =</span> <span class="fu">unname</span>(expected_n[id]),</span>
-<span id="cb22-238"><a href="#cb22-238" aria-hidden="true" tabindex="-1"></a>                 <span class="at">matches =</span> <span class="sc">!</span><span class="fu">is.na</span>(observed_n) <span class="sc">&amp;&amp;</span> observed_n <span class="sc">==</span> <span class="fu">unname</span>(expected_n[id]))</span>
-<span id="cb22-239"><a href="#cb22-239" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb22-240"><a href="#cb22-240" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(cache_audit, <span class="at">caption =</span> <span class="st">"Saved prediction files used by this book."</span>)</span>
-<span id="cb22-241"><a href="#cb22-241" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-242"><a href="#cb22-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-243"><a href="#cb22-243" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip title="Reproducibility checklist"}</span>
-<span id="cb22-244"><a href="#cb22-244" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The package check completes.</span>
-<span id="cb22-245"><a href="#cb22-245" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>CmdStan reports a version.</span>
-<span id="cb22-246"><a href="#cb22-246" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The required saved files are present.</span>
-<span id="cb22-247"><a href="#cb22-247" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Every prediction-file row says <span class="in">`found`</span> and <span class="in">`TRUE`</span>.</span>
-<span id="cb22-248"><a href="#cb22-248" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`quarto::quarto_render()`</span> writes <span class="in">`docs/index.html`</span>.</span>
-<span id="cb22-249"><a href="#cb22-249" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The commit hash and any uncommitted changes are recorded above.</span>
-<span id="cb22-250"><a href="#cb22-250" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb22-168"><a href="#cb22-168" aria-hidden="true" tabindex="-1"></a><span class="in">```{r package-inventory}</span></span>
+<span id="cb22-169"><a href="#cb22-169" aria-hidden="true" tabindex="-1"></a>package_versions <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb22-170"><a href="#cb22-170" aria-hidden="true" tabindex="-1"></a>  <span class="at">package =</span> project_packages,</span>
+<span id="cb22-171"><a href="#cb22-171" aria-hidden="true" tabindex="-1"></a>  <span class="at">version =</span> <span class="fu">vapply</span>(project_packages, <span class="cf">function</span>(x) {</span>
+<span id="cb22-172"><a href="#cb22-172" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">requireNamespace</span>(x, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb22-173"><a href="#cb22-173" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.character</span>(utils<span class="sc">::</span><span class="fu">packageVersion</span>(x))</span>
+<span id="cb22-174"><a href="#cb22-174" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb22-175"><a href="#cb22-175" aria-hidden="true" tabindex="-1"></a>      <span class="st">"not installed"</span></span>
+<span id="cb22-176"><a href="#cb22-176" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb22-177"><a href="#cb22-177" aria-hidden="true" tabindex="-1"></a>  }, <span class="fu">character</span>(<span class="dv">1</span>))</span>
+<span id="cb22-178"><a href="#cb22-178" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-179"><a href="#cb22-179" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(package_versions, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Package"</span>, <span class="st">"Version"</span>))</span>
+<span id="cb22-180"><a href="#cb22-180" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-181"><a href="#cb22-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-182"><a href="#cb22-182" aria-hidden="true" tabindex="-1"></a><span class="fu">### R and platform</span></span>
+<span id="cb22-183"><a href="#cb22-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-184"><a href="#cb22-184" aria-hidden="true" tabindex="-1"></a><span class="in">```{r session-info}</span></span>
+<span id="cb22-185"><a href="#cb22-185" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span>
+<span id="cb22-186"><a href="#cb22-186" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-187"><a href="#cb22-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-188"><a href="#cb22-188" aria-hidden="true" tabindex="-1"></a><span class="fu">### CmdStan</span></span>
+<span id="cb22-189"><a href="#cb22-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-190"><a href="#cb22-190" aria-hidden="true" tabindex="-1"></a><span class="in">```{r cmdstan-version}</span></span>
+<span id="cb22-191"><a href="#cb22-191" aria-hidden="true" tabindex="-1"></a><span class="fu">tryCatch</span>(</span>
+<span id="cb22-192"><a href="#cb22-192" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"CmdStan version:"</span>, cmdstanr<span class="sc">::</span><span class="fu">cmdstan_version</span>(), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>),</span>
+<span id="cb22-193"><a href="#cb22-193" aria-hidden="true" tabindex="-1"></a>  <span class="at">error =</span> <span class="cf">function</span>(e) <span class="fu">cat</span>(<span class="st">"CmdStan not available:"</span>, <span class="fu">conditionMessage</span>(e), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb22-194"><a href="#cb22-194" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-195"><a href="#cb22-195" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-196"><a href="#cb22-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-197"><a href="#cb22-197" aria-hidden="true" tabindex="-1"></a><span class="fu">### Git commit</span></span>
+<span id="cb22-198"><a href="#cb22-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-199"><a href="#cb22-199" aria-hidden="true" tabindex="-1"></a><span class="in">```{r git-info}</span></span>
+<span id="cb22-200"><a href="#cb22-200" aria-hidden="true" tabindex="-1"></a>git_hash <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(<span class="fu">system</span>(<span class="st">"git rev-parse HEAD"</span>, <span class="at">intern =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb22-201"><a href="#cb22-201" aria-hidden="true" tabindex="-1"></a>                     <span class="at">error =</span> <span class="cf">function</span>(e) <span class="st">"git not available"</span>)</span>
+<span id="cb22-202"><a href="#cb22-202" aria-hidden="true" tabindex="-1"></a>git_status <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(<span class="fu">system</span>(<span class="st">"git status --short"</span>, <span class="at">intern =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb22-203"><a href="#cb22-203" aria-hidden="true" tabindex="-1"></a>                       <span class="at">error =</span> <span class="cf">function</span>(e) <span class="fu">character</span>(<span class="dv">0</span>))</span>
+<span id="cb22-204"><a href="#cb22-204" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Commit hash:"</span>, git_hash, <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb22-205"><a href="#cb22-205" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(git_status)) {</span>
+<span id="cb22-206"><a href="#cb22-206" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Uncommitted changes:</span><span class="sc">\n</span><span class="st">"</span>, <span class="fu">paste</span>(git_status, <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb22-207"><a href="#cb22-207" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb22-208"><a href="#cb22-208" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Working tree clean.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb22-209"><a href="#cb22-209" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-210"><a href="#cb22-210" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-211"><a href="#cb22-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-212"><a href="#cb22-212" aria-hidden="true" tabindex="-1"></a><span class="fu">### Random seeds</span></span>
+<span id="cb22-213"><a href="#cb22-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-214"><a href="#cb22-214" aria-hidden="true" tabindex="-1"></a>SAFE lnM calculations use <span class="in">`seed = 123`</span>. Model fits use <span class="in">`seed = 123`</span>. The seeds</span>
+<span id="cb22-215"><a href="#cb22-215" aria-hidden="true" tabindex="-1"></a>are set in <span class="in">`chapters/Rscripts/04_lnm_safe.R`</span> and</span>
+<span id="cb22-216"><a href="#cb22-216" aria-hidden="true" tabindex="-1"></a><span class="in">`chapters/Rscripts/08_fit_or_read_model.R`</span>.</span>
+<span id="cb22-217"><a href="#cb22-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-218"><a href="#cb22-218" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 8 — Check saved results</span></span>
+<span id="cb22-219"><a href="#cb22-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-220"><a href="#cb22-220" aria-hidden="true" tabindex="-1"></a><span class="fu">### Effect-size file</span></span>
+<span id="cb22-221"><a href="#cb22-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-222"><a href="#cb22-222" aria-hidden="true" tabindex="-1"></a><span class="in">```{r es-cache}</span></span>
+<span id="cb22-223"><a href="#cb22-223" aria-hidden="true" tabindex="-1"></a>es_path <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"effect_sizes"</span>, <span class="st">"proceed_lnm_safe.rds"</span>)</span>
+<span id="cb22-224"><a href="#cb22-224" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(es_path)) {</span>
+<span id="cb22-225"><a href="#cb22-225" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"File:"</span>, es_path, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb22-226"><a href="#cb22-226" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Size:"</span>, <span class="fu">round</span>(<span class="fu">file.size</span>(es_path) <span class="sc">/</span> <span class="dv">1024</span><span class="sc">^</span><span class="dv">2</span>, <span class="dv">2</span>), <span class="st">"MB</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb22-227"><a href="#cb22-227" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Modified:"</span>, <span class="fu">format</span>(<span class="fu">file.mtime</span>(es_path)), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb22-228"><a href="#cb22-228" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb22-229"><a href="#cb22-229" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Missing. Complete Step 4, item 2.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb22-230"><a href="#cb22-230" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-231"><a href="#cb22-231" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-232"><a href="#cb22-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-233"><a href="#cb22-233" aria-hidden="true" tabindex="-1"></a><span class="fu">### Prediction files used by model chapters</span></span>
+<span id="cb22-234"><a href="#cb22-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-235"><a href="#cb22-235" aria-hidden="true" tabindex="-1"></a><span class="in">```{r rendered-cache-audit}</span></span>
+<span id="cb22-236"><a href="#cb22-236" aria-hidden="true" tabindex="-1"></a>rendered_ids <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"m00"</span>, <span class="st">"m01"</span>, <span class="st">"m02"</span>, <span class="st">"m03"</span>, <span class="st">"m04"</span>, <span class="st">"m05"</span>, <span class="st">"m07"</span>, <span class="st">"m08"</span>)</span>
+<span id="cb22-237"><a href="#cb22-237" aria-hidden="true" tabindex="-1"></a>expected_n <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">m00 =</span> <span class="dv">7186</span>L, <span class="at">m01 =</span> <span class="dv">7186</span>L, <span class="at">m02 =</span> <span class="dv">7186</span>L, <span class="at">m03 =</span> <span class="dv">7186</span>L,</span>
+<span id="cb22-238"><a href="#cb22-238" aria-hidden="true" tabindex="-1"></a>                <span class="at">m04 =</span> <span class="dv">7186</span>L, <span class="at">m05 =</span> <span class="dv">7186</span>L, <span class="at">m07 =</span> <span class="dv">7186</span>L, <span class="at">m08 =</span> <span class="dv">7186</span>L)</span>
+<span id="cb22-239"><a href="#cb22-239" aria-hidden="true" tabindex="-1"></a>cache_audit <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_dfr</span>(rendered_ids, <span class="cf">function</span>(id) {</span>
+<span id="cb22-240"><a href="#cb22-240" aria-hidden="true" tabindex="-1"></a>  path <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"epred_draws"</span>, <span class="fu">paste0</span>(id, <span class="st">".rds"</span>))</span>
+<span id="cb22-241"><a href="#cb22-241" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(path)) {</span>
+<span id="cb22-242"><a href="#cb22-242" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(tibble<span class="sc">::</span><span class="fu">tibble</span>(<span class="at">model =</span> id, <span class="at">file =</span> <span class="st">"missing"</span>, <span class="at">observations =</span> <span class="cn">NA_integer_</span>,</span>
+<span id="cb22-243"><a href="#cb22-243" aria-hidden="true" tabindex="-1"></a>                          <span class="at">expected =</span> <span class="fu">unname</span>(expected_n[id]), <span class="at">matches =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb22-244"><a href="#cb22-244" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb22-245"><a href="#cb22-245" aria-hidden="true" tabindex="-1"></a>  cache <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(path)</span>
+<span id="cb22-246"><a href="#cb22-246" aria-hidden="true" tabindex="-1"></a>  summary_text <span class="ot">&lt;-</span> <span class="fu">paste</span>(cache<span class="sc">$</span>summary_txt, <span class="at">collapse =</span> <span class="st">" "</span>)</span>
+<span id="cb22-247"><a href="#cb22-247" aria-hidden="true" tabindex="-1"></a>  match <span class="ot">&lt;-</span> <span class="fu">regmatches</span>(summary_text,</span>
+<span id="cb22-248"><a href="#cb22-248" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">regexec</span>(<span class="st">"Number of observations: ([0-9]+)"</span>, summary_text))[[<span class="dv">1</span>]]</span>
+<span id="cb22-249"><a href="#cb22-249" aria-hidden="true" tabindex="-1"></a>  observed_n <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">length</span>(match) <span class="sc">&gt;=</span> <span class="dv">2</span>) <span class="fu">as.integer</span>(match[<span class="dv">2</span>]) <span class="cf">else</span> <span class="cn">NA_integer_</span></span>
+<span id="cb22-250"><a href="#cb22-250" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">tibble</span>(<span class="at">model =</span> id, <span class="at">file =</span> <span class="st">"found"</span>, <span class="at">observations =</span> observed_n,</span>
+<span id="cb22-251"><a href="#cb22-251" aria-hidden="true" tabindex="-1"></a>                 <span class="at">expected =</span> <span class="fu">unname</span>(expected_n[id]),</span>
+<span id="cb22-252"><a href="#cb22-252" aria-hidden="true" tabindex="-1"></a>                 <span class="at">matches =</span> <span class="sc">!</span><span class="fu">is.na</span>(observed_n) <span class="sc">&amp;&amp;</span> observed_n <span class="sc">==</span> <span class="fu">unname</span>(expected_n[id]))</span>
+<span id="cb22-253"><a href="#cb22-253" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb22-254"><a href="#cb22-254" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(cache_audit, <span class="at">caption =</span> <span class="st">"Saved prediction files used by this book."</span>)</span>
+<span id="cb22-255"><a href="#cb22-255" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-256"><a href="#cb22-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-257"><a href="#cb22-257" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip title="Reproducibility checklist"}</span>
+<span id="cb22-258"><a href="#cb22-258" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The package check completes.</span>
+<span id="cb22-259"><a href="#cb22-259" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>CmdStan reports a version.</span>
+<span id="cb22-260"><a href="#cb22-260" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The required saved files are present.</span>
+<span id="cb22-261"><a href="#cb22-261" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Every prediction-file row says <span class="in">`found`</span> and <span class="in">`TRUE`</span>.</span>
+<span id="cb22-262"><a href="#cb22-262" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`quarto::quarto_render()`</span> writes <span class="in">`docs/index.html`</span>.</span>
+<span id="cb22-263"><a href="#cb22-263" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The commit hash and any uncommitted changes are recorded above.</span>
+<span id="cb22-264"><a href="#cb22-264" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

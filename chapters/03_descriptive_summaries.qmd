@@ -239,5 +239,5 @@ for (var in c("disturbance", "design", "trait_type", "taxa",
   )
 }
 
-cat("Descriptive tables saved to outputs/tables/\n")
+cat("Descriptive tables saved to Rdata/tables/\n")
 ```

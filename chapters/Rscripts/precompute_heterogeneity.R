@@ -20,6 +20,8 @@
 #
 # I^2_x = 100 * sigma2_x / (sigma2_u + sigma2_phylo + sigma2bar_e + Vbar)
 #
+# `outputs/` is the compute-server workspace. Copy these completed files to the
+# matching `Rdata/tables/` and `Rdata/summaries/` book folders before render.
 # Output (small): outputs/tables/heterogeneity_m00.csv
 #                 outputs/summaries/heterogeneity_m00.rds
 #

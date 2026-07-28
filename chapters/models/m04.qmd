@@ -61,7 +61,7 @@ print_cache_summary(cache)
 
 ## Orchard-like model figure
 
-The orchard-style figure is read from `outputs/figures/publication/orchard/`. The complete editable code used to build this plot is shown below.
+The orchard-style figure is read from `Rdata/figures/publication/orchard/`. The complete editable code used to build this plot is shown below.
 
 ```{r figure, fig.width=8, fig.height=9}
 knitr::include_graphics(

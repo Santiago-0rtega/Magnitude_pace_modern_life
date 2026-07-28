@@ -122,7 +122,9 @@ not during a normal book render.
 
 ## Step 5 — Prepare small files for the book
 
-After fitting models, run these scripts from the project root and in this order:
+The compute server uses `outputs/` as its working output folder. The web book
+uses `Rdata/` as its local, read-only mirror. After fitting models, run these
+scripts from the compute-project root and in this order:
 
 ```bash
 Rscript chapters/Rscripts/precompute_grid_summaries.R
@@ -132,7 +134,19 @@ Rscript chapters/Rscripts/precompute_heterogeneity.R
 ```
 
 These scripts convert large fitted models into small tables and prediction
-files. The model chapters read the small files.
+files.
+
+Copy the completed folders from the compute server to the matching book paths:
+
+| Compute server | Web-book project |
+|---|---|
+| `outputs/epred_draws/` | `Rdata/epred_draws/` |
+| `outputs/summaries/` | `Rdata/summaries/` |
+| `outputs/tables/` | `Rdata/tables/` |
+| `outputs/figures/` | `Rdata/figures/` |
+
+Replace the matching files in `Rdata/` only after every compute script finishes.
+The model chapters read the copied files; they never read `outputs/`.
 
 ## Step 6 — Render the web book
 

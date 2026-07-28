@@ -3,6 +3,8 @@
 # model, extracts fixed effects + diagnostics + status, and writes the small
 # tables that 05_location_scale_model_grid.qmd and 08_publication_figures.qmd
 # consume — so the BOOK never loads a 400 MB model.
+# `outputs/` is the compute-server workspace. Copy the completed tables to the
+# book mirror at `Rdata/tables/` before rendering.
 #
 # Outputs (all small) under outputs/tables/:
 #   location_effects_all_moderators.csv

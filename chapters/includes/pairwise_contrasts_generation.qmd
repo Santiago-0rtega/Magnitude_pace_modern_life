@@ -1,0 +1,114 @@
+### Code used to generate the contrasts
+
+This code was run with the fitted model on the compute machine. The `fit`,
+`model_id`, and `moderator` values are set in the model code above. Location
+contrasts use posterior expected values. Scale contrasts are calculated from
+posterior draws of the sigma coefficients. The compute server writes to
+`outputs/`; the completed tables are then copied to the book's `Rdata/` mirror.
+
+```{r generate-pairwise-contrasts, eval=FALSE}
+library(brms)
+library(emmeans)
+library(coda)
+library(dplyr)
+library(readr)
+library(tibble)
+
+# Location marginal means and all pairwise differences.
+em <- emmeans::emmeans(
+  fit,
+  stats::as.formula(paste("~", moderator)),
+  epred = TRUE,
+  re_formula = NA
+)
+
+loc_emmeans <- as.data.frame(summary(em)) |>
+  dplyr::rename(level = 1) |>
+  tibble::as_tibble()
+
+loc_pairs <- emmeans::contrast(em, method = "pairwise", adjust = "none")
+loc_contrasts <- as.data.frame(summary(loc_pairs, infer = TRUE)) |>
+  tibble::as_tibble()
+
+# Add probability of direction from the location-contrast draws.
+loc_draws <- as.matrix(
+  emmeans::as.mcmc.emmGrid(loc_pairs, names = FALSE)
+)
+loc_contrasts$pd <- apply(loc_draws, 2, function(d) {
+  p_positive <- mean(d > 0)
+  max(p_positive, 1 - p_positive)
+})
+
+# Scale marginal means on the log-sigma scale.
+draws <- brms::as_draws_df(fit)
+levels_all <- levels(factor(fit$data[[moderator]]))
+reference <- levels_all[1]
+sigma_intercept <- draws[["b_sigma_Intercept"]]
+sigma_by_level <- list()
+sigma_by_level[[reference]] <- sigma_intercept
+
+sigma_columns <- grep(
+  paste0("^b_sigma_", moderator),
+  names(draws),
+  value = TRUE
+)
+column_keys <- gsub(
+  "[^[:alnum:]_]", "",
+  sub(paste0("^b_sigma_", moderator), "", sigma_columns)
+)
+
+for (level in setdiff(levels_all, reference)) {
+  level_key <- gsub("[^[:alnum:]_]", "", level)
+  matched_column <- sigma_columns[column_keys == level_key]
+  if (length(matched_column) == 1L) {
+    sigma_by_level[[level]] <-
+      sigma_intercept + draws[[matched_column]]
+  }
+}
+
+hpd_interval <- function(x) {
+  as.numeric(coda::HPDinterval(coda::as.mcmc(x)))
+}
+
+scale_emmeans <- dplyr::bind_rows(lapply(names(sigma_by_level), function(level) {
+  d <- sigma_by_level[[level]]
+  interval <- hpd_interval(d)
+  tibble::tibble(
+    level = level,
+    emmean = mean(d),
+    lower.HPD = interval[1],
+    upper.HPD = interval[2],
+    residual_SD = exp(mean(d))
+  )
+}))
+
+# All pairwise differences between log-sigma draws.
+level_names <- names(sigma_by_level)
+level_pairs <- utils::combn(level_names, 2, simplify = FALSE)
+scale_contrasts <- dplyr::bind_rows(lapply(level_pairs, function(pair) {
+  d <- sigma_by_level[[pair[1]]] - sigma_by_level[[pair[2]]]
+  interval <- hpd_interval(d)
+  p_positive <- mean(d > 0)
+  tibble::tibble(
+    contrast = paste(pair, collapse = " - "),
+    estimate = mean(d),
+    lower.HPD = interval[1],
+    upper.HPD = interval[2],
+    pd = max(p_positive, 1 - p_positive)
+  )
+}))
+
+# Save the four tables used to build the shared cache.
+contrast_dir <- file.path("outputs", "tables", "contrasts")
+dir.create(contrast_dir, recursive = TRUE, showWarnings = FALSE)
+readr::write_csv(loc_emmeans,
+  file.path(contrast_dir, paste0(model_id, "_location_emmeans.csv")))
+readr::write_csv(loc_contrasts,
+  file.path(contrast_dir, paste0(model_id, "_location_contrasts.csv")))
+readr::write_csv(scale_emmeans,
+  file.path(contrast_dir, paste0(model_id, "_scale_emmeans.csv")))
+readr::write_csv(scale_contrasts,
+  file.path(contrast_dir, paste0(model_id, "_scale_contrasts.csv")))
+```
+
+### Code used to read and display the contrasts

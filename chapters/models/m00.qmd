@@ -63,7 +63,7 @@ print_cache_summary(cache)
 
 Location–scale $I^2$ from this intercept-only baseline, partitioned into between-study (reference), phylogenetic, and within-study (residual) components following the location–scale meta-analysis framework of Nakagawa et al. Values are read from `Rdata/summaries/heterogeneity_m00.rds`.
 
-```{r het, echo=FALSE}
+```{r het}
 source(here::here("chapters", "Rscripts", "18_contrasts_cache.R"))
 kable_contrasts(format_heterogeneity(read_heterogeneity()),
                 caption = "Location–scale heterogeneity (I², %) with 95% credible intervals.")
@@ -99,7 +99,7 @@ P = W - W X (X^\top W X)^{-1} X^\top W, \qquad
 W = V^{-1}.
 $$
 
-```{r het-components, echo=FALSE}
+```{r het-components}
 source(here::here("chapters", "Rscripts", "18_contrasts_cache.R"))
 kable_contrasts(format_heterogeneity_components(read_heterogeneity()),
                 caption = "Precomputed variance components used in the m00 heterogeneity denominator.")
@@ -107,7 +107,7 @@ kable_contrasts(format_heterogeneity_components(read_heterogeneity()),
 
 ## Orchard-like model figure
 
-The orchard-style figure is read from `outputs/figures/publication/orchard/`. The complete editable code used to build this plot is shown below.
+The orchard-style figure is read from `Rdata/figures/publication/orchard/`. The complete editable code used to build this plot is shown below.
 
 ```{r figure, fig.width=8, fig.height=9}
 knitr::include_graphics(

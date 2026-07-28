@@ -1,6 +1,7 @@
 # precompute_epred_draws.R
 # Run ONCE (re-run when a pending fit completes). Builds the small per-model
 # draw caches in outputs/epred_draws/<id>.rds that back models/m*.qmd.
+# Copy completed caches to the book mirror at Rdata/epred_draws/ before render.
 #
 #   Rscript precompute_epred_draws.R          # build missing caches
 #   FORCE=1 Rscript precompute_epred_draws.R  # rebuild all

@@ -4,6 +4,8 @@
 # level-vs-level contrasts, for BOTH the location part and the scale (sigma)
 # part, and save them as small structured tables the book can read without ever
 # loading a 400 MB fit.
+# `outputs/` is the compute-server workspace. Copy the completed summaries and
+# tables to `Rdata/summaries/` and `Rdata/tables/` before rendering the book.
 #
 #   Location: emmeans(fit, ~ moderator, epred = TRUE, re_formula = NA) and
 #             pairwise contrasts (no p-value adjustment; Bayesian HPD intervals).

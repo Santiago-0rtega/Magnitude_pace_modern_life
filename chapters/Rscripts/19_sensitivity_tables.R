@@ -179,7 +179,7 @@ sens_all_moderator_tables <- function(variant) {
   out <- lapply(sens_moderators, function(m) {
     knitr::knit_child(
       text = c(sprintf("### %s\n", .sens_mod_labels[[m]]),
-               "```{r echo=FALSE}",
+               "```{r}",
                sprintf("sens_moderator_table('%s', '%s')", variant, m),
                "```\n"),
       quiet = TRUE, envir = environment())

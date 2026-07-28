@@ -55,7 +55,7 @@ excludes intercepts and counts a coefficient when either:
 This rule creates the displayed `DIFFERS` and `consistent` labels. The paired
 estimates are also printed in the appendices.
 
-```{r sensitivity-summary, echo=FALSE}
+```{r sensitivity-summary}
 sens_variant_summary_table()
 ```
 
