@@ -13,18 +13,17 @@ moderator_grid <- tibble::tribble(
   "m07",     "genphen",            "Phenotypic vs genetic study",       "categorical"
 )
 
-# Moderators fit but excluded from the primary supplementary results, with
-# rationale. Rendered as a documented exclusion note in ch05.
+# Non-primary model families. This table is rendered once, at the end of ch05.
 excluded_grid <- tibble::tribble(
   ~model_id, ~moderator,  ~label,             ~reason,
   "m06",     "taxa",      "Taxonomic group",
-    "The original taxonomic fit and two collapsed-category refits did not complete within the allocated runtime. No converged posterior was available, so this moderator is excluded from reported estimates.",
+    "The original fit completed only 2 of 4 chains (max Rhat 1.05; minimum sigma ESS 59). Two collapsed-category refits were attempted, but neither produced a usable converged posterior within the allocated runtime.",
   "m08",     "env_change", "Environmental-change context",
-    "The corrected-data fit had max Rhat = 1.0143 and did not meet the pre-specified convergence criterion. It is excluded from primary results and retained only as a diagnostic appendix.",
+    "The corrected-data fit had max Rhat 1.0143, minimum bulk ESS 780, minimum tail ESS 663, and 0 divergences. It did not meet the pre-specified Rhat limit.",
   "m09",     "data_type", "Data type",
-    "The cleaned refit returned 5/8000 divergent transitions after warmup and is excluded from reported estimates.",
+    "The original fit had bulk ESS near 350 for sigma terms. The simplified m09b refit removed two sparse levels but retained 5 of 8000 post-warmup divergent transitions.",
   "m10",     "transf_data", "Transformation status",
-    "The cleaned refit had max Rhat = 1.0128 and minimum bulk ESS = 230, so it did not meet the convergence criteria and is excluded from the reported results.",
+    "The original seven-level fit stopped because of memory limits. The simplified two-level m10b refit had max Rhat 1.0128, minimum bulk ESS 230, minimum tail ESS 363, and 0 divergences.",
   "m11",     "data_scale", "Measurement scale",
-    "Measurement scale is a property of the source measurement units rather than a biological moderator. Its converged fit is retained as a sensitivity analysis of whether lnM differs between interval- and ratio-scale traits."
+    "This separate model converged. It is retained as a sensitivity model because measurement scale records source units rather than a biological moderator."
 )

@@ -58,14 +58,6 @@ render must not start model fitting.
 moderator_grid
 ```
 
-## Excluded moderators
-
-Moderators excluded from the primary results are listed below. Available fits are retained in `Rdata/models/`; their estimates are not carried into the reported effect tables or publication figures.
-
-```{r excluded-registry}
-excluded_grid |> dplyr::select(model_id, moderator, label, reason)
-```
-
 ## Input: load data and phylogeny
 
 ```{r load-data}
@@ -403,41 +395,18 @@ if (rebuild_grid) {
 }
 
 model_status <- model_status |>
-  dplyr::mutate(
-    status = dplyr::if_else(
-      model_id %in% c("m08", "m10"), "excluded: did not converge", status
-    ),
-    notes = dplyr::case_when(
-      model_id == "m08" ~ "Corrected-data fit had max Rhat = 1.0143, minimum bulk ESS = 780, minimum tail ESS = 663, and zero divergences; moved to the appendix and excluded from reported estimates.",
-      model_id == "m10" ~ "Cleaned transformation-status refit had max Rhat = 1.0128 and minimum bulk ESS = 230; its result chapter and estimates are excluded.",
-      TRUE ~ notes
-    )
-  ) |>
-  dplyr::bind_rows(
-    tibble::tribble(
-      ~model_id, ~moderator, ~label, ~type, ~status, ~notes, ~max_rhat, ~min_bulk_ess, ~min_tail_ess, ~n_divergent, ~max_treedepth_hits,
-      "m06", "taxa", "Taxonomic group", "categorical", "excluded: did not converge", "Taxonomic grouping was redundant with the phylogenetic effect and did not reach a usable posterior in a reasonable time.", NA_real_, NA_real_, NA_real_, NA_integer_, NA_integer_,
-      "m08", "env_change", "Environmental-change context", "categorical", "excluded: did not converge", "Corrected-data fit had max Rhat = 1.0143, minimum bulk ESS = 780, minimum tail ESS = 663, and zero divergences; moved to the appendix and excluded from reported estimates.", 1.0143, 780, 663, 0L, 0L,
-      "m09", "data_type", "Data type", "categorical", "excluded: did not converge", "The cleaned refit retained 5 divergent transitions after warmup; its result chapter and estimates are excluded.", NA_real_, NA_real_, NA_real_, 5L, NA_integer_,
-      "m10", "transf_data", "Transformation status", "categorical", "excluded: did not converge", "Cleaned transformation-status refit had max Rhat = 1.0128 and minimum bulk ESS = 230; its result chapter and estimates are excluded.", 1.0128, 230, 363, 0L, 0L,
-      "m12", "log10_years × disturbance", "Elapsed time (log10 years) × disturbance", "interaction", "excluded: interaction model", "Interaction models were removed from the reported book. The completed m12 fit also retained 4 divergent transitions after warmup.", 1.01, 293, 486, 4L, NA_integer_,
-      "m13", "log10_generations × disturbance", "Elapsed time (log10 generations) × disturbance", "interaction", "excluded: interaction model", "Interaction models were removed from the reported book and no result chapter is presented.", NA_real_, NA_real_, NA_real_, NA_integer_, NA_integer_
-    )
-  ) |>
+  dplyr::filter(model_id %in% moderator_grid$model_id) |>
   dplyr::arrange(model_id)
 
-# Excluded models are documented in the status table but are not propagated
-# into the reported effect tables or publication figures.
-excluded_model_ids <- c("m06", "m08", "m09", "m10", "m12", "m13")
 loc_effects <- loc_effects |>
-  dplyr::filter(!model_id %in% excluded_model_ids)
+  dplyr::filter(model_id %in% moderator_grid$model_id)
 scl_effects <- scl_effects |>
-  dplyr::filter(!model_id %in% excluded_model_ids)
+  dplyr::filter(model_id %in% moderator_grid$model_id)
 ```
 
 ## Model status table
 
-Models `m06`, `m08`, `m09`, and `m10` are excluded because they did not produce a reliable, converged posterior. The `m08` diagnostics page is retained in the appendix for transparency. The interaction models (`m12` and `m13`) are also excluded from the reported book. None of these models contributes to the reported effect tables or publication figures.
+This table contains only the six primary moderator models.
 
 ```{r status-table}
 model_status |>
@@ -459,4 +428,26 @@ model_status |>
     ess_ok  = dplyr::if_else(min_bulk_ess >= 400, "ok", "warn"),
     div_ok  = dplyr::if_else(n_divergent < 10, "ok", "warn")
   )
+```
+
+## Non-primary model attempts
+
+This is the only list of models outside the primary grid. Models `m09`, `m10`,
+and `m11` are separate models for three related data-description fields:
+`data_type`, `transf_data`, and `data_scale`. They are not submodels of one
+another. The simplified refits are `m09b` from `m09` and `m10b` from `m10`,
+similar to the collapsed-category attempts made for `m06`.
+
+```{r non-primary-models}
+interaction_attempts <- tibble::tribble(
+  ~model_id, ~moderator, ~label, ~reason,
+  "m12", "log10_years × disturbance", "Years × disturbance interaction",
+    "Removed from the reported book. The completed fit retained 4 post-warmup divergences, with max Rhat 1.01, minimum bulk ESS 293, and minimum tail ESS 486.",
+  "m13", "log10_generations × disturbance", "Generations × disturbance interaction",
+    "Removed from the reported book; no result chapter is presented."
+)
+
+dplyr::bind_rows(excluded_grid, interaction_attempts) |>
+  dplyr::select(model_id, label, reason) |>
+  knitr::kable(col.names = c("Model", "Field", "Recorded status"))
 ```
