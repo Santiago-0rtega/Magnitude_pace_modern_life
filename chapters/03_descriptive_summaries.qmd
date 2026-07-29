@@ -569,7 +569,7 @@ p_alluvial <- make_alluvial(
   m00_dat,
   axes = c("design", "genphen", "disturbance"),
   axis_labels = c(
-    "Comparison\ndesign", "Evidence", "Disturbance\ncontext"
+    "Comparison\ndesign", "Study type", "Disturbance\ncontext"
   )
 )
 
