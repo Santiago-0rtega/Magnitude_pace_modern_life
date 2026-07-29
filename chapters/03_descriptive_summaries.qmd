@@ -74,7 +74,21 @@ plot_count_donut <- function(dat, var, title, palette = NULL) {
 
 ```{r load}
 dat_es <- readRDS(here::here("Rdata", "effect_sizes", "proceed_lnm_safe.rds"))
-cat("Contrasts:", nrow(dat_es), "\n")
+m00_fit <- readRDS(
+  here::here("Rdata", "models", "m00_ls_intercept_only.rds")
+)
+m00_ids <- as.character(m00_fit$data$es_id_model)
+m00_index <- match(m00_ids, as.character(dat_es$es_id_model))
+
+if (anyNA(m00_index) || anyDuplicated(m00_ids)) {
+  stop("The m00 effect-size IDs do not map uniquely to the descriptive dataset.")
+}
+
+# All model-coverage summaries use the exact rows retained by m00, in model order.
+m00_dat <- dat_es[m00_index, , drop = FALSE]
+
+cat("SAFE contrasts:", nrow(dat_es), "\n")
+cat("m00 contrasts:", nrow(m00_dat), "\n")
 ```
 
 ## Check: overview counts
@@ -99,6 +113,56 @@ The tables report the exact counts. The plots display the same category totals.
 dat_es |> dplyr::count(disturbance, sort = TRUE)
 ```
 
+## Analytical coverage and dominant evidence pathways
+
+The baseline analysis retained `r scales::comma(nrow(m00_dat))` contrasts from
+`r dplyr::n_distinct(m00_dat$ref_id)` references and
+`r scales::comma(dplyr::n_distinct(m00_dat$sys_id))` study systems. After
+taxonomic reconciliation, these contrasts represented
+`r dplyr::n_distinct(m00_fit$data$sp_ncbi)` species. The table and figure below
+use only these model-retained contrasts; their denominator therefore agrees
+with the sample size reported for `m00`.
+
+```{r}
+#| label: tbl-m00-coverage
+#| tbl-cap: "Coverage of the baseline analytical sample. Percentages are the share of all 7,186 contrasts retained by m00."
+
+coverage_variables <- c(
+  disturbance = "Disturbance context",
+  design = "Comparison design",
+  trait_type = "Trait type",
+  genphen = "Evidence type",
+  taxa = "Taxonomic group"
+)
+
+m00_coverage <- purrr::imap_dfr(coverage_variables, function(dimension, variable) {
+  m00_dat |>
+    dplyr::transmute(category = as.character(.data[[variable]])) |>
+    dplyr::mutate(category = dplyr::coalesce(category, "Not reported")) |>
+    dplyr::count(category, name = "Contrasts", sort = TRUE) |>
+    dplyr::mutate(
+      Dimension = dimension,
+      `Coverage (%)` = 100 * Contrasts / nrow(m00_dat)
+    ) |>
+    dplyr::select(Dimension, Category = category, Contrasts, `Coverage (%)`)
+})
+
+m00_coverage |>
+  dplyr::mutate(
+    Contrasts = scales::comma(Contrasts),
+    `Coverage (%)` = sprintf("%.1f", `Coverage (%)`)
+  ) |>
+  knitr::kable(
+    align = c("l", "l", "r", "r"),
+    col.names = c("Dimension", "Category", "Contrasts", "Coverage (%)")
+  ) |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+    full_width = TRUE
+  ) |>
+  kableExtra::collapse_rows(columns = 1, valign = "top")
+```
+
 ```{r by-design}
 dat_es |> dplyr::count(design, sort = TRUE)
 ```
@@ -110,6 +174,426 @@ dat_es |> dplyr::count(trait_type, sort = TRUE)
 ```{r by-taxa}
 dat_es |> dplyr::count(taxa, sort = TRUE)
 ```
+
+## Taxonomic representation
+
+This figure counts the unique species and contrasts used by the baseline model (`m00`). Tile area is proportional to the number of contrasts per species. Each label gives the contrast count and species count. Records from the complete PROCEED database that were not included in the model are not counted.
+
+```{r}
+#| label: fig-taxonomic-representation
+#| fig-cap: "Taxonomic representation in model m00. Tile size is relative to the number of contrasts per species. Labels give the number of contrasts and species in each group."
+#| fig-alt: "A proportional tile chart showing 81 birds, 74 plants, 47 mammals, 29 fishes, 11 arthropods, 4 amphibians, 4 reptiles, and 3 molluscs. Each tile includes a white taxon silhouette."
+#| fig-width: 12
+#| fig-height: 8.2
+
+# Read the exact species names used by the baseline model.
+m00_species <- unique(as.character(m00_fit$data$sp_ncbi))
+
+# Connect the original species names to the canonical names used by m00.
+name_map <- readRDS(
+  here::here("Rdata", "phylogeny", "proceed_name_map.rds")
+)
+canonical_lookup <- stats::setNames(
+  as.character(name_map$sp_ncbi_canonical),
+  as.character(name_map$sp_ncbi_original)
+)
+
+# Keep the exact contrasts used by m00 and count species and contrasts.
+taxon_counts <- m00_dat |>
+  dplyr::mutate(
+    sp_ncbi_canonical = unname(canonical_lookup[as.character(sp_ncbi)])
+  ) |>
+  dplyr::filter(
+    !is.na(taxa)
+  ) |>
+  dplyr::group_by(taxa) |>
+  dplyr::summarise(
+    species = dplyr::n_distinct(sp_ncbi_canonical, na.rm = TRUE),
+    contrasts = dplyr::n(),
+    .groups = "drop"
+  ) |>
+  dplyr::filter(species > 0) |>
+  dplyr::mutate(
+    taxa = as.character(taxa),
+    contrasts_per_species = contrasts / species,
+    weight = contrasts_per_species
+  )
+
+# Use a wide layout. Small groups share a full-width strip.
+make_taxon_layout <- function(dat, total_width = 1.6) {
+  small_order <- c("Bird", "Mammal", "Amphibian", "Mollusc")
+  left_order <- c("Fish", "Arthropod")
+  right_order <- c("Reptile", "Plant")
+  total_weight <- sum(dat$weight)
+
+  small <- dat[match(small_order, dat$taxa), , drop = FALSE]
+  small_height <- sum(small$weight) / total_weight
+  small_widths <- total_width * small$weight / sum(small$weight)
+  small$xmin <- c(0, head(cumsum(small_widths), -1))
+  small$xmax <- cumsum(small_widths)
+  small$ymin <- 1 - small_height
+  small$ymax <- 1
+
+  large_height <- 1 - small_height
+  large <- dat[dat$taxa %in% c(left_order, right_order), , drop = FALSE]
+  left <- large[match(left_order, large$taxa), , drop = FALSE]
+  right <- large[match(right_order, large$taxa), , drop = FALSE]
+  left_width <- total_width * sum(left$weight) / sum(large$weight)
+
+  stack_column <- function(x, xmin, xmax) {
+    heights <- large_height * x$weight / sum(x$weight)
+    x$xmin <- xmin
+    x$xmax <- xmax
+    x$ymin <- c(0, head(cumsum(heights), -1))
+    x$ymax <- cumsum(heights)
+    x
+  }
+
+  dplyr::bind_rows(
+    stack_column(left, 0, left_width),
+    stack_column(right, left_width, total_width),
+    small
+  )
+}
+
+taxon_tiles <- make_taxon_layout(taxon_counts) |>
+  dplyr::mutate(
+    area = (xmax - xmin) * (ymax - ymin),
+    taxa_plural = dplyr::recode(
+      taxa,
+      Bird = "Birds", Plant = "Plants", Mammal = "Mammals", Fish = "Fishes",
+      Arthropod = "Arthropods", Amphibian = "Amphibians",
+      Reptile = "Reptiles", Mollusc = "Molluscs"
+    ),
+    label = dplyr::case_when(
+      taxa %in% c("Plant", "Reptile") ~ paste0(
+        taxa_plural, "\n", scales::comma(contrasts), "\n", species, " spp."
+      ),
+      taxa %in% c("Amphibian", "Mollusc") ~ paste0(
+        taxa_plural, "\n", scales::comma(contrasts), " | ", species, " spp."
+      ),
+      TRUE ~ paste0(
+        taxa_plural, "\n", scales::comma(contrasts), " contrasts\n", species, " spp."
+      )
+    ),
+    is_small = taxa %in% c("Bird", "Mammal", "Amphibian", "Mollusc"),
+    label_size = 13 / ggplot2::.pt,
+    label_x = xmin + ifelse(is_small, 0.012, 0.018),
+    label_y = ifelse(is_small, (ymin + ymax) / 2, ymax - 0.018),
+    label_vjust = ifelse(is_small, 0.5, 1)
+  )
+
+# Read the supplied silhouettes from Rdata/figures/Animals.
+animal_dir <- here::here("Rdata", "figures", "Animals")
+icon_paths <- c(
+  Bird = file.path(animal_dir, "Bird.png"),
+  Plant = file.path(animal_dir, "Tree.png"),
+  Mammal = file.path(animal_dir, "Mammals.png"),
+  Fish = file.path(animal_dir, "Fish.png"),
+  Arthropod = file.path(animal_dir, "Arthropods.png"),
+  Amphibian = file.path(animal_dir, "Frog.png"),
+  Reptile = file.path(animal_dir, "Turtle2.png"),
+  Mollusc = file.path(animal_dir, "Mollusca.png")
+)
+
+read_white_silhouette <- function(path) {
+  image <- png::readPNG(path)
+  if (dim(image)[3] == 4) {
+    alpha <- image[, , 4]
+  } else {
+    brightness <- apply(image[, , 1:3, drop = FALSE], c(1, 2), mean)
+    alpha <- pmin(1, pmax(0, (1 - brightness) * 8))
+  }
+  white <- array(1, dim = c(dim(image)[1], dim(image)[2], 4))
+  white[, , 4] <- alpha * 0.90
+  white
+}
+
+icon_layers <- lapply(seq_len(nrow(taxon_tiles)), function(i) {
+  tile <- taxon_tiles[i, ]
+  image <- read_white_silhouette(icon_paths[[tile$taxa]])
+  tile_width <- tile$xmax - tile$xmin
+  tile_height <- tile$ymax - tile$ymin
+  image_ratio <- dim(image)[2] / dim(image)[1]
+  keep_size <- tile$taxa %in% c("Fish", "Arthropod")
+  max_width <- tile_width * ifelse(
+    keep_size, 0.48,
+    ifelse(tile$is_small, 0.34, 0.62)
+  )
+  max_height <- tile_height * ifelse(
+    keep_size, 0.55,
+    ifelse(tile$is_small, 0.84, 0.68)
+  )
+  icon_width <- min(max_width, max_height * image_ratio)
+  icon_height <- icon_width / image_ratio
+  centre_x <- ifelse(
+    tile$is_small,
+    tile$xmax - tile_width * 0.20,
+    (tile$xmin + tile$xmax) / 2
+  )
+  centre_y <- (tile$ymin + tile$ymax) / 2
+
+  ggplot2::annotation_custom(
+    grid::rasterGrob(image, interpolate = TRUE),
+    xmin = centre_x - icon_width / 2,
+    xmax = centre_x + icon_width / 2,
+    ymin = centre_y - icon_height / 2,
+    ymax = centre_y + icon_height / 2
+  )
+})
+
+taxon_colours <- c(
+  Bird = "#5B6FA8", Plant = "#2F6B55", Mammal = "#8A5A44",
+  Fish = "#356A8A", Arthropod = "#B56A3A", Amphibian = "#4E8C8C",
+  Reptile = "#6C8B5A", Mollusc = "#8B648F"
+)
+
+p_taxa <- ggplot2::ggplot(taxon_tiles) +
+  ggplot2::geom_rect(
+    ggplot2::aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, fill = taxa),
+    colour = "white", linewidth = 1.2
+  )
+
+for (icon_layer in icon_layers) {
+  p_taxa <- p_taxa + icon_layer
+}
+
+p_taxa <- p_taxa +
+  ggplot2::geom_text(
+    ggplot2::aes(x = label_x, y = label_y, label = label,
+                 size = label_size, vjust = label_vjust),
+    colour = "white", fontface = "bold", hjust = 0,
+    lineheight = 0.9
+  ) +
+  ggplot2::scale_fill_manual(values = taxon_colours) +
+  ggplot2::scale_size_identity() +
+  ggplot2::coord_fixed(ratio = 1, expand = FALSE, clip = "off") +
+  ggplot2::theme_void(base_size = 13) +
+  ggplot2::theme(
+    legend.position = "none",
+    plot.margin = ggplot2::margin(10, 10, 10, 10)
+  )
+
+# Save the same figure displayed below.
+ggplot2::ggsave(
+  here::here("Rdata", "figures", "taxonomic_representation.png"),
+  p_taxa, width = 12, height = 8.2, dpi = 320, bg = "white"
+)
+ggplot2::ggsave(
+  here::here("Rdata", "figures", "taxonomic_representation.pdf"),
+  p_taxa, width = 12, height = 8.2, device = grDevices::cairo_pdf,
+  bg = "white"
+)
+
+p_taxa
+```
+
+### Evidence pathways
+
+Flow width is proportional to the number of `m00` contrasts following each
+path. Colour identifies comparison design at the first axis and is carried
+through the remaining axes. Counts and percentages are reported in
+@tbl-m00-coverage rather than repeated inside the figure.
+
+```{r}
+#| label: fig-m00-alluvial-coverage
+#| fig-cap: "Evidence pathways among the 7,186 contrasts retained by model m00, from comparison design through evidence type to disturbance context. Flow width is proportional to the number of contrasts."
+#| fig-alt: "An alluvial plot beginning with synchronic and allochronic comparison designs, passing through phenotypic or genetic evidence, and ending with disturbance contexts."
+#| fig-width: 14
+#| fig-height: 9
+
+make_alluvial <- function(dat, axes, axis_labels, gap = 0.018, curve_points = 35) {
+  paths <- dat |>
+    dplyr::transmute(dplyr::across(
+      dplyr::all_of(axes),
+      ~ dplyr::coalesce(as.character(.x), "Not reported")
+    )) |>
+    dplyr::count(dplyr::across(dplyr::all_of(axes)), name = "n") |>
+    dplyr::mutate(path_id = dplyr::row_number())
+
+  # Use one global vertical scale so a flow has identical thickness at every
+  # axis. Axes with fewer strata are centred rather than independently rescaled.
+  strata_per_axis <- vapply(
+    axes, function(axis) dplyr::n_distinct(paths[[axis]]), integer(1)
+  )
+  flow_scale <- (1 - gap * (max(strata_per_axis) - 1)) / nrow(dat)
+
+  strata <- vector("list", length(axes))
+
+  for (i in seq_along(axes)) {
+    axis <- axes[[i]]
+    category_totals <- paths |>
+      dplyr::group_by(.data[[axis]]) |>
+      dplyr::summarise(total = sum(n), .groups = "drop") |>
+      dplyr::arrange(dplyr::desc(total), .data[[axis]]) |>
+      dplyr::mutate(
+        height = flow_scale * total,
+        occupied = sum(height) + gap * (dplyr::n() - 1),
+        offset = (1 - occupied) / 2,
+        ymin = offset + dplyr::lag(cumsum(height + gap), default = 0),
+        ymax = ymin + height
+      )
+
+    strata[[i]] <- category_totals |>
+      dplyr::transmute(
+        axis = i,
+        category = .data[[axis]], total, ymin, ymax,
+        label = dplyr::recode(
+          category,
+          Hunt_harv = "Hunting and harvesting",
+          Introduction = "Introductions",
+          .default = stringr::str_to_sentence(
+            stringr::str_replace_all(category, "_", " ")
+          )
+        )
+      )
+  }
+
+  # Aggregate each adjacent pair independently. This produces exactly one
+  # ribbon per source-target pair instead of splitting a link according to
+  # categories on a third axis.
+  ribbons <- purrr::map_dfr(seq_len(length(axes) - 1), function(segment) {
+    source_axis <- axes[[segment]]
+    target_axis <- axes[[segment + 1]]
+    source_order <- strata[[segment]]$category
+    target_order <- strata[[segment + 1]]$category
+
+    links <- paths |>
+      dplyr::group_by(
+        source = .data[[source_axis]],
+        target = .data[[target_axis]]
+      ) |>
+      dplyr::summarise(n = sum(n), .groups = "drop") |>
+      dplyr::left_join(
+        strata[[segment]] |>
+          dplyr::select(source = category, source_base = ymin),
+        by = "source"
+      ) |>
+      dplyr::left_join(
+        strata[[segment + 1]] |>
+          dplyr::select(target = category, target_base = ymin),
+        by = "target"
+      ) |>
+      dplyr::mutate(
+        source_rank = match(source, source_order),
+        target_rank = match(target, target_order)
+      ) |>
+      dplyr::group_by(source) |>
+      dplyr::arrange(target_rank, .by_group = TRUE) |>
+      dplyr::mutate(source_ymin = source_base + (cumsum(n) - n) * flow_scale) |>
+      dplyr::ungroup() |>
+      dplyr::group_by(target) |>
+      dplyr::arrange(source_rank, .by_group = TRUE) |>
+      dplyr::mutate(target_ymin = target_base + (cumsum(n) - n) * flow_scale) |>
+      dplyr::ungroup()
+
+    purrr::map_dfr(seq_len(nrow(links)), function(row) {
+      link <- links[row, , drop = FALSE]
+      x <- seq(segment + 0.24, segment + 0.76, length.out = curve_points)
+      t <- (x - min(x)) / diff(range(x))
+      smooth <- 3 * t^2 - 2 * t^3
+      lower <- link$source_ymin + smooth * (link$target_ymin - link$source_ymin)
+      upper <- lower + link$n * flow_scale
+      tibble::tibble(
+        x = c(x, rev(x)), y = c(lower, rev(upper)),
+        ribbon_id = paste(segment, link$source, link$target, sep = "::"),
+        colour_key = paste(segment, link$source, sep = "::")
+      )
+    })
+  })
+
+  strata_dat <- dplyr::bind_rows(strata) |>
+    dplyr::mutate(
+      colour_key = paste(axis, category, sep = "::"),
+      text_colour = "white"
+    )
+
+  # Contrasting, colour-blind-conscious hues distinguish levels within each
+  # section. A ribbon takes the colour of the section it is leaving.
+  section_colours <- c(
+    "1::Allochronic" = "#D55E00",
+    "1::Synchronic" = "#0072B2",
+    "2::Genetic" = "#6A3D9A",
+    "2::Phenotypic" = "#009E73",
+    "3::Pollution" = "#C51B7D",
+    "3::Response to introductions" = "#1789A7",
+    "3::Landscape change" = "#E45756",
+    "3::Climate change" = "#765285",
+    "3::Hunt_harv" = "#8C564B",
+    "3::Other" = "#666666",
+    "3::Introduction" = "#D1495B"
+  )
+
+  ggplot2::ggplot() +
+    ggplot2::geom_polygon(
+      data = ribbons,
+      ggplot2::aes(x = x, y = y, group = ribbon_id, fill = colour_key),
+      alpha = 0.66, colour = NA
+    ) +
+    ggplot2::geom_rect(
+      data = strata_dat,
+      ggplot2::aes(
+        xmin = axis - 0.24, xmax = axis + 0.24,
+        ymin = ymin, ymax = ymax, fill = colour_key
+      ),
+      colour = "white", linewidth = 0.7
+    ) +
+    ggplot2::geom_text(
+      data = strata_dat,
+      ggplot2::aes(
+        x = axis, y = (ymin + ymax) / 2, label = label,
+        colour = text_colour
+      ),
+      hjust = 0.5, lineheight = 0.9, size = 12 / ggplot2::.pt,
+      fontface = "bold"
+    ) +
+    ggplot2::scale_fill_manual(values = section_colours, guide = "none") +
+    ggplot2::scale_colour_identity() +
+    ggplot2::scale_x_continuous(
+      breaks = seq_along(axes), labels = axis_labels,
+      limits = c(0.72, length(axes) + 0.28), expand = c(0, 0),
+      position = "top"
+    ) +
+    ggplot2::coord_cartesian(ylim = c(0, 1), clip = "off") +
+    ggplot2::labs(x = NULL, y = NULL) +
+    ggplot2::theme_void(base_size = 12) +
+    ggplot2::theme(
+      axis.text.x.top = ggplot2::element_text(
+        face = "bold", colour = "#263238", size = 16, margin = ggplot2::margin(b = 12)
+      ),
+      plot.margin = ggplot2::margin(18, 12, 10, 12)
+    )
+}
+
+p_alluvial <- make_alluvial(
+  m00_dat,
+  axes = c("design", "genphen", "disturbance"),
+  axis_labels = c(
+    "Comparison\ndesign", "Evidence", "Disturbance\ncontext"
+  )
+)
+
+ggplot2::ggsave(
+  here::here("Rdata", "figures", "m00_alluvial_coverage.png"),
+  p_alluvial, width = 14, height = 9, dpi = 320, bg = "white"
+)
+ggplot2::ggsave(
+  here::here("Rdata", "figures", "m00_alluvial_coverage.pdf"),
+  p_alluvial, width = 14, height = 9, device = grDevices::cairo_pdf,
+  bg = "white"
+)
+
+p_alluvial
+```
+
+Introductions supplied the broadest stream of evidence (57.1% of contrasts),
+with most contrasts being synchronic (64.5%) and phenotypic (63.9%). Size and
+other-morphology traits together accounted for 70.9% of the analytical sample.
+The largest single pathway was allochronic, phenotypic size evidence under
+hunting or harvesting (878 contrasts; 12.2%), while the next four largest
+pathways all arose from synchronic comparisons of introduced systems. Thus,
+coverage was substantial but concentrated in a small number of recurring
+design–trait–evidence combinations.
 
 ```{r by-genphen}
 dat_es |> dplyr::count(genphen, sort = TRUE)

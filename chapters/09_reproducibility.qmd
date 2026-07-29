@@ -53,7 +53,7 @@ including `ggbeeswarm` and `patchwork`.
 cran_packages <- c(
   "ape", "bayesplot", "brms", "cli", "cmdstanr", "coda", "dplyr",
   "emmeans", "ggbeeswarm", "ggplot2", "here", "httr2", "janitor",
-  "kableExtra", "knitr", "orchaRd", "patchwork", "posterior", "purrr",
+  "kableExtra", "knitr", "orchaRd", "patchwork", "png", "posterior", "purrr",
   "quarto", "readr", "remotes", "rotl", "scales", "sessioninfo", "stringr", "tibble",
   "tidybayes", "tidyr", "tidyverse"
 )

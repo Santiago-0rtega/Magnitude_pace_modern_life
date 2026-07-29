@@ -3,7 +3,7 @@
 project_packages <- c(
   "ape", "bayesplot", "brms", "cli", "cmdstanr", "coda", "dplyr",
   "emmeans", "ggbeeswarm", "ggplot2", "here", "httr2", "janitor",
-  "kableExtra", "knitr", "orchaRd", "patchwork", "posterior", "prepR4pcm",
+  "kableExtra", "knitr", "orchaRd", "patchwork", "png", "posterior", "prepR4pcm",
   "purrr", "quarto", "readr", "remotes", "rotl", "scales", "sessioninfo", "stringr",
   "tibble", "tidybayes", "tidyr", "tidyverse"
 )
