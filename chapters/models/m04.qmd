@@ -59,6 +59,21 @@ Continuous moderator: divergence as a function of elapsed time in generations (l
 print_cache_summary(cache)
 ```
 
+## Main predictions in equivalent-d units
+
+Predictions at 1, 10, and 100 generations are reported on the $\ln M$ scale
+and as $d_{\mathrm{eq}} \approx \sqrt{2\exp(\ln M)}$. These are
+prediction-scale summaries from the cached posterior draws; the regression
+slope itself is not transformed into an equivalent $d$.
+
+```{r elapsed-generations-d-eq}
+source(here::here("chapters", "Rscripts", "18_contrasts_cache.R"))
+kable_contrasts(
+  format_continuous_d_eq(cache, unit = "Generations"),
+  caption = "Predicted lnM and equivalent d at selected elapsed generations, with 95% credible intervals."
+)
+```
+
 ## Orchard-like model figure
 
 The orchard-style figure is read from `Rdata/figures/publication/orchard/`. The complete editable code used to build this plot is shown below.

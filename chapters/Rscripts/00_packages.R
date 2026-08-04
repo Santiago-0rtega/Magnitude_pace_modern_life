@@ -8,10 +8,18 @@ project_packages <- c(
   "tibble", "tidybayes", "tidyr", "tidyverse"
 )
 
-analysis_packages <- setdiff(project_packages, c("quarto", "remotes"))
+# Normal renders consume cached model summaries and do not fit models. Keep the
+# render-time dependency check separate from the optional fitting toolchain so
+# a book build does not require brms/cmdstanr/tidybayes merely to read caches.
+render_packages <- c(
+  "ape", "dplyr", "ggbeeswarm", "ggplot2", "here", "httr2", "janitor",
+  "kableExtra", "knitr", "orchaRd", "patchwork", "png", "prepR4pcm",
+  "purrr", "readr", "rotl", "scales", "sessioninfo", "stringr", "tibble",
+  "tidyr", "tidyverse"
+)
 
-missing_packages <- analysis_packages[
-  !vapply(analysis_packages, requireNamespace, logical(1), quietly = TRUE)
+missing_packages <- render_packages[
+  !vapply(render_packages, requireNamespace, logical(1), quietly = TRUE)
 ]
 
 if (length(missing_packages) > 0) {
@@ -25,12 +33,7 @@ if (length(missing_packages) > 0) {
 library(tidyverse)
 library(here)
 library(janitor)
-library(brms)
-library(cmdstanr)
 library(orchaRd)
-library(tidybayes)
-library(posterior)
-library(bayesplot)
 library(ape)
 library(rotl)
 library(prepR4pcm)

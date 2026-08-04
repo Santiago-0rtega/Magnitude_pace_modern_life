@@ -74,6 +74,48 @@ format_scale_contrasts <- function(cache, digits = 3) {
 # strictly increasing, so applying it to both CrI endpoints preserves coverage.
 lnm_to_d_eq <- function(lnm) sqrt(2 * exp(lnm))
 
+# Summarize posterior draws on the lnM and equivalent-d scales. Quantiles are
+# calculated from the draws; because the transform is monotonic, transformed
+# endpoint quantiles are identical to quantiles of the transformed draws.
+format_posterior_d_eq <- function(lnm_draws, label = "Overall", digits = 3) {
+  if (is.null(lnm_draws) || !length(lnm_draws)) return(NULL)
+  lnm_est <- mean(lnm_draws, na.rm = TRUE)
+  lnm_ci  <- stats::quantile(lnm_draws, c(0.025, 0.975), na.rm = TRUE)
+  .round_num(tibble::tibble(
+    Estimate              = label,
+    `Mean lnM`            = lnm_est,
+    `lnM lower 95% CrI`   = unname(lnm_ci[1]),
+    `lnM upper 95% CrI`   = unname(lnm_ci[2]),
+    `d_eq`                = lnm_to_d_eq(lnm_est),
+    `d_eq lower 95% CrI`  = lnm_to_d_eq(unname(lnm_ci[1])),
+    `d_eq upper 95% CrI`  = lnm_to_d_eq(unname(lnm_ci[2]))
+  ), digits)
+}
+
+# Summarize cached continuous-model predictions at interpretable values on the
+# original time scale (1, 10, and 100 years or generations by default).
+format_continuous_d_eq <- function(cache, original_values = c(1, 10, 100),
+                                   unit = "Time", digits = 3) {
+  if (is.null(cache) || is.null(cache$loc) || is.null(cache$moderator)) return(NULL)
+  mod <- cache$moderator
+  target_log10 <- log10(original_values)
+  available <- sort(unique(cache$loc[[mod]]))
+  keep <- target_log10 >= min(available) & target_log10 <= max(available)
+  target_log10 <- target_log10[keep]
+  original_values <- original_values[keep]
+  if (!length(target_log10)) return(NULL)
+
+  rows <- lapply(seq_along(target_log10), function(i) {
+    grid_value <- available[which.min(abs(available - target_log10[i]))]
+    draws <- cache$loc$.epred[cache$loc[[mod]] == grid_value]
+    out <- format_posterior_d_eq(draws, label = as.character(original_values[i]),
+                                 digits = digits)
+    names(out)[1] <- unit
+    dplyr::mutate(out, `log10 value` = grid_value, .after = 1)
+  })
+  dplyr::bind_rows(rows)
+}
+
 # Marginal means (level estimates) for location and scale.
 format_location_emmeans <- function(cache, digits = 3) {
   if (is.null(cache) || is.null(cache$loc_emmeans)) return(NULL)

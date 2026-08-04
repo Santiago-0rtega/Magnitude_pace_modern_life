@@ -59,12 +59,25 @@ The intercept-only model estimates the overall mean lnM and the baseline residua
 print_cache_summary(cache)
 ```
 
+## Main result in equivalent-d units
+
+The overall posterior mean is shown on the $\ln M$ scale and as
+$d_{\mathrm{eq}} \approx \sqrt{2\exp(\ln M)}$. The transformation is applied
+to the posterior 95% credible-interval endpoints.
+
+```{r overall-d-eq}
+source(here::here("chapters", "Rscripts", "18_contrasts_cache.R"))
+kable_contrasts(
+  format_posterior_d_eq(cache$post$b_Intercept, "Overall mean"),
+  caption = "Overall mean lnM and equivalent d with 95% credible intervals."
+)
+```
+
 ## Heterogeneity decomposition
 
 Location–scale $I^2$ from this intercept-only baseline, partitioned into between-study (reference), phylogenetic, and within-study (residual) components following the location–scale meta-analysis framework of Nakagawa et al. Values are read from `Rdata/summaries/heterogeneity_m00.rds`.
 
 ```{r het}
-source(here::here("chapters", "Rscripts", "18_contrasts_cache.R"))
 kable_contrasts(format_heterogeneity(read_heterogeneity()),
                 caption = "Location–scale heterogeneity (I², %) with 95% credible intervals.")
 ```
