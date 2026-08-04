@@ -684,7 +684,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </section>
 <section id="main-predictions-in-equivalent-d-units" class="level2" data-number="13.3">
 <h2 data-number="13.3" class="anchored" data-anchor-id="main-predictions-in-equivalent-d-units"><span class="header-section-number">13.3</span> Main predictions in equivalent-d units</h2>
-<p>Predictions at 1, 10, and 100 generations are reported on the <span class="math inline">\(\ln M\)</span> scale and as <span class="math inline">\(d_{\mathrm{eq}} \approx \sqrt{2\exp(\ln M)}\)</span>. These are prediction-scale summaries from the cached posterior draws; the regression slope itself is not transformed into an equivalent <span class="math inline">\(d\)</span>.</p>
+<p>Predictions at 1, 10, and 100 generations are reported on the <span class="math inline">\(\ln M\)</span> scale and as <span class="math inline">\(d_{\mathrm{eq}} \approx \sqrt{2\exp(2\ln M)}\)</span>. These are prediction-scale summaries from the cached posterior draws; the regression slope itself is not transformed into an equivalent <span class="math inline">\(d\)</span>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -716,9 +716,9 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <td style="text-align: right;">-0.926</td>
 <td style="text-align: right;">-1.829</td>
 <td style="text-align: right;">-0.013</td>
-<td style="text-align: right;">0.890</td>
-<td style="text-align: right;">0.567</td>
-<td style="text-align: right;">1.405</td>
+<td style="text-align: right;">0.560</td>
+<td style="text-align: right;">0.227</td>
+<td style="text-align: right;">1.396</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">10</td>
@@ -726,9 +726,9 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <td style="text-align: right;">-0.635</td>
 <td style="text-align: right;">-1.527</td>
 <td style="text-align: right;">0.292</td>
-<td style="text-align: right;">1.030</td>
-<td style="text-align: right;">0.659</td>
-<td style="text-align: right;">1.637</td>
+<td style="text-align: right;">0.750</td>
+<td style="text-align: right;">0.307</td>
+<td style="text-align: right;">1.894</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">100</td>
@@ -736,9 +736,9 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <td style="text-align: right;">-0.353</td>
 <td style="text-align: right;">-1.260</td>
 <td style="text-align: right;">0.558</td>
-<td style="text-align: right;">1.185</td>
-<td style="text-align: right;">0.753</td>
-<td style="text-align: right;">1.869</td>
+<td style="text-align: right;">0.993</td>
+<td style="text-align: right;">0.401</td>
+<td style="text-align: right;">2.470</td>
 </tr>
 </tbody>
 </table>
@@ -1450,7 +1450,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a><span class="fu">## Main predictions in equivalent-d units</span></span>
 <span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>Predictions at 1, 10, and 100 generations are reported on the $\ln M$ scale</span>
-<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>and as $d_{\mathrm{eq}} \approx \sqrt{2\exp(\ln M)}$. These are</span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>and as $d_{\mathrm{eq}} \approx \sqrt{2\exp(2\ln M)}$. These are</span>
 <span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>prediction-scale summaries from the cached posterior draws; the regression</span>
 <span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>slope itself is not transformed into an equivalent $d$.</span>
 <span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a></span>

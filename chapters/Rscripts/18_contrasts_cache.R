@@ -72,7 +72,7 @@ format_scale_contrasts <- function(cache, digits = 3) {
 # Convert a location estimate on the lnM scale to the approximate equivalent
 # standardized mean difference described in the lnM chapter. The transform is
 # strictly increasing, so applying it to both CrI endpoints preserves coverage.
-lnm_to_d_eq <- function(lnm) sqrt(2 * exp(lnm))
+lnm_to_d_eq <- function(lnm) sqrt(2 * exp(2 * lnm))
 
 # Summarize posterior draws on the lnM and equivalent-d scales. Quantiles are
 # calculated from the draws; because the transform is monotonic, transformed

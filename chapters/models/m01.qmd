@@ -75,7 +75,7 @@ cc <- read_contrasts_cache("m01")
 For each disturbance context, the table reports the estimated marginal mean
 on the $\ln M$ scale and its approximate standardized-mean-difference
 equivalent, calculated as
-$d_{\mathrm{eq}} \approx \sqrt{2\exp(\ln M)}$. Because this transformation is
+$d_{\mathrm{eq}} \approx \sqrt{2\exp(2\ln M)}$. Because this transformation is
 monotonic, the 95% credible-interval endpoints are transformed in the same way.
 
 ```{r loc-emmeans}

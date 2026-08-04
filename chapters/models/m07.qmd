@@ -74,7 +74,7 @@ cc <- read_contrasts_cache("m07")
 
 For genetic and phenotypic studies, the table reports the estimated marginal
 mean on the $\ln M$ scale and
-$d_{\mathrm{eq}} \approx \sqrt{2\exp(\ln M)}$. The same monotonic transformation
+$d_{\mathrm{eq}} \approx \sqrt{2\exp(2\ln M)}$. The same monotonic transformation
 is applied to the 95% credible-interval endpoints.
 
 ```{r loc-emmeans}

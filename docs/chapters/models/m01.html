@@ -835,7 +835,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </section>
 <section id="main-level-estimates" class="level2" data-number="10.4">
 <h2 data-number="10.4" class="anchored" data-anchor-id="main-level-estimates"><span class="header-section-number">10.4</span> Main level estimates</h2>
-<p>For each disturbance context, the table reports the estimated marginal mean on the <span class="math inline">\(\ln M\)</span> scale and its approximate standardized-mean-difference equivalent, calculated as <span class="math inline">\(d_{\mathrm{eq}} \approx \sqrt{2\exp(\ln M)}\)</span>. Because this transformation is monotonic, the 95% credible-interval endpoints are transformed in the same way.</p>
+<p>For each disturbance context, the table reports the estimated marginal mean on the <span class="math inline">\(\ln M\)</span> scale and its approximate standardized-mean-difference equivalent, calculated as <span class="math inline">\(d_{\mathrm{eq}} \approx \sqrt{2\exp(2\ln M)}\)</span>. Because this transformation is monotonic, the 95% credible-interval endpoints are transformed in the same way.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -864,63 +864,63 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <td style="text-align: right;">-0.541</td>
 <td style="text-align: right;">-1.327</td>
 <td style="text-align: right;">0.328</td>
-<td style="text-align: right;">1.079</td>
-<td style="text-align: right;">0.728</td>
-<td style="text-align: right;">1.666</td>
+<td style="text-align: right;">0.823</td>
+<td style="text-align: right;">0.375</td>
+<td style="text-align: right;">1.963</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Hunt_harv</td>
 <td style="text-align: right;">-0.805</td>
 <td style="text-align: right;">-1.616</td>
 <td style="text-align: right;">-0.039</td>
-<td style="text-align: right;">0.945</td>
-<td style="text-align: right;">0.630</td>
-<td style="text-align: right;">1.387</td>
+<td style="text-align: right;">0.632</td>
+<td style="text-align: right;">0.281</td>
+<td style="text-align: right;">1.360</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Introduction</td>
 <td style="text-align: right;">-0.522</td>
 <td style="text-align: right;">-1.291</td>
 <td style="text-align: right;">0.263</td>
-<td style="text-align: right;">1.089</td>
-<td style="text-align: right;">0.742</td>
-<td style="text-align: right;">1.613</td>
+<td style="text-align: right;">0.839</td>
+<td style="text-align: right;">0.389</td>
+<td style="text-align: right;">1.839</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Landscape change</td>
 <td style="text-align: right;">-0.322</td>
 <td style="text-align: right;">-1.119</td>
 <td style="text-align: right;">0.506</td>
-<td style="text-align: right;">1.204</td>
-<td style="text-align: right;">0.808</td>
-<td style="text-align: right;">1.821</td>
+<td style="text-align: right;">1.025</td>
+<td style="text-align: right;">0.462</td>
+<td style="text-align: right;">2.345</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Other</td>
 <td style="text-align: right;">-0.811</td>
 <td style="text-align: right;">-1.556</td>
 <td style="text-align: right;">0.011</td>
-<td style="text-align: right;">0.943</td>
-<td style="text-align: right;">0.650</td>
-<td style="text-align: right;">1.422</td>
+<td style="text-align: right;">0.628</td>
+<td style="text-align: right;">0.298</td>
+<td style="text-align: right;">1.431</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Pollution</td>
 <td style="text-align: right;">-0.356</td>
 <td style="text-align: right;">-1.231</td>
 <td style="text-align: right;">0.478</td>
-<td style="text-align: right;">1.184</td>
-<td style="text-align: right;">0.764</td>
-<td style="text-align: right;">1.796</td>
+<td style="text-align: right;">0.991</td>
+<td style="text-align: right;">0.413</td>
+<td style="text-align: right;">2.282</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Response to introductions</td>
 <td style="text-align: right;">-0.424</td>
 <td style="text-align: right;">-1.298</td>
 <td style="text-align: right;">0.467</td>
-<td style="text-align: right;">1.144</td>
-<td style="text-align: right;">0.739</td>
-<td style="text-align: right;">1.786</td>
+<td style="text-align: right;">0.925</td>
+<td style="text-align: right;">0.386</td>
+<td style="text-align: right;">2.256</td>
 </tr>
 </tbody>
 </table>
@@ -2046,7 +2046,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a>For each disturbance context, the table reports the estimated marginal mean</span>
 <span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a>on the $\ln M$ scale and its approximate standardized-mean-difference</span>
 <span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a>equivalent, calculated as</span>
-<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a>$d_{\mathrm{eq}} \approx \sqrt{2\exp(\ln M)}$. Because this transformation is</span>
+<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a>$d_{\mathrm{eq}} \approx \sqrt{2\exp(2\ln M)}$. Because this transformation is</span>
 <span id="cb11-79"><a href="#cb11-79" aria-hidden="true" tabindex="-1"></a>monotonic, the 95% credible-interval endpoints are transformed in the same way.</span>
 <span id="cb11-80"><a href="#cb11-80" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-81"><a href="#cb11-81" aria-hidden="true" tabindex="-1"></a><span class="in">```{r loc-emmeans}</span></span>

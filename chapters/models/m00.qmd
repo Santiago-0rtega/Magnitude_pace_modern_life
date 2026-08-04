@@ -62,7 +62,7 @@ print_cache_summary(cache)
 ## Main result in equivalent-d units
 
 The overall posterior mean is shown on the $\ln M$ scale and as
-$d_{\mathrm{eq}} \approx \sqrt{2\exp(\ln M)}$. The transformation is applied
+$d_{\mathrm{eq}} \approx \sqrt{2\exp(2\ln M)}$. The transformation is applied
 to the posterior 95% credible-interval endpoints.
 
 ```{r overall-d-eq}
