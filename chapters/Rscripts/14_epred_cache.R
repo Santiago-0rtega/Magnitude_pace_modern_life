@@ -25,7 +25,6 @@
 ## Plotting dependencies only (light — sourced by chapters at render time).
 suppressMessages({
   library(ggplot2)
-  library(ggdist)
   library(patchwork)
   library(dplyr)
 })
@@ -157,13 +156,13 @@ print_cache_summary <- function(cache) {
   p_loc <- ggplot(cache$loc, aes(x = .epred, y = .data[[mod]])) +
     geom_vline(xintercept = 0, linetype = "dashed", colour = "grey55",
                linewidth = 0.4) +
-    stat_pointinterval(.width = c(0.50, 0.95), point_size = 2.4,
-                       colour = COL_LOCATION) +
+    ggdist::stat_pointinterval(.width = c(0.50, 0.95), point_size = 2.4,
+                               colour = COL_LOCATION) +
     labs(x = "Predicted lnM (location)", y = NULL, title = paste("Location:", lab)) +
     theme_cache()
   p_scl <- ggplot(cache$scl, aes(x = sigma, y = .data[[mod]])) +
-    stat_pointinterval(.width = c(0.50, 0.95), point_size = 2.4,
-                       colour = COL_SCALE) +
+    ggdist::stat_pointinterval(.width = c(0.50, 0.95), point_size = 2.4,
+                               colour = COL_SCALE) +
     labs(x = "Predicted sigma (residual SD)", y = NULL,
          title = paste("Scale:", lab),
          caption = "Higher sigma = more heterogeneous divergence within category") +
@@ -187,16 +186,16 @@ print_cache_summary <- function(cache) {
                  size = 1.7, alpha = 0.5, stroke = 0.5)
   }
   p_loc <- p_loc +
-    stat_lineribbon(data = cache$loc, aes(x = .data[[mod]], y = .epred),
-                    .width = c(0.50, 0.80, 0.95), alpha = 0.30,
-                    fill = COL_LOCATION, colour = NA) +
-    stat_lineribbon(data = cache$loc, aes(x = .data[[mod]], y = .epred),
-                    .width = 0, colour = COL_LOCATION, linewidth = 0.9) +
+    ggdist::stat_lineribbon(data = cache$loc, aes(x = .data[[mod]], y = .epred),
+                            .width = c(0.50, 0.80, 0.95), alpha = 0.30,
+                            fill = COL_LOCATION, colour = NA) +
+    ggdist::stat_lineribbon(data = cache$loc, aes(x = .data[[mod]], y = .epred),
+                            .width = 0, colour = COL_LOCATION, linewidth = 0.9) +
     labs(x = lab, y = "Predicted lnM (location)") + theme_cache()
   p_scl <- ggplot(cache$scl, aes(x = .data[[mod]], y = sigma)) +
-    stat_lineribbon(.width = c(0.50, 0.80, 0.95), alpha = 0.30,
-                    fill = COL_SCALE, colour = NA) +
-    stat_lineribbon(.width = 0, colour = COL_SCALE, linewidth = 0.9) +
+    ggdist::stat_lineribbon(.width = c(0.50, 0.80, 0.95), alpha = 0.30,
+                            fill = COL_SCALE, colour = NA) +
+    ggdist::stat_lineribbon(.width = 0, colour = COL_SCALE, linewidth = 0.9) +
     labs(x = lab, y = "Predicted sigma (residual SD)") + theme_cache()
   (p_loc / p_scl) +
     plot_annotation(title = paste("Location–scale predictions:", lab),
@@ -209,15 +208,15 @@ print_cache_summary <- function(cache) {
   p_loc <- ggplot(cache$loc, aes(x = .data[[cv]], y = .epred)) +
     geom_hline(yintercept = 0, linetype = "dashed", colour = "grey55",
                linewidth = 0.4) +
-    stat_lineribbon(.width = c(0.50, 0.80, 0.95), alpha = 0.30,
-                    fill = COL_LOCATION, colour = NA) +
-    stat_lineribbon(.width = 0, colour = COL_LOCATION, linewidth = 0.8) +
+    ggdist::stat_lineribbon(.width = c(0.50, 0.80, 0.95), alpha = 0.30,
+                            fill = COL_LOCATION, colour = NA) +
+    ggdist::stat_lineribbon(.width = 0, colour = COL_LOCATION, linewidth = 0.8) +
     facet_wrap(~ disturbance) +
     labs(x = lab, y = "Predicted lnM (location)") + theme_cache()
   p_scl <- ggplot(cache$scl, aes(x = .data[[cv]], y = sigma)) +
-    stat_lineribbon(.width = c(0.50, 0.80, 0.95), alpha = 0.30,
-                    fill = COL_SCALE, colour = NA) +
-    stat_lineribbon(.width = 0, colour = COL_SCALE, linewidth = 0.8) +
+    ggdist::stat_lineribbon(.width = c(0.50, 0.80, 0.95), alpha = 0.30,
+                            fill = COL_SCALE, colour = NA) +
+    ggdist::stat_lineribbon(.width = 0, colour = COL_SCALE, linewidth = 0.8) +
     facet_wrap(~ disturbance) +
     labs(x = lab, y = "Predicted sigma (residual SD)") + theme_cache()
   (p_loc / p_scl) +
@@ -230,11 +229,11 @@ print_cache_summary <- function(cache) {
   p_loc <- ggplot(cache$post, aes(x = b_Intercept)) +
     geom_vline(xintercept = 0, linetype = "dashed", colour = "grey55",
                linewidth = 0.4) +
-    stat_halfeye(fill = COL_LOCATION, .width = c(0.50, 0.95), slab_alpha = 0.6) +
+    ggdist::stat_halfeye(fill = COL_LOCATION, .width = c(0.50, 0.95), slab_alpha = 0.6) +
     labs(x = "Overall mean lnM (location)", y = NULL, title = "Grand mean") +
     theme_cache()
   p_scl <- ggplot(cache$post, aes(x = sigma)) +
-    stat_halfeye(fill = COL_SCALE, .width = c(0.50, 0.95), slab_alpha = 0.6) +
+    ggdist::stat_halfeye(fill = COL_SCALE, .width = c(0.50, 0.95), slab_alpha = 0.6) +
     labs(x = "Baseline residual SD (exp(sigma))", y = NULL,
          title = "Residual heterogeneity") +
     theme_cache()

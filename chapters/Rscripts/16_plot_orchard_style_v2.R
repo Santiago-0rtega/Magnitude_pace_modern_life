@@ -485,28 +485,30 @@ for (m in all_models) {
         linewidth = 1.1, colour = "#0072B2") +
       ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.3, 4)) +
       ggplot2::scale_y_continuous(sec.axis = d_axis) +
-      ggplot2::labs(x = m$label, y = "lnM", title = "A)") +
+      ggplot2::labs(x = m$label, y = "lnM", title = NULL) +
       theme_orchard()
 
     p_scl <- ggplot2::ggplot() +
       ggplot2::geom_point(data = raw_cont_sig,
         ggplot2::aes(x = .data[[m$moderator]], y = abs_resid, size = precision),
-        alpha = 0.20, shape = 21, fill = "#88CCEE", colour = "#0072B2") +
+        alpha = 0.20, shape = 21, fill = "#F2B27E", colour = "#D55E00") +
       ggplot2::geom_ribbon(data = pred_sig,
         ggplot2::aes(x = .data[[m$moderator]], ymin = lowerCL, ymax = upperCL),
-        alpha = 0.35, fill = "grey40") +
+        alpha = 0.35, fill = "#E69F00") +
       ggplot2::geom_line(data = pred_sig,
         ggplot2::aes(x = .data[[m$moderator]], y = estimate),
-        linewidth = 1.1, colour = "grey15") +
+        linewidth = 1.1, colour = "#D55E00") +
       ggplot2::scale_size_continuous(name = "Precision (1/SE)", range = c(0.3, 4)) +
       ggplot2::scale_y_continuous(limits = c(0, NA), expand = ggplot2::expansion(mult = c(0, 0.05))) +
-      ggplot2::labs(x = m$label, y = "residual lnM (SD)", title = "B)") +
+      ggplot2::labs(x = m$label, y = "residual lnM (SD)", title = NULL) +
       theme_orchard()
 
     p_comb <- patchwork::wrap_plots(
-      p_loc + ggplot2::theme(legend.position = "none"),
-      p_scl, ncol = 1
-    )
+      p_loc,
+      p_scl + ggplot2::guides(size = "none"),
+      ncol = 1,
+      guides = "collect"
+    ) & ggplot2::theme(legend.position = "bottom")
 
     save_plot(p_loc,  paste0(m$id, "_orchard_location"), width = 8, height = 5)
     save_plot(p_scl,  paste0(m$id, "_orchard_scale"),    width = 8, height = 4)

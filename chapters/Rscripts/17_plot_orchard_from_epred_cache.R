@@ -210,7 +210,7 @@ plot_continuous <- function(cache) {
       linewidth = 1.1, colour = COL_LOCATION
     ) +
     ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.3, 4)) +
-    ggplot2::labs(x = lab, y = "lnM", title = paste("Location --", lab)) +
+    ggplot2::labs(x = lab, y = "lnM", title = NULL) +
     theme_orchard()
 
   p_scl <- ggplot2::ggplot() +
@@ -231,13 +231,16 @@ plot_continuous <- function(cache) {
     ) +
     ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.3, 4)) +
     ggplot2::labs(x = lab, y = "residual lnM (SD)",
-                  title = paste("Scale --", lab),
-                  caption = SCALE_CAPTION_RIBBON) +
+                  title = NULL, caption = NULL) +
     theme_orchard()
 
   list(location = p_loc, scale = p_scl,
-       combined = patchwork::wrap_plots(p_loc, p_scl, ncol = 1, guides = "collect") &
-         ggplot2::theme(legend.position = "bottom"),
+       combined = patchwork::wrap_plots(
+         p_loc,
+         p_scl + ggplot2::guides(size = "none"),
+         ncol = 1,
+         guides = "collect"
+       ) & ggplot2::theme(legend.position = "bottom"),
        width = 8, height = 5, combined_height = 9)
 }
 

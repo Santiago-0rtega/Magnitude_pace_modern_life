@@ -69,11 +69,31 @@ format_scale_contrasts <- function(cache, digits = 3) {
   .round_num(out, digits)
 }
 
+# Convert a location estimate on the lnM scale to the approximate equivalent
+# standardized mean difference described in the lnM chapter. The transform is
+# strictly increasing, so applying it to both CrI endpoints preserves coverage.
+lnm_to_d_eq <- function(lnm) sqrt(2 * exp(lnm))
+
 # Marginal means (level estimates) for location and scale.
 format_location_emmeans <- function(cache, digits = 3) {
   if (is.null(cache) || is.null(cache$loc_emmeans)) return(NULL)
-  .round_num(dplyr::rename_with(cache$loc_emmeans, ~ sub("^emmean$", "Estimate", .x)),
-             digits)
+  df <- cache$loc_emmeans
+  lo_name <- intersect(c("lower.HPD", "asymp.LCL", "lower.CL"), names(df))[1]
+  hi_name <- intersect(c("upper.HPD", "asymp.UCL", "upper.CL"), names(df))[1]
+  if (is.na(lo_name) || is.na(hi_name)) return(NULL)
+  lo <- df[[lo_name]]
+  hi <- df[[hi_name]]
+
+  out <- tibble::tibble(
+    Level                = as.character(df$level),
+    `Mean lnM`           = df$emmean,
+    `lnM lower 95% CrI`  = lo,
+    `lnM upper 95% CrI`  = hi,
+    `d_eq`               = lnm_to_d_eq(df$emmean),
+    `d_eq lower 95% CrI` = lnm_to_d_eq(lo),
+    `d_eq upper 95% CrI` = lnm_to_d_eq(hi)
+  )
+  .round_num(out, digits)
 }
 format_scale_emmeans <- function(cache, digits = 3) {
   if (is.null(cache) || is.null(cache$scl_emmeans)) return(NULL)

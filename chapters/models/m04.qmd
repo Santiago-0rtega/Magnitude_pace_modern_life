@@ -161,7 +161,7 @@ p_loc <- ggplot2::ggplot() +
   ggplot2::labs(
     x = moderator_label,
     y = "lnM",
-    title = paste("Location --", moderator_label)
+    title = NULL
   ) +
   theme_orchard()
 
@@ -185,12 +185,17 @@ p_scl <- ggplot2::ggplot() +
   ggplot2::labs(
     x = moderator_label,
     y = "residual lnM (SD)",
-    title = paste("Scale --", moderator_label),
-    caption = "Bubbles: absolute residual lnM, sized by precision. Line/ribbon: predicted residual SD (sigma)."
+    title = NULL,
+    caption = NULL
   ) +
   theme_orchard()
 
-p_comb <- patchwork::wrap_plots(p_loc, p_scl, ncol = 1)
+p_comb <- patchwork::wrap_plots(
+  p_loc,
+  p_scl + ggplot2::guides(size = "none"),
+  ncol = 1,
+  guides = "collect"
+) & ggplot2::theme(legend.position = "bottom")
 
 save_plot(p_loc, paste0(model_id, "_orchard_location"), width = 8, height = 5)
 save_plot(p_scl, paste0(model_id, "_orchard_scale"), width = 8, height = 4)

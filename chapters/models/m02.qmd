@@ -59,7 +59,7 @@ How the focal–reference comparison was constructed (e.g. spatial vs temporal).
 print_cache_summary(cache)
 ```
 
-## Pairwise level contrasts
+## Model-estimated results
 
 Estimated marginal means and pairwise contrasts are read from `Rdata/summaries/emmeans_contrasts_cache.rds`.
 
@@ -69,6 +69,21 @@ Estimated marginal means and pairwise contrasts are read from `Rdata/summaries/e
 source(here::here("chapters", "Rscripts", "18_contrasts_cache.R"))
 cc <- read_contrasts_cache("m02")
 ```
+
+## Main level estimates
+
+For each comparison design, the table reports the estimated marginal mean on
+the $\ln M$ scale and $d_{\mathrm{eq}} \approx \sqrt{2\exp(\ln M)}$. The same
+monotonic transformation is applied to the 95% credible-interval endpoints.
+
+```{r loc-emmeans}
+kable_contrasts(
+  format_location_emmeans(cc),
+  caption = "Comparison-design mean lnM and equivalent d with 95% credible intervals."
+)
+```
+
+## Pairwise level contrasts
 
 **Location — pairwise contrasts (difference in mean lnM):**
 

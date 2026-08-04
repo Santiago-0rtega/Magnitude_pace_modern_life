@@ -265,16 +265,10 @@ taxon_tiles <- make_taxon_layout(taxon_counts) |>
       Arthropod = "Arthropods", Amphibian = "Amphibians",
       Reptile = "Reptiles", Mollusc = "Molluscs"
     ),
-    label = dplyr::case_when(
-      taxa %in% c("Plant", "Reptile") ~ paste0(
-        taxa_plural, "\n", scales::comma(contrasts), "\n", species, " spp."
-      ),
-      taxa %in% c("Amphibian", "Mollusc") ~ paste0(
-        taxa_plural, "\n", scales::comma(contrasts), " | ", species, " spp."
-      ),
-      TRUE ~ paste0(
-        taxa_plural, "\n", scales::comma(contrasts), " contrasts\n", species, " spp."
-      )
+    label = paste0(
+      taxa_plural, "\n",
+      scales::comma(contrasts), " contrasts\n",
+      species, " spp."
     ),
     is_small = taxa %in% c("Bird", "Mammal", "Amphibian", "Mollusc"),
     label_size = 13 / ggplot2::.pt,
@@ -391,14 +385,14 @@ p_taxa
 ### Evidence pathways
 
 Flow width is proportional to the number of `m00` contrasts following each
-path. Colour identifies comparison design at the first axis and is carried
+path. Colour identifies disturbance context at the first axis and is carried
 through the remaining axes. Counts and percentages are reported in
 @tbl-m00-coverage rather than repeated inside the figure.
 
 ```{r}
 #| label: fig-m00-alluvial-coverage
-#| fig-cap: "Evidence pathways among the 7,186 contrasts retained by model m00, from comparison design through evidence type to disturbance context. Flow width is proportional to the number of contrasts."
-#| fig-alt: "An alluvial plot beginning with synchronic and allochronic comparison designs, passing through phenotypic or genetic evidence, and ending with disturbance contexts."
+#| fig-cap: "Evidence pathways among the 7,186 contrasts retained by model m00, from disturbance context through comparison design to study type. Flow width is proportional to the number of contrasts."
+#| fig-alt: "An alluvial plot beginning with disturbance contexts, passing through synchronic and allochronic comparison designs, and ending with field or common-garden and quantitative-genetic study types."
 #| fig-width: 14
 #| fig-height: 9
 
@@ -442,6 +436,9 @@ make_alluvial <- function(dat, axes, axis_labels, gap = 0.018, curve_points = 35
           category,
           Hunt_harv = "Hunting and harvesting",
           Introduction = "Introductions",
+          Other = "In situ natural variation",
+          Phenotypic = "Field",
+          Genetic = "Common garden /\nQuantitative genetics",
           .default = stringr::str_to_sentence(
             stringr::str_replace_all(category, "_", " ")
           )
@@ -511,18 +508,28 @@ make_alluvial <- function(dat, axes, axis_labels, gap = 0.018, curve_points = 35
   # Contrasting, colour-blind-conscious hues distinguish levels within each
   # section. A ribbon takes the colour of the section it is leaving.
   section_colours <- c(
-    "1::Allochronic" = "#D55E00",
-    "1::Synchronic" = "#0072B2",
-    "2::Genetic" = "#6A3D9A",
-    "2::Phenotypic" = "#009E73",
-    "3::Pollution" = "#C51B7D",
-    "3::Response to introductions" = "#1789A7",
-    "3::Landscape change" = "#E45756",
-    "3::Climate change" = "#765285",
-    "3::Hunt_harv" = "#8C564B",
-    "3::Other" = "#666666",
-    "3::Introduction" = "#D1495B"
+    "1::Pollution" = "#C51B7D",
+    "1::Response to introductions" = "#1789A7",
+    "1::Landscape change" = "#E45756",
+    "1::Climate change" = "#765285",
+    "1::Hunt_harv" = "#8C564B",
+    "1::Other" = "#666666",
+    "1::Introduction" = "#D1495B",
+    "2::Allochronic" = "#D55E00",
+    "2::Synchronic" = "#0072B2",
+    "3::Genetic" = "#6A3D9A",
+    "3::Phenotypic" = "#009E73"
   )
+
+  # Supply stable fallback colours when the helper is reused with a different
+  # set of axes (for example, disturbance context and taxonomic group).
+  colour_keys <- unique(c(ribbons$colour_key, strata_dat$colour_key))
+  missing_keys <- setdiff(colour_keys, names(section_colours))
+  if (length(missing_keys) > 0) {
+    fallback_colours <- scales::hue_pal(l = 52, c = 70)(length(missing_keys))
+    names(fallback_colours) <- missing_keys
+    section_colours <- c(section_colours, fallback_colours)
+  }
 
   ggplot2::ggplot() +
     ggplot2::geom_polygon(
@@ -539,12 +546,22 @@ make_alluvial <- function(dat, axes, axis_labels, gap = 0.018, curve_points = 35
       colour = "white", linewidth = 0.7
     ) +
     ggplot2::geom_text(
-      data = strata_dat,
+      data = dplyr::filter(strata_dat, category != "Other"),
       ggplot2::aes(
         x = axis, y = (ymin + ymax) / 2, label = label,
         colour = text_colour
       ),
       hjust = 0.5, lineheight = 0.9, size = 12 / ggplot2::.pt,
+      fontface = "bold"
+    ) +
+    ggplot2::geom_text(
+      data = dplyr::filter(strata_dat, category == "Other"),
+      ggplot2::aes(
+        x = axis, y = (ymin + ymax) / 2,
+        label = "italic('In situ')~'natural variation'",
+        colour = text_colour
+      ),
+      parse = TRUE, hjust = 0.5, size = 12 / ggplot2::.pt,
       fontface = "bold"
     ) +
     ggplot2::scale_fill_manual(values = section_colours, guide = "none") +
@@ -567,9 +584,9 @@ make_alluvial <- function(dat, axes, axis_labels, gap = 0.018, curve_points = 35
 
 p_alluvial <- make_alluvial(
   m00_dat,
-  axes = c("design", "genphen", "disturbance"),
+  axes = c("disturbance", "design", "genphen"),
   axis_labels = c(
-    "Comparison\ndesign", "Study type", "Disturbance\ncontext"
+    "Disturbance\ncontext", "Comparison\ndesign", "Study type"
   )
 )
 
@@ -584,6 +601,81 @@ ggplot2::ggsave(
 )
 
 p_alluvial
+```
+
+### Disturbance context, taxonomic representation, and trait type
+
+The second flow view links disturbance context to taxonomic group and then to
+trait type. The accompanying table reports the taxon--trait pathways within
+each disturbance context, so percentages sum to 100% within every context.
+
+```{r}
+#| label: tbl-m00-disturbance-taxa-trait
+#| tbl-cap: "Taxonomic and trait representation within each disturbance context in model m00. Percentages are the share of contrasts within each disturbance context."
+
+disturbance_taxa_trait <- m00_dat |>
+  dplyr::transmute(
+    `Disturbance context` = dplyr::coalesce(
+      as.character(disturbance), "Not reported"
+    ),
+    `Taxonomic group` = dplyr::coalesce(as.character(taxa), "Not reported"),
+    `Trait type` = dplyr::coalesce(as.character(trait_type), "Not reported")
+  ) |>
+  dplyr::count(
+    `Disturbance context`, `Taxonomic group`, `Trait type`,
+    name = "Contrasts"
+  ) |>
+  dplyr::group_by(`Disturbance context`) |>
+  dplyr::mutate(`Within-context (%)` = 100 * Contrasts / sum(Contrasts)) |>
+  dplyr::ungroup()
+
+readr::write_csv(
+  disturbance_taxa_trait,
+  here::here("Rdata", "tables", "m00_disturbance_taxa_trait_percent.csv")
+)
+
+disturbance_taxa_trait |>
+  dplyr::arrange(
+    `Disturbance context`, dplyr::desc(`Within-context (%)`),
+    `Taxonomic group`, `Trait type`
+  ) |>
+  dplyr::mutate(
+    Contrasts = scales::comma(Contrasts),
+    `Within-context (%)` = sprintf("%.1f", `Within-context (%)`)
+  ) |>
+  knitr::kable(align = c("l", "l", "l", "r", "r")) |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+    full_width = TRUE
+  )
+```
+
+```{r}
+#| label: fig-m00-alluvial-disturbance-taxa-trait
+#| fig-cap: "Disturbance context, taxonomic representation, and trait type among the 7,186 contrasts retained by model m00. Flow width is proportional to the number of contrasts."
+#| fig-alt: "An alluvial plot linking disturbance contexts to taxonomic groups and then trait types, with wider flows indicating more contrasts."
+#| fig-width: 14
+#| fig-height: 9
+
+p_disturbance_taxa_trait <- make_alluvial(
+  m00_dat,
+  axes = c("disturbance", "taxa", "trait_type"),
+  axis_labels = c(
+    "Disturbance\ncontext", "Taxonomic\ngroup", "Trait type"
+  )
+)
+
+ggplot2::ggsave(
+  here::here("Rdata", "figures", "m00_alluvial_disturbance_taxa_trait.png"),
+  p_disturbance_taxa_trait, width = 14, height = 9, dpi = 320, bg = "white"
+)
+ggplot2::ggsave(
+  here::here("Rdata", "figures", "m00_alluvial_disturbance_taxa_trait.pdf"),
+  p_disturbance_taxa_trait, width = 14, height = 9,
+  device = grDevices::cairo_pdf, bg = "white"
+)
+
+p_disturbance_taxa_trait
 ```
 
 Introductions supplied the broadest stream of evidence (57.1% of contrasts),
