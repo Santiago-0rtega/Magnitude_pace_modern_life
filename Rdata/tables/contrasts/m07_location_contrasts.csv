@@ -1,2 +1,2 @@
-contrast,estimate,lower.HPD,upper.HPD,pd
-Genetic - Phenotypic,0.2105815,0.06229229999999997,0.353205,0.997375
+contrast,estimate,lower.CrI,upper.CrI,pd
+Genetic - Phenotypic,0.210173986516375,0.06309082499999999,0.3545031249999999,0.997375

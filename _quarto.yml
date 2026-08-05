@@ -1,6 +1,7 @@
 project:
   type: book
   output-dir: docs
+  pre-render: Rscript chapters/Rscripts/21_validate_summary_artifacts.R
   resources:
     - .nojekyll   # disable GitHub Pages Jekyll processing of the rendered site
 
@@ -42,6 +43,7 @@ book:
         - chapters/models/m07.qmd
     - part: "Figures & Reproducibility"
       chapters:
+        - chapters/07b_small_study_effects.qmd
         - chapters/07_sensitivity_analyses.qmd
         - chapters/08_publication_figures.qmd
         - chapters/09_reproducibility.qmd

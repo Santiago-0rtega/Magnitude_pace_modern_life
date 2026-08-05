@@ -3,7 +3,7 @@
 project_packages <- c(
   "ape", "bayesplot", "brms", "cli", "cmdstanr", "coda", "dplyr",
   "emmeans", "ggbeeswarm", "ggplot2", "here", "httr2", "janitor",
-  "kableExtra", "knitr", "orchaRd", "patchwork", "png", "posterior", "prepR4pcm",
+  "kableExtra", "knitr", "metafor", "orchaRd", "patchwork", "png", "posterior", "prepR4pcm",
   "purrr", "quarto", "readr", "remotes", "rotl", "scales", "sessioninfo", "stringr",
   "tibble", "tidybayes", "tidyr", "tidyverse"
 )
@@ -13,7 +13,7 @@ project_packages <- c(
 # a book build does not require brms/cmdstanr/tidybayes merely to read caches.
 render_packages <- c(
   "ape", "dplyr", "ggbeeswarm", "ggplot2", "here", "httr2", "janitor",
-  "kableExtra", "knitr", "orchaRd", "patchwork", "png", "prepR4pcm",
+  "kableExtra", "knitr", "metafor", "orchaRd", "patchwork", "png", "prepR4pcm",
   "purrr", "readr", "rotl", "scales", "sessioninfo", "stringr", "tibble",
   "tidyr", "tidyverse"
 )

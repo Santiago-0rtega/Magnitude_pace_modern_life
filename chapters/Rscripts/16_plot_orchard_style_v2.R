@@ -79,7 +79,7 @@ get_sig_estimates <- function(fit, moderator, levels_vec = NULL) {
   ) |>
     dplyr::group_by(.data[[moderator]]) |>
     dplyr::summarise(
-      estimate = median(sigma),
+      estimate = mean(sigma),
       lowerCL  = quantile(sigma, 0.025),
       upperCL  = quantile(sigma, 0.975),
       .groups = "drop"
@@ -451,14 +451,14 @@ for (m in all_models) {
 
     pred <- tidybayes::add_epred_draws(nd, fit, re_formula = NA, ndraws = 500) |>
       dplyr::group_by(.data[[m$moderator]]) |>
-      dplyr::summarise(estimate = median(.epred),
+      dplyr::summarise(estimate = mean(.epred),
                        lowerCL  = quantile(.epred, 0.025),
                        upperCL  = quantile(.epred, 0.975), .groups = "drop")
 
     pred_sig <- tidybayes::epred_draws(fit, newdata = nd, dpar = TRUE,
                                        re_formula = NA, ndraws = 500) |>
       dplyr::group_by(.data[[m$moderator]]) |>
-      dplyr::summarise(estimate = median(sigma),
+      dplyr::summarise(estimate = mean(sigma),
                        lowerCL  = quantile(sigma, 0.025),
                        upperCL  = quantile(sigma, 0.975), .groups = "drop")
 

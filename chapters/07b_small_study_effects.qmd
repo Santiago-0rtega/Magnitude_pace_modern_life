@@ -1,0 +1,266 @@
+---
+title: "Small-study effects diagnostic"
+---
+
+::: {.workflow}
+::: {}
+**Input**
+SAFE lnM estimates, group sample sizes, and the phylogenetic covariance matrix.
+:::
+::: {}
+**Action**
+Fit sample-size-based Egger-style multilevel meta-regressions.
+:::
+::: {}
+**Output**
+Small-study slope, infinite-sample intercept, and diagnostic plot.
+:::
+::: {}
+**Next**
+Check whether conclusions are robust to alternative analysis specifications.
+:::
+:::
+
+```{r setup, include=FALSE}
+source(here::here("chapters", "Rscripts", "00_packages.R"))
+source(here::here("chapters", "Rscripts", "20_small_study_effects.R"))
+library(metafor)
+
+result_path <- here::here("Rdata", "tables", "small_study_effects.csv")
+model_path <- here::here("Rdata", "models", "small_study_effects.rds")
+figure_path <- here::here("Rdata", "figures", "publication", "small_study_effects.png")
+
+if (!file.exists(result_path) || !file.exists(model_path) || !file.exists(figure_path)) {
+  stop(
+    "Small-study-effects outputs are missing. Run ",
+    "run_small_study_analysis() from chapters/Rscripts/20_small_study_effects.R.",
+    call. = FALSE
+  )
+}
+
+small_study_results <- readr::read_csv(result_path, show_col_types = FALSE)
+small_study_fit <- readRDS(model_path)
+```
+
+## Why sample size, rather than sampling error?
+
+We assess whether estimated effect magnitudes vary systematically with study
+size. Such a pattern is a **small-study effect**: it can be consistent with
+publication bias, but it can also arise from genuine heterogeneity or design
+differences. It is therefore a diagnostic, not a direct test of the publication
+process.
+
+The usual Egger regression uses an effect's sampling standard error as the
+predictor. For lnM, however, the effect and its estimated standard error share
+underlying variance components. Their structural dependence can create
+artefactual asymmetry. Following the
+[lnM worked example](https://itchyshin.github.io/meta-analysis_of_magnitude/)
+and Nakagawa et al. (2022), we instead use a predictor calculated only from the
+two group sample sizes.
+
+For each contrast, the harmonic effective sample size is
+
+$$
+n_0 = \frac{n_1 n_2}{n_1 + n_2}.
+$$
+
+We fit two related models:
+
+1. $1/\sqrt{n_0}$ is an SE analogue; its slope is the primary diagnostic for
+   small-study effects.
+2. $1/n_0$ is a variance analogue; its intercept at $1/n_0=0$ is an
+   infinite-sample, bias-adjusted estimate. We treat this as a conditional
+   sensitivity estimate rather than an automatic replacement for the primary
+   meta-analytic mean.
+
+### Constructing the predictors
+
+The two predictors are calculated directly from the original group sample
+sizes. Neither uses the observed lnM estimate or its sampling variance.
+
+```{r predictor-code, eval=FALSE}
+diagnostic_data <- readRDS(
+  here::here("Rdata", "effect_sizes", "proceed_lnm_safe.rds")
+) |>
+  dplyr::filter(
+    is.finite(n1), n1 > 0,
+    is.finite(n2), n2 > 0
+  ) |>
+  dplyr::mutate(
+    n0   = (n1 * n2) / (n1 + n2),
+    n_se = 1 / sqrt(n0),
+    n_v  = 1 / n0
+  )
+```
+
+## Model structure
+
+Both models use SAFE lnM as the response and retain the analysis's known
+sampling variances. Random intercepts account for clustering by reference,
+phylogenetically correlated species, and effect-size record. Thus the
+diagnostic changes the fixed predictor while preserving the main sources of
+non-independence.
+
+```{r model-code, eval=FALSE}
+diagnostic_data <- prepare_small_study_data()
+
+fit_se <- metafor::rma.mv(
+  yi = yi_lnM_safe,
+  V = vi_lnM_safe,
+  mods = ~ n_se,
+  random = list(
+    ~ 1 | ref_id,
+    ~ 1 | sp_ncbi,
+    ~ 1 | es_id_model
+  ),
+  R = list(sp_ncbi = diagnostic_data$A),
+  Rscale = "cor",
+  method = "REML",
+  test = "t",
+  sparse = TRUE,
+  data = diagnostic_data$data
+)
+
+fit_v <- metafor::rma.mv(
+  yi = yi_lnM_safe,
+  V = vi_lnM_safe,
+  mods = ~ n_v,
+  random = list(
+    ~ 1 | ref_id,
+    ~ 1 | sp_ncbi,
+    ~ 1 | es_id_model
+  ),
+  R = list(sp_ncbi = diagnostic_data$A),
+  Rscale = "cor",
+  method = "REML",
+  test = "t",
+  sparse = TRUE,
+  data = diagnostic_data$data
+)
+```
+
+The diagnostic includes **`r small_study_fit$n` contrasts** with complete,
+positive group sample sizes and resolved species names.
+
+## Results
+
+### Model summaries
+
+The following are the complete `summary()` outputs from the two cached model
+objects fitted on Totoro.
+
+```{r model-summary-se}
+summary(small_study_fit$fit_se)
+```
+
+```{r model-summary-v}
+summary(small_study_fit$fit_v)
+```
+
+### Coefficient table
+
+```{r results-table}
+display_results <- small_study_results |>
+  dplyr::mutate(
+    term = dplyr::recode(
+      term,
+      intrcpt = "Intercept",
+      n_se = "1 / sqrt(n0) slope",
+      n_v = "1 / n0 slope"
+    ),
+    across(c(estimate, std_error, ci_lower, ci_upper), ~ round(.x, 3)),
+    p_value = format.pval(p_value, digits = 3, eps = 0.001)
+  ) |>
+  dplyr::select(Model = model, Term = term, Estimate = estimate,
+                `Standard error` = std_error, `95% CI lower` = ci_lower,
+                `95% CI upper` = ci_upper, `p-value` = p_value)
+
+knitr::kable(
+  display_results,
+  caption = paste0(
+    "Sample-size-based multilevel meta-regressions. The primary diagnostic ",
+    "is the 1 / sqrt(n0) slope; the 1 / n0 intercept estimates the effect at ",
+    "infinite sample size."
+  )
+)
+```
+
+```{r interpretation, results='asis'}
+slope <- small_study_results |>
+  dplyr::filter(model == "Small-study slope: 1 / sqrt(n0)", term == "n_se")
+
+direction <- if (slope$estimate > 0) "larger" else "smaller"
+evidence <- if (slope$ci_lower > 0 || slope$ci_upper < 0) {
+  "The 95% confidence interval excludes zero, providing evidence of a small-study effect"
+} else {
+  "The 95% confidence interval includes zero, so this analysis does not provide clear evidence of a small-study effect"
+}
+
+cat(sprintf(
+  "%s (slope = %.3f, 95%% CI [%.3f, %.3f]). The fitted direction associates smaller effective samples with %s lnM estimates. This pattern should not, by itself, be labelled publication bias.\n",
+  evidence, slope$estimate, slope$ci_lower, slope$ci_upper, direction
+))
+```
+
+## Diagnostic plot
+
+The two panels are constructed from the cached models and joined with
+`patchwork`. Bubble area represents sampling precision, $1/\mathrm{SE}$.
+
+```{r figure-code, eval=FALSE}
+diagnostic_data <- prepare_small_study_data()
+
+p_se <- build_small_study_figure(
+  small_study_fit$fit_se,
+  diagnostic_data$data,
+  predictor = "n_se",
+  bubble_fill = "#DC143C",
+  line_colour = "#DC143C"
+)
+
+p_v <- build_small_study_figure(
+  small_study_fit$fit_v,
+  diagnostic_data$data,
+  predictor = "n_v",
+  bubble_fill = "#FF8C00",
+  line_colour = "#8B4500"
+) +
+  ggplot2::theme(legend.position = "none")
+
+p <- ((p_se + p_v) / patchwork::guide_area()) +
+  patchwork::plot_layout(heights = c(1, 0.10), guides = "collect") +
+  patchwork::plot_annotation(tag_levels = "A", tag_suffix = ")") &
+  ggplot2::theme(
+    legend.position = "bottom",
+    legend.justification = "center",
+    plot.tag = ggplot2::element_text(face = "bold", size = 14),
+    plot.tag.position = c(0.01, 0.99)
+  )
+
+ggplot2::ggsave(
+  here::here("Rdata", "figures", "publication", "small_study_effects.png"),
+  p, width = 13, height = 6, dpi = 300, bg = "white"
+)
+```
+
+```{r figure}
+knitr::include_graphics(figure_path)
+```
+
+::: {.callout-note}
+The infinite-sample intercept is an extrapolation to $1/n_0=0$, outside the
+observed finite-sample data. It is most useful as a sensitivity analysis when
+the slope diagnostic indicates small-study effects and the model is otherwise
+well specified.
+:::
+
+## Reproduce the cached outputs
+
+Normal book renders read the saved model, table, and figure. To refit the
+diagnostic deliberately, run:
+
+```{r reproduce, eval=FALSE}
+source(here::here("chapters", "Rscripts", "00_packages.R"))
+source(here::here("chapters", "Rscripts", "20_small_study_effects.R"))
+run_small_study_analysis()
+```

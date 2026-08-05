@@ -70,6 +70,9 @@ for (s in specs) {
     ndraws     = if (is.na(s$ndraws)) 1000 else s$ndraws,
     n_grid     = if (is.null(s$n_grid)) 100 else s$n_grid
   )
+  cache$summary_spec <- list(
+    version = 2L, point = "posterior_mean", interval = "equal_tail_95"
+  )
   cache$source_fit <- basename(fit_file)
   saveRDS(cache, out_f, compress = "xz")
   rm(fit, cache); gc(verbose = FALSE)

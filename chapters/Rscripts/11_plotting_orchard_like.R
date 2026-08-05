@@ -56,7 +56,7 @@ plot_continuous_location <- function(fit, moderator, moderator_label,
   pred <- tidybayes::add_epred_draws(nd, fit, re_formula = NA, ndraws = 500) |>
     dplyr::group_by(.data[[moderator]]) |>
     dplyr::summarise(
-      estimate = median(.epred),
+      estimate = mean(.epred),
       q2_5     = quantile(.epred, 0.025),
       q97_5    = quantile(.epred, 0.975),
       .groups  = "drop"
@@ -89,7 +89,7 @@ plot_continuous_scale <- function(fit, moderator, moderator_label,
                                      ndraws = 500) |>
     dplyr::group_by(.data[[moderator]]) |>
     dplyr::summarise(
-      estimate = median(.epred),
+      estimate = mean(.epred),
       q2_5     = quantile(.epred, 0.025),
       q97_5    = quantile(.epred, 0.975),
       .groups  = "drop"

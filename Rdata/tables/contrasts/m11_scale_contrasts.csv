@@ -1,2 +1,2 @@
-contrast,estimate,lower.HPD,upper.HPD,pd
-interval - ratio,-0.3219415392375,-0.507172,-0.14160099999999998,1
+contrast,estimate,lower.CrI,upper.CrI,pd
+interval - ratio,-0.3219415392375,-0.512024575,-0.1457446750000001,1

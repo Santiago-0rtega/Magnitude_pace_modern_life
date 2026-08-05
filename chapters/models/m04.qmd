@@ -132,7 +132,7 @@ raw <- dat_es[!is.na(dat_es[[moderator]]), ] |>
 pred <- cache$loc |>
   dplyr::group_by(.data[[moderator]]) |>
   dplyr::summarise(
-    estimate = median(.epred),
+    estimate = mean(.epred),
     lowerCL = quantile(.epred, 0.025),
     upperCL = quantile(.epred, 0.975),
     .groups = "drop"
@@ -141,7 +141,7 @@ pred <- cache$loc |>
 pred_sig <- cache$scl |>
   dplyr::group_by(.data[[moderator]]) |>
   dplyr::summarise(
-    estimate = median(sigma),
+    estimate = mean(sigma),
     lowerCL = quantile(sigma, 0.025),
     upperCL = quantile(sigma, 0.975),
     .groups = "drop"

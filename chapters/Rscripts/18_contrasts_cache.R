@@ -14,12 +14,17 @@ suppressMessages({ library(dplyr); library(kableExtra) })
 
 # CI excludes 0 (both bounds same sign) → contrast is "credibly non-zero".
 .ci_excludes_zero <- function(lo, hi) (lo > 0 & hi > 0) | (lo < 0 & hi < 0)
+.first_col <- function(df, candidates) df[[intersect(candidates, names(df))[1]]]
 
 read_contrasts_cache <- function(
     id,
     path = here::here("Rdata", "summaries", "emmeans_contrasts_cache.rds")) {
   if (!file.exists(path)) return(NULL)
-  readRDS(path)[[id]]
+  cache <- readRDS(path)
+  if (!identical(attr(cache, "summary_spec")$version, 2L)) {
+    stop("Legacy contrasts cache rejected. Rebuild it using posterior-mean/equal-tail summary specification v2.")
+  }
+  cache[[id]]
 }
 
 format_heterogeneity_components <- function(het) {
@@ -38,18 +43,18 @@ format_heterogeneity_components <- function(het) {
 }
 
 # Location pairwise contrasts, tidied for display.
-# emmeans summary columns are typically: contrast, estimate, lower.HPD,
-# upper.HPD (Bayesian) — plus our added pd. We rename to friendly headers.
+# Specification-v2 contrast columns contain the posterior mean and equal-tail
+# credible limits, plus probability of direction (`pd`).
 format_location_contrasts <- function(cache, digits = 3) {
   if (is.null(cache) || is.null(cache$loc_contrasts)) return(NULL)
   df <- cache$loc_contrasts
-  lo <- dplyr::coalesce(df[["lower.HPD"]], df[["asymp.LCL"]], df[["lower.CL"]])
-  hi <- dplyr::coalesce(df[["upper.HPD"]], df[["asymp.UCL"]], df[["upper.CL"]])
+  lo <- .first_col(df, "lower.CrI")
+  hi <- .first_col(df, "upper.CrI")
   out <- tibble::tibble(
     Contrast          = as.character(df$contrast),
     Estimate          = df$estimate,
-    `Lower 95% HPD`   = lo,
-    `Upper 95% HPD`   = hi
+    `Lower 95% CrI`   = lo,
+    `Upper 95% CrI`   = hi
   )
   out[[".sig"]] <- .ci_excludes_zero(lo, hi)
   .round_num(out, digits)
@@ -62,10 +67,10 @@ format_scale_contrasts <- function(cache, digits = 3) {
   out <- tibble::tibble(
     Contrast          = as.character(df$contrast),
     `Estimate (logσ)` = df$estimate,
-    `Lower 95% HPD`   = df$lower.HPD,
-    `Upper 95% HPD`   = df$upper.HPD
+    `Lower 95% CrI`   = .first_col(df, "lower.CrI"),
+    `Upper 95% CrI`   = .first_col(df, "upper.CrI")
   )
-  out[[".sig"]] <- .ci_excludes_zero(df$lower.HPD, df$upper.HPD)
+  out[[".sig"]] <- .ci_excludes_zero(out[["Lower 95% CrI"]], out[["Upper 95% CrI"]])
   .round_num(out, digits)
 }
 
@@ -120,8 +125,8 @@ format_continuous_d_eq <- function(cache, original_values = c(1, 10, 100),
 format_location_emmeans <- function(cache, digits = 3) {
   if (is.null(cache) || is.null(cache$loc_emmeans)) return(NULL)
   df <- cache$loc_emmeans
-  lo_name <- intersect(c("lower.HPD", "asymp.LCL", "lower.CL"), names(df))[1]
-  hi_name <- intersect(c("upper.HPD", "asymp.UCL", "upper.CL"), names(df))[1]
+  lo_name <- intersect("lower.CrI", names(df))[1]
+  hi_name <- intersect("upper.CrI", names(df))[1]
   if (is.na(lo_name) || is.na(hi_name)) return(NULL)
   lo <- df[[lo_name]]
   hi <- df[[hi_name]]

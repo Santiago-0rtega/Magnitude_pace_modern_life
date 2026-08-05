@@ -8,7 +8,8 @@
 # tables to `Rdata/summaries/` and `Rdata/tables/` before rendering the book.
 #
 #   Location: emmeans(fit, ~ moderator, epred = TRUE, re_formula = NA) and
-#             pairwise contrasts (no p-value adjustment; Bayesian HPD intervals).
+#             pairwise contrasts (no p-value adjustment). Tables and figures use
+#             posterior means and equal-tail 95% credible intervals throughout.
 #   Scale:    marginal means and pairwise contrasts built directly from the
 #             posterior draws of the sigma (log-scale) coefficients, since
 #             emmeans cannot target the scale part of a brms location-scale fit.
@@ -84,11 +85,11 @@ sigma_contrasts <- function(fit, moderator) {
     }
   }
 
-  hpd <- function(d) as.numeric(coda::HPDinterval(coda::as.mcmc(d)))
+  cri <- function(d) unname(quantile(d, c(0.025, 0.975)))
 
   emm <- bind_rows(lapply(names(lev_draws), function(lv) {
-    d <- lev_draws[[lv]]; h <- hpd(d)
-    tibble(level = lv, emmean = mean(d), lower.HPD = h[1], upper.HPD = h[2],
+    d <- lev_draws[[lv]]; h <- cri(d)
+    tibble(level = lv, emmean = mean(d), lower.CrI = h[1], upper.CrI = h[2],
            residual_SD = exp(mean(d)))
   }))
 
@@ -96,10 +97,10 @@ sigma_contrasts <- function(fit, moderator) {
   pairs <- bind_rows(lapply(seq_along(levs), function(i)
     bind_rows(lapply(seq_along(levs), function(j) {
       if (j <= i) return(NULL)
-      d <- lev_draws[[levs[i]]] - lev_draws[[levs[j]]]; h <- hpd(d)
+      d <- lev_draws[[levs[i]]] - lev_draws[[levs[j]]]; h <- cri(d)
       pdir <- mean(d > 0)
       tibble(contrast = paste(levs[i], "-", levs[j]),
-             estimate = mean(d), lower.HPD = h[1], upper.HPD = h[2],
+             estimate = mean(d), lower.CrI = h[1], upper.CrI = h[2],
              pd = max(pdir, 1 - pdir))
     }))))
   list(emmeans = emm, contrasts = pairs)
@@ -109,22 +110,43 @@ sigma_contrasts <- function(fit, moderator) {
 location_contrasts <- function(fit, moderator) {
   em <- emmeans::emmeans(fit, as.formula(paste("~", moderator)),
                          epred = TRUE, re_formula = NA)
-  emm_df <- as.data.frame(summary(em)) |>
-    rename(level = 1) |> as_tibble()
+  em_draws <- as.matrix(emmeans::as.mcmc.emmGrid(em, names = FALSE))
+  em_levels <- as.character(as.data.frame(em)[[1]])
+  emm_df <- bind_rows(lapply(seq_along(em_levels), function(i) {
+    d <- em_draws[, i]
+    tibble(
+      level = em_levels[i], emmean = mean(d),
+      lower.CrI = unname(quantile(d, 0.025)),
+      upper.CrI = unname(quantile(d, 0.975))
+    )
+  }))
 
   pw <- emmeans::contrast(em, method = "pairwise", adjust = "none")
-  ctr_df <- as.data.frame(summary(pw, infer = TRUE)) |> as_tibble()
-
-  # Probability of direction from the contrast posterior draws.
-  pd <- tryCatch({
-    mc <- as.matrix(emmeans::as.mcmc.emmGrid(pw, names = FALSE))
-    apply(mc, 2, function(d) { p <- mean(d > 0); max(p, 1 - p) })
-  }, error = function(e) rep(NA_real_, nrow(ctr_df)))
-  ctr_df$pd <- pd
+  pw_draws <- as.matrix(emmeans::as.mcmc.emmGrid(pw, names = FALSE))
+  pw_labels <- as.character(as.data.frame(pw)$contrast)
+  ctr_df <- bind_rows(lapply(seq_along(pw_labels), function(i) {
+    d <- pw_draws[, i]; p <- mean(d > 0)
+    tibble(
+      contrast = pw_labels[i], estimate = mean(d),
+      lower.CrI = unname(quantile(d, 0.025)),
+      upper.CrI = unname(quantile(d, 0.975)), pd = max(p, 1 - p)
+    )
+  }))
   list(emmeans = emm_df, contrasts = ctr_df)
 }
 
-cat_grid <- dplyr::filter(moderator_grid, type == "categorical")
+# Explicit render-active categorical models. Do not derive this set from the
+# fitting registry: m08 is an appendix result and can be absent from the primary
+# grid while still requiring synchronized tables and orchard figures.
+cat_grid <- tibble::tribble(
+  ~model_id, ~moderator,   ~label,
+  "m01",     "disturbance", "Disturbance context",
+  "m02",     "design",      "Comparison design",
+  "m05",     "trait_type",  "Trait type",
+  "m07",     "genphen",     "Phenotypic vs genetic study",
+  "m08",     "env_change",  "Environmental-change context",
+  "m11",     "data_scale",  "Measurement scale"
+)
 cache <- list()
 
 for (i in seq_len(nrow(cat_grid))) {
@@ -161,5 +183,8 @@ for (i in seq_len(nrow(cat_grid))) {
   rm(fit); gc(verbose = FALSE)
 }
 
+attr(cache, "summary_spec") <- list(
+  version = 2L, point = "posterior_mean", interval = "equal_tail_95"
+)
 saveRDS(cache, file.path(summ_dir, "emmeans_contrasts_cache.rds"))
 message("\nDone. cached models: ", paste(names(cache), collapse = ", "))

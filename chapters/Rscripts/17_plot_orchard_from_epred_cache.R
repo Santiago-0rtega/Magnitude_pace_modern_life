@@ -8,12 +8,16 @@ dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 
 dat_es <- readRDS(here::here("Rdata", "effect_sizes", "proceed_lnm_safe.rds"))
 cache_dir <- here::here("Rdata", "epred_draws")
+summary_cache <- readRDS(here::here("Rdata", "summaries", "emmeans_contrasts_cache.rds"))
+if (!identical(attr(summary_cache, "summary_spec")$version, 2L)) {
+  stop("Legacy contrasts cache rejected; rebuild summary specification v2 first.")
+}
 
 model_ids <- Sys.getenv("ORCHARD_MODEL_IDS", unset = "")
 model_ids <- if (nzchar(model_ids)) {
   stringr::str_split(model_ids, "\\s*,\\s*")[[1]]
 } else {
-  sprintf("m%02d", 0:11)
+  c("m00", "m01", "m02", "m03", "m04", "m05", "m07", "m08", "m11")
 }
 
 label_maps <- list(
@@ -96,7 +100,7 @@ summarise_draws <- function(data, group, value) {
   data |>
     dplyr::group_by(.data[[group]]) |>
     dplyr::summarise(
-      estimate = median(.data[[value]], na.rm = TRUE),
+      estimate = mean(.data[[value]], na.rm = TRUE),
       lowerCL = quantile(.data[[value]], 0.025, na.rm = TRUE),
       upperCL = quantile(.data[[value]], 0.975, na.rm = TRUE),
       .groups = "drop"
@@ -105,10 +109,10 @@ summarise_draws <- function(data, group, value) {
 
 plot_intercept <- function(cache) {
   raw <- dat_es |> dplyr::mutate(precision = 1 / sqrt(vi_lnM_safe))
-  int_est <- median(cache$post$b_Intercept)
+  int_est <- mean(cache$post$b_Intercept)
   int_lo <- quantile(cache$post$b_Intercept, 0.025)
   int_hi <- quantile(cache$post$b_Intercept, 0.975)
-  sig_est <- median(cache$post$sigma)
+  sig_est <- mean(cache$post$sigma)
   sig_lo <- quantile(cache$post$sigma, 0.025)
   sig_hi <- quantile(cache$post$sigma, 0.975)
   cap_half_height <- 0.08
@@ -249,10 +253,25 @@ plot_categorical <- function(cache) {
   lab <- cache$label
   map <- label_maps[[cache$id]]
 
-  ests <- summarise_draws(cache$loc, mod, ".epred") |>
-    dplyr::mutate(level = apply_labels(.data[[mod]], map))
-  sig_ests <- summarise_draws(cache$scl, mod, "sigma") |>
-    dplyr::mutate(level = apply_labels(.data[[mod]], map))
+  shared <- summary_cache[[cache$id]]
+  if (is.null(shared)) stop("No shared table summary for categorical model ", cache$id)
+  loc_lo <- intersect(c("lower.CrI"), names(shared$loc_emmeans))[1]
+  loc_hi <- intersect(c("upper.CrI"), names(shared$loc_emmeans))[1]
+  scl_lo <- intersect(c("lower.CrI"), names(shared$scl_emmeans))[1]
+  scl_hi <- intersect(c("upper.CrI"), names(shared$scl_emmeans))[1]
+  if (anyNA(c(loc_lo, loc_hi, scl_lo, scl_hi))) {
+    stop("Shared summary for ", cache$id, " is not specification v2.")
+  }
+  ests <- shared$loc_emmeans |>
+    dplyr::transmute(
+      level = apply_labels(level, map), estimate = emmean,
+      lowerCL = .data[[loc_lo]], upperCL = .data[[loc_hi]]
+    )
+  sig_ests <- shared$scl_emmeans |>
+    dplyr::transmute(
+      level = apply_labels(level, map), estimate = exp(emmean),
+      lowerCL = exp(.data[[scl_lo]]), upperCL = exp(.data[[scl_hi]])
+    )
 
   raw <- if (mod %in% names(dat_es)) {
     dat_es[!is.na(dat_es[[mod]]), ] |>
@@ -371,6 +390,9 @@ plot_categorical <- function(cache) {
 
 for (id in model_ids) {
   cache <- readRDS(file.path(cache_dir, paste0(id, ".rds")))
+  if (!identical(cache$summary_spec$version, 2L)) {
+    stop("Legacy epred cache rejected for ", id, ". Rebuild specification v2 first.")
+  }
   message("\n--- ", id, " from cached epred draws ---")
 
   plots <- switch(
@@ -388,3 +410,19 @@ for (id in model_ids) {
   save_plot(plots$combined, paste0(id, "_orchard_combined"),
             width = plots$width, height = plots$combined_height)
 }
+
+saveRDS(
+  list(
+    summary_spec = list(version = 2L, point = "posterior_mean", interval = "equal_tail_95"),
+    model_ids = model_ids,
+    summary_cache_md5 = unname(tools::md5sum(
+      here::here("Rdata", "summaries", "emmeans_contrasts_cache.rds")
+    )),
+    epred_cache_md5 = stats::setNames(
+      unname(tools::md5sum(file.path(cache_dir, paste0(model_ids, ".rds")))),
+      model_ids
+    ),
+    generated = Sys.time()
+  ),
+  file.path(out_dir, "orchard_manifest.rds")
+)

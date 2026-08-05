@@ -1,2 +1,2 @@
-contrast,estimate,lower.HPD,upper.HPD,pd
-Allochronic - Synchronic,-0.2508005,-0.42029099999999997,-0.08096230000000004,0.997625
+contrast,estimate,lower.CrI,upper.CrI,pd
+Allochronic - Synchronic,-0.249875928991625,-0.4183574,-0.07670750999999995,0.997625

@@ -138,7 +138,13 @@ build_epred_cache <- function(fit, id, kind, label,
 
 read_epred_cache <- function(id, cache_dir) {
   f <- file.path(cache_dir, paste0(id, ".rds"))
-  if (file.exists(f)) readRDS(f) else NULL
+  if (!file.exists(f)) return(NULL)
+  cache <- readRDS(f)
+  if (!identical(cache$summary_spec$version, 2L)) {
+    stop("Legacy epred cache rejected for ", id,
+         ". Rebuild it using posterior-mean/equal-tail summary specification v2.")
+  }
+  cache
 }
 
 # Print the cached summary as verbatim output, or a placeholder.

@@ -1,2 +1,2 @@
-contrast,estimate,lower.HPD,upper.HPD,pd
-novel - ongoing,-0.21422249937500001,-0.267544,-0.16190000000000004,1
+contrast,estimate,lower.CrI,upper.CrI,pd
+novel - ongoing,-0.21422249937500001,-0.267731225,-0.16199594999999997,1
