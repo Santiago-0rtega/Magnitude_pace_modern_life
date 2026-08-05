@@ -1,5 +1,9 @@
 library(here)
-library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(purrr)
+library(stringr)
+library(tibble)
 library(ggbeeswarm)
 library(patchwork)
 
@@ -62,11 +66,23 @@ COL_SCALE <- "#D55E00"
 COL_SCALE_LIGHT <- "#E69F00"
 COL_SCALE_RIBBON <- "#F2B27E"
 PRECISION_LABEL <- "Effect-size precision (1/SE)"
-SCALE_CAPTION_MARKS <- "Points show absolute residual lnM values; diamonds and intervals show model-estimated residual heterogeneity (sigma_lnm)."
-SCALE_CAPTION_RIBBON <- "Points show absolute residual lnM values; line and ribbon show model-estimated residual heterogeneity (sigma_lnm)."
+PRECISION_GUIDE <- ggplot2::guide_legend(
+  override.aes = list(shape = 21, fill = "white", colour = "grey40", alpha = 1)
+)
 CATEGORY_COLS <- c(
   "#0072B2", "#D55E00", "#009E73", "#CC79A7", "#E69F00",
   "#56B4E9", "#6A3D9A", "#999999", "#000000"
+)
+
+# Approximate large-sample conversion used in the original orchard figures:
+# d_eq = sqrt(2) * exp(lnM). This is valid for location effects, not sigma.
+D_EQ_BREAKS <- c(0.2, 0.5, 0.8, sqrt(2))
+LNM_REF <- log(D_EQ_BREAKS[1:3] / sqrt(2))
+D_EQ_AXIS <- ggplot2::sec_axis(
+  ~ sqrt(2) * exp(.),
+  breaks = D_EQ_BREAKS,
+  labels = c("0.2", "0.5", "0.8", "1.41"),
+  name = expression(Approximate~italic(d)[plain(eq)])
 )
 
 theme_orchard <- function() {
@@ -78,14 +94,13 @@ theme_orchard <- function() {
       panel.grid.major.x = ggplot2::element_line(colour = "grey92"),
       legend.position    = "bottom",
       legend.title       = ggplot2::element_text(size = 10),
-      plot.title         = ggplot2::element_text(size = 13, face = "bold"),
-      plot.caption       = ggplot2::element_text(size = 9, colour = "grey50")
+      plot.title         = ggplot2::element_text(size = 13, face = "bold")
     )
 }
 
 save_plot <- function(p, stem, width = 9, height = 6) {
   ggplot2::ggsave(file.path(out_dir, paste0(stem, ".pdf")), p,
-                  width = width, height = height, device = cairo_pdf)
+                  width = width, height = height, device = grDevices::pdf)
   ggplot2::ggsave(file.path(out_dir, paste0(stem, ".png")), p,
                   width = width, height = height, dpi = 300, type = "cairo")
 }
@@ -118,6 +133,8 @@ plot_intercept <- function(cache) {
   cap_half_height <- 0.08
 
   p_loc <- ggplot2::ggplot() +
+    ggplot2::geom_vline(xintercept = LNM_REF, linetype = "dotted",
+                        colour = "grey72", linewidth = 0.45) +
     ggplot2::geom_vline(xintercept = 0, linetype = "dashed", colour = "grey50") +
     ggbeeswarm::geom_quasirandom(
       data = raw,
@@ -142,10 +159,11 @@ plot_intercept <- function(cache) {
     ggplot2::geom_point(ggplot2::aes(x = int_est, y = 1),
                         size = 3.4, shape = 23,
                         fill = "white", colour = "grey10", stroke = 1.1) +
-    ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.3, 4)) +
+    ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.3, 4),
+                                   guide = PRECISION_GUIDE) +
+    ggplot2::scale_x_continuous(sec.axis = D_EQ_AXIS) +
     ggplot2::scale_y_continuous(breaks = NULL) +
-    ggplot2::labs(x = "Location effect (lnM)", y = NULL,
-                  title = "Location -- Overall baseline (m00)") +
+    ggplot2::labs(x = "lnM", y = NULL, title = "A)") +
     theme_orchard()
 
   raw_sig <- raw |> dplyr::mutate(abs_resid = abs(yi_lnM_safe - int_est))
@@ -173,15 +191,17 @@ plot_intercept <- function(cache) {
     ggplot2::geom_point(ggplot2::aes(x = sig_est, y = 1),
                         size = 3.4, shape = 23,
                         fill = "white", colour = "grey10", stroke = 1.1) +
-    ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.3, 4)) +
+    ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.3, 4),
+                                   guide = PRECISION_GUIDE) +
     ggplot2::scale_y_continuous(breaks = NULL) +
-    ggplot2::labs(x = "residual lnM (SD)", y = NULL,
-                  title = "Scale -- Overall baseline (m00)",
-                  caption = SCALE_CAPTION_MARKS) +
+    ggplot2::labs(x = "residual lnM (SD)", y = NULL, title = "B)") +
     theme_orchard()
 
   list(location = p_loc, scale = p_scl,
-       combined = patchwork::wrap_plots(p_loc, p_scl, ncol = 1, guides = "collect") &
+       combined = patchwork::wrap_plots(
+         p_loc + ggplot2::theme(legend.position = "none"), p_scl,
+         ncol = 1, guides = "collect"
+       ) &
          ggplot2::theme(legend.position = "bottom"),
        width = 9, height = 4, combined_height = 8)
 }
@@ -197,6 +217,8 @@ plot_continuous <- function(cache) {
   raw_sig <- raw |> dplyr::mutate(abs_resid = abs(yi_lnM_safe - raw_pred_loc))
 
   p_loc <- ggplot2::ggplot() +
+    ggplot2::geom_hline(yintercept = LNM_REF, linetype = "dotted",
+                        colour = "grey72", linewidth = 0.45) +
     ggplot2::geom_hline(yintercept = 0, linetype = "dashed", colour = "grey50") +
     ggplot2::geom_point(
       data = raw,
@@ -213,8 +235,10 @@ plot_continuous <- function(cache) {
       ggplot2::aes(x = .data[[mod]], y = estimate),
       linewidth = 1.1, colour = COL_LOCATION
     ) +
-    ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.3, 4)) +
-    ggplot2::labs(x = lab, y = "lnM", title = NULL) +
+    ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.3, 4),
+                                   guide = PRECISION_GUIDE) +
+    ggplot2::scale_y_continuous(sec.axis = D_EQ_AXIS) +
+    ggplot2::labs(x = lab, y = "lnM", title = "A)") +
     theme_orchard()
 
   p_scl <- ggplot2::ggplot() +
@@ -233,15 +257,15 @@ plot_continuous <- function(cache) {
       ggplot2::aes(x = .data[[mod]], y = estimate),
       linewidth = 1.1, colour = COL_SCALE
     ) +
-    ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.3, 4)) +
-    ggplot2::labs(x = lab, y = "residual lnM (SD)",
-                  title = NULL, caption = NULL) +
+    ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.3, 4),
+                                   guide = PRECISION_GUIDE) +
+    ggplot2::labs(x = lab, y = "residual lnM (SD)", title = "B)") +
     theme_orchard()
 
   list(location = p_loc, scale = p_scl,
        combined = patchwork::wrap_plots(
-         p_loc,
-         p_scl + ggplot2::guides(size = "none"),
+         p_loc + ggplot2::theme(legend.position = "none"),
+         p_scl,
          ncol = 1,
          guides = "collect"
        ) & ggplot2::theme(legend.position = "bottom"),
@@ -297,6 +321,8 @@ plot_categorical <- function(cache) {
   cap_half_height <- 0.12
 
   p_loc <- ggplot2::ggplot() +
+    ggplot2::geom_vline(xintercept = LNM_REF, linetype = "dotted",
+                        colour = "grey72", linewidth = 0.45) +
     ggplot2::geom_vline(xintercept = 0, linetype = "dashed", colour = "grey50") +
     { if (!is.null(raw)) ggbeeswarm::geom_quasirandom(
       data = raw,
@@ -328,10 +354,11 @@ plot_categorical <- function(cache) {
     ) +
     ggplot2::scale_colour_manual(values = level_cols, guide = "none") +
     ggplot2::scale_fill_manual(values = level_cols, guide = "none") +
-    ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.4, 4)) +
+    ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.4, 4),
+                                   guide = PRECISION_GUIDE) +
+    ggplot2::scale_x_continuous(sec.axis = D_EQ_AXIS) +
     ggplot2::scale_y_continuous(breaks = y_breaks, labels = lev_order) +
-    ggplot2::labs(x = "Location effect (lnM)", y = NULL,
-                  title = paste("Location --", lab)) +
+    ggplot2::labs(x = "lnM", y = NULL, title = "A)") +
     theme_orchard()
 
   raw_sig <- if (!is.null(raw)) {
@@ -373,16 +400,18 @@ plot_categorical <- function(cache) {
     ) +
     ggplot2::scale_colour_manual(values = level_cols, guide = "none") +
     ggplot2::scale_fill_manual(values = level_cols, guide = "none") +
-    ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.4, 4)) +
+    ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.4, 4),
+                                   guide = PRECISION_GUIDE) +
     ggplot2::scale_y_continuous(breaks = y_breaks, labels = lev_order) +
-    ggplot2::labs(x = "residual lnM (SD)", y = NULL,
-                  title = paste("Scale --", lab),
-                  caption = SCALE_CAPTION_MARKS) +
+    ggplot2::labs(x = "residual lnM (SD)", y = NULL, title = "B)") +
     theme_orchard()
 
   height_single <- max(2.5 + n_levels * 0.55, 5)
   list(location = p_loc, scale = p_scl,
-       combined = patchwork::wrap_plots(p_loc, p_scl, ncol = 1, guides = "collect") &
+       combined = patchwork::wrap_plots(
+         p_loc + ggplot2::theme(legend.position = "none"), p_scl,
+         ncol = 1, guides = "collect"
+       ) &
          ggplot2::theme(legend.position = "bottom"),
        width = 9, height = height_single,
        combined_height = max(height_single * 1.9, 10))

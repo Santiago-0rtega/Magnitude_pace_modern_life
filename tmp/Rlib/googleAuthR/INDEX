@@ -1,0 +1,62 @@
+gar_api_generator       googleAuthR data fetch function generator
+gar_api_page            Takes a generated API function and lets you
+                        page through results
+gar_attach_auto_auth    Auto Authentication function for use within
+                        .onAttach
+gar_auth                Authorize 'googleAuthR'
+gar_auth_configure      Edit and view auth configuration
+gar_auth_service        JSON service account authentication
+gar_auto_auth           Perform auto authentication
+gar_batch               Turn a list of gar_fetch_functions into batch
+                        functions
+gar_batch_walk          Walk data through batches
+gar_cache_get_loc       Setup where to put cache
+gar_check_existing_token
+                        Check a token vs options
+gar_create_api_objects
+                        Create the API objects from the Discovery API
+gar_create_api_skeleton
+                        Create an API library skeleton
+gar_create_package      Create a Google API package
+gar_deauth              Suspend authorization
+gar_debug_parsing       Read the diagnostic object returned on API
+                        parse errors.
+gar_discovery_api       Get meta data details for specified Google API
+gar_discovery_apis_list
+                        Get a list of Google API libraries
+gar_gce_auth            Authenticate on Google Compute Engine
+gar_gce_auth_default    Authenticate via gcloud's application-default
+                        login
+gar_gce_auth_email      Get the service email via GCE metadata
+gar_has_token           Is there a token on hand?
+gar_scope_config        Create or add scopes to configuration
+gar_service_create      Work with service accounts via the API
+gar_service_provision   Provision a service account
+gar_set_client          Setup the clientId, clientSecret and scopes
+gar_setup_auth_check    Check service key works via environment
+                        argument
+gar_setup_auth_key      Create a service account for googleCloudRunner
+gar_setup_clientid      Check for a client JSON
+gar_setup_edit_renviron
+                        Setup wizard help - asking users to edit
+                        .Renviron
+gar_setup_env_check     Setup wizard help - check if environment
+                        argument is set
+gar_setup_get_authenv   Setup wizard helper - add authentication file
+                        to .Renviron
+gar_setup_menu          Setup wizard - introduction helper
+gar_setup_menu_do       Setup wizard help - the functions that will
+                        execute on different menu options
+gar_shiny_auth          Create Authentication within Shiny's server.R
+gar_shiny_auth_url      Make a Google Authorisation URL for Shiny
+gar_shiny_login_ui      A login page for Shiny
+gar_shiny_ui            Create a Google login before your Shiny UI
+                        launches
+gar_token               Produce configured token
+gar_token_info          Get current token summary
+googleAuthR             googleAuthR: Easy Authentication with Google
+                        OAuth2 APIs
+googleSignIn            Google SignIn [Server Module]
+googleSignInUI          Google SignIn [UI Module]
+silent_auth             Silent auth
+skip_if_no_env_auth     Skip test if not authenticated

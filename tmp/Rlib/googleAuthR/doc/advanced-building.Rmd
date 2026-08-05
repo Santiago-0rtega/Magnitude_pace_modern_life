@@ -1,0 +1,389 @@
+---
+title: "Advanced Google API building techniques"
+author: "Mark Edmondson"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Advanced Google API building techniques}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Advanced API building techniques
+
+These go into more edge cases: paging API responses, no parsing content, batching and caching API responses.
+
+## Setup wizard helpers
+
+If making a Google API package the trickiest bit for new users is usually navigating the GCP console and files needed for authentication - client JSON or service key JSON?  Environment arguments?  Authentication after or before library load?
+
+To help with the onboarding process, the `gar_setup_*` functions give helpers to create a startup wizard to guide users through the process.
+
+## Paging API responses
+
+A common need for APIs is to read multiple API calls since all data can not fit in one response. `googleAuthR` provides the `gar_api_page` function to help with this.  It operates upon the generated function you create in `gar_api_generator()`, after it has been parsed by the `data_parse_function`.  The output is a list of the API responses, which you then will need to parse into one object if you want (e.g. A list of data.frames, that you turn into one data.frame via `Reduce(rbind, response_list))`
+
+Depending on the API, you have two strategies to consider:
+
+1. A lot of the Google APIs provide a `nextLink` field - if you make this available in your `data_parse_function` you can then use this to fetch all the results.
+2. In some cases the `nextLink` field is not available - in those cases you can use parameters in the API responses to walk through the pages.  These are typically called `start-index` and `page-size`, to control what rows in the response you want each call.
+
+An example of the two approaches can be shown below on a Google Analytics segments API response.  Both provide equivalent output.
+
+```r
+# demos the two methods for the same function.
+# The example is for the Google Analytics management API, 
+#  you need to authenticate with that to run them. 
+ 
+
+# paging by using nextLink that is returned in API response
+ga_segment_list1 <- function(){
+ 
+# this URL will be modified by using the url_override argument in the generated function
+segs <- gar_api_generator("https://www.googleapis.com/analytics/v3/management/segments",
+                             "GET",
+                             pars_args = list("max-results"=10),
+                             data_parse_function = function(x) x)
+                          
+                          
+   gar_api_page(segs, 
+                page_method = "url",
+                page_f = function(x) x$nextLink)
+ 
+}
+ 
+# paging by looking for the next start-index parameter
+ 
+## start by creating the function that will output the correct start-index
+paging_function <- function(x){
+   next_entry <- x$startIndex + x$itemsPerPage
+ 
+   # we have all results e.g. 1001 > 1000
+   if(next_entry > x$totalResults){
+     return(NULL)
+   }
+ 
+   next_entry
+   }
+   
+## remember to add the paging argument (start-index) to the generated function too, 
+##  so it can be modified.    
+ga_segment_list2 <- function(){
+ 
+ segs <- gar_api_generator("https://www.googleapis.com/analytics/v3/management/segments",
+                            "GET",
+                             pars_args = list("start-index" = 1,
+                                              "max-results"=10),
+                             data_parse_function = function(x) x)
+                            
+   gar_api_page(segs, 
+                page_method = "param",
+                page_f = paging_function,
+                page_arg = "start-index")
+ 
+   }
+ 
+ 
+ identical(ga_segment_list1(), ga_segment_list2())
+ 
+ }
+```
+
+## Skip parsing
+
+In some cases you may want to skip all parsing of API content, perhaps if it is not JSON or some other reason.
+
+For this, you can use the option `options("googleAuthR.rawResponse" = TRUE)` to skip all tests and return the raw response.
+
+Here is an example of this from the googleCloudStorageR library:
+
+```r
+gcs_get_object <- function(bucket, 
+                           object_name){
+  ## skip JSON parsing on output as we expect a CSV
+  options(googleAuthR.rawResponse = TRUE)
+  
+  ## do the request
+  ob <- googleAuthR::gar_api_generator("https://www.googleapis.com/storage/v1/",
+                                       path_args = list(b = bucket,
+                                                        o = object_name),
+                                       pars_args = list(alt = "media"))
+  req <- ob()
+  
+  ## set it back to FALSE for other API calls.
+  options(googleAuthR.rawResponse = FALSE)
+  req
+}
+```
+
+## Batching API requests
+
+If you are doing many API calls, you can speed this up a lot by using the batch option.
+This takes the API functions you have created and wraps them in the `gar_batch` function to request them all in one POST call.  You then recieve the responses in a list.
+
+Note that this does not count as one call for API limits purposes, it just speeds up the processing.
+
+### Setting batch endpoint
+
+From version `googleAuthR 0.6.0` you also need to set an option of the batch endpoint.  This is due to multi-batch endpoints being deprecated by Google.  You are also no longer able to send batches for multiple APIs in one call.
+
+The batch endpoint is usually of the form:
+
+`www.googleapis.com/batch/api-name/api-version`
+
+e.g. For BigQuery, the option is:
+
+```r
+options(googleAuthR.batch_endpoint = "https://www.googleapis.com/batch/bigquery/v2")
+```
+
+#### Working with batching
+
+Batching is done via the `gar_batch()` function.  This transforms functions created by `gar_api_generator()` into one `POST` request following the batching syntax given by Google API docs. [Here is an example](https://developers.google.com/analytics/devguides/config/mgmt/v3/batching) for the Google Analytics management API, but its very standard for all the APIs that support batching.  If however it doesn't have a batching section in its docs, it is likely that the API does not support batching. 
+
+```r
+## usually set on package load
+options(googleAuthR.batch_endpoint = "https://www.googleapis.com/batch/urlshortener/v1")
+
+## from goo.gl API
+shorten_url <- function(url){
+
+  body = list(
+    longUrl = url
+  )
+  
+  f <- gar_api_generator("https://www.googleapis.com/urlshortener/v1/url",
+                         "POST",
+                         data_parse_function = function(x) x$id)
+  
+  f(the_body = body)
+  
+}
+
+## from goo.gl API
+user_history <- function(){
+  f <- gar_api_generator("https://www.googleapis.com/urlshortener/v1/url/history",
+                         "GET",
+                         data_parse_function = function(x) x$items)
+  
+  f()
+}
+library(googleAuthR)
+
+gar_auth()
+
+ggg <- gar_batch(list(shorten_url("http://markedmondson.me"), user_history()))
+
+```
+
+### Walking through batch requests
+
+A common batch task is to walk through the same API call, modifying only one parameter.  An example includes walking through Google Analytics API calls by date to avoid sampling. This is implemented at `gar_batch_walk()`
+
+This modifies the API function parameters, so you need to supply it which parameters you will (and will not) vary, as well as the values you want to walk through.  Some rules to help you get started are:
+
+* The `f` function needs to be a `gar_api_generator()` function that uses at least one of `path_args`, `pars_args` or `body_args` to construct the URL (rather than say using `sprintf()` to create the API URL)
+* You don't need to set the headers as described in the Google docs for batching API functions - those are done for you.
+* The argument `walk_vector` needs to be a vector of the values of the arguments to walk over, which you indicate will walk over the pars/path or body arguments on the function via on of the `*_walk` arguments e.g. if walking over id=1, id=2, for a path argument then it would be `path_walk="id"` and `walk_vector=c(1,2,3,4)`
+* `gar_batch_walk()` only supports changing one value at a time, for one or multiple arguments (I think only changing the `start-date`, `end-date` example would be the case when you walk through more than one per call)
+* `batch_size` should be over 1 for batching to be of any benefit at all
+* The `batch_function` argument gives you a way to operate on the parsed output of each call, before they are merged.
+
+An example is shown below - this gets a Google Analytics WebProperty object for each Account ID, in batches of 100 per API call:
+
+```r
+# outputs a vector of accountIds
+getAccountInfo <- gar_api_generator(
+  "https://www.googleapis.com/analytics/v3/management/accounts",
+  "GET", data_parse_function = function(x) unique(x$items$id))
+
+# for each accountId, get a list of web properties
+getWebpropertyInfo <- gar_api_generator(
+  "https://www.googleapis.com/analytics/v3/management/", # don't use sprintf to construct this
+  "GET",
+  path_args = list(accounts = "default", webproperties = ""),
+  data_parse_function = function(x) x$items)
+
+# walks through a list of accountIds
+walkWebpropertyInfo <- function(accs){
+  
+  gar_batch_walk(getWebpropertyInfo, 
+                 walk_vector = accs,
+                 gar_paths = list("webproperties" = ""),
+                 path_walk = "accounts",
+                 batch_size = 100, data_frame_output = FALSE)
+}
+
+##----- to use:
+
+library(googleAuthR)
+accs <- getAccountInfo()
+walkWebpropertyInfo(accs)
+
+```
+
+## Caching API calls
+
+You can also set up local caching of API calls.  This uses the [`memoise`](https://github.com/r-lib/memoise) package to let you write API responses to memory or disk and to call them from there instead of the API, if its using the same parameters.
+
+A demonstration is shown below:
+
+```r
+#' Shortens a url using goo.gl
+#'
+#' 
+#' @return the email of the user authenticated
+get_email <- function(){
+
+  f <- gar_api_generator("https://openidconnect.googleapis.com/v1/userinfo",
+                         "POST",
+                         data_parse_function = function(x) x$email,
+                         checkTrailingSlash = FALSE)
+  
+  f()
+  
+}
+
+gar_auth(email = Sys.getenv("GARGLE_EMAIL"), scopes = "email")
+
+## normal API fetch
+get_email()
+#> email@me.com
+
+## By default this will save the API response to RAM when it has a 200 response
+gar_cache_setup()
+#> [1] TRUE
+
+## first time no cache
+get_email()
+#> email@me.com
+
+## second time cached - much quicker for slow functions
+get_email()
+#> 2019-07-17 12:29:18> Reading cache
+#> email@me.com
+```
+
+
+Caching is activated by using the `gar_cache_setup()`  function.
+
+The default uses `memoise::cache_memory()` which will cache the response to RAM, but you can change this to any of the `memoise` cache functions such as `cache_s3()` or `cache_filesytem()`
+
+`cache_filesystem()` will write to a local folder, meaning you can save API responses between R sessions.
+
+### Other cache functions
+
+You can see the current cache location function via `gar_cache_get_loc` and stop caching via `gar_cache_empty`
+
+### Invalidating cache
+
+> There are two hard things in Computer Science: cache invalidation and naming things.
+
+In some cases, you may only want to cache the API responses under certain conditions.  A common use case is if an API call is checking if a job is running or finished.  You would only want to cache the finished state, otherwise the function will run indefinitely. 
+
+For those circumstances, you can supply a function that takes the API response as its only input, and outputs `TRUE` or `FALSE` whether to do the caching.  This allows you to introduce a check e.g. for finished jobs.
+
+The default will only cache for when a successful request `200` is found:
+
+```r
+function(req){req$status_code == 200}
+```
+
+For more advanced use cases, examine the response of failed and successful API calls, and create the appropriate function. Pass that function when creating the cache:
+
+```r
+# demo function to cache within
+shorten_url_cache <- function(url){
+  
+  body = list(
+    longUrl = url
+  )
+  
+  f <- gar_api_generator("https://www.googleapis.com/urlshortener/v1/url",
+                         "POST",
+                         data_parse_function = function(x) x)
+  
+  f(the_body = body)
+  
+}
+
+## only cache if this URL
+gar_cache_setup(invalid_func = function(req){
+    req$content$longUrl == "http://code.markedmondson.me/"
+    })
+
+# authentication
+gar_auth()
+
+## caches
+shorten_url_cache("http://code.markedmondson.me")
+  
+## read cache
+shorten_url_cache("http://code.markedmondson.me")
+  
+## ..but dont cache me
+shorten_url_cache("http://blahblah.com")
+```
+
+#### Batching and caching
+
+If you are caching a batched call, your cache invalidation function will need to take account that it will recieve a response which is a `multipart/mixed; boundary=batch_{random_string}` as its content-type header.  This response will need to be parsed into JSON first, before applying your data parsing functions and/or deciding to cache.  To get you started here is a cache function:
+
+
+```r
+batched_caching <- function(req){
+
+  ## if a batched response
+  if(grepl("^multipart/mixed; boundary=batch_",req$headers$`content-type`)){
+
+    ## find content that indicates a successful request ('kind:analytics#gaData')
+    parsed <- httr::content(req, as = "text", encoding = "UTF-8")
+    is_ga <- grepl('"kind":"analytics#gaData"', parsed)
+    if(is_ga){
+      ## is a response you want, cache me
+      return(TRUE)
+    }
+  }
+  
+  FALSE
+}
+
+```
+
+### Using caching
+
+Once set, if the function call name, arguments and body are the same, it will attempt to find a cache. If it exists it will read from there rather than making the API call.  If it does not it will make the API call, and save the response to where you have specified.
+
+Applications include saving large responses to RAM during paging calls, so that if the response fails retries are quickly moved to where the API left off, or to write API responses to disk for multi-session caching. You could also use this for unit testing, although its recommend to use [`httptest`](https://github.com/nealrichardson/httptest) library for that as it has wider support for authentication obscuration etc. 
+
+Be careful to only use caching where you know the API request won't change - if you want to reset the cache you can run the `gar_cache_setup` function again or delete the individual cache file in the directory.
+
+## Tests
+
+All packages should ideally have tests to ensure that any changes do not break functionality. 
+
+If new to testing, first read this guide on using the `tidyverse`'s [testthat](https://testthat.r-lib.org/).
+
+However, testing APIs that need authentication is more complicated, as you need to deal with the authentication token to get a correct response. 
+
+One option is to encrypt and upload your token, for which you can read a guide by Jenny Bryan here - `https://cran.r-project.org/web/packages/googlesheets/vignettes/managing-auth-tokens.html`.
+
+Since [`googleCloudRunner`](https://code.markedmondson.me/googleCloudRunner/) has been published, Google Cloud Build has been used for a lot of `googleAuthR` packages - this includes a [`cr_deploy_packagetests()`](https://code.markedmondson.me/googleCloudRunner/reference/cr_deploy_packagetests.html) function to which you can supply a secret token via [`cr_buildstep_secret()`](https://code.markedmondson.me/googleCloudRunner/reference/cr_buildstep_secret.html)
+
+
+### Codecov
+
+One of the nicest features of continuous integration is it can be used for code coverage.  This uses your tests to find out how many lines of code are triggered within them.  This lets you see how thorough yours tests are.  Developers covert the 100% coverage badge as it shows all of your code is checked every time you push to GitHub and helps mitigate bugs.
+
+This is this package's current Codecov status:
+[![codecov](https://codecov.io/gh/MarkEdmondson1234/googleAuthR/branch/master/graph/badge.svg)](https://app.codecov.io/gh/MarkEdmondson1234/googleAuthR)
+
+
+#### Offline code coverage
+
+As mentioned above, some tests you may not be able to run online due to authentication issues.  If you want, you can run these tests offline locally - go to your repositories settings on 
+Codecov, select settings and get your `Repository Upload Token`.  Place this in an environment var like this:
+
+`CODECOV_TOKEN=XXXXXX`
+
+...then run `covr::codecov()` in the package home directory. It will run your tests, and upload them to Codecov. 

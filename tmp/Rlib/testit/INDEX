@@ -1,0 +1,4 @@
+assert                  Assert that conditions are true, with an
+                        informative failure message
+has_message             Test whether an expression signals a condition
+test_pkg                Run all tests for a package

@@ -91,9 +91,9 @@ format_posterior_d_eq <- function(lnm_draws, label = "Overall", digits = 3) {
     `Mean lnM`            = lnm_est,
     `lnM lower 95% CrI`   = unname(lnm_ci[1]),
     `lnM upper 95% CrI`   = unname(lnm_ci[2]),
-    `d_eq`                = lnm_to_d_eq(lnm_est),
-    `d_eq lower 95% CrI`  = lnm_to_d_eq(unname(lnm_ci[1])),
-    `d_eq upper 95% CrI`  = lnm_to_d_eq(unname(lnm_ci[2]))
+    `<i>d</i><sub>eq</sub>`                = lnm_to_d_eq(lnm_est),
+    `<i>d</i><sub>eq</sub> lower 95% CrI`  = lnm_to_d_eq(unname(lnm_ci[1])),
+    `<i>d</i><sub>eq</sub> upper 95% CrI`  = lnm_to_d_eq(unname(lnm_ci[2]))
   ), digits)
 }
 
@@ -136,9 +136,9 @@ format_location_emmeans <- function(cache, digits = 3) {
     `Mean lnM`           = df$emmean,
     `lnM lower 95% CrI`  = lo,
     `lnM upper 95% CrI`  = hi,
-    `d_eq`               = lnm_to_d_eq(df$emmean),
-    `d_eq lower 95% CrI` = lnm_to_d_eq(lo),
-    `d_eq upper 95% CrI` = lnm_to_d_eq(hi)
+    `<i>d</i><sub>eq</sub>`               = lnm_to_d_eq(df$emmean),
+    `<i>d</i><sub>eq</sub> lower 95% CrI` = lnm_to_d_eq(lo),
+    `<i>d</i><sub>eq</sub> upper 95% CrI` = lnm_to_d_eq(hi)
   )
   .round_num(out, digits)
 }
@@ -153,7 +153,7 @@ kable_contrasts <- function(df, caption = NULL, digits = 3) {
     return(knitr::asis_output("_Contrast table unavailable — rebuild the cache on totoro._"))
   sig <- if (".sig" %in% names(df)) df[[".sig"]] else rep(FALSE, nrow(df))
   df  <- df[, setdiff(names(df), ".sig"), drop = FALSE]     # hide the flag column
-  kb  <- kableExtra::kbl(df, caption = caption, digits = digits) |>
+  kb  <- kableExtra::kbl(df, caption = caption, digits = digits, escape = FALSE) |>
     kableExtra::kable_styling(full_width = FALSE)
   rows <- which(sig)                                        # NA treated as FALSE
   if (length(rows)) kb <- kableExtra::row_spec(kb, rows, bold = TRUE)
