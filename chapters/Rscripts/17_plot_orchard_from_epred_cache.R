@@ -259,6 +259,10 @@ plot_continuous <- function(cache) {
     ) +
     ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.3, 4),
                                    guide = PRECISION_GUIDE) +
+    ggplot2::scale_y_continuous(
+      limits = c(0, NA),
+      expand = ggplot2::expansion(mult = c(0, 0.05))
+    ) +
     ggplot2::labs(x = lab, y = "residual lnM (SD)", title = "B)") +
     theme_orchard()
 

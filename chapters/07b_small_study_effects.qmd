@@ -9,7 +9,7 @@ SAFE lnM estimates, group sample sizes, and the phylogenetic covariance matrix.
 :::
 ::: {}
 **Action**
-Fit sample-size-based Egger-style multilevel meta-regressions.
+Fit sample-size-based Egger-style location–scale meta-regressions.
 :::
 ::: {}
 **Output**
@@ -24,22 +24,29 @@ Check whether conclusions are robust to alternative analysis specifications.
 ```{r setup, include=FALSE}
 source(here::here("chapters", "Rscripts", "00_packages.R"))
 source(here::here("chapters", "Rscripts", "20_small_study_effects.R"))
-library(metafor)
 
-result_path <- here::here("Rdata", "tables", "small_study_effects.csv")
-model_path <- here::here("Rdata", "models", "small_study_effects.rds")
-figure_path <- here::here("Rdata", "figures", "publication", "small_study_effects.png")
+cache_se <- read_small_study_cache("n_se_sigmax")
+cache_v <- read_small_study_cache("n_v_sigma1")
 
-if (!file.exists(result_path) || !file.exists(model_path) || !file.exists(figure_path)) {
+missing_caches <- c("n_se_sigmax", "n_v_sigma1")[c(is.null(cache_se), is.null(cache_v))]
+if (length(missing_caches) > 0) {
   stop(
-    "Small-study-effects outputs are missing. Run ",
-    "run_small_study_analysis() from chapters/Rscripts/20_small_study_effects.R.",
+    "Small-study brms caches are missing: ",
+    paste(missing_caches, collapse = ", "),
+    ". Fit on totoro with remote_run_small_study_brms_parallel.sh, build the ",
+    "caches with remote_precompute_small_study_brms_cache.R, then copy them ",
+    "into Rdata/epred_draws/.",
     call. = FALSE
   )
 }
 
-small_study_results <- readr::read_csv(result_path, show_col_types = FALSE)
-small_study_fit <- readRDS(model_path)
+figure_path <- here::here("Rdata", "figures", "publication", "small_study_effects.png")
+crosscheck_path <- here::here("Rdata", "tables", "small_study_effects.csv")
+crosscheck <- if (file.exists(crosscheck_path)) {
+  readr::read_csv(crosscheck_path, show_col_types = FALSE)
+} else {
+  NULL
+}
 ```
 
 ## Why sample size, rather than sampling error?
@@ -96,136 +103,128 @@ diagnostic_data <- readRDS(
 ## Model structure
 
 Both models use SAFE lnM as the response and retain the analysis's known
-sampling variances. Random intercepts account for clustering by reference,
-phylogenetically correlated species, and effect-size record. Thus the
-diagnostic changes the fixed predictor while preserving the main sources of
-non-independence.
+sampling variances through the effect-size covariance matrix `V`. Random
+intercepts account for clustering by reference, phylogenetically correlated
+species, and effect-size record. Thus the diagnostic changes the fixed
+predictor while preserving the main sources of non-independence.
 
 ```{r model-code, eval=FALSE}
-diagnostic_data <- prepare_small_study_data()
-
-fit_se <- metafor::rma.mv(
-  yi = yi_lnM_safe,
-  V = vi_lnM_safe,
-  mods = ~ n_se,
-  random = list(
-    ~ 1 | ref_id,
-    ~ 1 | sp_ncbi,
-    ~ 1 | es_id_model
-  ),
-  R = list(sp_ncbi = diagnostic_data$A),
-  Rscale = "cor",
-  method = "REML",
-  test = "t",
-  sparse = TRUE,
-  data = diagnostic_data$data
+formula_se <- brms::bf(
+  yi_lnM_safe ~ n_se + (1 | ref_id) +
+    (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)),
+  sigma ~ n_se
 )
 
-fit_v <- metafor::rma.mv(
-  yi = yi_lnM_safe,
-  V = vi_lnM_safe,
-  mods = ~ n_v,
-  random = list(
-    ~ 1 | ref_id,
-    ~ 1 | sp_ncbi,
-    ~ 1 | es_id_model
-  ),
-  R = list(sp_ncbi = diagnostic_data$A),
-  Rscale = "cor",
-  method = "REML",
-  test = "t",
-  sparse = TRUE,
-  data = diagnostic_data$data
+fit_se <- brms::brm(
+  formula_se, data = dat_model, data2 = list(A = A_mod, V = V)
+)
+
+formula_v <- brms::bf(
+  yi_lnM_safe ~ n_v + (1 | ref_id) +
+    (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)),
+  sigma ~ 1
+)
+
+fit_v <- brms::brm(
+  formula_v, data = dat_model, data2 = list(A = A_mod, V = V)
 )
 ```
 
-The diagnostic includes **`r small_study_fit$n` contrasts** with complete,
+### Specification grid
+
+Each predictor was crossed with two scale specifications — a constant residual
+SD (`sigma ~ 1`) and one varying with the predictor (`sigma ~ x`) — giving four
+fits. `remote_fit_one_small_study_brms.R` writes a model only after it passes
+fixed convergence criteria: no divergent transitions, $\hat{R} \le 1.01$, and
+bulk and tail ESS of at least 400.
+
+| Model | Predictor | Scale | Status |
+|---|---|---|---|
+| `n_se_sigmax` | $1/\sqrt{n_0}$ | `sigma ~ n_se` | Reported below |
+| `n_v_sigma1` | $1/n_0$ | `sigma ~ 1` | Reported below |
+| `n_se_sigma1` | $1/\sqrt{n_0}$ | `sigma ~ 1` | Criteria not met; refit pending |
+| `n_v_sigmax` | $1/n_0$ | `sigma ~ n_v` | Criteria not met; refit pending |
+
+The two reported models are fitted to
+**`r format(cache_se$meta$n_obs, big.mark = ",")` contrasts** with complete,
 positive group sample sizes and resolved species names.
 
 ## Results
 
+### Convergence
+
+```{r convergence-table}
+diag_tbl <- dplyr::bind_rows(cache_se$diagnostics, cache_v$diagnostics) |>
+  dplyr::select(
+    Model = model_id, Moderator = moderator,
+    `Max Rhat` = max_rhat, `Min bulk ESS` = min_bulk_ess,
+    `Min tail ESS` = min_tail_ess, Divergences = n_divergent,
+    `Treedepth hits` = max_treedepth_hits
+  ) |>
+  dplyr::mutate(
+    `Max Rhat` = round(`Max Rhat`, 4),
+    dplyr::across(dplyr::starts_with("Min"), ~ round(.x, 0))
+  )
+
+knitr::kable(
+  diag_tbl,
+  caption = "Sampler diagnostics for the two reported models."
+)
+```
+
 ### Model summaries
 
-The following are the complete `summary()` outputs from the two cached model
-objects fitted on Totoro.
+Complete `summary()` output is read from the cached draw objects; the ~400 MB
+`brms` fits are not loaded at render.
 
 ```{r model-summary-se}
-summary(small_study_fit$fit_se)
+writeLines(cache_se$summary_txt)
 ```
 
 ```{r model-summary-v}
-summary(small_study_fit$fit_v)
+writeLines(cache_v$summary_txt)
 ```
 
 ### Coefficient table
 
 ```{r results-table}
-display_results <- small_study_results |>
-  dplyr::mutate(
-    term = dplyr::recode(
-      term,
-      intrcpt = "Intercept",
-      n_se = "1 / sqrt(n0) slope",
-      n_v = "1 / n0 slope"
-    ),
-    across(c(estimate, std_error, ci_lower, ci_upper), ~ round(.x, 3)),
-    p_value = format.pval(p_value, digits = 3, eps = 0.001)
-  ) |>
-  dplyr::select(Model = model, Term = term, Estimate = estimate,
-                `Standard error` = std_error, `95% CI lower` = ci_lower,
-                `95% CI upper` = ci_upper, `p-value` = p_value)
-
 knitr::kable(
-  display_results,
+  small_study_coef_table(list(cache_se, cache_v)),
+  digits = 3,
   caption = paste0(
-    "Sample-size-based multilevel meta-regressions. The primary diagnostic ",
-    "is the 1 / sqrt(n0) slope; the 1 / n0 intercept estimates the effect at ",
-    "infinite sample size."
+    "Posterior fixed effects with 95% equal-tailed credible intervals. The ",
+    "primary diagnostic is the 1 / sqrt(n0) location slope; the 1 / n0 ",
+    "intercept estimates the effect at infinite sample size."
   )
 )
 ```
 
 ```{r interpretation, results='asis'}
-slope <- small_study_results |>
-  dplyr::filter(model == "Small-study slope: 1 / sqrt(n0)", term == "n_se")
+slope <- cache_se$fixef["n_se", ]
 
-direction <- if (slope$estimate > 0) "larger" else "smaller"
-evidence <- if (slope$ci_lower > 0 || slope$ci_upper < 0) {
-  "The 95% confidence interval excludes zero, providing evidence of a small-study effect"
+direction <- if (slope[["Estimate"]] > 0) "larger" else "smaller"
+evidence <- if (slope[["Q2.5"]] > 0 || slope[["Q97.5"]] < 0) {
+  "The 95% credible interval excludes zero, providing evidence of a small-study effect"
 } else {
-  "The 95% confidence interval includes zero, so this analysis does not provide clear evidence of a small-study effect"
+  "The 95% credible interval includes zero, so this analysis does not provide clear evidence of a small-study effect"
 }
 
 cat(sprintf(
-  "%s (slope = %.3f, 95%% CI [%.3f, %.3f]). The fitted direction associates smaller effective samples with %s lnM estimates. This pattern should not, by itself, be labelled publication bias.\n",
-  evidence, slope$estimate, slope$ci_lower, slope$ci_upper, direction
+  "%s (slope = %.3f, 95%% CrI [%.3f, %.3f]). The fitted direction associates smaller effective samples with %s lnM estimates. This pattern should not, by itself, be labelled publication bias.\n",
+  evidence, slope[["Estimate"]], slope[["Q2.5"]], slope[["Q97.5"]], direction
 ))
 ```
 
 ## Diagnostic plot
 
-The two panels are constructed from the cached models and joined with
-`patchwork`. Bubble area represents sampling precision, $1/\mathrm{SE}$.
+The two panels are constructed from the cached draws and joined with
+`patchwork`. Bubble area represents sampling precision, $1/\mathrm{SE}$. Bands
+show 50%, 80%, and 95% credible intervals for the posterior mean, drawn down to
+the predictor's zero bound.
 
 ```{r figure-code, eval=FALSE}
-diagnostic_data <- prepare_small_study_data()
-
-p_se <- build_small_study_figure(
-  small_study_fit$fit_se,
-  diagnostic_data$data,
-  predictor = "n_se",
-  bubble_fill = "#DC143C",
-  line_colour = "#DC143C"
-)
-
-p_v <- build_small_study_figure(
-  small_study_fit$fit_v,
-  diagnostic_data$data,
-  predictor = "n_v",
-  bubble_fill = "#FF8C00",
-  line_colour = "#8B4500"
-) +
-  ggplot2::theme(legend.position = "none")
+p_se <- build_small_study_location_panel(cache_se, show_legend = TRUE)
+p_v <- build_small_study_location_panel(cache_v, show_legend = FALSE)
 
 p <- ((p_se + p_v) / patchwork::guide_area()) +
   patchwork::plot_layout(heights = c(1, 0.10), guides = "collect") +
@@ -243,8 +242,13 @@ ggplot2::ggsave(
 )
 ```
 
-```{r figure}
-knitr::include_graphics(figure_path)
+```{r figure, fig.width=13, fig.height=6}
+p <- build_small_study_brms_figure(cache_se, cache_v)
+
+dir.create(dirname(figure_path), recursive = TRUE, showWarnings = FALSE)
+ggplot2::ggsave(figure_path, p, width = 13, height = 6, dpi = 300, bg = "white")
+
+p
 ```
 
 ::: {.callout-note}
@@ -254,10 +258,62 @@ the slope diagnostic indicates small-study effects and the model is otherwise
 well specified.
 :::
 
+### Residual SD across study size
+
+`n_se_sigmax` models the residual SD as a function of the predictor. The
+posterior for that scale submodel is plotted below.
+
+```{r scale-figure, fig.width=7, fig.height=5}
+build_small_study_scale_panel(cache_se)
+```
+
+## Frequentist cross-check
+
+`metafor::rma.mv` fits the same location structure by REML and is
+homoscedastic, so it corresponds to the `sigma ~ 1` specification.
+
+```{r crosscheck-table}
+if (is.null(crosscheck)) {
+  cat("Cross-check table not available.\n")
+} else {
+  knitr::kable(
+    crosscheck |>
+      dplyr::mutate(
+        term = dplyr::recode(
+          term,
+          intrcpt = "Intercept",
+          n_se = "1 / sqrt(n0) slope",
+          n_v = "1 / n0 slope"
+        ),
+        dplyr::across(c(estimate, std_error, ci_lower, ci_upper), ~ round(.x, 3))
+      ) |>
+      dplyr::select(
+        Model = model, Term = term, Estimate = estimate,
+        `Standard error` = std_error, `95% CI lower` = ci_lower,
+        `95% CI upper` = ci_upper
+      ),
+    caption = "REML cross-check (metafor::rma.mv, homoscedastic)."
+  )
+}
+```
+
 ## Reproduce the cached outputs
 
-Normal book renders read the saved model, table, and figure. To refit the
-diagnostic deliberately, run:
+Normal book renders read the small draw caches under `Rdata/epred_draws/`. The
+fits themselves are run on Totoro:
+
+```bash
+# 1. Fit the specification grid (four models, parallel)
+bash remote_run_small_study_brms_parallel.sh
+
+# 2. Build the small draw caches from the fits that converged
+Rscript remote_precompute_small_study_brms_cache.R
+
+# 3. Copy the caches into the book mirror
+scp totoro:'~/Documents/PACE/outputs/epred_draws/small_study_*.rds' Rdata/epred_draws/
+```
+
+To regenerate the REML cross-check locally:
 
 ```{r reproduce, eval=FALSE}
 source(here::here("chapters", "Rscripts", "00_packages.R"))
