@@ -20,9 +20,11 @@ dat <- apply_phylo_name_map(dat, name_map) |>
     !is.na(sp_ncbi_canonical), nzchar(sp_ncbi_canonical)
   ) |>
   mutate(
-    n0 = (n1 * n2) / (n1 + n2),
-    n_se = 1 / sqrt(n0),
-    n_v = 1 / n0,
+    # Half harmonic-mean sample size: n0_tilde = n0 / 2, where the harmonic
+    # mean is n0 = 2 * n1 * n2 / (n1 + n2).
+    n0_tilde = (n1 * n2) / (n1 + n2),
+    n_se = 1 / sqrt(n0_tilde),
+    n_v = 1 / n0_tilde,
     ref_id = droplevels(factor(ref_id)),
     sp_ncbi = factor(sp_ncbi_canonical),
     es_id_model = factor(seq_len(n()))
@@ -43,7 +45,7 @@ saveRDS(list(n = nrow(dat), fit = fit), file.path(out_dir, paste0(predictor, ".r
 
 tab <- data.frame(
   model = if (predictor == "n_se")
-    "Small-study slope: 1 / sqrt(n0)" else "Adjustment model: 1 / n0",
+    "Small-study slope: 1 / sqrt(n0_tilde)" else "Adjustment model: 1 / n0_tilde",
   term = rownames(fit$beta), estimate = as.numeric(fit$beta),
   std_error = as.numeric(fit$se), ci_lower = as.numeric(fit$ci.lb),
   ci_upper = as.numeric(fit$ci.ub), p_value = as.numeric(fit$pval),

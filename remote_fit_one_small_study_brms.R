@@ -29,9 +29,11 @@ dat_es <- apply_phylo_name_map(dat_es, name_map) |>
     is.finite(n1), n1 > 0, is.finite(n2), n2 > 0
   ) |>
   dplyr::mutate(
-    n0 = (n1 * n2) / (n1 + n2),
-    n_se = 1 / sqrt(n0),
-    n_v = 1 / n0,
+    # Half harmonic-mean sample size: n0_tilde = n0 / 2, where the harmonic
+    # mean is n0 = 2 * n1 * n2 / (n1 + n2).
+    n0_tilde = (n1 * n2) / (n1 + n2),
+    n_se = 1 / sqrt(n0_tilde),
+    n_v = 1 / n0_tilde,
     es_id_model = factor(seq_len(dplyr::n()))
   )
 

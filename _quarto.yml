@@ -6,9 +6,24 @@ project:
     - .nojekyll   # disable GitHub Pages Jekyll processing of the rendered site
 
 book:
-  title: "Supplementary material: Human disturbance and the magnitude of phenotypic divergence"
-  subtitle: "A step-by-step reproducible analysis"
-  author: "TBA"
+  title: "Environmental change leaves no universal signature of phenotypic divergence"
+  subtitle: "Supplementary material: a step-by-step reproducible analysis"
+  author:
+    - name: "Santiago Ortega"
+      orcid: "0000-0002-3518-276X"
+      email: ortegara@ualberta.ca
+    - name: "Eduardo S.A. Santos"
+      orcid: "0000-0002-0434-3655"
+    - name: "Kiyoko Gotanda"
+      orcid: "0000-0002-3666-0700"
+    - name: "Sarah Sanderson"
+      orcid: "0000-0003-1525-2326"
+    - name: "Lucas Damian Gorné"
+      orcid: "0000-0003-1940-1755"
+    - name: "Andrew Hendry"
+      orcid: "0000-0002-4807-6667"
+    - name: "Shinichi Nakagawa"
+      orcid: "0000-0002-7765-5182"
   date: today
   repo-url: https://github.com/Santiago-0rtega/Magnitude_pace_modern_life
   downloads: [pdf]

@@ -35,9 +35,11 @@ prepare_small_study_data <- function(
       !is.na(sp_ncbi_canonical), nzchar(sp_ncbi_canonical)
     ) |>
     dplyr::mutate(
-      n0 = (n1 * n2) / (n1 + n2),
-      n_se = 1 / sqrt(n0),
-      n_v = 1 / n0,
+      # Half harmonic-mean sample size: n0_tilde = n0 / 2, where the harmonic
+      # mean is n0 = 2 * n1 * n2 / (n1 + n2).
+      n0_tilde = (n1 * n2) / (n1 + n2),
+      n_se = 1 / sqrt(n0_tilde),
+      n_v = 1 / n0_tilde,
       ref_id = droplevels(factor(ref_id)),
       sp_ncbi = factor(sp_ncbi_canonical),
       es_id_model = factor(seq_len(dplyr::n()))
@@ -142,8 +144,8 @@ run_small_study_analysis <- function(
   fit_v <- fit_small_study_model(inputs$data, inputs$A, "n_v")
 
   results <- dplyr::bind_rows(
-    tidy_small_study_model(fit_se, "Small-study slope: 1 / sqrt(n0)"),
-    tidy_small_study_model(fit_v, "Adjustment model: 1 / n0")
+    tidy_small_study_model(fit_se, "Small-study slope: 1 / sqrt(n0_tilde)"),
+    tidy_small_study_model(fit_v, "Adjustment model: 1 / n0_tilde")
   )
 
   dir.create(dirname(table_path), recursive = TRUE, showWarnings = FALSE)
@@ -171,8 +173,16 @@ run_small_study_analysis <- function(
 
 SMALL_STUDY_COL <- c(n_se = "#DC143C", n_v = "#FF8C00")
 
+# Predictors are built from the HALF harmonic-mean sample size,
+# n0_tilde = n0 / 2 = (n1 * n2) / (n1 + n2), following Nakagawa et al. (2022).
+# Notation follows the manuscript: n0 is the harmonic mean itself, which is
+# never used directly as a predictor here.
 small_study_x_label <- function(moderator) {
-  if (moderator == "n_se") expression(1 / sqrt(n[0])) else expression(1 / n[0])
+  if (moderator == "n_se") {
+    expression(1 / sqrt(tilde(n)[0]))
+  } else {
+    expression(1 / tilde(n)[0])
+  }
 }
 
 read_small_study_cache <- function(id,
@@ -191,11 +201,11 @@ read_small_study_cache <- function(id,
 small_study_coef_table <- function(caches) {
   term_labels <- c(
     Intercept       = "Intercept (location)",
-    n_se            = "1 / sqrt(n0) slope (location)",
-    n_v             = "1 / n0 slope (location)",
+    n_se            = "$1/\\sqrt{\\tilde{n}_0}$ slope (location)",
+    n_v             = "$1/\\tilde{n}_0$ slope (location)",
     sigma_Intercept = "Intercept (log sigma)",
-    sigma_n_se      = "1 / sqrt(n0) slope (log sigma)",
-    sigma_n_v       = "1 / n0 slope (log sigma)"
+    sigma_n_se      = "$1/\\sqrt{\\tilde{n}_0}$ slope (log sigma)",
+    sigma_n_v       = "$1/\\tilde{n}_0$ slope (log sigma)"
   )
 
   dplyr::bind_rows(lapply(caches, function(cache) {

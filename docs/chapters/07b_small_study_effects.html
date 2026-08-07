@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>16&nbsp; Small-study effects diagnostic – Supplementary material: Human disturbance and the magnitude of phenotypic divergence</title>
+<title>16&nbsp; Small-study effects diagnostic – Environmental change leaves no universal signature of phenotypic divergence</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -339,10 +339,10 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">Supplementary material: Human disturbance and the magnitude of phenotypic divergence</a> 
+      <a href="../">Environmental change leaves no universal signature of phenotypic divergence</a> 
         <div class="sidebar-tools-main tools-wide">
     <a href="https://github.com/Santiago-0rtega/Magnitude_pace_modern_life" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="../Supplementary-material--Human-disturbance-and-the-magnitude-of-phenotypic-divergence.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="../Environmental-change-leaves-no-universal-signature-of-phenotypic-divergence.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
     </div>
@@ -632,14 +632,18 @@ window.Quarto = {
 <h2 data-number="16.1" class="anchored" data-anchor-id="why-sample-size-rather-than-sampling-error"><span class="header-section-number">16.1</span> Why sample size, rather than sampling error?</h2>
 <p>We assess whether estimated effect magnitudes vary systematically with study size. Such a pattern is a <strong>small-study effect</strong>: it can be consistent with publication bias, but it can also arise from genuine heterogeneity or design differences. It is therefore a diagnostic, not a direct test of the publication process.</p>
 <p>The usual Egger regression uses an effect’s sampling standard error as the predictor. For lnM, however, the effect and its estimated standard error share underlying variance components. Their structural dependence can create artefactual asymmetry. Following the <a href="https://itchyshin.github.io/meta-analysis_of_magnitude/">lnM worked example</a> and Nakagawa et al.&nbsp;(2022), we instead use a predictor calculated only from the two group sample sizes.</p>
-<p>For each contrast, the harmonic effective sample size is</p>
+<p>For each contrast, the harmonic-mean sample size is</p>
 <p><span class="math display">\[
-n_0 = \frac{n_1 n_2}{n_1 + n_2}.
+n_0 = \frac{2 n_1 n_2}{n_1 + n_2},
+\]</span></p>
+<p>and the predictors are built from the <strong>half</strong> harmonic-mean sample size</p>
+<p><span class="math display">\[
+\tilde{n}_0 = \frac{n_0}{2} = \frac{n_1 n_2}{n_1 + n_2}.
 \]</span></p>
 <p>We fit two related models:</p>
 <ol type="1">
-<li><span class="math inline">\(1/\sqrt{n_0}\)</span> is an SE analogue; its slope is the primary diagnostic for small-study effects.</li>
-<li><span class="math inline">\(1/n_0\)</span> is a variance analogue; its intercept at <span class="math inline">\(1/n_0=0\)</span> is an infinite-sample, bias-adjusted estimate. We treat this as a conditional sensitivity estimate rather than an automatic replacement for the primary meta-analytic mean.</li>
+<li><span class="math inline">\(1/\sqrt{\tilde{n}_0}\)</span> is an SE analogue; its slope is the primary diagnostic for small-study effects.</li>
+<li><span class="math inline">\(1/\tilde{n}_0\)</span> is a variance analogue; its intercept at <span class="math inline">\(1/\tilde{n}_0=0\)</span> is an infinite-sample, bias-adjusted estimate. We treat this as a conditional sensitivity estimate rather than an automatic replacement for the primary meta-analytic mean.</li>
 </ol>
 <section id="constructing-the-predictors" class="level3" data-number="16.1.1">
 <h3 data-number="16.1.1" class="anchored" data-anchor-id="constructing-the-predictors"><span class="header-section-number">16.1.1</span> Constructing the predictors</h3>
@@ -655,10 +659,11 @@ n_0 = \frac{n_1 n_2}{n_1 + n_2}.
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.finite</span>(n2), n2 <span class="sc">&gt;</span> <span class="dv">0</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">n0   =</span> (n1 <span class="sc">*</span> n2) <span class="sc">/</span> (n1 <span class="sc">+</span> n2),</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_se =</span> <span class="dv">1</span> <span class="sc">/</span> <span class="fu">sqrt</span>(n0),</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_v  =</span> <span class="dv">1</span> <span class="sc">/</span> n0</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Half harmonic-mean sample size, n0_tilde = n0 / 2.</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">n0_tilde =</span> (n1 <span class="sc">*</span> n2) <span class="sc">/</span> (n1 <span class="sc">+</span> n2),</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_se     =</span> <span class="dv">1</span> <span class="sc">/</span> <span class="fu">sqrt</span>(n0_tilde),</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_v      =</span> <span class="dv">1</span> <span class="sc">/</span> n0_tilde</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -711,25 +716,25 @@ n_0 = \frac{n_1 n_2}{n_1 + n_2}.
 <tbody>
 <tr class="odd">
 <td><code>n_se_sigmax</code></td>
-<td><span class="math inline">\(1/\sqrt{n_0}\)</span></td>
+<td><span class="math inline">\(1/\sqrt{\tilde{n}_0}\)</span></td>
 <td><code>sigma ~ n_se</code></td>
 <td>Reported below</td>
 </tr>
 <tr class="even">
 <td><code>n_v_sigma1</code></td>
-<td><span class="math inline">\(1/n_0\)</span></td>
+<td><span class="math inline">\(1/\tilde{n}_0\)</span></td>
 <td><code>sigma ~ 1</code></td>
 <td>Reported below</td>
 </tr>
 <tr class="odd">
 <td><code>n_se_sigma1</code></td>
-<td><span class="math inline">\(1/\sqrt{n_0}\)</span></td>
+<td><span class="math inline">\(1/\sqrt{\tilde{n}_0}\)</span></td>
 <td><code>sigma ~ 1</code></td>
 <td>Criteria not met; refit pending</td>
 </tr>
 <tr class="even">
 <td><code>n_v_sigmax</code></td>
-<td><span class="math inline">\(1/n_0\)</span></td>
+<td><span class="math inline">\(1/\tilde{n}_0\)</span></td>
 <td><code>sigma ~ n_v</code></td>
 <td>Criteria not met; refit pending</td>
 </tr>
@@ -900,21 +905,21 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">3</span>,</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="fu">paste0</span>(</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Posterior fixed effects with 95% equal-tailed credible intervals. The "</span>,</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"primary diagnostic is the 1 / sqrt(n0) location slope; the 1 / n0 "</span>,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"intercept estimates the effect at infinite sample size."</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"primary diagnostic is the $1/</span><span class="sc">\\</span><span class="st">sqrt{</span><span class="sc">\\</span><span class="st">tilde{n}_0}$ location slope; the "</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"$1/</span><span class="sc">\\</span><span class="st">tilde{n}_0$ intercept estimates the effect at infinite sample size."</span></span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
-<caption>Posterior fixed effects with 95% equal-tailed credible intervals. The primary diagnostic is the 1 / sqrt(n0) location slope; the 1 / n0 intercept estimates the effect at infinite sample size.</caption>
+<caption>Posterior fixed effects with 95% equal-tailed credible intervals. The primary diagnostic is the <span class="math inline">\(1/\sqrt{\tilde{n}_0}\)</span> location slope; the <span class="math inline">\(1/\tilde{n}_0\)</span> intercept estimates the effect at infinite sample size.</caption>
 <colgroup>
+<col style="width: 11%">
+<col style="width: 40%">
+<col style="width: 8%">
+<col style="width: 10%">
 <col style="width: 13%">
-<col style="width: 34%">
-<col style="width: 9%">
-<col style="width: 12%">
-<col style="width: 15%">
-<col style="width: 15%">
+<col style="width: 13%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -945,7 +950,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">n_se_sigmax</td>
-<td style="text-align: left;">1 / sqrt(n0) slope (location)</td>
+<td style="text-align: left;"><span class="math inline">\(1/\sqrt{\tilde{n}_0}\)</span> slope (location)</td>
 <td style="text-align: right;">1.749</td>
 <td style="text-align: right;">0.101</td>
 <td style="text-align: right;">1.547</td>
@@ -953,7 +958,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </tr>
 <tr class="even">
 <td style="text-align: left;">n_se_sigmax</td>
-<td style="text-align: left;">1 / sqrt(n0) slope (log sigma)</td>
+<td style="text-align: left;"><span class="math inline">\(1/\sqrt{\tilde{n}_0}\)</span> slope (log sigma)</td>
 <td style="text-align: right;">-1.370</td>
 <td style="text-align: right;">0.115</td>
 <td style="text-align: right;">-1.602</td>
@@ -977,7 +982,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">n_v_sigma1</td>
-<td style="text-align: left;">1 / n0 slope (location)</td>
+<td style="text-align: left;"><span class="math inline">\(1/\tilde{n}_0\)</span> slope (location)</td>
 <td style="text-align: right;">1.845</td>
 <td style="text-align: right;">0.135</td>
 <td style="text-align: right;">1.581</td>
@@ -1059,7 +1064,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The infinite-sample intercept is an extrapolation to <span class="math inline">\(1/n_0=0\)</span>, outside the observed finite-sample data. It is most useful as a sensitivity analysis when the slope diagnostic indicates small-study effects and the model is otherwise well specified.</p>
+<p>The infinite-sample intercept is an extrapolation to <span class="math inline">\(1/\tilde{n}_0=0\)</span>, outside the observed finite-sample data. It is most useful as a sensitivity analysis when the slope diagnostic indicates small-study effects and the model is otherwise well specified.</p>
 </div>
 </div>
 <section id="residual-sd-across-study-size" class="level3" data-number="16.4.1">
@@ -1092,33 +1097,43 @@ Note
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    crosscheck <span class="sc">|&gt;</span></span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">term =</span> dplyr<span class="sc">::</span><span class="fu">recode</span>(</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>          term,</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">intrcpt =</span> <span class="st">"Intercept"</span>,</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">n_se =</span> <span class="st">"1 / sqrt(n0) slope"</span>,</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">n_v =</span> <span class="st">"1 / n0 slope"</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>        dplyr<span class="sc">::</span><span class="fu">across</span>(<span class="fu">c</span>(estimate, std_error, ci_lower, ci_upper), <span class="sc">~</span> <span class="fu">round</span>(.x, <span class="dv">3</span>))</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">|&gt;</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">Model =</span> model, <span class="at">Term =</span> term, <span class="at">Estimate =</span> estimate,</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">Standard error</span><span class="st">`</span> <span class="ot">=</span> std_error, <span class="st">`</span><span class="at">95% CI lower</span><span class="st">`</span> <span class="ot">=</span> ci_lower,</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">95% CI upper</span><span class="st">`</span> <span class="ot">=</span> ci_upper</span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>      ),</span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"REML cross-check (metafor::rma.mv, homoscedastic)."</span></span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># The predictor is carried by the Term column, so the model label only</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># needs its role. Both the current and regenerated CSV spellings map</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># here, since the cached table predates the notation fix.</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">model =</span> dplyr<span class="sc">::</span><span class="fu">recode</span>(</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>          model,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>          <span class="st">`</span><span class="at">Small-study slope: 1 / sqrt(n0)</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Small-study slope"</span>,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>          <span class="st">`</span><span class="at">Small-study slope: 1 / sqrt(n0_tilde)</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Small-study slope"</span>,</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>          <span class="st">`</span><span class="at">Adjustment model: 1 / n0</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Adjustment model"</span>,</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>          <span class="st">`</span><span class="at">Adjustment model: 1 / n0_tilde</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Adjustment model"</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">term =</span> dplyr<span class="sc">::</span><span class="fu">recode</span>(</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>          term,</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>          <span class="at">intrcpt =</span> <span class="st">"Intercept"</span>,</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>          <span class="at">n_se =</span> <span class="st">"$1/</span><span class="sc">\\</span><span class="st">sqrt{</span><span class="sc">\\</span><span class="st">tilde{n}_0}$ slope"</span>,</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>          <span class="at">n_v =</span> <span class="st">"$1/</span><span class="sc">\\</span><span class="st">tilde{n}_0$ slope"</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>        dplyr<span class="sc">::</span><span class="fu">across</span>(<span class="fu">c</span>(estimate, std_error, ci_lower, ci_upper), <span class="sc">~</span> <span class="fu">round</span>(.x, <span class="dv">3</span>))</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">|&gt;</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">Model =</span> model, <span class="at">Term =</span> term, <span class="at">Estimate =</span> estimate,</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">Standard error</span><span class="st">`</span> <span class="ot">=</span> std_error, <span class="st">`</span><span class="at">95% CI lower</span><span class="st">`</span> <span class="ot">=</span> ci_lower,</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">95% CI upper</span><span class="st">`</span> <span class="ot">=</span> ci_upper</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"REML cross-check (metafor::rma.mv, homoscedastic)."</span></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>REML cross-check (metafor::rma.mv, homoscedastic).</caption>
 <colgroup>
-<col style="width: 31%">
 <col style="width: 18%">
-<col style="width: 8%">
-<col style="width: 14%">
-<col style="width: 12%">
-<col style="width: 12%">
+<col style="width: 29%">
+<col style="width: 9%">
+<col style="width: 15%">
+<col style="width: 13%">
+<col style="width: 13%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1132,7 +1147,7 @@ Note
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Small-study slope: 1 / sqrt(n0)</td>
+<td style="text-align: left;">Small-study slope</td>
 <td style="text-align: left;">Intercept</td>
 <td style="text-align: right;">-1.127</td>
 <td style="text-align: right;">0.219</td>
@@ -1140,15 +1155,15 @@ Note
 <td style="text-align: right;">-0.697</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Small-study slope: 1 / sqrt(n0)</td>
-<td style="text-align: left;">1 / sqrt(n0) slope</td>
+<td style="text-align: left;">Small-study slope</td>
+<td style="text-align: left;"><span class="math inline">\(1/\sqrt{\tilde{n}_0}\)</span> slope</td>
 <td style="text-align: right;">1.642</td>
 <td style="text-align: right;">0.104</td>
 <td style="text-align: right;">1.439</td>
 <td style="text-align: right;">1.846</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Adjustment model: 1 / n0</td>
+<td style="text-align: left;">Adjustment model</td>
 <td style="text-align: left;">Intercept</td>
 <td style="text-align: right;">-0.845</td>
 <td style="text-align: right;">0.263</td>
@@ -1156,8 +1171,8 @@ Note
 <td style="text-align: right;">-0.330</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Adjustment model: 1 / n0</td>
-<td style="text-align: left;">1 / n0 slope</td>
+<td style="text-align: left;">Adjustment model</td>
+<td style="text-align: left;"><span class="math inline">\(1/\tilde{n}_0\)</span> slope</td>
 <td style="text-align: right;">1.848</td>
 <td style="text-align: right;">0.135</td>
 <td style="text-align: right;">1.583</td>
@@ -1740,261 +1755,278 @@ Note
 <span id="cb16-65"><a href="#cb16-65" aria-hidden="true" tabindex="-1"></a>and Nakagawa et al. (2022), we instead use a predictor calculated only from the</span>
 <span id="cb16-66"><a href="#cb16-66" aria-hidden="true" tabindex="-1"></a>two group sample sizes.</span>
 <span id="cb16-67"><a href="#cb16-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-68"><a href="#cb16-68" aria-hidden="true" tabindex="-1"></a>For each contrast, the harmonic effective sample size is</span>
+<span id="cb16-68"><a href="#cb16-68" aria-hidden="true" tabindex="-1"></a>For each contrast, the harmonic-mean sample size is</span>
 <span id="cb16-69"><a href="#cb16-69" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-70"><a href="#cb16-70" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb16-71"><a href="#cb16-71" aria-hidden="true" tabindex="-1"></a>n_0 = \frac{n_1 n_2}{n_1 + n_2}.</span>
+<span id="cb16-71"><a href="#cb16-71" aria-hidden="true" tabindex="-1"></a>n_0 = \frac{2 n_1 n_2}{n_1 + n_2},</span>
 <span id="cb16-72"><a href="#cb16-72" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb16-73"><a href="#cb16-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-74"><a href="#cb16-74" aria-hidden="true" tabindex="-1"></a>We fit two related models:</span>
+<span id="cb16-74"><a href="#cb16-74" aria-hidden="true" tabindex="-1"></a>and the predictors are built from the **half** harmonic-mean sample size</span>
 <span id="cb16-75"><a href="#cb16-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-76"><a href="#cb16-76" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>$1/\sqrt{n_0}$ is an SE analogue; its slope is the primary diagnostic for</span>
-<span id="cb16-77"><a href="#cb16-77" aria-hidden="true" tabindex="-1"></a>   small-study effects.</span>
-<span id="cb16-78"><a href="#cb16-78" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>$1/n_0$ is a variance analogue; its intercept at $1/n_0=0$ is an</span>
-<span id="cb16-79"><a href="#cb16-79" aria-hidden="true" tabindex="-1"></a>   infinite-sample, bias-adjusted estimate. We treat this as a conditional</span>
-<span id="cb16-80"><a href="#cb16-80" aria-hidden="true" tabindex="-1"></a>   sensitivity estimate rather than an automatic replacement for the primary</span>
-<span id="cb16-81"><a href="#cb16-81" aria-hidden="true" tabindex="-1"></a>   meta-analytic mean.</span>
-<span id="cb16-82"><a href="#cb16-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-83"><a href="#cb16-83" aria-hidden="true" tabindex="-1"></a><span class="fu">### Constructing the predictors</span></span>
-<span id="cb16-84"><a href="#cb16-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-85"><a href="#cb16-85" aria-hidden="true" tabindex="-1"></a>The two predictors are calculated directly from the original group sample</span>
-<span id="cb16-86"><a href="#cb16-86" aria-hidden="true" tabindex="-1"></a>sizes. Neither uses the observed lnM estimate or its sampling variance.</span>
-<span id="cb16-87"><a href="#cb16-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-88"><a href="#cb16-88" aria-hidden="true" tabindex="-1"></a><span class="in">```{r predictor-code, eval=FALSE}</span></span>
-<span id="cb16-89"><a href="#cb16-89" aria-hidden="true" tabindex="-1"></a>diagnostic_data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(</span>
-<span id="cb16-90"><a href="#cb16-90" aria-hidden="true" tabindex="-1"></a>  here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"effect_sizes"</span>, <span class="st">"proceed_lnm_safe.rds"</span>)</span>
-<span id="cb16-91"><a href="#cb16-91" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb16-92"><a href="#cb16-92" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
-<span id="cb16-93"><a href="#cb16-93" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.finite</span>(n1), n1 <span class="sc">&gt;</span> <span class="dv">0</span>,</span>
-<span id="cb16-94"><a href="#cb16-94" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.finite</span>(n2), n2 <span class="sc">&gt;</span> <span class="dv">0</span></span>
-<span id="cb16-95"><a href="#cb16-95" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb16-96"><a href="#cb16-96" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb16-97"><a href="#cb16-97" aria-hidden="true" tabindex="-1"></a>    <span class="at">n0   =</span> (n1 <span class="sc">*</span> n2) <span class="sc">/</span> (n1 <span class="sc">+</span> n2),</span>
-<span id="cb16-98"><a href="#cb16-98" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_se =</span> <span class="dv">1</span> <span class="sc">/</span> <span class="fu">sqrt</span>(n0),</span>
-<span id="cb16-99"><a href="#cb16-99" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_v  =</span> <span class="dv">1</span> <span class="sc">/</span> n0</span>
-<span id="cb16-100"><a href="#cb16-100" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb16-101"><a href="#cb16-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-102"><a href="#cb16-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-103"><a href="#cb16-103" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model structure</span></span>
-<span id="cb16-104"><a href="#cb16-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-105"><a href="#cb16-105" aria-hidden="true" tabindex="-1"></a>Both models use SAFE lnM as the response and retain the analysis's known</span>
-<span id="cb16-106"><a href="#cb16-106" aria-hidden="true" tabindex="-1"></a>sampling variances through the effect-size covariance matrix <span class="in">`V`</span>. Random</span>
-<span id="cb16-107"><a href="#cb16-107" aria-hidden="true" tabindex="-1"></a>intercepts account for clustering by reference, phylogenetically correlated</span>
-<span id="cb16-108"><a href="#cb16-108" aria-hidden="true" tabindex="-1"></a>species, and effect-size record. Thus the diagnostic changes the fixed</span>
-<span id="cb16-109"><a href="#cb16-109" aria-hidden="true" tabindex="-1"></a>predictor while preserving the main sources of non-independence.</span>
-<span id="cb16-110"><a href="#cb16-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-111"><a href="#cb16-111" aria-hidden="true" tabindex="-1"></a><span class="in">```{r model-code, eval=FALSE}</span></span>
-<span id="cb16-112"><a href="#cb16-112" aria-hidden="true" tabindex="-1"></a>formula_se <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">bf</span>(</span>
-<span id="cb16-113"><a href="#cb16-113" aria-hidden="true" tabindex="-1"></a>  yi_lnM_safe <span class="sc">~</span> n_se <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> ref_id) <span class="sc">+</span></span>
-<span id="cb16-114"><a href="#cb16-114" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span> <span class="sc">|</span> <span class="fu">gr</span>(sp_ncbi, <span class="at">cov =</span> A)) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> <span class="fu">gr</span>(es_id_model, <span class="at">cov =</span> V)),</span>
-<span id="cb16-115"><a href="#cb16-115" aria-hidden="true" tabindex="-1"></a>  sigma <span class="sc">~</span> n_se</span>
-<span id="cb16-116"><a href="#cb16-116" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-76"><a href="#cb16-76" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb16-77"><a href="#cb16-77" aria-hidden="true" tabindex="-1"></a>\tilde{n}_0 = \frac{n_0}{2} = \frac{n_1 n_2}{n_1 + n_2}.</span>
+<span id="cb16-78"><a href="#cb16-78" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb16-79"><a href="#cb16-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-80"><a href="#cb16-80" aria-hidden="true" tabindex="-1"></a>We fit two related models:</span>
+<span id="cb16-81"><a href="#cb16-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-82"><a href="#cb16-82" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>$1/\sqrt{\tilde{n}_0}$ is an SE analogue; its slope is the primary</span>
+<span id="cb16-83"><a href="#cb16-83" aria-hidden="true" tabindex="-1"></a>   diagnostic for small-study effects.</span>
+<span id="cb16-84"><a href="#cb16-84" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>$1/\tilde{n}_0$ is a variance analogue; its intercept at $1/\tilde{n}_0=0$</span>
+<span id="cb16-85"><a href="#cb16-85" aria-hidden="true" tabindex="-1"></a>   is an infinite-sample, bias-adjusted estimate. We treat this as a</span>
+<span id="cb16-86"><a href="#cb16-86" aria-hidden="true" tabindex="-1"></a>   conditional sensitivity estimate rather than an automatic replacement for</span>
+<span id="cb16-87"><a href="#cb16-87" aria-hidden="true" tabindex="-1"></a>   the primary meta-analytic mean.</span>
+<span id="cb16-88"><a href="#cb16-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-89"><a href="#cb16-89" aria-hidden="true" tabindex="-1"></a><span class="fu">### Constructing the predictors</span></span>
+<span id="cb16-90"><a href="#cb16-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-91"><a href="#cb16-91" aria-hidden="true" tabindex="-1"></a>The two predictors are calculated directly from the original group sample</span>
+<span id="cb16-92"><a href="#cb16-92" aria-hidden="true" tabindex="-1"></a>sizes. Neither uses the observed lnM estimate or its sampling variance.</span>
+<span id="cb16-93"><a href="#cb16-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-94"><a href="#cb16-94" aria-hidden="true" tabindex="-1"></a><span class="in">```{r predictor-code, eval=FALSE}</span></span>
+<span id="cb16-95"><a href="#cb16-95" aria-hidden="true" tabindex="-1"></a>diagnostic_data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(</span>
+<span id="cb16-96"><a href="#cb16-96" aria-hidden="true" tabindex="-1"></a>  here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"effect_sizes"</span>, <span class="st">"proceed_lnm_safe.rds"</span>)</span>
+<span id="cb16-97"><a href="#cb16-97" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb16-98"><a href="#cb16-98" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
+<span id="cb16-99"><a href="#cb16-99" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.finite</span>(n1), n1 <span class="sc">&gt;</span> <span class="dv">0</span>,</span>
+<span id="cb16-100"><a href="#cb16-100" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.finite</span>(n2), n2 <span class="sc">&gt;</span> <span class="dv">0</span></span>
+<span id="cb16-101"><a href="#cb16-101" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb16-102"><a href="#cb16-102" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb16-103"><a href="#cb16-103" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Half harmonic-mean sample size, n0_tilde = n0 / 2.</span></span>
+<span id="cb16-104"><a href="#cb16-104" aria-hidden="true" tabindex="-1"></a>    <span class="at">n0_tilde =</span> (n1 <span class="sc">*</span> n2) <span class="sc">/</span> (n1 <span class="sc">+</span> n2),</span>
+<span id="cb16-105"><a href="#cb16-105" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_se     =</span> <span class="dv">1</span> <span class="sc">/</span> <span class="fu">sqrt</span>(n0_tilde),</span>
+<span id="cb16-106"><a href="#cb16-106" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_v      =</span> <span class="dv">1</span> <span class="sc">/</span> n0_tilde</span>
+<span id="cb16-107"><a href="#cb16-107" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb16-108"><a href="#cb16-108" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-109"><a href="#cb16-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-110"><a href="#cb16-110" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model structure</span></span>
+<span id="cb16-111"><a href="#cb16-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-112"><a href="#cb16-112" aria-hidden="true" tabindex="-1"></a>Both models use SAFE lnM as the response and retain the analysis's known</span>
+<span id="cb16-113"><a href="#cb16-113" aria-hidden="true" tabindex="-1"></a>sampling variances through the effect-size covariance matrix <span class="in">`V`</span>. Random</span>
+<span id="cb16-114"><a href="#cb16-114" aria-hidden="true" tabindex="-1"></a>intercepts account for clustering by reference, phylogenetically correlated</span>
+<span id="cb16-115"><a href="#cb16-115" aria-hidden="true" tabindex="-1"></a>species, and effect-size record. Thus the diagnostic changes the fixed</span>
+<span id="cb16-116"><a href="#cb16-116" aria-hidden="true" tabindex="-1"></a>predictor while preserving the main sources of non-independence.</span>
 <span id="cb16-117"><a href="#cb16-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-118"><a href="#cb16-118" aria-hidden="true" tabindex="-1"></a>fit_se <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">brm</span>(</span>
-<span id="cb16-119"><a href="#cb16-119" aria-hidden="true" tabindex="-1"></a>  formula_se, <span class="at">data =</span> dat_model, <span class="at">data2 =</span> <span class="fu">list</span>(<span class="at">A =</span> A_mod, <span class="at">V =</span> V)</span>
-<span id="cb16-120"><a href="#cb16-120" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb16-121"><a href="#cb16-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-122"><a href="#cb16-122" aria-hidden="true" tabindex="-1"></a>formula_v <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">bf</span>(</span>
-<span id="cb16-123"><a href="#cb16-123" aria-hidden="true" tabindex="-1"></a>  yi_lnM_safe <span class="sc">~</span> n_v <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> ref_id) <span class="sc">+</span></span>
-<span id="cb16-124"><a href="#cb16-124" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span> <span class="sc">|</span> <span class="fu">gr</span>(sp_ncbi, <span class="at">cov =</span> A)) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> <span class="fu">gr</span>(es_id_model, <span class="at">cov =</span> V)),</span>
-<span id="cb16-125"><a href="#cb16-125" aria-hidden="true" tabindex="-1"></a>  sigma <span class="sc">~</span> <span class="dv">1</span></span>
-<span id="cb16-126"><a href="#cb16-126" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb16-127"><a href="#cb16-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-128"><a href="#cb16-128" aria-hidden="true" tabindex="-1"></a>fit_v <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">brm</span>(</span>
-<span id="cb16-129"><a href="#cb16-129" aria-hidden="true" tabindex="-1"></a>  formula_v, <span class="at">data =</span> dat_model, <span class="at">data2 =</span> <span class="fu">list</span>(<span class="at">A =</span> A_mod, <span class="at">V =</span> V)</span>
-<span id="cb16-130"><a href="#cb16-130" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb16-131"><a href="#cb16-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-132"><a href="#cb16-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-133"><a href="#cb16-133" aria-hidden="true" tabindex="-1"></a><span class="fu">### Specification grid</span></span>
+<span id="cb16-118"><a href="#cb16-118" aria-hidden="true" tabindex="-1"></a><span class="in">```{r model-code, eval=FALSE}</span></span>
+<span id="cb16-119"><a href="#cb16-119" aria-hidden="true" tabindex="-1"></a>formula_se <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">bf</span>(</span>
+<span id="cb16-120"><a href="#cb16-120" aria-hidden="true" tabindex="-1"></a>  yi_lnM_safe <span class="sc">~</span> n_se <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> ref_id) <span class="sc">+</span></span>
+<span id="cb16-121"><a href="#cb16-121" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span> <span class="sc">|</span> <span class="fu">gr</span>(sp_ncbi, <span class="at">cov =</span> A)) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> <span class="fu">gr</span>(es_id_model, <span class="at">cov =</span> V)),</span>
+<span id="cb16-122"><a href="#cb16-122" aria-hidden="true" tabindex="-1"></a>  sigma <span class="sc">~</span> n_se</span>
+<span id="cb16-123"><a href="#cb16-123" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-124"><a href="#cb16-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-125"><a href="#cb16-125" aria-hidden="true" tabindex="-1"></a>fit_se <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">brm</span>(</span>
+<span id="cb16-126"><a href="#cb16-126" aria-hidden="true" tabindex="-1"></a>  formula_se, <span class="at">data =</span> dat_model, <span class="at">data2 =</span> <span class="fu">list</span>(<span class="at">A =</span> A_mod, <span class="at">V =</span> V)</span>
+<span id="cb16-127"><a href="#cb16-127" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-128"><a href="#cb16-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-129"><a href="#cb16-129" aria-hidden="true" tabindex="-1"></a>formula_v <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">bf</span>(</span>
+<span id="cb16-130"><a href="#cb16-130" aria-hidden="true" tabindex="-1"></a>  yi_lnM_safe <span class="sc">~</span> n_v <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> ref_id) <span class="sc">+</span></span>
+<span id="cb16-131"><a href="#cb16-131" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span> <span class="sc">|</span> <span class="fu">gr</span>(sp_ncbi, <span class="at">cov =</span> A)) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> <span class="fu">gr</span>(es_id_model, <span class="at">cov =</span> V)),</span>
+<span id="cb16-132"><a href="#cb16-132" aria-hidden="true" tabindex="-1"></a>  sigma <span class="sc">~</span> <span class="dv">1</span></span>
+<span id="cb16-133"><a href="#cb16-133" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb16-134"><a href="#cb16-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-135"><a href="#cb16-135" aria-hidden="true" tabindex="-1"></a>Each predictor was crossed with two scale specifications — a constant residual</span>
-<span id="cb16-136"><a href="#cb16-136" aria-hidden="true" tabindex="-1"></a>SD (<span class="in">`sigma ~ 1`</span>) and one varying with the predictor (<span class="in">`sigma ~ x`</span>) — giving four</span>
-<span id="cb16-137"><a href="#cb16-137" aria-hidden="true" tabindex="-1"></a>fits. <span class="in">`remote_fit_one_small_study_brms.R`</span> writes a model only after it passes</span>
-<span id="cb16-138"><a href="#cb16-138" aria-hidden="true" tabindex="-1"></a>fixed convergence criteria: no divergent transitions, $\hat{R} \le 1.01$, and</span>
-<span id="cb16-139"><a href="#cb16-139" aria-hidden="true" tabindex="-1"></a>bulk and tail ESS of at least 400.</span>
-<span id="cb16-140"><a href="#cb16-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-141"><a href="#cb16-141" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Model <span class="pp">|</span> Predictor <span class="pp">|</span> Scale <span class="pp">|</span> Status <span class="pp">|</span></span>
-<span id="cb16-142"><a href="#cb16-142" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|</span></span>
-<span id="cb16-143"><a href="#cb16-143" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`n_se_sigmax`</span> <span class="pp">|</span> $1/\sqrt{n_0}$ <span class="pp">|</span> <span class="in">`sigma ~ n_se`</span> <span class="pp">|</span> Reported below <span class="pp">|</span></span>
-<span id="cb16-144"><a href="#cb16-144" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`n_v_sigma1`</span> <span class="pp">|</span> $1/n_0$ <span class="pp">|</span> <span class="in">`sigma ~ 1`</span> <span class="pp">|</span> Reported below <span class="pp">|</span></span>
-<span id="cb16-145"><a href="#cb16-145" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`n_se_sigma1`</span> <span class="pp">|</span> $1/\sqrt{n_0}$ <span class="pp">|</span> <span class="in">`sigma ~ 1`</span> <span class="pp">|</span> Criteria not met; refit pending <span class="pp">|</span></span>
-<span id="cb16-146"><a href="#cb16-146" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`n_v_sigmax`</span> <span class="pp">|</span> $1/n_0$ <span class="pp">|</span> <span class="in">`sigma ~ n_v`</span> <span class="pp">|</span> Criteria not met; refit pending <span class="pp">|</span></span>
+<span id="cb16-135"><a href="#cb16-135" aria-hidden="true" tabindex="-1"></a>fit_v <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">brm</span>(</span>
+<span id="cb16-136"><a href="#cb16-136" aria-hidden="true" tabindex="-1"></a>  formula_v, <span class="at">data =</span> dat_model, <span class="at">data2 =</span> <span class="fu">list</span>(<span class="at">A =</span> A_mod, <span class="at">V =</span> V)</span>
+<span id="cb16-137"><a href="#cb16-137" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-138"><a href="#cb16-138" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-139"><a href="#cb16-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-140"><a href="#cb16-140" aria-hidden="true" tabindex="-1"></a><span class="fu">### Specification grid</span></span>
+<span id="cb16-141"><a href="#cb16-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-142"><a href="#cb16-142" aria-hidden="true" tabindex="-1"></a>Each predictor was crossed with two scale specifications — a constant residual</span>
+<span id="cb16-143"><a href="#cb16-143" aria-hidden="true" tabindex="-1"></a>SD (<span class="in">`sigma ~ 1`</span>) and one varying with the predictor (<span class="in">`sigma ~ x`</span>) — giving four</span>
+<span id="cb16-144"><a href="#cb16-144" aria-hidden="true" tabindex="-1"></a>fits. <span class="in">`remote_fit_one_small_study_brms.R`</span> writes a model only after it passes</span>
+<span id="cb16-145"><a href="#cb16-145" aria-hidden="true" tabindex="-1"></a>fixed convergence criteria: no divergent transitions, $\hat{R} \le 1.01$, and</span>
+<span id="cb16-146"><a href="#cb16-146" aria-hidden="true" tabindex="-1"></a>bulk and tail ESS of at least 400.</span>
 <span id="cb16-147"><a href="#cb16-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-148"><a href="#cb16-148" aria-hidden="true" tabindex="-1"></a>The two reported models are fitted to</span>
-<span id="cb16-149"><a href="#cb16-149" aria-hidden="true" tabindex="-1"></a>**`r format(cache_se$meta$n_obs, big.mark = ",")` contrasts** with complete,</span>
-<span id="cb16-150"><a href="#cb16-150" aria-hidden="true" tabindex="-1"></a>positive group sample sizes and resolved species names.</span>
-<span id="cb16-151"><a href="#cb16-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-152"><a href="#cb16-152" aria-hidden="true" tabindex="-1"></a><span class="fu">## Results</span></span>
-<span id="cb16-153"><a href="#cb16-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-154"><a href="#cb16-154" aria-hidden="true" tabindex="-1"></a><span class="fu">### Convergence</span></span>
-<span id="cb16-155"><a href="#cb16-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-156"><a href="#cb16-156" aria-hidden="true" tabindex="-1"></a><span class="in">```{r convergence-table}</span></span>
-<span id="cb16-157"><a href="#cb16-157" aria-hidden="true" tabindex="-1"></a>diag_tbl <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(cache_se<span class="sc">$</span>diagnostics, cache_v<span class="sc">$</span>diagnostics) <span class="sc">|&gt;</span></span>
-<span id="cb16-158"><a href="#cb16-158" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
-<span id="cb16-159"><a href="#cb16-159" aria-hidden="true" tabindex="-1"></a>    <span class="at">Model =</span> model_id, <span class="at">Moderator =</span> moderator,</span>
-<span id="cb16-160"><a href="#cb16-160" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Max Rhat</span><span class="st">`</span> <span class="ot">=</span> max_rhat, <span class="st">`</span><span class="at">Min bulk ESS</span><span class="st">`</span> <span class="ot">=</span> min_bulk_ess,</span>
-<span id="cb16-161"><a href="#cb16-161" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Min tail ESS</span><span class="st">`</span> <span class="ot">=</span> min_tail_ess, <span class="at">Divergences =</span> n_divergent,</span>
-<span id="cb16-162"><a href="#cb16-162" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Treedepth hits</span><span class="st">`</span> <span class="ot">=</span> max_treedepth_hits</span>
-<span id="cb16-163"><a href="#cb16-163" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb16-164"><a href="#cb16-164" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb16-165"><a href="#cb16-165" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Max Rhat</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="st">`</span><span class="at">Max Rhat</span><span class="st">`</span>, <span class="dv">4</span>),</span>
-<span id="cb16-166"><a href="#cb16-166" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">across</span>(dplyr<span class="sc">::</span><span class="fu">starts_with</span>(<span class="st">"Min"</span>), <span class="sc">~</span> <span class="fu">round</span>(.x, <span class="dv">0</span>))</span>
-<span id="cb16-167"><a href="#cb16-167" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb16-168"><a href="#cb16-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-169"><a href="#cb16-169" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb16-170"><a href="#cb16-170" aria-hidden="true" tabindex="-1"></a>  diag_tbl,</span>
-<span id="cb16-171"><a href="#cb16-171" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Sampler diagnostics for the two reported models."</span></span>
-<span id="cb16-172"><a href="#cb16-172" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb16-173"><a href="#cb16-173" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-174"><a href="#cb16-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-175"><a href="#cb16-175" aria-hidden="true" tabindex="-1"></a><span class="fu">### Model summaries</span></span>
-<span id="cb16-176"><a href="#cb16-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-177"><a href="#cb16-177" aria-hidden="true" tabindex="-1"></a>Complete <span class="in">`summary()`</span> output is read from the cached draw objects; the ~400 MB</span>
-<span id="cb16-178"><a href="#cb16-178" aria-hidden="true" tabindex="-1"></a><span class="in">`brms`</span> fits are not loaded at render.</span>
-<span id="cb16-179"><a href="#cb16-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-180"><a href="#cb16-180" aria-hidden="true" tabindex="-1"></a><span class="in">```{r model-summary-se}</span></span>
-<span id="cb16-181"><a href="#cb16-181" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(cache_se<span class="sc">$</span>summary_txt)</span>
-<span id="cb16-182"><a href="#cb16-182" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-148"><a href="#cb16-148" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Model <span class="pp">|</span> Predictor <span class="pp">|</span> Scale <span class="pp">|</span> Status <span class="pp">|</span></span>
+<span id="cb16-149"><a href="#cb16-149" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|</span></span>
+<span id="cb16-150"><a href="#cb16-150" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`n_se_sigmax`</span> <span class="pp">|</span> $1/\sqrt{\tilde{n}_0}$ <span class="pp">|</span> <span class="in">`sigma ~ n_se`</span> <span class="pp">|</span> Reported below <span class="pp">|</span></span>
+<span id="cb16-151"><a href="#cb16-151" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`n_v_sigma1`</span> <span class="pp">|</span> $1/\tilde{n}_0$ <span class="pp">|</span> <span class="in">`sigma ~ 1`</span> <span class="pp">|</span> Reported below <span class="pp">|</span></span>
+<span id="cb16-152"><a href="#cb16-152" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`n_se_sigma1`</span> <span class="pp">|</span> $1/\sqrt{\tilde{n}_0}$ <span class="pp">|</span> <span class="in">`sigma ~ 1`</span> <span class="pp">|</span> Criteria not met; refit pending <span class="pp">|</span></span>
+<span id="cb16-153"><a href="#cb16-153" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`n_v_sigmax`</span> <span class="pp">|</span> $1/\tilde{n}_0$ <span class="pp">|</span> <span class="in">`sigma ~ n_v`</span> <span class="pp">|</span> Criteria not met; refit pending <span class="pp">|</span></span>
+<span id="cb16-154"><a href="#cb16-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-155"><a href="#cb16-155" aria-hidden="true" tabindex="-1"></a>The two reported models are fitted to</span>
+<span id="cb16-156"><a href="#cb16-156" aria-hidden="true" tabindex="-1"></a>**`r format(cache_se$meta$n_obs, big.mark = ",")` contrasts** with complete,</span>
+<span id="cb16-157"><a href="#cb16-157" aria-hidden="true" tabindex="-1"></a>positive group sample sizes and resolved species names.</span>
+<span id="cb16-158"><a href="#cb16-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-159"><a href="#cb16-159" aria-hidden="true" tabindex="-1"></a><span class="fu">## Results</span></span>
+<span id="cb16-160"><a href="#cb16-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-161"><a href="#cb16-161" aria-hidden="true" tabindex="-1"></a><span class="fu">### Convergence</span></span>
+<span id="cb16-162"><a href="#cb16-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-163"><a href="#cb16-163" aria-hidden="true" tabindex="-1"></a><span class="in">```{r convergence-table}</span></span>
+<span id="cb16-164"><a href="#cb16-164" aria-hidden="true" tabindex="-1"></a>diag_tbl <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(cache_se<span class="sc">$</span>diagnostics, cache_v<span class="sc">$</span>diagnostics) <span class="sc">|&gt;</span></span>
+<span id="cb16-165"><a href="#cb16-165" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb16-166"><a href="#cb16-166" aria-hidden="true" tabindex="-1"></a>    <span class="at">Model =</span> model_id, <span class="at">Moderator =</span> moderator,</span>
+<span id="cb16-167"><a href="#cb16-167" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Max Rhat</span><span class="st">`</span> <span class="ot">=</span> max_rhat, <span class="st">`</span><span class="at">Min bulk ESS</span><span class="st">`</span> <span class="ot">=</span> min_bulk_ess,</span>
+<span id="cb16-168"><a href="#cb16-168" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Min tail ESS</span><span class="st">`</span> <span class="ot">=</span> min_tail_ess, <span class="at">Divergences =</span> n_divergent,</span>
+<span id="cb16-169"><a href="#cb16-169" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Treedepth hits</span><span class="st">`</span> <span class="ot">=</span> max_treedepth_hits</span>
+<span id="cb16-170"><a href="#cb16-170" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb16-171"><a href="#cb16-171" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb16-172"><a href="#cb16-172" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Max Rhat</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="st">`</span><span class="at">Max Rhat</span><span class="st">`</span>, <span class="dv">4</span>),</span>
+<span id="cb16-173"><a href="#cb16-173" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">across</span>(dplyr<span class="sc">::</span><span class="fu">starts_with</span>(<span class="st">"Min"</span>), <span class="sc">~</span> <span class="fu">round</span>(.x, <span class="dv">0</span>))</span>
+<span id="cb16-174"><a href="#cb16-174" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb16-175"><a href="#cb16-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-176"><a href="#cb16-176" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb16-177"><a href="#cb16-177" aria-hidden="true" tabindex="-1"></a>  diag_tbl,</span>
+<span id="cb16-178"><a href="#cb16-178" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Sampler diagnostics for the two reported models."</span></span>
+<span id="cb16-179"><a href="#cb16-179" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-180"><a href="#cb16-180" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-181"><a href="#cb16-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-182"><a href="#cb16-182" aria-hidden="true" tabindex="-1"></a><span class="fu">### Model summaries</span></span>
 <span id="cb16-183"><a href="#cb16-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-184"><a href="#cb16-184" aria-hidden="true" tabindex="-1"></a><span class="in">```{r model-summary-v}</span></span>
-<span id="cb16-185"><a href="#cb16-185" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(cache_v<span class="sc">$</span>summary_txt)</span>
-<span id="cb16-186"><a href="#cb16-186" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-187"><a href="#cb16-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-188"><a href="#cb16-188" aria-hidden="true" tabindex="-1"></a><span class="fu">### Coefficient table</span></span>
-<span id="cb16-189"><a href="#cb16-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-190"><a href="#cb16-190" aria-hidden="true" tabindex="-1"></a><span class="in">```{r results-table}</span></span>
-<span id="cb16-191"><a href="#cb16-191" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb16-192"><a href="#cb16-192" aria-hidden="true" tabindex="-1"></a>  <span class="fu">small_study_coef_table</span>(<span class="fu">list</span>(cache_se, cache_v)),</span>
-<span id="cb16-193"><a href="#cb16-193" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">3</span>,</span>
-<span id="cb16-194"><a href="#cb16-194" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="fu">paste0</span>(</span>
-<span id="cb16-195"><a href="#cb16-195" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Posterior fixed effects with 95% equal-tailed credible intervals. The "</span>,</span>
-<span id="cb16-196"><a href="#cb16-196" aria-hidden="true" tabindex="-1"></a>    <span class="st">"primary diagnostic is the 1 / sqrt(n0) location slope; the 1 / n0 "</span>,</span>
-<span id="cb16-197"><a href="#cb16-197" aria-hidden="true" tabindex="-1"></a>    <span class="st">"intercept estimates the effect at infinite sample size."</span></span>
-<span id="cb16-198"><a href="#cb16-198" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb16-199"><a href="#cb16-199" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb16-200"><a href="#cb16-200" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-201"><a href="#cb16-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-202"><a href="#cb16-202" aria-hidden="true" tabindex="-1"></a><span class="in">```{r interpretation, results='asis'}</span></span>
-<span id="cb16-203"><a href="#cb16-203" aria-hidden="true" tabindex="-1"></a>slope <span class="ot">&lt;-</span> cache_se<span class="sc">$</span>fixef[<span class="st">"n_se"</span>, ]</span>
-<span id="cb16-204"><a href="#cb16-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-205"><a href="#cb16-205" aria-hidden="true" tabindex="-1"></a>direction <span class="ot">&lt;-</span> <span class="cf">if</span> (slope[[<span class="st">"Estimate"</span>]] <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="st">"larger"</span> <span class="cf">else</span> <span class="st">"smaller"</span></span>
-<span id="cb16-206"><a href="#cb16-206" aria-hidden="true" tabindex="-1"></a>evidence <span class="ot">&lt;-</span> <span class="cf">if</span> (slope[[<span class="st">"Q2.5"</span>]] <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">||</span> slope[[<span class="st">"Q97.5"</span>]] <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
-<span id="cb16-207"><a href="#cb16-207" aria-hidden="true" tabindex="-1"></a>  <span class="st">"The 95% credible interval excludes zero, providing evidence of a small-study effect"</span></span>
-<span id="cb16-208"><a href="#cb16-208" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb16-209"><a href="#cb16-209" aria-hidden="true" tabindex="-1"></a>  <span class="st">"The 95% credible interval includes zero, so this analysis does not provide clear evidence of a small-study effect"</span></span>
-<span id="cb16-210"><a href="#cb16-210" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-184"><a href="#cb16-184" aria-hidden="true" tabindex="-1"></a>Complete <span class="in">`summary()`</span> output is read from the cached draw objects; the ~400 MB</span>
+<span id="cb16-185"><a href="#cb16-185" aria-hidden="true" tabindex="-1"></a><span class="in">`brms`</span> fits are not loaded at render.</span>
+<span id="cb16-186"><a href="#cb16-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-187"><a href="#cb16-187" aria-hidden="true" tabindex="-1"></a><span class="in">```{r model-summary-se}</span></span>
+<span id="cb16-188"><a href="#cb16-188" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(cache_se<span class="sc">$</span>summary_txt)</span>
+<span id="cb16-189"><a href="#cb16-189" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-190"><a href="#cb16-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-191"><a href="#cb16-191" aria-hidden="true" tabindex="-1"></a><span class="in">```{r model-summary-v}</span></span>
+<span id="cb16-192"><a href="#cb16-192" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(cache_v<span class="sc">$</span>summary_txt)</span>
+<span id="cb16-193"><a href="#cb16-193" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-194"><a href="#cb16-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-195"><a href="#cb16-195" aria-hidden="true" tabindex="-1"></a><span class="fu">### Coefficient table</span></span>
+<span id="cb16-196"><a href="#cb16-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-197"><a href="#cb16-197" aria-hidden="true" tabindex="-1"></a><span class="in">```{r results-table}</span></span>
+<span id="cb16-198"><a href="#cb16-198" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb16-199"><a href="#cb16-199" aria-hidden="true" tabindex="-1"></a>  <span class="fu">small_study_coef_table</span>(<span class="fu">list</span>(cache_se, cache_v)),</span>
+<span id="cb16-200"><a href="#cb16-200" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">3</span>,</span>
+<span id="cb16-201"><a href="#cb16-201" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="fu">paste0</span>(</span>
+<span id="cb16-202"><a href="#cb16-202" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Posterior fixed effects with 95% equal-tailed credible intervals. The "</span>,</span>
+<span id="cb16-203"><a href="#cb16-203" aria-hidden="true" tabindex="-1"></a>    <span class="st">"primary diagnostic is the $1/</span><span class="sc">\\</span><span class="st">sqrt{</span><span class="sc">\\</span><span class="st">tilde{n}_0}$ location slope; the "</span>,</span>
+<span id="cb16-204"><a href="#cb16-204" aria-hidden="true" tabindex="-1"></a>    <span class="st">"$1/</span><span class="sc">\\</span><span class="st">tilde{n}_0$ intercept estimates the effect at infinite sample size."</span></span>
+<span id="cb16-205"><a href="#cb16-205" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb16-206"><a href="#cb16-206" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-207"><a href="#cb16-207" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-208"><a href="#cb16-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-209"><a href="#cb16-209" aria-hidden="true" tabindex="-1"></a><span class="in">```{r interpretation, results='asis'}</span></span>
+<span id="cb16-210"><a href="#cb16-210" aria-hidden="true" tabindex="-1"></a>slope <span class="ot">&lt;-</span> cache_se<span class="sc">$</span>fixef[<span class="st">"n_se"</span>, ]</span>
 <span id="cb16-211"><a href="#cb16-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-212"><a href="#cb16-212" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(</span>
-<span id="cb16-213"><a href="#cb16-213" aria-hidden="true" tabindex="-1"></a>  <span class="st">"%s (slope = %.3f, 95%% CrI [%.3f, %.3f]). The fitted direction associates smaller effective samples with %s lnM estimates. This pattern should not, by itself, be labelled publication bias.</span><span class="sc">\n</span><span class="st">"</span>,</span>
-<span id="cb16-214"><a href="#cb16-214" aria-hidden="true" tabindex="-1"></a>  evidence, slope[[<span class="st">"Estimate"</span>]], slope[[<span class="st">"Q2.5"</span>]], slope[[<span class="st">"Q97.5"</span>]], direction</span>
-<span id="cb16-215"><a href="#cb16-215" aria-hidden="true" tabindex="-1"></a>))</span>
-<span id="cb16-216"><a href="#cb16-216" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-217"><a href="#cb16-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-218"><a href="#cb16-218" aria-hidden="true" tabindex="-1"></a><span class="fu">## Diagnostic plot</span></span>
-<span id="cb16-219"><a href="#cb16-219" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-220"><a href="#cb16-220" aria-hidden="true" tabindex="-1"></a>The two panels are constructed from the cached draws and joined with</span>
-<span id="cb16-221"><a href="#cb16-221" aria-hidden="true" tabindex="-1"></a><span class="in">`patchwork`</span>. Bubble area represents sampling precision, $1/\mathrm{SE}$. Bands</span>
-<span id="cb16-222"><a href="#cb16-222" aria-hidden="true" tabindex="-1"></a>show 50%, 80%, and 95% credible intervals for the posterior mean, drawn down to</span>
-<span id="cb16-223"><a href="#cb16-223" aria-hidden="true" tabindex="-1"></a>the predictor's zero bound.</span>
+<span id="cb16-212"><a href="#cb16-212" aria-hidden="true" tabindex="-1"></a>direction <span class="ot">&lt;-</span> <span class="cf">if</span> (slope[[<span class="st">"Estimate"</span>]] <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="st">"larger"</span> <span class="cf">else</span> <span class="st">"smaller"</span></span>
+<span id="cb16-213"><a href="#cb16-213" aria-hidden="true" tabindex="-1"></a>evidence <span class="ot">&lt;-</span> <span class="cf">if</span> (slope[[<span class="st">"Q2.5"</span>]] <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">||</span> slope[[<span class="st">"Q97.5"</span>]] <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
+<span id="cb16-214"><a href="#cb16-214" aria-hidden="true" tabindex="-1"></a>  <span class="st">"The 95% credible interval excludes zero, providing evidence of a small-study effect"</span></span>
+<span id="cb16-215"><a href="#cb16-215" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb16-216"><a href="#cb16-216" aria-hidden="true" tabindex="-1"></a>  <span class="st">"The 95% credible interval includes zero, so this analysis does not provide clear evidence of a small-study effect"</span></span>
+<span id="cb16-217"><a href="#cb16-217" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-218"><a href="#cb16-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-219"><a href="#cb16-219" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(</span>
+<span id="cb16-220"><a href="#cb16-220" aria-hidden="true" tabindex="-1"></a>  <span class="st">"%s (slope = %.3f, 95%% CrI [%.3f, %.3f]). The fitted direction associates smaller effective samples with %s lnM estimates. This pattern should not, by itself, be labelled publication bias.</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb16-221"><a href="#cb16-221" aria-hidden="true" tabindex="-1"></a>  evidence, slope[[<span class="st">"Estimate"</span>]], slope[[<span class="st">"Q2.5"</span>]], slope[[<span class="st">"Q97.5"</span>]], direction</span>
+<span id="cb16-222"><a href="#cb16-222" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb16-223"><a href="#cb16-223" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb16-224"><a href="#cb16-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-225"><a href="#cb16-225" aria-hidden="true" tabindex="-1"></a><span class="in">```{r figure-code, eval=FALSE}</span></span>
-<span id="cb16-226"><a href="#cb16-226" aria-hidden="true" tabindex="-1"></a>p_se <span class="ot">&lt;-</span> <span class="fu">build_small_study_location_panel</span>(cache_se, <span class="at">show_legend =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb16-227"><a href="#cb16-227" aria-hidden="true" tabindex="-1"></a>p_v <span class="ot">&lt;-</span> <span class="fu">build_small_study_location_panel</span>(cache_v, <span class="at">show_legend =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb16-228"><a href="#cb16-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-229"><a href="#cb16-229" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> ((p_se <span class="sc">+</span> p_v) <span class="sc">/</span> patchwork<span class="sc">::</span><span class="fu">guide_area</span>()) <span class="sc">+</span></span>
-<span id="cb16-230"><a href="#cb16-230" aria-hidden="true" tabindex="-1"></a>  patchwork<span class="sc">::</span><span class="fu">plot_layout</span>(<span class="at">heights =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.10</span>), <span class="at">guides =</span> <span class="st">"collect"</span>) <span class="sc">+</span></span>
-<span id="cb16-231"><a href="#cb16-231" aria-hidden="true" tabindex="-1"></a>  patchwork<span class="sc">::</span><span class="fu">plot_annotation</span>(<span class="at">tag_levels =</span> <span class="st">"A"</span>, <span class="at">tag_suffix =</span> <span class="st">")"</span>) <span class="sc">&amp;</span></span>
-<span id="cb16-232"><a href="#cb16-232" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme</span>(</span>
-<span id="cb16-233"><a href="#cb16-233" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
-<span id="cb16-234"><a href="#cb16-234" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.justification =</span> <span class="st">"center"</span>,</span>
-<span id="cb16-235"><a href="#cb16-235" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.tag =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">14</span>),</span>
-<span id="cb16-236"><a href="#cb16-236" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.tag.position =</span> <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.99</span>)</span>
-<span id="cb16-237"><a href="#cb16-237" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb16-238"><a href="#cb16-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-239"><a href="#cb16-239" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggsave</span>(</span>
-<span id="cb16-240"><a href="#cb16-240" aria-hidden="true" tabindex="-1"></a>  here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>, <span class="st">"small_study_effects.png"</span>),</span>
-<span id="cb16-241"><a href="#cb16-241" aria-hidden="true" tabindex="-1"></a>  p, <span class="at">width =</span> <span class="dv">13</span>, <span class="at">height =</span> <span class="dv">6</span>, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">bg =</span> <span class="st">"white"</span></span>
-<span id="cb16-242"><a href="#cb16-242" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb16-243"><a href="#cb16-243" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-244"><a href="#cb16-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-245"><a href="#cb16-245" aria-hidden="true" tabindex="-1"></a><span class="in">```{r figure, fig.width=13, fig.height=6}</span></span>
-<span id="cb16-246"><a href="#cb16-246" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">build_small_study_brms_figure</span>(cache_se, cache_v)</span>
-<span id="cb16-247"><a href="#cb16-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-248"><a href="#cb16-248" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="fu">dirname</span>(figure_path), <span class="at">recursive =</span> <span class="cn">TRUE</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb16-249"><a href="#cb16-249" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggsave</span>(figure_path, p, <span class="at">width =</span> <span class="dv">13</span>, <span class="at">height =</span> <span class="dv">6</span>, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">bg =</span> <span class="st">"white"</span>)</span>
-<span id="cb16-250"><a href="#cb16-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-251"><a href="#cb16-251" aria-hidden="true" tabindex="-1"></a>p</span>
-<span id="cb16-252"><a href="#cb16-252" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-253"><a href="#cb16-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-254"><a href="#cb16-254" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb16-255"><a href="#cb16-255" aria-hidden="true" tabindex="-1"></a>The infinite-sample intercept is an extrapolation to $1/n_0=0$, outside the</span>
-<span id="cb16-256"><a href="#cb16-256" aria-hidden="true" tabindex="-1"></a>observed finite-sample data. It is most useful as a sensitivity analysis when</span>
-<span id="cb16-257"><a href="#cb16-257" aria-hidden="true" tabindex="-1"></a>the slope diagnostic indicates small-study effects and the model is otherwise</span>
-<span id="cb16-258"><a href="#cb16-258" aria-hidden="true" tabindex="-1"></a>well specified.</span>
-<span id="cb16-259"><a href="#cb16-259" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-225"><a href="#cb16-225" aria-hidden="true" tabindex="-1"></a><span class="fu">## Diagnostic plot</span></span>
+<span id="cb16-226"><a href="#cb16-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-227"><a href="#cb16-227" aria-hidden="true" tabindex="-1"></a>The two panels are constructed from the cached draws and joined with</span>
+<span id="cb16-228"><a href="#cb16-228" aria-hidden="true" tabindex="-1"></a><span class="in">`patchwork`</span>. Bubble area represents sampling precision, $1/\mathrm{SE}$. Bands</span>
+<span id="cb16-229"><a href="#cb16-229" aria-hidden="true" tabindex="-1"></a>show 50%, 80%, and 95% credible intervals for the posterior mean, drawn down to</span>
+<span id="cb16-230"><a href="#cb16-230" aria-hidden="true" tabindex="-1"></a>the predictor's zero bound.</span>
+<span id="cb16-231"><a href="#cb16-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-232"><a href="#cb16-232" aria-hidden="true" tabindex="-1"></a><span class="in">```{r figure-code, eval=FALSE}</span></span>
+<span id="cb16-233"><a href="#cb16-233" aria-hidden="true" tabindex="-1"></a>p_se <span class="ot">&lt;-</span> <span class="fu">build_small_study_location_panel</span>(cache_se, <span class="at">show_legend =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-234"><a href="#cb16-234" aria-hidden="true" tabindex="-1"></a>p_v <span class="ot">&lt;-</span> <span class="fu">build_small_study_location_panel</span>(cache_v, <span class="at">show_legend =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb16-235"><a href="#cb16-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-236"><a href="#cb16-236" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> ((p_se <span class="sc">+</span> p_v) <span class="sc">/</span> patchwork<span class="sc">::</span><span class="fu">guide_area</span>()) <span class="sc">+</span></span>
+<span id="cb16-237"><a href="#cb16-237" aria-hidden="true" tabindex="-1"></a>  patchwork<span class="sc">::</span><span class="fu">plot_layout</span>(<span class="at">heights =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.10</span>), <span class="at">guides =</span> <span class="st">"collect"</span>) <span class="sc">+</span></span>
+<span id="cb16-238"><a href="#cb16-238" aria-hidden="true" tabindex="-1"></a>  patchwork<span class="sc">::</span><span class="fu">plot_annotation</span>(<span class="at">tag_levels =</span> <span class="st">"A"</span>, <span class="at">tag_suffix =</span> <span class="st">")"</span>) <span class="sc">&amp;</span></span>
+<span id="cb16-239"><a href="#cb16-239" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme</span>(</span>
+<span id="cb16-240"><a href="#cb16-240" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
+<span id="cb16-241"><a href="#cb16-241" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.justification =</span> <span class="st">"center"</span>,</span>
+<span id="cb16-242"><a href="#cb16-242" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.tag =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb16-243"><a href="#cb16-243" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.tag.position =</span> <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.99</span>)</span>
+<span id="cb16-244"><a href="#cb16-244" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb16-245"><a href="#cb16-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-246"><a href="#cb16-246" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggsave</span>(</span>
+<span id="cb16-247"><a href="#cb16-247" aria-hidden="true" tabindex="-1"></a>  here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>, <span class="st">"small_study_effects.png"</span>),</span>
+<span id="cb16-248"><a href="#cb16-248" aria-hidden="true" tabindex="-1"></a>  p, <span class="at">width =</span> <span class="dv">13</span>, <span class="at">height =</span> <span class="dv">6</span>, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">bg =</span> <span class="st">"white"</span></span>
+<span id="cb16-249"><a href="#cb16-249" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-250"><a href="#cb16-250" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-251"><a href="#cb16-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-252"><a href="#cb16-252" aria-hidden="true" tabindex="-1"></a><span class="in">```{r figure, fig.width=13, fig.height=6}</span></span>
+<span id="cb16-253"><a href="#cb16-253" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">build_small_study_brms_figure</span>(cache_se, cache_v)</span>
+<span id="cb16-254"><a href="#cb16-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-255"><a href="#cb16-255" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="fu">dirname</span>(figure_path), <span class="at">recursive =</span> <span class="cn">TRUE</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb16-256"><a href="#cb16-256" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggsave</span>(figure_path, p, <span class="at">width =</span> <span class="dv">13</span>, <span class="at">height =</span> <span class="dv">6</span>, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">bg =</span> <span class="st">"white"</span>)</span>
+<span id="cb16-257"><a href="#cb16-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-258"><a href="#cb16-258" aria-hidden="true" tabindex="-1"></a>p</span>
+<span id="cb16-259"><a href="#cb16-259" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb16-260"><a href="#cb16-260" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-261"><a href="#cb16-261" aria-hidden="true" tabindex="-1"></a><span class="fu">### Residual SD across study size</span></span>
-<span id="cb16-262"><a href="#cb16-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-263"><a href="#cb16-263" aria-hidden="true" tabindex="-1"></a><span class="in">`n_se_sigmax`</span> models the residual SD as a function of the predictor. The</span>
-<span id="cb16-264"><a href="#cb16-264" aria-hidden="true" tabindex="-1"></a>posterior for that scale submodel is plotted below.</span>
-<span id="cb16-265"><a href="#cb16-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-266"><a href="#cb16-266" aria-hidden="true" tabindex="-1"></a><span class="in">```{r scale-figure, fig.width=7, fig.height=5}</span></span>
-<span id="cb16-267"><a href="#cb16-267" aria-hidden="true" tabindex="-1"></a><span class="fu">build_small_study_scale_panel</span>(cache_se)</span>
-<span id="cb16-268"><a href="#cb16-268" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-261"><a href="#cb16-261" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb16-262"><a href="#cb16-262" aria-hidden="true" tabindex="-1"></a>The infinite-sample intercept is an extrapolation to $1/\tilde{n}_0=0$, outside</span>
+<span id="cb16-263"><a href="#cb16-263" aria-hidden="true" tabindex="-1"></a>the observed finite-sample data. It is most useful as a sensitivity analysis when</span>
+<span id="cb16-264"><a href="#cb16-264" aria-hidden="true" tabindex="-1"></a>the slope diagnostic indicates small-study effects and the model is otherwise</span>
+<span id="cb16-265"><a href="#cb16-265" aria-hidden="true" tabindex="-1"></a>well specified.</span>
+<span id="cb16-266"><a href="#cb16-266" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-267"><a href="#cb16-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-268"><a href="#cb16-268" aria-hidden="true" tabindex="-1"></a><span class="fu">### Residual SD across study size</span></span>
 <span id="cb16-269"><a href="#cb16-269" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-270"><a href="#cb16-270" aria-hidden="true" tabindex="-1"></a><span class="fu">## Frequentist cross-check</span></span>
-<span id="cb16-271"><a href="#cb16-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-272"><a href="#cb16-272" aria-hidden="true" tabindex="-1"></a><span class="in">`metafor::rma.mv`</span> fits the same location structure by REML and is</span>
-<span id="cb16-273"><a href="#cb16-273" aria-hidden="true" tabindex="-1"></a>homoscedastic, so it corresponds to the <span class="in">`sigma ~ 1`</span> specification.</span>
-<span id="cb16-274"><a href="#cb16-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-275"><a href="#cb16-275" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crosscheck-table}</span></span>
-<span id="cb16-276"><a href="#cb16-276" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">is.null</span>(crosscheck)) {</span>
-<span id="cb16-277"><a href="#cb16-277" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Cross-check table not available.</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb16-278"><a href="#cb16-278" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb16-279"><a href="#cb16-279" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb16-280"><a href="#cb16-280" aria-hidden="true" tabindex="-1"></a>    crosscheck <span class="sc">|&gt;</span></span>
-<span id="cb16-281"><a href="#cb16-281" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb16-282"><a href="#cb16-282" aria-hidden="true" tabindex="-1"></a>        <span class="at">term =</span> dplyr<span class="sc">::</span><span class="fu">recode</span>(</span>
-<span id="cb16-283"><a href="#cb16-283" aria-hidden="true" tabindex="-1"></a>          term,</span>
-<span id="cb16-284"><a href="#cb16-284" aria-hidden="true" tabindex="-1"></a>          <span class="at">intrcpt =</span> <span class="st">"Intercept"</span>,</span>
-<span id="cb16-285"><a href="#cb16-285" aria-hidden="true" tabindex="-1"></a>          <span class="at">n_se =</span> <span class="st">"1 / sqrt(n0) slope"</span>,</span>
-<span id="cb16-286"><a href="#cb16-286" aria-hidden="true" tabindex="-1"></a>          <span class="at">n_v =</span> <span class="st">"1 / n0 slope"</span></span>
-<span id="cb16-287"><a href="#cb16-287" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb16-288"><a href="#cb16-288" aria-hidden="true" tabindex="-1"></a>        dplyr<span class="sc">::</span><span class="fu">across</span>(<span class="fu">c</span>(estimate, std_error, ci_lower, ci_upper), <span class="sc">~</span> <span class="fu">round</span>(.x, <span class="dv">3</span>))</span>
-<span id="cb16-289"><a href="#cb16-289" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">|&gt;</span></span>
-<span id="cb16-290"><a href="#cb16-290" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
-<span id="cb16-291"><a href="#cb16-291" aria-hidden="true" tabindex="-1"></a>        <span class="at">Model =</span> model, <span class="at">Term =</span> term, <span class="at">Estimate =</span> estimate,</span>
-<span id="cb16-292"><a href="#cb16-292" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">Standard error</span><span class="st">`</span> <span class="ot">=</span> std_error, <span class="st">`</span><span class="at">95% CI lower</span><span class="st">`</span> <span class="ot">=</span> ci_lower,</span>
-<span id="cb16-293"><a href="#cb16-293" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">95% CI upper</span><span class="st">`</span> <span class="ot">=</span> ci_upper</span>
-<span id="cb16-294"><a href="#cb16-294" aria-hidden="true" tabindex="-1"></a>      ),</span>
-<span id="cb16-295"><a href="#cb16-295" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"REML cross-check (metafor::rma.mv, homoscedastic)."</span></span>
-<span id="cb16-296"><a href="#cb16-296" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb16-297"><a href="#cb16-297" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb16-298"><a href="#cb16-298" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-299"><a href="#cb16-299" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-300"><a href="#cb16-300" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reproduce the cached outputs</span></span>
-<span id="cb16-301"><a href="#cb16-301" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-302"><a href="#cb16-302" aria-hidden="true" tabindex="-1"></a>Normal book renders read the small draw caches under <span class="in">`Rdata/epred_draws/`</span>. The</span>
-<span id="cb16-303"><a href="#cb16-303" aria-hidden="true" tabindex="-1"></a>fits themselves are run on Totoro:</span>
-<span id="cb16-304"><a href="#cb16-304" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-305"><a href="#cb16-305" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb16-306"><a href="#cb16-306" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Fit the specification grid (four models, parallel)</span></span>
-<span id="cb16-307"><a href="#cb16-307" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> remote_run_small_study_brms_parallel.sh</span>
-<span id="cb16-308"><a href="#cb16-308" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-309"><a href="#cb16-309" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Build the small draw caches from the fits that converged</span></span>
-<span id="cb16-310"><a href="#cb16-310" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> remote_precompute_small_study_brms_cache.R</span>
-<span id="cb16-311"><a href="#cb16-311" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-312"><a href="#cb16-312" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Copy the caches into the book mirror</span></span>
-<span id="cb16-313"><a href="#cb16-313" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> totoro:<span class="st">'~/Documents/PACE/outputs/epred_draws/small_study_*.rds'</span> Rdata/epred_draws/</span>
-<span id="cb16-314"><a href="#cb16-314" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-315"><a href="#cb16-315" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-316"><a href="#cb16-316" aria-hidden="true" tabindex="-1"></a>To regenerate the REML cross-check locally:</span>
-<span id="cb16-317"><a href="#cb16-317" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-318"><a href="#cb16-318" aria-hidden="true" tabindex="-1"></a><span class="in">```{r reproduce, eval=FALSE}</span></span>
-<span id="cb16-319"><a href="#cb16-319" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"chapters"</span>, <span class="st">"Rscripts"</span>, <span class="st">"00_packages.R"</span>))</span>
-<span id="cb16-320"><a href="#cb16-320" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"chapters"</span>, <span class="st">"Rscripts"</span>, <span class="st">"20_small_study_effects.R"</span>))</span>
-<span id="cb16-321"><a href="#cb16-321" aria-hidden="true" tabindex="-1"></a><span class="fu">run_small_study_analysis</span>()</span>
-<span id="cb16-322"><a href="#cb16-322" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb16-270"><a href="#cb16-270" aria-hidden="true" tabindex="-1"></a><span class="in">`n_se_sigmax`</span> models the residual SD as a function of the predictor. The</span>
+<span id="cb16-271"><a href="#cb16-271" aria-hidden="true" tabindex="-1"></a>posterior for that scale submodel is plotted below.</span>
+<span id="cb16-272"><a href="#cb16-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-273"><a href="#cb16-273" aria-hidden="true" tabindex="-1"></a><span class="in">```{r scale-figure, fig.width=7, fig.height=5}</span></span>
+<span id="cb16-274"><a href="#cb16-274" aria-hidden="true" tabindex="-1"></a><span class="fu">build_small_study_scale_panel</span>(cache_se)</span>
+<span id="cb16-275"><a href="#cb16-275" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-276"><a href="#cb16-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-277"><a href="#cb16-277" aria-hidden="true" tabindex="-1"></a><span class="fu">## Frequentist cross-check</span></span>
+<span id="cb16-278"><a href="#cb16-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-279"><a href="#cb16-279" aria-hidden="true" tabindex="-1"></a><span class="in">`metafor::rma.mv`</span> fits the same location structure by REML and is</span>
+<span id="cb16-280"><a href="#cb16-280" aria-hidden="true" tabindex="-1"></a>homoscedastic, so it corresponds to the <span class="in">`sigma ~ 1`</span> specification.</span>
+<span id="cb16-281"><a href="#cb16-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-282"><a href="#cb16-282" aria-hidden="true" tabindex="-1"></a><span class="in">```{r crosscheck-table}</span></span>
+<span id="cb16-283"><a href="#cb16-283" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">is.null</span>(crosscheck)) {</span>
+<span id="cb16-284"><a href="#cb16-284" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Cross-check table not available.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb16-285"><a href="#cb16-285" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb16-286"><a href="#cb16-286" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb16-287"><a href="#cb16-287" aria-hidden="true" tabindex="-1"></a>    crosscheck <span class="sc">|&gt;</span></span>
+<span id="cb16-288"><a href="#cb16-288" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb16-289"><a href="#cb16-289" aria-hidden="true" tabindex="-1"></a>        <span class="co"># The predictor is carried by the Term column, so the model label only</span></span>
+<span id="cb16-290"><a href="#cb16-290" aria-hidden="true" tabindex="-1"></a>        <span class="co"># needs its role. Both the current and regenerated CSV spellings map</span></span>
+<span id="cb16-291"><a href="#cb16-291" aria-hidden="true" tabindex="-1"></a>        <span class="co"># here, since the cached table predates the notation fix.</span></span>
+<span id="cb16-292"><a href="#cb16-292" aria-hidden="true" tabindex="-1"></a>        <span class="at">model =</span> dplyr<span class="sc">::</span><span class="fu">recode</span>(</span>
+<span id="cb16-293"><a href="#cb16-293" aria-hidden="true" tabindex="-1"></a>          model,</span>
+<span id="cb16-294"><a href="#cb16-294" aria-hidden="true" tabindex="-1"></a>          <span class="st">`</span><span class="at">Small-study slope: 1 / sqrt(n0)</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Small-study slope"</span>,</span>
+<span id="cb16-295"><a href="#cb16-295" aria-hidden="true" tabindex="-1"></a>          <span class="st">`</span><span class="at">Small-study slope: 1 / sqrt(n0_tilde)</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Small-study slope"</span>,</span>
+<span id="cb16-296"><a href="#cb16-296" aria-hidden="true" tabindex="-1"></a>          <span class="st">`</span><span class="at">Adjustment model: 1 / n0</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Adjustment model"</span>,</span>
+<span id="cb16-297"><a href="#cb16-297" aria-hidden="true" tabindex="-1"></a>          <span class="st">`</span><span class="at">Adjustment model: 1 / n0_tilde</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Adjustment model"</span></span>
+<span id="cb16-298"><a href="#cb16-298" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb16-299"><a href="#cb16-299" aria-hidden="true" tabindex="-1"></a>        <span class="at">term =</span> dplyr<span class="sc">::</span><span class="fu">recode</span>(</span>
+<span id="cb16-300"><a href="#cb16-300" aria-hidden="true" tabindex="-1"></a>          term,</span>
+<span id="cb16-301"><a href="#cb16-301" aria-hidden="true" tabindex="-1"></a>          <span class="at">intrcpt =</span> <span class="st">"Intercept"</span>,</span>
+<span id="cb16-302"><a href="#cb16-302" aria-hidden="true" tabindex="-1"></a>          <span class="at">n_se =</span> <span class="st">"$1/</span><span class="sc">\\</span><span class="st">sqrt{</span><span class="sc">\\</span><span class="st">tilde{n}_0}$ slope"</span>,</span>
+<span id="cb16-303"><a href="#cb16-303" aria-hidden="true" tabindex="-1"></a>          <span class="at">n_v =</span> <span class="st">"$1/</span><span class="sc">\\</span><span class="st">tilde{n}_0$ slope"</span></span>
+<span id="cb16-304"><a href="#cb16-304" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb16-305"><a href="#cb16-305" aria-hidden="true" tabindex="-1"></a>        dplyr<span class="sc">::</span><span class="fu">across</span>(<span class="fu">c</span>(estimate, std_error, ci_lower, ci_upper), <span class="sc">~</span> <span class="fu">round</span>(.x, <span class="dv">3</span>))</span>
+<span id="cb16-306"><a href="#cb16-306" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">|&gt;</span></span>
+<span id="cb16-307"><a href="#cb16-307" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb16-308"><a href="#cb16-308" aria-hidden="true" tabindex="-1"></a>        <span class="at">Model =</span> model, <span class="at">Term =</span> term, <span class="at">Estimate =</span> estimate,</span>
+<span id="cb16-309"><a href="#cb16-309" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">Standard error</span><span class="st">`</span> <span class="ot">=</span> std_error, <span class="st">`</span><span class="at">95% CI lower</span><span class="st">`</span> <span class="ot">=</span> ci_lower,</span>
+<span id="cb16-310"><a href="#cb16-310" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">95% CI upper</span><span class="st">`</span> <span class="ot">=</span> ci_upper</span>
+<span id="cb16-311"><a href="#cb16-311" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb16-312"><a href="#cb16-312" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"REML cross-check (metafor::rma.mv, homoscedastic)."</span></span>
+<span id="cb16-313"><a href="#cb16-313" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb16-314"><a href="#cb16-314" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-315"><a href="#cb16-315" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-316"><a href="#cb16-316" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-317"><a href="#cb16-317" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reproduce the cached outputs</span></span>
+<span id="cb16-318"><a href="#cb16-318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-319"><a href="#cb16-319" aria-hidden="true" tabindex="-1"></a>Normal book renders read the small draw caches under <span class="in">`Rdata/epred_draws/`</span>. The</span>
+<span id="cb16-320"><a href="#cb16-320" aria-hidden="true" tabindex="-1"></a>fits themselves are run on Totoro:</span>
+<span id="cb16-321"><a href="#cb16-321" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-322"><a href="#cb16-322" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb16-323"><a href="#cb16-323" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Fit the specification grid (four models, parallel)</span></span>
+<span id="cb16-324"><a href="#cb16-324" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> remote_run_small_study_brms_parallel.sh</span>
+<span id="cb16-325"><a href="#cb16-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-326"><a href="#cb16-326" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Build the small draw caches from the fits that converged</span></span>
+<span id="cb16-327"><a href="#cb16-327" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> remote_precompute_small_study_brms_cache.R</span>
+<span id="cb16-328"><a href="#cb16-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-329"><a href="#cb16-329" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Copy the caches into the book mirror</span></span>
+<span id="cb16-330"><a href="#cb16-330" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> totoro:<span class="st">'~/Documents/PACE/outputs/epred_draws/small_study_*.rds'</span> Rdata/epred_draws/</span>
+<span id="cb16-331"><a href="#cb16-331" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-332"><a href="#cb16-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-333"><a href="#cb16-333" aria-hidden="true" tabindex="-1"></a>To regenerate the REML cross-check locally:</span>
+<span id="cb16-334"><a href="#cb16-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-335"><a href="#cb16-335" aria-hidden="true" tabindex="-1"></a><span class="in">```{r reproduce, eval=FALSE}</span></span>
+<span id="cb16-336"><a href="#cb16-336" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"chapters"</span>, <span class="st">"Rscripts"</span>, <span class="st">"00_packages.R"</span>))</span>
+<span id="cb16-337"><a href="#cb16-337" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"chapters"</span>, <span class="st">"Rscripts"</span>, <span class="st">"20_small_study_effects.R"</span>))</span>
+<span id="cb16-338"><a href="#cb16-338" aria-hidden="true" tabindex="-1"></a><span class="fu">run_small_study_analysis</span>()</span>
+<span id="cb16-339"><a href="#cb16-339" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

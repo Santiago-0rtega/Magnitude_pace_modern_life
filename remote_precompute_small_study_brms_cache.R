@@ -39,9 +39,11 @@ dat_es <- apply_phylo_name_map(dat_es, name_map) |>
     is.finite(n1), n1 > 0, is.finite(n2), n2 > 0
   ) |>
   dplyr::mutate(
-    n0 = (n1 * n2) / (n1 + n2),
-    n_se = 1 / sqrt(n0),
-    n_v = 1 / n0,
+    # Half harmonic-mean sample size: n0_tilde = n0 / 2, where the harmonic
+    # mean is n0 = 2 * n1 * n2 / (n1 + n2).
+    n0_tilde = (n1 * n2) / (n1 + n2),
+    n_se = 1 / sqrt(n0_tilde),
+    n_v = 1 / n0_tilde,
     es_id_model = factor(seq_len(dplyr::n()))
   )
 dat_model <- prepare_phylo_and_data(dat_es, A_full, label = "small_study")$dat_model
@@ -90,11 +92,13 @@ build_small_study_cache <- function(fit, id, label, moderator, scale_label,
 }
 
 # ── Specs ────────────────────────────────────────────────────────────────────
+# Predictors are built from the half harmonic-mean sample size,
+# n0_tilde = n0 / 2 = (n1 * n2) / (n1 + n2), following Nakagawa et al. (2022).
 specs <- list(
   list(id = "n_se_sigmax", moderator = "n_se",
-       label = "1 / sqrt(n0)", scale_label = "sigma ~ n_se"),
+       label = "1 / sqrt(n0_tilde)", scale_label = "sigma ~ n_se"),
   list(id = "n_v_sigma1", moderator = "n_v",
-       label = "1 / n0", scale_label = "sigma ~ 1")
+       label = "1 / n0_tilde", scale_label = "sigma ~ 1")
 )
 
 for (s in specs) {
