@@ -27,13 +27,13 @@
 #
 #   Rscript precompute_heterogeneity.R
 
-setwd(if (dir.exists("/home/ortegara/Documents/PACE"))
-        "/home/ortegara/Documents/PACE" else getwd())
+setwd(here::here())
+source(here::here("chapters", "Rscripts", "01_paths.R"))
 suppressMessages({ library(brms); library(dplyr); library(tibble); library(readr) })
 
-model_dir  <- file.path("outputs", "models")
-tables_dir <- file.path("outputs", "tables")
-summ_dir   <- file.path("outputs", "summaries")
+model_dir  <- dir_out("models")
+tables_dir <- dir_out("tables")
+summ_dir   <- dir_out("summaries")
 dir.create(tables_dir, showWarnings = FALSE, recursive = TRUE)
 dir.create(summ_dir,   showWarnings = FALSE, recursive = TRUE)
 
@@ -115,4 +115,4 @@ saveRDS(list(I2 = het_tbl, components = meta, Vbar = Vbar,
              built = Sys.time()),
         file.path(summ_dir, "heterogeneity_m00.rds"))
 
-cat("\nSaved: outputs/tables/heterogeneity_m00.csv\n")
+cat("\nSaved:", dir_out("tables", "heterogeneity_m00.csv"), "\n")

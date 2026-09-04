@@ -15,20 +15,19 @@
 #
 #   Rscript precompute_grid_summaries.R
 
-setwd(if (dir.exists("/home/ortegara/Documents/PACE"))
-        "/home/ortegara/Documents/PACE" else getwd())
-suppressMessages({ library(brms); library(dplyr); library(tibble); library(readr); library(purrr) })
-source(file.path("R", "00_packages.R"))
-source(file.path("R", "01_paths.R"))
-source(file.path("R", "06_model_registry.R"))
-source(file.path("R", "09_model_summaries.R"))
-source(file.path("R", "10_model_diagnostics.R"))
+setwd(here::here())
+suppressMessages({ library(dplyr); library(tibble); library(readr); library(purrr) })
+source(here::here("chapters", "Rscripts", "00_packages_fit.R"))
+source(here::here("chapters", "Rscripts", "01_paths.R"))
+source(here::here("chapters", "Rscripts", "06_model_registry.R"))
+source(here::here("chapters", "Rscripts", "09_model_summaries.R"))
+source(here::here("chapters", "Rscripts", "10_model_diagnostics.R"))
 
-model_dir  <- file.path("outputs", "models")
-tables_dir <- file.path("outputs", "tables")
+model_dir  <- dir_out("models")
+tables_dir <- dir_out("tables")
 dir.create(tables_dir, showWarnings = FALSE, recursive = TRUE)
 
-dat_es <- readRDS(file.path("outputs", "effect_sizes", "proceed_lnm_safe.rds"))
+dat_es <- readRDS(dir_out("effect_sizes", "proceed_lnm_safe.rds"))
 
 # Candidate rds per model_id (prefer the *_v2 refit, fall back to base) —
 # mirrors the per-model chapter / epred-cache resolution.

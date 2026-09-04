@@ -117,14 +117,34 @@ Run the work in this order:
 6. Run the precompute scripts in Step 5 below.
 7. [Create the publication figures](08_publication_figures.qmd).
 
+The fitting scripts live in the project root and run from it. Each one loads the
+fitting toolchain through `chapters/Rscripts/00_packages_fit.R` and resolves
+every path with `here::here()`, so no path editing is needed:
+
+```bash
+Rscript remote_rebuild_safe.R
+Rscript run_model_grid.R
+Rscript run_sensitivity.R
+Rscript aggregate_sensitivity.R
+```
+
+`remote_rebuild_safe.R` rebuilds the cleaned data and the SAFE lnM effect sizes.
+`run_model_grid.R` fits the moderator grid; `run_model_grid_m07plus.R` and the
+single-model `run_m*.R` scripts refit individual models. Fitting the full grid
+takes many hours and needs roughly 400 MB of disk per model.
+
 The rendered book is read-only. Rebuild large files with the analysis scripts,
 not during a normal book render.
 
 ## Step 5 — Prepare small files for the book
 
-The compute server uses `outputs/` as its working output folder. The web book
-uses `Rdata/` as its local, read-only mirror. After fitting models, run these
-scripts from the compute-project root and in this order:
+Every script builds its output paths with `dir_out()`, defined once in
+`chapters/Rscripts/01_paths.R`. It writes to `Rdata/` by default, so a local run
+puts files where the book already reads them and no copying is needed. To send
+output somewhere else, set `options(pace.out_root = "outputs")` before sourcing
+`01_paths.R`.
+
+After fitting models, run these scripts from the project root in this order:
 
 ```bash
 Rscript chapters/Rscripts/precompute_grid_summaries.R
@@ -136,7 +156,8 @@ Rscript chapters/Rscripts/precompute_heterogeneity.R
 These scripts convert large fitted models into small tables and prediction
 files.
 
-Copy the completed folders from the compute server to the matching book paths:
+A local run needs no copying. If the models were fitted on a separate compute
+server that writes to `outputs/`, copy the completed folders across instead:
 
 | Compute server | Web-book project |
 |---|---|
@@ -146,7 +167,13 @@ Copy the completed folders from the compute server to the matching book paths:
 | `outputs/figures/` | `Rdata/figures/` |
 
 Replace the matching files in `Rdata/` only after every compute script finishes.
-The model chapters read the copied files; they never read `outputs/`.
+
+::: {.callout-note title="Fitted models are not in the repository"}
+`.gitignore` excludes every `.rds` file, so a fresh clone contains the raw data,
+all scripts, and the small CSV and figure outputs, but none of the fitted models
+or cached draws. Take the quick route only if you already hold a copy of
+`Rdata/`; otherwise use the full route and refit.
+:::
 
 ## Step 6 — Render the web book
 

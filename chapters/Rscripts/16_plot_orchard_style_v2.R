@@ -42,25 +42,32 @@ apply_labels <- function(x, lbl_map) {
 }
 
 get_level_estimates <- function(fit, moderator) {
-  fe    <- brms::fixef(fit)
-  beta  <- fe[, "Estimate"]
-  lower <- fe[, "Q2.5"]
-  upper <- fe[, "Q97.5"]
-  intercept    <- beta["Intercept"]
-  intercept_lo <- lower["Intercept"]
-  intercept_hi <- upper["Intercept"]
-  pat  <- paste0("^", moderator)
-  rows <- grep(pat, names(beta))
+  # Credible intervals must come from quantiles of the joint posterior draws
+  # of (Intercept + coefficient), not from adding the separately-computed
+  # Q2.5/Q97.5 of each term. brms::fixef() intervals ignore the (typically
+  # negative) posterior covariance between the intercept and factor-level
+  # coefficients, so naive addition roughly doubles the interval width. This
+  # mirrors the draw-level approach already used for the scale submodel in
+  # precompute_emmeans_contrasts.R::sigma_contrasts().
+  draws     <- brms::as_draws_df(fit)
   ref_level <- levels(factor(fit$data[[moderator]]))[1]
-  out <- tibble::tibble(level = ref_level, estimate = intercept,
-                        lowerCL = intercept_lo, upperCL = intercept_hi)
-  for (r in rows) {
-    lvl <- sub(pat, "", names(beta)[r])
+  pat       <- paste0("^b_", moderator)
+  coef_cols <- grep(pat, names(draws), value = TRUE)
+  cri       <- function(d) unname(quantile(d, c(0.025, 0.975)))
+
+  int_draws <- draws[["b_Intercept"]]
+  h0 <- cri(int_draws)
+  out <- tibble::tibble(level = ref_level, estimate = mean(int_draws),
+                        lowerCL = h0[1], upperCL = h0[2])
+  for (col in coef_cols) {
+    lvl <- sub(pat, "", col)
+    d   <- int_draws + draws[[col]]
+    h   <- cri(d)
     out <- dplyr::bind_rows(out, tibble::tibble(
       level    = lvl,
-      estimate = intercept + beta[r],
-      lowerCL  = intercept + lower[r],
-      upperCL  = intercept + upper[r]))
+      estimate = mean(d),
+      lowerCL  = h[1],
+      upperCL  = h[2]))
   }
   out
 }

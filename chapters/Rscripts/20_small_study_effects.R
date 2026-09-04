@@ -11,10 +11,7 @@ prepare_small_study_data <- function(
     phylogeny_script = NULL) {
 
   if (is.null(phylogeny_script)) {
-    candidates <- c(
-      here::here("chapters", "Rscripts", "05_phylogeny.R"),
-      here::here("R", "05_phylogeny.R")
-    )
+    candidates <- here::here("chapters", "Rscripts", "05_phylogeny.R")
     phylogeny_script <- candidates[file.exists(candidates)][1]
   }
   if (is.na(phylogeny_script) || !file.exists(phylogeny_script)) {

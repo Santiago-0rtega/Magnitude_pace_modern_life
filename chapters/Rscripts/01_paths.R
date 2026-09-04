@@ -1,15 +1,21 @@
+# Single source of truth for the derived-output tree. Every script builds its
+# output paths through dir_out(), so the directory name is changed in one place
+# instead of in a hundred literal here::here("Rdata", ...) calls. Override with
+# options(pace.out_root = "somewhere_else") before sourcing this file.
+dir_out <- function(...) here::here(getOption("pace.out_root", "Rdata"), ...)
+
 dir_data        <- here::here("data")
-dir_data_clean  <- here::here("Rdata", "data_clean")
-dir_effect_sizes <- here::here("Rdata", "effect_sizes")
-dir_phylogeny   <- here::here("Rdata", "phylogeny")
-dir_models      <- here::here("Rdata", "models")
-dir_models_sens <- here::here("Rdata", "models", "sensitivity")
-dir_diagnostics <- here::here("Rdata", "diagnostics")
-dir_tables      <- here::here("Rdata", "tables")
-dir_tables_sens <- here::here("Rdata", "tables", "sensitivity")
-dir_fig_pdf     <- here::here("Rdata", "figures", "pdf")
-dir_fig_png     <- here::here("Rdata", "figures", "png")
-dir_fig_jpg     <- here::here("Rdata", "figures", "jpg")
+dir_data_clean  <- dir_out("data_clean")
+dir_effect_sizes <- dir_out("effect_sizes")
+dir_phylogeny   <- dir_out("phylogeny")
+dir_models      <- dir_out("models")
+dir_models_sens <- dir_out("models", "sensitivity")
+dir_diagnostics <- dir_out("diagnostics")
+dir_tables      <- dir_out("tables")
+dir_tables_sens <- dir_out("tables", "sensitivity")
+dir_fig_pdf     <- dir_out("figures", "pdf")
+dir_fig_png     <- dir_out("figures", "png")
+dir_fig_jpg     <- dir_out("figures", "jpg")
 
 dirs_all <- c(
   dir_data_clean, dir_effect_sizes, dir_phylogeny,

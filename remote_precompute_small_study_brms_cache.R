@@ -12,27 +12,27 @@
 # remote_fit_one_small_study_brms.R are listed. Add n_se_sigma1 / n_v_sigmax
 # here once their extended refits pass.
 
-setwd(if (dir.exists("/home/ortegara/Documents/PACE"))
-        "/home/ortegara/Documents/PACE" else getwd())
+setwd(here::here())
+source(here::here("chapters", "Rscripts", "01_paths.R"))
 suppressMessages({
   library(brms); library(tidybayes); library(dplyr); library(tibble); library(here)
 })
-source(file.path("R", "14_epred_cache.R"))
-source(file.path("R", "05_phylogeny.R"))
+source(here::here("chapters", "Rscripts", "14_epred_cache.R"))
+source(here::here("chapters", "Rscripts", "05_phylogeny.R"))
 
 force_all <- nzchar(Sys.getenv("FORCE"))
-model_dir <- file.path("outputs", "models")
-cache_dir <- file.path("outputs", "epred_draws")
-diag_dir  <- file.path("outputs", "tables", "small_study_brms")
+model_dir <- dir_out("models")
+cache_dir <- dir_out("epred_draws")
+diag_dir  <- dir_out("tables", "small_study_brms")
 dir.create(cache_dir, showWarnings = FALSE, recursive = TRUE)
 
 # ── Model data ───────────────────────────────────────────────────────────────
 # Rebuilt with the same pipeline as remote_fit_one_small_study_brms.R so the
 # bubble overlay can carry vi_lnM_safe, which the fits themselves do not store
 # as a column (sampling variance enters through the es_id_model V matrix).
-dat_es <- readRDS(here::here("outputs", "effect_sizes", "proceed_lnm_safe.rds"))
-A_full <- readRDS(here::here("outputs", "phylogeny", "proceed_A_matrix.rds"))
-name_map <- readRDS(here::here("outputs", "phylogeny", "proceed_name_map.rds"))
+dat_es <- readRDS(dir_out("effect_sizes", "proceed_lnm_safe.rds"))
+A_full <- readRDS(dir_out("phylogeny", "proceed_A_matrix.rds"))
+name_map <- readRDS(dir_out("phylogeny", "proceed_name_map.rds"))
 dat_es <- apply_phylo_name_map(dat_es, name_map) |>
   dplyr::filter(
     is.finite(yi_lnM_safe), is.finite(vi_lnM_safe), vi_lnM_safe > 0,

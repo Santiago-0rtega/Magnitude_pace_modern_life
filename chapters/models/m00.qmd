@@ -59,6 +59,36 @@ The intercept-only model estimates the overall mean lnM and the baseline residua
 print_cache_summary(cache)
 ```
 
+::: {.callout-note title="Reading the scale-model intercept: log(σ), not σ"}
+The model summary reports the scale-model intercept on the log-$\sigma$
+scale, because the `brms` model uses `Links: mu = identity; sigma = log`. The
+summary therefore gives
+
+$$
+\beta_{\mathrm{Overall}}^{(s)} = -0.59,
+$$
+
+which is really $\log(\sigma) = -0.59$, not $\sigma$ itself.
+
+The orchard plot below explicitly back-transforms that coefficient with
+`exp()` before plotting it:
+
+$$
+\sigma = \exp(-0.59) \approx 0.55.
+$$
+
+The plotting code confirms this directly (`sig_est <- exp(fe["sigma_Intercept", "Estimate"])`),
+and the scale panel's x-axis is labelled "residual lnM (SD)", not log-sigma.
+
+So the positive value shown in the orchard plot's scale panel is not a
+residual $\ln M$ effect size, and it is not showing logged residuals. It is
+the residual standard deviation of $\ln M$ — $\sigma$ — on its natural
+scale. Because a standard deviation cannot be negative, it appears positive
+even though the corresponding row in the summary table above is negative.
+This applies to every scale-submodel coefficient in this book, not only the
+intercept.
+:::
+
 ## Main result in equivalent-d units
 
 The overall posterior mean is shown on the $\ln M$ scale and as

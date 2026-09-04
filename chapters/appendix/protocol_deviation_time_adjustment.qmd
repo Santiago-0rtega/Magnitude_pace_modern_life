@@ -1,0 +1,257 @@
+---
+title: "Protocol deviation — moderators adjusted for elapsed time"
+---
+
+## Recorded change
+
+This chapter was **not** part of the pre-registered protocol. It was added in
+response to reviewer feedback (Lucas Damián Gorné) questioning whether the
+primary moderators (`disturbance`, `design`, `trait_type`, `genphen`) were
+analysed one at a time without adjusting for elapsed time, and whether the
+reported effects could partly reflect uneven elapsed-time coverage across
+moderator levels rather than the moderator itself.
+
+::: {.callout-note title="What changed—and what did not"}
+**Changed:** for each of the four primary moderators, we fitted an additive
+location-scale model that adds elapsed time (`log10_years`, and separately
+`log10_generations`) as a second main-effect term, with **no interaction**.
+This adjusts each moderator's estimate for the average elapsed-time
+difference between its levels, without letting the time slope itself vary
+by level.
+
+**Unchanged:** the dataset, the moderator definitions, the `ref_id` and
+phylogenetic random effects, the priors, and the MCMC settings all match the
+primary single-moderator models.
+:::
+
+This produces eight models: four moderators × two elapsed-time scales.
+
+## Moderator–time relationships
+
+The plots below motivate the check: they show how elapsed time is
+distributed across the levels of each moderator. Uneven coverage (e.g. one
+level skewing toward longer elapsed time) is exactly the pattern that would
+let a moderator effect and a time effect be confounded.
+
+```{r setup}
+source(here::here("chapters", "Rscripts", "00_packages.R"))
+
+dat_es <- readRDS(here::here("Rdata", "effect_sizes", "proceed_lnm_safe.rds"))
+
+moderator_labels <- c(
+  disturbance = "Disturbance context",
+  design      = "Comparison design",
+  trait_type  = "Trait type",
+  genphen     = "Phenotypic vs. genetic"
+)
+
+theme_deviation <- function(base_size = 13) {
+  ggplot2::theme_classic(base_size = base_size) +
+    ggplot2::theme(
+      strip.background = ggplot2::element_blank(),
+      strip.text        = ggplot2::element_text(face = "bold"),
+      axis.text.x       = ggplot2::element_text(angle = 30, hjust = 1),
+      panel.grid.major.y = ggplot2::element_line(colour = "grey92"),
+      plot.title        = ggplot2::element_text(face = "bold")
+    )
+}
+
+make_time_panel <- function(dat, timevar, timelabel) {
+  long_dat <- purrr::map_dfr(names(moderator_labels), function(m) {
+    dat |>
+      dplyr::filter(!is.na(.data[[m]]), !is.na(.data[[timevar]])) |>
+      dplyr::transmute(
+        moderator_label = moderator_labels[[m]],
+        level = as.character(.data[[m]]),
+        time_value = .data[[timevar]]
+      )
+  })
+
+  ggplot2::ggplot(long_dat, ggplot2::aes(x = level, y = time_value)) +
+    ggplot2::geom_boxplot(fill = "grey85", outlier.alpha = 0.35, width = 0.6) +
+    ggplot2::facet_wrap(~moderator_label, scales = "free_x", nrow = 2) +
+    ggplot2::labs(x = NULL, y = timelabel) +
+    theme_deviation()
+}
+```
+
+```{r plot-years, fig.width=11, fig.height=8, fig.cap="Elapsed years (log10 scale) across the levels of each primary moderator."}
+make_time_panel(dat_es, "log10_years", expression(log[10]("elapsed years")))
+```
+
+```{r plot-generations, fig.width=11, fig.height=8, fig.cap="Elapsed generations (log10 scale) across the levels of each primary moderator."}
+make_time_panel(dat_es, "log10_generations", expression(log[10]("elapsed generations")))
+```
+
+## Model specification
+
+Models were fitted on `totoro`, not while rendering this book, using the same
+priors and MCMC settings as the primary models: 4 chains × 4,000 iterations
+(2,000 warmup), `adapt_delta = 0.97`, `max_treedepth = 15`, `cmdstanr` backend.
+
+```{r how-fit, eval=FALSE}
+loc_formula <- as.formula(paste0(
+  "yi_lnM_safe ~ ", moderator, " + ", timevar,
+  " + (1 | ref_id) + (1 | gr(sp_ncbi_canonical, cov = A))",
+  " + (1 | gr(es_id_model, cov = V))"
+))
+scl_formula <- as.formula(paste0("sigma ~ ", moderator, " + ", timevar))
+
+formula_add <- brms::bf(loc_formula, scl_formula)
+fit_add <- brms::brm(
+  formula = formula_add, data = dat_model, data2 = list(A = A_mod, V = V),
+  prior = priors_add, chains = 4, iter = 4000, warmup = 2000, cores = 4,
+  backend = "cmdstanr", control = list(adapt_delta = 0.97, max_treedepth = 15)
+)
+```
+
+## Convergence diagnostics
+
+```{r diagnostics}
+diag_tbl <- readr::read_csv(
+  here::here("Rdata", "tables", "additive_diagnostics.csv"),
+  show_col_types = FALSE
+)
+knitr::kable(
+  diag_tbl,
+  col.names = c("Model", "Moderator", "Elapsed-time variable", "Max Rhat",
+               "Min Bulk ESS", "Min Tail ESS", "Divergent transitions",
+               "Max-treedepth hits"),
+  digits = 3,
+  caption = "Convergence diagnostics for the eight additive (moderator + time) models."
+)
+```
+
+## Model summaries
+
+```{r summaries-setup, include=FALSE}
+additive_summaries <- readRDS(here::here("Rdata", "summaries", "additive_summaries.rds"))
+```
+
+::: {.panel-tabset}
+
+### disturbance + years
+
+```{r summary-disturbance-years, echo=FALSE}
+writeLines(additive_summaries[["disturbance_plus_log10_years"]])
+```
+
+### disturbance + generations
+
+```{r summary-disturbance-generations, echo=FALSE}
+writeLines(additive_summaries[["disturbance_plus_log10_generations"]])
+```
+
+### design + years
+
+```{r summary-design-years, echo=FALSE}
+writeLines(additive_summaries[["design_plus_log10_years"]])
+```
+
+### design + generations
+
+```{r summary-design-generations, echo=FALSE}
+writeLines(additive_summaries[["design_plus_log10_generations"]])
+```
+
+### trait_type + years
+
+```{r summary-trait-years, echo=FALSE}
+writeLines(additive_summaries[["trait_type_plus_log10_years"]])
+```
+
+### trait_type + generations
+
+```{r summary-trait-generations, echo=FALSE}
+writeLines(additive_summaries[["trait_type_plus_log10_generations"]])
+```
+
+### genphen + years
+
+```{r summary-genphen-years, echo=FALSE}
+writeLines(additive_summaries[["genphen_plus_log10_years"]])
+```
+
+### genphen + generations
+
+```{r summary-genphen-generations, echo=FALSE}
+writeLines(additive_summaries[["genphen_plus_log10_generations"]])
+```
+
+:::
+
+## Orchard-style figures
+
+Each figure shows the focal moderator's location (top) and scale (bottom)
+estimates from its additive model, with elapsed time held at its dataset
+mean. Points and beeswarm markers are on the same scale as the primary
+single-moderator orchard figures (see the model chapters); only the added
+time term differs.
+
+::: {.panel-tabset}
+
+### Disturbance
+
+```{r orchard-disturbance-years, fig.width=13, fig.height=12}
+knitr::include_graphics(here::here("Rdata", "figures", "publication",
+                                   "orchard_additive",
+                                   "disturbance_plus_log10_years_orchard_combined.png"))
+```
+
+```{r orchard-disturbance-generations, fig.width=13, fig.height=12}
+knitr::include_graphics(here::here("Rdata", "figures", "publication",
+                                   "orchard_additive",
+                                   "disturbance_plus_log10_generations_orchard_combined.png"))
+```
+
+### Design
+
+```{r orchard-design-years, fig.width=9, fig.height=10}
+knitr::include_graphics(here::here("Rdata", "figures", "publication",
+                                   "orchard_additive",
+                                   "design_plus_log10_years_orchard_combined.png"))
+```
+
+```{r orchard-design-generations, fig.width=9, fig.height=10}
+knitr::include_graphics(here::here("Rdata", "figures", "publication",
+                                   "orchard_additive",
+                                   "design_plus_log10_generations_orchard_combined.png"))
+```
+
+### Trait type
+
+```{r orchard-trait-years, fig.width=13, fig.height=12}
+knitr::include_graphics(here::here("Rdata", "figures", "publication",
+                                   "orchard_additive",
+                                   "trait_type_plus_log10_years_orchard_combined.png"))
+```
+
+```{r orchard-trait-generations, fig.width=13, fig.height=12}
+knitr::include_graphics(here::here("Rdata", "figures", "publication",
+                                   "orchard_additive",
+                                   "trait_type_plus_log10_generations_orchard_combined.png"))
+```
+
+### Genphen
+
+```{r orchard-genphen-years, fig.width=9, fig.height=10}
+knitr::include_graphics(here::here("Rdata", "figures", "publication",
+                                   "orchard_additive",
+                                   "genphen_plus_log10_years_orchard_combined.png"))
+```
+
+```{r orchard-genphen-generations, fig.width=9, fig.height=10}
+knitr::include_graphics(here::here("Rdata", "figures", "publication",
+                                   "orchard_additive",
+                                   "genphen_plus_log10_generations_orchard_combined.png"))
+```
+
+:::
+
+::: {.callout-warning title="Read the diagnostics table before the figures above"}
+The disturbance and trait_type models did not meet the convergence criteria
+used elsewhere in this book (max Rhat ≤ 1.01, min ESS ≥ 400, divergent
+transitions ≤ 10), particularly with `log10_generations`. Their summaries and
+figures are shown here for transparency, but should not be read as reliable
+estimates. The design and genphen models converged cleanly.
+:::

@@ -8,14 +8,14 @@
 #
 # Heavy step (loads each ~400 MB fit + epreds); meant to run on totoro.
 
-setwd(if (dir.exists("/home/ortegara/Documents/PACE"))
-        "/home/ortegara/Documents/PACE" else getwd())
+setwd(here::here())
+source(here::here("chapters", "Rscripts", "01_paths.R"))
 suppressMessages({ library(brms); library(tidybayes); library(dplyr); library(tibble) })
-source(file.path("R", "14_epred_cache.R"))
+source(here::here("chapters", "Rscripts", "14_epred_cache.R"))
 
 force_all <- nzchar(Sys.getenv("FORCE"))
-model_dir <- file.path("outputs", "models")
-cache_dir <- file.path("outputs", "epred_draws")
+model_dir <- dir_out("models")
+cache_dir <- dir_out("epred_draws")
 dir.create(cache_dir, showWarnings = FALSE, recursive = TRUE)
 
 # id, kind, candidate fit files (first existing wins) + matching moderator,

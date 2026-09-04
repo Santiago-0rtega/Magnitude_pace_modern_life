@@ -1,0 +1,9 @@
+model_id,moderator,timevar,max_rhat,min_bulk_ess,min_tail_ess,n_divergent,max_treedepth_hits
+disturbance_plus_log10_years,disturbance,log10_years,1.0399544031792551,110.42234551307209,85.16777157804066,10,0
+disturbance_plus_log10_generations,disturbance,log10_generations,1.0490317061698065,83.72190533198282,36.600112480198476,35,0
+design_plus_log10_years,design,log10_years,1.0044999105241177,1957.1045068410115,3304.6214282288583,0,0
+design_plus_log10_generations,design,log10_generations,1.0037246588937851,1708.8731054910272,3037.8051512324096,0,0
+trait_type_plus_log10_years,trait_type,log10_years,1.0139990192777264,266.4704954179674,224.02371103662023,0,0
+trait_type_plus_log10_generations,trait_type,log10_generations,1.0655409591507807,52.1833149398977,81.76445908389047,2,0
+genphen_plus_log10_years,genphen,log10_years,1.0054729046269648,1436.4357024054957,2809.3528162578154,0,0
+genphen_plus_log10_generations,genphen,log10_generations,1.0053768011160744,1276.3621110158251,2639.2745326899235,0,0

@@ -67,6 +67,7 @@ book:
     - chapters/appendix/sensitivity_min_n.qmd
     - chapters/appendix/sensitivity_no_phylogeny.qmd
     - chapters/appendix/sensitivity_sys_id.qmd
+    - chapters/appendix/protocol_deviation_time_adjustment.qmd
 
 format:
   html:

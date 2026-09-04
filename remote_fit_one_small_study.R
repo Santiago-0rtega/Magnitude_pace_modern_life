@@ -3,15 +3,16 @@ if (length(args) != 1L || !args[[1]] %in% c("n_se", "n_v"))
   stop("Usage: Rscript remote_fit_one_small_study.R n_se|n_v")
 predictor <- args[[1]]
 
-setwd("/home/ortegara/Documents/PACE")
+setwd(here::here())
+source(here::here("chapters", "Rscripts", "01_paths.R"))
 library(here)
 library(dplyr)
 library(metafor)
-source(here::here("R", "05_phylogeny.R"))
+source(here::here("chapters", "Rscripts", "05_phylogeny.R"))
 
-dat <- readRDS(here::here("outputs", "effect_sizes", "proceed_lnm_safe.rds"))
-A_full <- readRDS(here::here("outputs", "phylogeny", "proceed_A_matrix.rds"))
-name_map <- readRDS(here::here("outputs", "phylogeny", "proceed_name_map.rds"))
+dat <- readRDS(dir_out("effect_sizes", "proceed_lnm_safe.rds"))
+A_full <- readRDS(dir_out("phylogeny", "proceed_A_matrix.rds"))
+name_map <- readRDS(dir_out("phylogeny", "proceed_name_map.rds"))
 
 dat <- apply_phylo_name_map(dat, name_map) |>
   filter(
@@ -39,7 +40,7 @@ fit <- metafor::rma.mv(
   method = "REML", test = "t", sparse = TRUE, data = dat
 )
 
-out_dir <- here::here("outputs", "small_study")
+out_dir <- dir_out("small_study")
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 saveRDS(list(n = nrow(dat), fit = fit), file.path(out_dir, paste0(predictor, ".rds")))
 

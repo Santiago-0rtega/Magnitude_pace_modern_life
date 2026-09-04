@@ -9,20 +9,20 @@ extended_refit <- identical(tolower(Sys.getenv("EXTENDED_REFIT", "false")), "tru
 artifact_suffix <- Sys.getenv("ARTIFACT_SUFFIX", "")
 artifact_id <- paste0(model_id, artifact_suffix)
 
-setwd("/home/ortegara/Documents/PACE")
+setwd(here::here())
 library(here)
-for (f in c("00_packages", "01_paths", "05_phylogeny", "07_model_formulas",
+for (f in c("00_packages_fit", "01_paths", "05_phylogeny", "07_model_formulas",
             "08_fit_or_read_model", "10_model_diagnostics")) {
-  source(here::here("R", paste0(f, ".R")))
+  source(here::here("chapters", "Rscripts", paste0(f, ".R")))
 }
 
 predictor <- if (startsWith(model_id, "n_se")) "n_se" else "n_v"
 sigma_predictor <- endsWith(model_id, "sigmax")
 model_name <- paste0("small_study_brms_", artifact_id)
 
-dat_es <- readRDS(here::here("outputs", "effect_sizes", "proceed_lnm_safe.rds"))
-A_full <- readRDS(here::here("outputs", "phylogeny", "proceed_A_matrix.rds"))
-name_map <- readRDS(here::here("outputs", "phylogeny", "proceed_name_map.rds"))
+dat_es <- readRDS(dir_out("effect_sizes", "proceed_lnm_safe.rds"))
+A_full <- readRDS(dir_out("phylogeny", "proceed_A_matrix.rds"))
+name_map <- readRDS(dir_out("phylogeny", "proceed_name_map.rds"))
 dat_es <- apply_phylo_name_map(dat_es, name_map) |>
   dplyr::filter(
     is.finite(yi_lnM_safe), is.finite(vi_lnM_safe), vi_lnM_safe > 0,
@@ -90,7 +90,7 @@ fit <- fit_or_read_model(
       mcmc_args = mcmc_args
     )
   },
-  model_dir = here::here("outputs", "models"),
+  model_dir = dir_out("models"),
   refit = TRUE
 )
 
@@ -98,7 +98,7 @@ diag <- extract_diagnostics(
   fit, artifact_id, predictor,
   max_treedepth = mcmc_args$control$max_treedepth
 )
-out_dir <- here::here("outputs", "tables", "small_study_brms")
+out_dir <- dir_out("tables", "small_study_brms")
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 readr::write_csv(diag, file.path(out_dir, paste0(artifact_id, "_diagnostics.csv")))
 

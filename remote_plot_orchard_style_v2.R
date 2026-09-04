@@ -1,16 +1,17 @@
-setwd("/home/ortegara/Documents/PACE")
+setwd(here::here())
+source(here::here("chapters", "Rscripts", "01_paths.R"))
 library(here)
 suppressPackageStartupMessages({
-  source(here::here("R", "00_packages.R"))
-  source(here::here("R", "06_model_registry.R"))
-  source(here::here("R", "09_model_summaries.R"))
+  source(here::here("chapters", "Rscripts", "00_packages_fit.R"))
+  source(here::here("chapters", "Rscripts", "06_model_registry.R"))
+  source(here::here("chapters", "Rscripts", "09_model_summaries.R"))
 })
 library(ggbeeswarm)
 
-out_dir <- here::here("outputs", "figures", "orchard")
+out_dir <- dir_out("figures", "orchard")
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 
-dat_es <- readRDS(here::here("outputs", "effect_sizes", "proceed_lnm_safe.rds"))
+dat_es <- readRDS(dir_out("effect_sizes", "proceed_lnm_safe.rds"))
 
 cb_cols <- c("#88CCEE","#CC6677","#DDCC77","#117733","#332288",
              "#AA4499","#44AA99","#999933","#882255","#661100",
@@ -233,7 +234,7 @@ if (length(orchard_model_ids) > 0) {
 }
 
 # ---- m00: intercept-only overall distribution --------------------------------
-m00_path <- here::here("outputs", "models", "m00_ls_intercept_only.rds")
+m00_path <- dir_out("models", "m00_ls_intercept_only.rds")
 if (file.exists(m00_path) &&
     (length(orchard_model_ids) == 0 || "m00" %in% orchard_model_ids)) {
   message("\n--- m00 (intercept-only) ---")
@@ -326,7 +327,7 @@ if (file.exists(m00_path) &&
 
 # ---- Main loop ---------------------------------------------------------------
 for (m in all_models) {
-  rds_path <- here::here("outputs", "models", paste0(m$file, ".rds"))
+  rds_path <- dir_out("models", paste0(m$file, ".rds"))
   if (!file.exists(rds_path)) {
     message("\nSkipping ", m$id, " — RDS not found")
     next

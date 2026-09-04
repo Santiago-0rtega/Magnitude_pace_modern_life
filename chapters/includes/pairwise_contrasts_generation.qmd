@@ -99,7 +99,7 @@ scale_contrasts <- dplyr::bind_rows(lapply(level_pairs, function(pair) {
 }))
 
 # Save the four tables used to build the shared cache.
-contrast_dir <- file.path("outputs", "tables", "contrasts")
+contrast_dir <- here::here("Rdata", "tables", "contrasts")
 dir.create(contrast_dir, recursive = TRUE, showWarnings = FALSE)
 readr::write_csv(loc_emmeans,
   file.path(contrast_dir, paste0(model_id, "_location_emmeans.csv")))

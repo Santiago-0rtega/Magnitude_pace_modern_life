@@ -1,11 +1,11 @@
-setwd("/home/ortegara/Documents/PACE")
+setwd(here::here())
 library(here)
-for (f in c("00_packages", "01_paths", "02_read_clean_data", "03_filters", "04_lnm_safe"))
-  source(here::here("R", paste0(f, ".R")))
+for (f in c("00_packages_fit", "01_paths", "02_read_clean_data", "03_filters", "04_lnm_safe"))
+  source(here::here("chapters", "Rscripts", paste0(f, ".R")))
 
-clean_path <- here::here("outputs", "data_clean", "proceed_clean_filtered.rds")
-es_path <- here::here("outputs", "effect_sizes", "proceed_lnm_safe.rds")
-diag_path <- here::here("outputs", "tables", "safe_lnm_diagnostics.csv")
+clean_path <- dir_out("data_clean", "proceed_clean_filtered.rds")
+es_path <- dir_out("effect_sizes", "proceed_lnm_safe.rds")
+diag_path <- dir_out("tables", "safe_lnm_diagnostics.csv")
 for (p in c(clean_path, es_path, diag_path))
   dir.create(dirname(p), recursive = TRUE, showWarnings = FALSE)
 

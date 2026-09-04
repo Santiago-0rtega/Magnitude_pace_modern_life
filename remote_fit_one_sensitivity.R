@@ -19,29 +19,29 @@ variant   <- args[[1]]
 moderator <- args[[2]]
 mname     <- paste0(variant, "_", moderator)
 
-setwd("/home/ortegara/Documents/PACE")
+setwd(here::here())
 suppressMessages({
   library(here)
-  for (f in c("00_packages","01_paths","05_phylogeny","06_model_registry",
+  for (f in c("00_packages_fit","01_paths","05_phylogeny","06_model_registry",
               "07_model_formulas","08_fit_or_read_model","09_model_summaries",
               "10_model_diagnostics"))
-    source(here::here("R", paste0(f, ".R")))
+    source(here::here("chapters", "Rscripts", paste0(f, ".R")))
 })
 options(pace.read_only = FALSE)
 refit_sensitivity <- identical(tolower(Sys.getenv("REFIT_SENSITIVITY", "false")), "true")
 
-model_dir <- here::here("outputs", "models", "sensitivity")
-part_dir  <- here::here("outputs", "tables", "sensitivity", "parts")
+model_dir <- dir_out("models", "sensitivity")
+part_dir  <- dir_out("tables", "sensitivity", "parts")
 dir.create(model_dir, recursive = TRUE, showWarnings = FALSE)
 dir.create(part_dir,  recursive = TRUE, showWarnings = FALSE)
 
 stamp <- function(...) message(format(Sys.time(), "%H:%M:%S"), "  [", mname, "] ", ...)
 
 # ── Data ─────────────────────────────────────────────────────────────────────
-dat_es   <- readRDS(here::here("outputs", "effect_sizes", "proceed_lnm_safe.rds"))
-A_full   <- tryCatch(readRDS(here::here("outputs", "phylogeny", "proceed_A_matrix.rds")),
+dat_es   <- readRDS(dir_out("effect_sizes", "proceed_lnm_safe.rds"))
+A_full   <- tryCatch(readRDS(dir_out("phylogeny", "proceed_A_matrix.rds")),
                      error = function(e) NULL)
-name_map <- tryCatch(readRDS(here::here("outputs", "phylogeny", "proceed_name_map.rds")),
+name_map <- tryCatch(readRDS(dir_out("phylogeny", "proceed_name_map.rds")),
                      error = function(e) NULL)
 if (!is.null(name_map)) {
   dat_es <- apply_phylo_name_map(dat_es, name_map)

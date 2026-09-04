@@ -24,17 +24,17 @@
 #
 #   Rscript precompute_emmeans_contrasts.R
 
-setwd(if (dir.exists("/home/ortegara/Documents/PACE"))
-        "/home/ortegara/Documents/PACE" else getwd())
+setwd(here::here())
+source(here::here("chapters", "Rscripts", "01_paths.R"))
 suppressMessages({
   library(brms); library(emmeans); library(dplyr); library(tibble); library(readr)
   library(coda)
 })
-source(file.path("R", "06_model_registry.R"))
+source(here::here("chapters", "Rscripts", "06_model_registry.R"))
 
-model_dir     <- file.path("outputs", "models")
-tables_dir    <- file.path("outputs", "tables", "contrasts")
-summ_dir      <- file.path("outputs", "summaries")
+model_dir     <- dir_out("models")
+tables_dir    <- dir_out("tables", "contrasts")
+summ_dir      <- dir_out("summaries")
 dir.create(tables_dir, showWarnings = FALSE, recursive = TRUE)
 dir.create(summ_dir,   showWarnings = FALSE, recursive = TRUE)
 
