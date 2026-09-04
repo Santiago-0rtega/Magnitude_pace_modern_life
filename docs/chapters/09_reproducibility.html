@@ -527,6 +527,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Sensitivity C — Study-system (sys_id) random effect</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix/protocol_deviation_time_adjustment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Protocol deviation — moderators adjusted for elapsed time</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -832,7 +838,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td style="text-align: left;">kableExtra</td>
-<td style="text-align: left;">1.4.0</td>
+<td style="text-align: left;">1.4.1</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">knitr</td>
@@ -933,7 +939,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  collate  English_Guernsey.utf8
  ctype    English_Guernsey.utf8
  tz       America/Edmonton
- date     2026-08-12
+ date     2026-09-04
  pandoc   3.10 @ C:/Users/zannt/AppData/Local/Pandoc/ (via rmarkdown)
  quarto   1.10.18 @ C:\\PROGRA~1\\Quarto\\bin\\quarto.exe
 
@@ -976,7 +982,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    httr2          * 1.2.3      2026-06-23 [1] CRAN (R 4.6.1)
    janitor        * 2.2.1      2024-12-22 [1] CRAN (R 4.6.1)
    jsonlite         2.0.0      2025-03-27 [1] CRAN (R 4.6.1)
-   kableExtra       1.4.0      2024-01-24 [1] CRAN (R 4.6.1)
+   kableExtra       1.4.1      2026-07-08 [1] CRAN (R 4.6.1)
    knitr            1.51       2025-12-20 [1] CRAN (R 4.6.1)
    later            1.4.8      2026-03-05 [1] CRAN (R 4.6.1)
    lattice          0.22-9     2026-02-09 [2] CRAN (R 4.6.1)
@@ -1069,7 +1075,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>CmdStan not available: CmdStan path has not been set yet. See ?set_cmdstan_path. </code></pre>
+<pre><code>CmdStan version: 2.39.0 </code></pre>
 </div>
 </div>
 </section>
@@ -1085,7 +1091,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Commit hash:"</span>, git_hash, <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Commit hash: 24f5705dc9ecbcc6c9ac03a8527f39c89bf1fb83 </code></pre>
+<pre><code>Commit hash: dad47b553cea24c9c12fade979db50c8d9796d9a </code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -1118,14 +1124,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  M ../Rdata/figures/pdf/m07_genphen_location_scale_combined.pdf
  M ../Rdata/figures/pdf/m07_genphen_scale.pdf
  M ../Rdata/figures/taxonomic_representation.pdf
- M 09_reproducibility.qmd
- M Rscripts/01_paths.R
- M Rscripts/20_small_study_effects.R
- M Rscripts/precompute_emmeans_contrasts.R
- M Rscripts/precompute_epred_draws.R
- M Rscripts/precompute_grid_summaries.R
- M Rscripts/precompute_heterogeneity.R
- M includes/pairwise_contrasts_generation.qmd
  D ../docs/.nojekyll
  D ../docs/Rdata/figures/publication/orchard/m00_orchard_combined.png
  D ../docs/Rdata/figures/publication/orchard/m01_orchard_combined.png
@@ -1135,6 +1133,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  D ../docs/Rdata/figures/publication/orchard/m05_orchard_combined.png
  D ../docs/Rdata/figures/publication/orchard/m07_orchard_combined.png
  D ../docs/Rdata/figures/publication/orchard/m08_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard_additive/design_plus_log10_generations_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard_additive/design_plus_log10_years_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard_additive/disturbance_plus_log10_generations_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard_additive/disturbance_plus_log10_years_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard_additive/genphen_plus_log10_generations_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard_additive/genphen_plus_log10_years_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard_additive/trait_type_plus_log10_generations_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard_additive/trait_type_plus_log10_years_orchard_combined.png
  D ../docs/chapters/01_data_preparation.html
  D ../docs/chapters/02_lnm_effect_sizes.html
  D ../docs/chapters/03_descriptive_summaries.html
@@ -1162,6 +1168,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  D ../docs/chapters/07b_small_study_effects_files/figure-html/scale-figure-1.png
  D ../docs/chapters/08_publication_figures.html
  D ../docs/chapters/09_reproducibility.html
+ D ../docs/chapters/appendix/protocol_deviation_time_adjustment.html
+ D ../docs/chapters/appendix/protocol_deviation_time_adjustment_files/figure-html/plot-generations-1.png
+ D ../docs/chapters/appendix/protocol_deviation_time_adjustment_files/figure-html/plot-years-1.png
  D ../docs/chapters/appendix/sensitivity_min_n.html
  D ../docs/chapters/appendix/sensitivity_no_phylogeny.html
  D ../docs/chapters/appendix/sensitivity_sys_id.html
@@ -1200,16 +1209,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  D ../docs/site_libs/quarto-search/fuse.min.js
  D ../docs/site_libs/quarto-search/quarto-search.js
  D ../docs/styles.css
- M ../remote_finalize_small_study.R
- M ../remote_fit_one_primary.R
- M ../remote_fit_one_sensitivity.R
- M ../remote_fit_one_small_study.R
- M ../remote_fit_one_small_study_brms.R
- M ../remote_plot_orchard_style_v2.R
- M ../remote_precompute_small_study_brms_cache.R
- M ../remote_rebuild_safe.R
- M ../remote_validate.R
-?? ../aggregate_sensitivity.R
 ?? 01_data_preparation.html
 ?? 02_lnm_effect_sizes.html
 ?? 03_descriptive_summaries.html
@@ -1223,7 +1222,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 ?? 07b_small_study_effects_files/
 ?? 08_publication_figures.html
 ?? 09_reproducibility.rmarkdown
-?? Rscripts/00_packages_fit.R
 ?? models/m00.html
 ?? models/m01.html
 ?? models/m02.html
@@ -1232,22 +1230,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 ?? models/m05.html
 ?? models/m07.html
 ?? ../index.html
-?? ../model_summaries_emmeans.R
-?? ../plot_finished_models.R
-?? ../plot_orchard_style.R
-?? ../remote_check_counts.R
-?? ../remote_refresh_recent_summaries.R
-?? ../run_m00_intercept_only.R
-?? ../run_m06b.R
-?? ../run_m06c.R
-?? ../run_m09b.R
-?? ../run_m10b.R
-?? ../run_m12.R
-?? ../run_m13.R
-?? ../run_model_grid.R
-?? ../run_model_grid_m07plus.R
-?? ../run_model_grid_m11.R
-?? ../run_sensitivity.R
 ?? ../site_libs/ </code></pre>
 </div>
 </div>
