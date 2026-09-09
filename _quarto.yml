@@ -6,7 +6,7 @@ project:
     - .nojekyll   # disable GitHub Pages Jekyll processing of the rendered site
 
 book:
-  title: "Environmental change leaves no universal signature of phenotypic divergence"
+  title: "Human disturbance and the magnitude and predictability of phenotypic separation"
   subtitle: "Supplementary material: a step-by-step reproducible analysis"
   author:
     - name: "Santiago Ortega"

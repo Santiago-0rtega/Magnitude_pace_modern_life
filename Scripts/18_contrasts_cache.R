@@ -150,7 +150,7 @@ format_scale_emmeans <- function(cache, digits = 3) {
 # knitr::kable wrapper that prints a placeholder instead of erroring on NULL.
 kable_contrasts <- function(df, caption = NULL, digits = 3) {
   if (is.null(df) || !nrow(df))
-    return(knitr::asis_output("_Contrast table unavailable — rebuild the cache on totoro._"))
+    return(knitr::asis_output("_Contrast table unavailable — rebuild the cache on the labs server (totoro)._"))
   sig <- if (".sig" %in% names(df)) df[[".sig"]] else rep(FALSE, nrow(df))
   df  <- df[, setdiff(names(df), ".sig"), drop = FALSE]     # hide the flag column
   kb  <- kableExtra::kbl(df, caption = caption, digits = digits, escape = FALSE) |>

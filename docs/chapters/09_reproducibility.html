@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>19&nbsp; Reproduce this analysis – Environmental change leaves no universal signature of phenotypic divergence</title>
+<title>19&nbsp; Reproduce this analysis – Human disturbance and the magnitude and predictability of phenotypic separation</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -310,10 +310,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">Environmental change leaves no universal signature of phenotypic divergence</a> 
+      <a href="../">Human disturbance and the magnitude and predictability of phenotypic separation</a> 
         <div class="sidebar-tools-main tools-wide">
     <a href="https://github.com/Santiago-0rtega/Magnitude_pace_modern_life" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="../Environmental-change-leaves-no-universal-signature-of-phenotypic-divergence.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="../Human-disturbance-and-the-magnitude-and-predictability-of-phenotypic-separation.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
     </div>
@@ -1097,7 +1097,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Commit hash:"</span>, git_hash, <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Commit hash: 887adf9f4eaeaba4a169119bce916a70160a7f02 </code></pre>
+<pre><code>Commit hash: 248c3c0a1821cd8888c591ef3a2789de3b525b38 </code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -1111,18 +1111,93 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Uncommitted changes:
   M ../Figures/m00_alluvial_coverage.pdf
  M ../Figures/m00_alluvial_disturbance_taxa_trait.pdf
- D ../Figures/publication/orchard/m09_orchard_combined.pdf
- D ../Figures/publication/orchard/m09_orchard_location.pdf
- D ../Figures/publication/orchard/m09_orchard_scale.pdf
- D ../Figures/publication/orchard/m10_orchard_combined.pdf
- D ../Figures/publication/orchard/m10_orchard_location.pdf
- D ../Figures/publication/orchard/m10_orchard_scale.pdf
- D ../Figures/publication/orchard/m11_orchard_combined.pdf
- D ../Figures/publication/orchard/m11_orchard_location.pdf
- D ../Figures/publication/orchard/m11_orchard_scale.pdf
+ M ../Figures/pdf/m01_disturbance_location.pdf
+ M ../Figures/pdf/m01_disturbance_location_scale_combined.pdf
+ M ../Figures/pdf/m01_disturbance_scale.pdf
+ M ../Figures/pdf/m02_design_location.pdf
+ M ../Figures/pdf/m02_design_location_scale_combined.pdf
+ M ../Figures/pdf/m02_design_scale.pdf
+ M ../Figures/pdf/m03_log10_years_location.pdf
+ M ../Figures/pdf/m03_log10_years_location_scale_combined.pdf
+ M ../Figures/pdf/m03_log10_years_scale.pdf
+ M ../Figures/pdf/m04_log10_generations_location.pdf
+ M ../Figures/pdf/m04_log10_generations_location_scale_combined.pdf
+ M ../Figures/pdf/m04_log10_generations_scale.pdf
+ M ../Figures/pdf/m05_trait_type_location.pdf
+ M ../Figures/pdf/m05_trait_type_location_scale_combined.pdf
+ M ../Figures/pdf/m05_trait_type_scale.pdf
+ M ../Figures/pdf/m07_genphen_location.pdf
+ M ../Figures/pdf/m07_genphen_location_scale_combined.pdf
+ M ../Figures/pdf/m07_genphen_scale.pdf
  M ../Figures/taxonomic_representation.pdf
+ M ../Scripts/14_epred_cache.R
+ M ../Scripts/18_contrasts_cache.R
+ M ../_quarto.yml
+ M 07b_small_study_effects.qmd
+ M appendix/protocol_deviation_leave_oke_out.qmd
+ M appendix/protocol_deviation_time_adjustment.qmd
+ M appendix/sensitivity_min_n.qmd
+ M appendix/sensitivity_no_phylogeny.qmd
+ M appendix/sensitivity_sys_id.qmd
  D ../docs/.nojekyll
+ D ../docs/Rdata/figures/publication/orchard/m00_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard/m01_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard/m02_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard/m03_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard/m04_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard/m05_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard/m07_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard/m08_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard_additive/design_plus_log10_generations_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard_additive/design_plus_log10_years_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard_additive/disturbance_plus_log10_generations_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard_additive/disturbance_plus_log10_years_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard_additive/genphen_plus_log10_generations_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard_additive/genphen_plus_log10_years_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard_additive/trait_type_plus_log10_generations_orchard_combined.png
+ D ../docs/Rdata/figures/publication/orchard_additive/trait_type_plus_log10_years_orchard_combined.png
+ D ../docs/chapters/01_data_preparation.html
+ D ../docs/chapters/02_lnm_effect_sizes.html
+ D ../docs/chapters/03_descriptive_summaries.html
+ D ../docs/chapters/03_descriptive_summaries_files/figure-html/dist-gen-1.png
+ D ../docs/chapters/03_descriptive_summaries_files/figure-html/dist-n-1.png
+ D ../docs/chapters/03_descriptive_summaries_files/figure-html/dist-vi-1.png
+ D ../docs/chapters/03_descriptive_summaries_files/figure-html/dist-years-1.png
+ D ../docs/chapters/03_descriptive_summaries_files/figure-html/dist-yi-1.png
+ D ../docs/chapters/03_descriptive_summaries_files/figure-html/donut-data-1.png
+ D ../docs/chapters/03_descriptive_summaries_files/figure-html/donut-design-disturbance-1.png
+ D ../docs/chapters/03_descriptive_summaries_files/figure-html/donut-trait-taxa-1.png
+ D ../docs/chapters/03_descriptive_summaries_files/figure-html/fig-m00-alluvial-coverage-1.png
+ D ../docs/chapters/03_descriptive_summaries_files/figure-html/fig-m00-alluvial-disturbance-taxa-trait-1.png
+ D ../docs/chapters/03_descriptive_summaries_files/figure-html/fig-taxonomic-representation-1.png
+ D ../docs/chapters/03b_moderator_associations.html
+ D ../docs/chapters/03b_moderator_associations_files/figure-html/categorical-plot-1.png
+ D ../docs/chapters/03b_moderator_associations_files/figure-html/continuous-plot-1.png
+ D ../docs/chapters/03b_moderator_associations_files/figure-html/mixed-plot-1.png
+ D ../docs/chapters/04_dependency_structure.html
+ D ../docs/chapters/04b_phylogeny.html
+ D ../docs/chapters/05_location_scale_model_grid.html
+ D ../docs/chapters/07_sensitivity_analyses.html
+ D ../docs/chapters/07b_small_study_effects.html
+ D ../docs/chapters/07b_small_study_effects_files/figure-html/figure-1.png
+ D ../docs/chapters/07b_small_study_effects_files/figure-html/scale-figure-1.png
+ D ../docs/chapters/08_publication_figures.html
+ D ../docs/chapters/09_reproducibility.html
  D ../docs/chapters/appendix/protocol_deviation_leave_oke_out.html
+ D ../docs/chapters/appendix/protocol_deviation_time_adjustment.html
+ D ../docs/chapters/appendix/protocol_deviation_time_adjustment_files/figure-html/plot-generations-1.png
+ D ../docs/chapters/appendix/protocol_deviation_time_adjustment_files/figure-html/plot-years-1.png
+ D ../docs/chapters/appendix/sensitivity_min_n.html
+ D ../docs/chapters/appendix/sensitivity_no_phylogeny.html
+ D ../docs/chapters/appendix/sensitivity_sys_id.html
+ D ../docs/chapters/models/m00.html
+ D ../docs/chapters/models/m01.html
+ D ../docs/chapters/models/m02.html
+ D ../docs/chapters/models/m03.html
+ D ../docs/chapters/models/m04.html
+ D ../docs/chapters/models/m05.html
+ D ../docs/chapters/models/m07.html
+ D ../docs/chapters/models/m08.html
  D ../docs/index.html
  D ../docs/search.json
  D ../docs/site_libs/bootstrap/bootstrap-531b922294e5101f6db3b3c5f1c89591.min.css
@@ -1150,8 +1225,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  D ../docs/site_libs/quarto-search/fuse.min.js
  D ../docs/site_libs/quarto-search/quarto-search.js
  D ../docs/styles.css
-?? ../Figures/pdf/
-?? ../Rdata/figures/png/
+ M ../index.qmd
+ M ../styles.css
+?? ../.claude/launch.json
 ?? 01_data_preparation.html
 ?? 02_lnm_effect_sizes.html
 ?? 03_descriptive_summaries.html

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Appendix F — Protocol deviation — leave-one-reference-out check: Oke et al.&nbsp;(2020) – Environmental change leaves no universal signature of phenotypic divergence</title>
+<title>Appendix F — Protocol deviation — leave-one-reference-out check: Oke et al.&nbsp;(2020) – Human disturbance and the magnitude and predictability of phenotypic separation</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -313,10 +313,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../../">Environmental change leaves no universal signature of phenotypic divergence</a> 
+      <a href="../../">Human disturbance and the magnitude and predictability of phenotypic separation</a> 
         <div class="sidebar-tools-main tools-wide">
     <a href="https://github.com/Santiago-0rtega/Magnitude_pace_modern_life" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="../../Environmental-change-leaves-no-universal-signature-of-phenotypic-divergence.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="../../Human-disturbance-and-the-magnitude-and-predictability-of-phenotypic-separation.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
     </div>
@@ -1153,7 +1153,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="model-specification" class="level2" data-number="F.5">
 <h2 data-number="F.5" class="anchored" data-anchor-id="model-specification"><span class="header-section-number">F.5</span> Model specification</h2>
-<p>Model m01 (<code>yi_lnM_safe ~ disturbance + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V))</code>, <code>sigma ~ disturbance</code>) was refit on the dataset with every Oke et al.&nbsp;(2020) contrast removed. The formula, priors, and MCMC settings are unchanged from the primary m01 fit: 4 chains × 4,000 iterations (2,000 warmup), <code>adapt_delta = 0.97</code>, <code>max_treedepth = 15</code>, <code>cmdstanr</code> backend. The model was fitted on <code>totoro</code>, not while rendering this book.</p>
+<p>Model m01 (<code>yi_lnM_safe ~ disturbance + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V))</code>, <code>sigma ~ disturbance</code>) was refit on the dataset with every Oke et al.&nbsp;(2020) contrast removed. The formula, priors, and MCMC settings are unchanged from the primary m01 fit: 4 chains × 4,000 iterations (2,000 warmup), <code>adapt_delta = 0.97</code>, <code>max_treedepth = 15</code>, <code>cmdstanr</code> backend. The model was fitted on the labs server (<code>totoro</code>), not while rendering this book.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -2607,7 +2607,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb15-164"><a href="#cb15-164" aria-hidden="true" tabindex="-1"></a>contrast removed. The formula, priors, and MCMC settings are unchanged from</span>
 <span id="cb15-165"><a href="#cb15-165" aria-hidden="true" tabindex="-1"></a>the primary m01 fit: 4 chains × 4,000 iterations (2,000 warmup),</span>
 <span id="cb15-166"><a href="#cb15-166" aria-hidden="true" tabindex="-1"></a><span class="in">`adapt_delta = 0.97`</span>, <span class="in">`max_treedepth = 15`</span>, <span class="in">`cmdstanr`</span> backend. The model was</span>
-<span id="cb15-167"><a href="#cb15-167" aria-hidden="true" tabindex="-1"></a>fitted on <span class="in">`totoro`</span>, not while rendering this book.</span>
+<span id="cb15-167"><a href="#cb15-167" aria-hidden="true" tabindex="-1"></a>fitted on the labs server (<span class="in">`totoro`</span>), not while rendering this book.</span>
 <span id="cb15-168"><a href="#cb15-168" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-169"><a href="#cb15-169" aria-hidden="true" tabindex="-1"></a><span class="in">```{r how-fit, eval=FALSE}</span></span>
 <span id="cb15-170"><a href="#cb15-170" aria-hidden="true" tabindex="-1"></a>dat_model <span class="ot">&lt;-</span> dat_es[<span class="sc">!</span><span class="fu">is.na</span>(dat_es[[<span class="st">"disturbance"</span>]]), ]</span>

@@ -150,7 +150,7 @@ read_epred_cache <- function(id, cache_dir) {
 # Print the cached summary as verbatim output, or a placeholder.
 print_cache_summary <- function(cache) {
   if (is.null(cache) || is.null(cache$summary_txt)) {
-    cat("Model not yet fitted — rebuild the cache once the totoro fit completes.\n")
+    cat("Model not yet fitted — rebuild the cache once the labs server (totoro) fit completes.\n")
   } else {
     writeLines(cache$summary_txt)
   }

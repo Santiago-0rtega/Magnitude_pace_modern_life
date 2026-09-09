@@ -33,7 +33,7 @@ if (length(missing_caches) > 0) {
   stop(
     "Small-study brms caches are missing: ",
     paste(missing_caches, collapse = ", "),
-    ". Fit on totoro with remote_run_small_study_brms_parallel.sh, build the ",
+    ". Fit on the labs server (totoro) with remote_run_small_study_brms_parallel.sh, build the ",
     "caches with remote_precompute_small_study_brms_cache.R, then copy them ",
     "into Rdata/epred_draws/.",
     call. = FALSE
@@ -206,22 +206,6 @@ knitr::kable(
 )
 ```
 
-```{r interpretation, results='asis'}
-slope <- cache_se$fixef["n_se", ]
-
-direction <- if (slope[["Estimate"]] > 0) "larger" else "smaller"
-evidence <- if (slope[["Q2.5"]] > 0 || slope[["Q97.5"]] < 0) {
-  "The 95% credible interval excludes zero, providing evidence of a small-study effect"
-} else {
-  "The 95% credible interval includes zero, so this analysis does not provide clear evidence of a small-study effect"
-}
-
-cat(sprintf(
-  "%s (slope = %.3f, 95%% CrI [%.3f, %.3f]). The fitted direction associates smaller effective samples with %s lnM estimates. This pattern should not, by itself, be labelled publication bias.\n",
-  evidence, slope[["Estimate"]], slope[["Q2.5"]], slope[["Q97.5"]], direction
-))
-```
-
 ## Diagnostic plot
 
 The two panels are constructed from the cached draws and joined with
@@ -317,7 +301,7 @@ if (is.null(crosscheck)) {
 ## Reproduce the cached outputs
 
 Normal book renders read the small draw caches under `Rdata/epred_draws/`. The
-fits themselves are run on Totoro:
+fits themselves are run on the labs server (`totoro`):
 
 ```bash
 # 1. Fit the specification grid (four models, parallel)

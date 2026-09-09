@@ -164,7 +164,7 @@ Model m01 (`yi_lnM_safe ~ disturbance + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)
 contrast removed. The formula, priors, and MCMC settings are unchanged from
 the primary m01 fit: 4 chains × 4,000 iterations (2,000 warmup),
 `adapt_delta = 0.97`, `max_treedepth = 15`, `cmdstanr` backend. The model was
-fitted on `totoro`, not while rendering this book.
+fitted on the labs server (`totoro`), not while rendering this book.
 
 ```{r how-fit, eval=FALSE}
 dat_model <- dat_es[!is.na(dat_es[["disturbance"]]), ]

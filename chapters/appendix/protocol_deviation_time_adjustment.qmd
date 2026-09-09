@@ -85,7 +85,7 @@ make_time_panel(dat_es, "log10_generations", expression(log[10]("elapsed generat
 
 ## Model specification
 
-Models were fitted on `totoro`, not while rendering this book, using the same
+Models were fitted on the labs server (`totoro`), not while rendering this book, using the same
 priors and MCMC settings as the primary models: 4 chains × 4,000 iterations
 (2,000 warmup), `adapt_delta = 0.97`, `max_treedepth = 15`, `cmdstanr` backend.
 
