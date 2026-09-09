@@ -3,7 +3,7 @@ title: "Transformation status"
 ---
 
 ```{r setup, include=FALSE}
-source(here::here("chapters", "Rscripts", "14_epred_cache.R"))
+source(here::here("Scripts", "14_epred_cache.R"))
 cache_dir <- here::here("Rdata", "epred_draws")
 cache     <- read_epred_cache("m10", cache_dir)
 ```
@@ -23,7 +23,7 @@ print_cache_summary(cache)
 Estimated marginal means and all pairwise level-vs-level contrasts for the location (mean lnM) and scale (residual heterogeneity) parts, read from the precomputed cache (`outputs/summaries/emmeans_contrasts_cache.rds`) — the full `brms` fit is never loaded at render.
 
 ```{r contrasts-setup, include=FALSE}
-source(here::here("chapters", "Rscripts", "18_contrasts_cache.R"))
+source(here::here("Scripts", "18_contrasts_cache.R"))
 cc <- read_contrasts_cache("m10")
 ```
 
@@ -50,7 +50,7 @@ knitr::include_graphics(
 ```
 ### Editable plotting code
 
-The figure above is actually built by `chapters/Rscripts/17_plot_orchard_from_epred_cache.R`, which reads the credible intervals for each transf_data_v2 level from `Rdata/summaries/emmeans_contrasts_cache.rds` (`emmeans::emmeans(fit, ~ transf_data_v2, epred = TRUE, re_formula = NA)`, i.e. quantiles of the joint posterior of `Intercept + coefficient`). The self-contained variant below is kept for portability; its `get_level_estimates()` now uses the same joint-posterior-draws approach rather than adding the separately-computed `Q2.5`/`Q97.5` of the intercept and the coefficient, which would ignore their posterior covariance and roughly double the interval width.
+The figure above is actually built by `Scripts/17_plot_orchard_from_epred_cache.R`, which reads the credible intervals for each transf_data_v2 level from `Rdata/summaries/emmeans_contrasts_cache.rds` (`emmeans::emmeans(fit, ~ transf_data_v2, epred = TRUE, re_formula = NA)`, i.e. quantiles of the joint posterior of `Intercept + coefficient`). The self-contained variant below is kept for portability; its `get_level_estimates()` now uses the same joint-posterior-draws approach rather than adding the separately-computed `Q2.5`/`Q97.5` of the intercept and the coefficient, which would ignore their posterior covariance and roughly double the interval width.
 
 ```{r build-orchard-m10, eval=FALSE}
 library(here)
@@ -67,7 +67,9 @@ moderator_label <- "Transformation status"
 label_map <- c("Untransformed" = "Untransformed (raw)", "Transformed" = "Transformed (ln / log10 / arcsin / resid / ord)")
 
 out_dir <- here::here("Rdata", "figures", "publication", "orchard")
+out_dir_pdf <- here::here("Figures", "publication", "orchard")
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
+dir.create(out_dir_pdf, recursive = TRUE, showWarnings = FALSE)
 
 dat_es <- readRDS(here::here("Rdata", "effect_sizes", "proceed_lnm_safe.rds"))
 fit <- readRDS(here::here("Rdata", "models", paste0(model_file, ".rds")))
@@ -173,7 +175,7 @@ get_pred_interval <- function(fit, moderator, levels_vec) {
 }
 
 save_plot <- function(p, stem, width = 9, height = 6) {
-  ggplot2::ggsave(file.path(out_dir, paste0(stem, ".pdf")), p,
+  ggplot2::ggsave(file.path(out_dir_pdf, paste0(stem, ".pdf")), p,
                   width = width, height = height, device = cairo_pdf)
   ggplot2::ggsave(file.path(out_dir, paste0(stem, ".png")), p,
                   width = width, height = height, dpi = 300, type = "cairo")

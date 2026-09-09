@@ -23,7 +23,7 @@ Continue to the next model chapter.
 
 
 ```{r setup, include=FALSE}
-source(here::here("chapters", "Rscripts", "14_epred_cache.R"))
+source(here::here("Scripts", "14_epred_cache.R"))
 cache_dir <- here::here("Rdata", "epred_draws")
 cache     <- read_epred_cache("m04", cache_dir)
 ```
@@ -67,7 +67,7 @@ prediction-scale summaries from the cached posterior draws; the regression
 slope itself is not transformed into an equivalent $d$.
 
 ```{r elapsed-generations-d-eq}
-source(here::here("chapters", "Rscripts", "18_contrasts_cache.R"))
+source(here::here("Scripts", "18_contrasts_cache.R"))
 kable_contrasts(
   format_continuous_d_eq(cache, unit = "Generations"),
   caption = "Predicted lnM and equivalent d at selected elapsed generations, with 95% credible intervals."
@@ -100,7 +100,9 @@ col_scale_light <- "#E69F00"
 col_scale_ribbon <- "#F2B27E"
 
 out_dir <- here::here("Rdata", "figures", "publication", "orchard")
+out_dir_pdf <- here::here("Figures", "publication", "orchard")
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
+dir.create(out_dir_pdf, recursive = TRUE, showWarnings = FALSE)
 
 dat_es <- readRDS(here::here("Rdata", "effect_sizes", "proceed_lnm_safe.rds"))
 cache <- readRDS(here::here("Rdata", "epred_draws", paste0(model_id, ".rds")))
@@ -120,7 +122,7 @@ theme_orchard <- function() {
 }
 
 save_plot <- function(p, stem, width = 8, height = 6) {
-  ggplot2::ggsave(file.path(out_dir, paste0(stem, ".pdf")), p,
+  ggplot2::ggsave(file.path(out_dir_pdf, paste0(stem, ".pdf")), p,
                   width = width, height = height, device = cairo_pdf)
   ggplot2::ggsave(file.path(out_dir, paste0(stem, ".png")), p,
                   width = width, height = height, dpi = 300, type = "cairo")

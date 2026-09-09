@@ -22,10 +22,10 @@ Prepare the model grid.
 :::
 
 ```{r setup}
-source(here::here("chapters", "Rscripts", "00_packages.R"))
-source(here::here("chapters", "Rscripts", "01_paths.R"))
-source(here::here("chapters", "Rscripts", "05_phylogeny.R"))
-source(here::here("chapters", "Rscripts", "15_render_guard.R"))   # read-only: never rebuild the phylogeny here
+source(here::here("Scripts", "00_packages.R"))
+source(here::here("Scripts", "01_paths.R"))
+source(here::here("Scripts", "05_phylogeny.R"))
+source(here::here("Scripts", "15_render_guard.R"))   # read-only: never rebuild the phylogeny here
 ```
 
 ## Role of the phylogenetic matrix
@@ -74,7 +74,7 @@ evolution (`prepR4pcm::pr_phylo_cor`, falling back to `ape::vcv.phylo` if
 unavailable).
 
 All of this logic lives in
-`chapters/Rscripts/05_phylogeny.R::build_or_read_phylogeny()`; this
+`Scripts/05_phylogeny.R::build_or_read_phylogeny()`; this
 chapter only *reads* the cached result — rebuilding it requires network access
 to Open Tree of Life and GNVerifier and is not done automatically on render.
 

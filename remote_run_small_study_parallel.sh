@@ -10,7 +10,7 @@ echo "$run_dir" > logs/current_small_study_dir.txt
 models=(n_se n_v)
 pids=()
 for model in "${models[@]}"; do
-  Rscript remote_fit_one_small_study.R "$model" >"$run_dir/${model}.log" 2>&1 &
+  Rscript Scripts/remote_fit_one_small_study.R "$model" >"$run_dir/${model}.log" 2>&1 &
   pids+=("$!")
 done
 
@@ -25,5 +25,5 @@ for i in "${!models[@]}"; do
 done
 
 [[ "$failed" -eq 0 ]] || exit 1
-Rscript remote_finalize_small_study.R >"$run_dir/finalize.log" 2>&1
+Rscript Scripts/remote_finalize_small_study.R >"$run_dir/finalize.log" 2>&1
 echo "COMPLETE: $run_dir" | tee -a "$run_dir/status.log"

@@ -1,0 +1,467 @@
+library(here)
+library(dplyr)
+library(ggplot2)
+library(purrr)
+library(stringr)
+library(tibble)
+library(ggbeeswarm)
+library(patchwork)
+
+out_dir <- here::here("Rdata", "figures", "publication", "orchard")
+out_dir_pdf <- here::here("Figures", "publication", "orchard")
+dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
+dir.create(out_dir_pdf, recursive = TRUE, showWarnings = FALSE)
+
+dat_es <- readRDS(here::here("Rdata", "effect_sizes", "proceed_lnm_safe.rds"))
+cache_dir <- here::here("Rdata", "epred_draws")
+summary_cache <- readRDS(here::here("Rdata", "summaries", "emmeans_contrasts_cache.rds"))
+if (!identical(attr(summary_cache, "summary_spec")$version, 2L)) {
+  stop("Legacy contrasts cache rejected; rebuild summary specification v2 first.")
+}
+
+model_ids <- Sys.getenv("ORCHARD_MODEL_IDS", unset = "")
+model_ids <- if (nzchar(model_ids)) {
+  stringr::str_split(model_ids, "\\s*,\\s*")[[1]]
+} else {
+  c("m00", "m01", "m02", "m03", "m04", "m05", "m07", "m08", "m11")
+}
+
+label_maps <- list(
+  m01 = c(
+    "Climate change" = "Climate change",
+    "Hunt_harv" = "Hunting / harvest",
+    "Introduction" = "Introduction",
+    "Landscape change" = "Landscape change",
+    "Other" = "Other (in situ natural variation)",
+    "Pollution" = "Pollution",
+    "Response to introductions" = "Response to introductions"
+  ),
+  m02 = c("Allochronic" = "Allochronic", "Synchronic" = "Synchronic"),
+  m05 = c(
+    "behavior" = "Behavior", "growth" = "Growth", "lifehistory" = "Life history",
+    "otherLH" = "Other life history", "othermorphology" = "Other morphology",
+    "phenology" = "Phenology", "physio" = "Physiology", "size" = "Size"
+  ),
+  m06 = c(
+    "Arthropod" = "Arthropod", "Bird" = "Bird", "Fish" = "Fish",
+    "Mammal" = "Mammal", "Mollusk" = "Mollusk", "Plant" = "Plant",
+    "Reptile" = "Reptile"
+  ),
+  m07 = c("Genetic" = "Genetic", "Phenotypic" = "Phenotypic"),
+  m08 = c("novel" = "Novel", "ongoing" = "Ongoing"),
+  m09 = c(
+    "area" = "Area", "count" = "Count", "cube (3D)" = "Cube (3D)",
+    "linear" = "Linear", "mass" = "Mass", "proportion" = "Proportion",
+    "rate" = "Rate", "time" = "Time", "volume" = "Volume"
+  ),
+  m10 = c(
+    "raw" = "Raw", "ln" = "ln", "log10" = "log10", "arcsin" = "arcsin",
+    "resid" = "Residuals", "ord" = "Ordinal", "other" = "Other transformed",
+    "Transformed" = "Transformed (ln / log10 / arcsin / resid / ord)"
+  ),
+  m11 = c("interval" = "Interval (arbitrary zero)", "ratio" = "Ratio (true zero)")
+)
+
+COL_LOCATION <- "#0072B2"
+COL_LOCATION_LIGHT <- "#88CCEE"
+COL_SCALE <- "#D55E00"
+COL_SCALE_LIGHT <- "#E69F00"
+COL_SCALE_RIBBON <- "#F2B27E"
+PRECISION_LABEL <- "Effect-size precision (1/SE)"
+PRECISION_GUIDE <- ggplot2::guide_legend(
+  override.aes = list(shape = 21, fill = "white", colour = "grey40", alpha = 1)
+)
+CATEGORY_COLS <- c(
+  "#0072B2", "#D55E00", "#009E73", "#CC79A7", "#E69F00",
+  "#56B4E9", "#6A3D9A", "#999999", "#000000"
+)
+
+# Approximate large-sample conversion used in the original orchard figures:
+# d_eq = sqrt(2) * exp(lnM). This is valid for location effects, not sigma.
+D_EQ_BREAKS <- c(0.2, 0.5, 0.8, sqrt(2))
+LNM_REF <- log(D_EQ_BREAKS[1:3] / sqrt(2))
+D_EQ_AXIS <- ggplot2::sec_axis(
+  ~ sqrt(2) * exp(.),
+  breaks = D_EQ_BREAKS,
+  labels = c("0.2", "0.5", "0.8", "1.41"),
+  name = expression(Approximate~italic(d)[plain(eq)])
+)
+
+theme_orchard <- function() {
+  ggplot2::theme_classic(base_size = 13) +
+    ggplot2::theme(
+      axis.text.y        = ggplot2::element_text(size = 11),
+      axis.title.x       = ggplot2::element_text(size = 12),
+      axis.ticks.y       = ggplot2::element_blank(),
+      panel.grid.major.x = ggplot2::element_line(colour = "grey92"),
+      legend.position    = "bottom",
+      legend.title       = ggplot2::element_text(size = 10),
+      plot.title         = ggplot2::element_text(size = 13, face = "bold")
+    )
+}
+
+save_plot <- function(p, stem, width = 9, height = 6) {
+  ggplot2::ggsave(file.path(out_dir_pdf, paste0(stem, ".pdf")), p,
+                  width = width, height = height, device = grDevices::cairo_pdf)
+  ggplot2::ggsave(file.path(out_dir, paste0(stem, ".png")), p,
+                  width = width, height = height, dpi = 300, type = "cairo")
+}
+
+apply_labels <- function(x, map) {
+  x <- as.character(x)
+  if (is.null(map)) return(x)
+  dplyr::recode(x, !!!map, .default = x)
+}
+
+summarise_draws <- function(data, group, value) {
+  data |>
+    dplyr::group_by(.data[[group]]) |>
+    dplyr::summarise(
+      estimate = mean(.data[[value]], na.rm = TRUE),
+      lowerCL = quantile(.data[[value]], 0.025, na.rm = TRUE),
+      upperCL = quantile(.data[[value]], 0.975, na.rm = TRUE),
+      .groups = "drop"
+    )
+}
+
+plot_intercept <- function(cache) {
+  raw <- dat_es |> dplyr::mutate(precision = 1 / sqrt(vi_lnM_safe))
+  int_est <- mean(cache$post$b_Intercept)
+  int_lo <- quantile(cache$post$b_Intercept, 0.025)
+  int_hi <- quantile(cache$post$b_Intercept, 0.975)
+  sig_est <- mean(cache$post$sigma)
+  sig_lo <- quantile(cache$post$sigma, 0.025)
+  sig_hi <- quantile(cache$post$sigma, 0.975)
+  cap_half_height <- 0.08
+
+  p_loc <- ggplot2::ggplot() +
+    ggplot2::geom_vline(xintercept = LNM_REF, linetype = "dotted",
+                        colour = "grey72", linewidth = 0.45) +
+    ggplot2::geom_vline(xintercept = 0, linetype = "dashed", colour = "grey50") +
+    ggbeeswarm::geom_quasirandom(
+      data = raw,
+      ggplot2::aes(x = yi_lnM_safe, y = 1, size = precision),
+      alpha = 0.20, shape = 21, fill = COL_LOCATION_LIGHT, colour = COL_LOCATION,
+      groupOnX = FALSE
+    ) +
+    ggplot2::geom_segment(
+      ggplot2::aes(x = int_lo, xend = int_hi, y = 1, yend = 1),
+      linewidth = 1.25, colour = "grey10"
+    ) +
+    ggplot2::geom_segment(
+      ggplot2::aes(x = int_lo, xend = int_lo,
+                   y = 1 - cap_half_height, yend = 1 + cap_half_height),
+      linewidth = 1.25, colour = "grey10"
+    ) +
+    ggplot2::geom_segment(
+      ggplot2::aes(x = int_hi, xend = int_hi,
+                   y = 1 - cap_half_height, yend = 1 + cap_half_height),
+      linewidth = 1.25, colour = "grey10"
+    ) +
+    ggplot2::geom_point(ggplot2::aes(x = int_est, y = 1),
+                        size = 3.4, shape = 23,
+                        fill = "white", colour = "grey10", stroke = 1.1) +
+    ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.3, 4),
+                                   guide = PRECISION_GUIDE) +
+    ggplot2::scale_x_continuous(sec.axis = D_EQ_AXIS) +
+    ggplot2::scale_y_continuous(breaks = NULL) +
+    ggplot2::labs(x = "lnM", y = NULL, title = "A)") +
+    theme_orchard()
+
+  raw_sig <- raw |> dplyr::mutate(abs_resid = abs(yi_lnM_safe - int_est))
+  p_scl <- ggplot2::ggplot() +
+    ggbeeswarm::geom_quasirandom(
+      data = raw_sig,
+      ggplot2::aes(x = abs_resid, y = 1, size = precision),
+      alpha = 0.20, shape = 21, fill = COL_SCALE_LIGHT, colour = COL_SCALE,
+      groupOnX = FALSE
+    ) +
+    ggplot2::geom_segment(
+      ggplot2::aes(x = sig_lo, xend = sig_hi, y = 1, yend = 1),
+      linewidth = 1.25, colour = "grey10"
+    ) +
+    ggplot2::geom_segment(
+      ggplot2::aes(x = sig_lo, xend = sig_lo,
+                   y = 1 - cap_half_height, yend = 1 + cap_half_height),
+      linewidth = 1.25, colour = "grey10"
+    ) +
+    ggplot2::geom_segment(
+      ggplot2::aes(x = sig_hi, xend = sig_hi,
+                   y = 1 - cap_half_height, yend = 1 + cap_half_height),
+      linewidth = 1.25, colour = "grey10"
+    ) +
+    ggplot2::geom_point(ggplot2::aes(x = sig_est, y = 1),
+                        size = 3.4, shape = 23,
+                        fill = "white", colour = "grey10", stroke = 1.1) +
+    ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.3, 4),
+                                   guide = PRECISION_GUIDE) +
+    ggplot2::scale_y_continuous(breaks = NULL) +
+    ggplot2::labs(x = "residual lnM (SD)", y = NULL, title = "B)") +
+    theme_orchard()
+
+  list(location = p_loc, scale = p_scl,
+       combined = patchwork::wrap_plots(
+         p_loc + ggplot2::theme(legend.position = "none"), p_scl,
+         ncol = 1, guides = "collect"
+       ) &
+         ggplot2::theme(legend.position = "bottom"),
+       width = 9, height = 4, combined_height = 8)
+}
+
+plot_continuous <- function(cache) {
+  mod <- cache$moderator
+  lab <- cache$label
+  raw <- dat_es[!is.na(dat_es[[mod]]), ] |>
+    dplyr::mutate(precision = 1 / sqrt(vi_lnM_safe))
+  pred <- summarise_draws(cache$loc, mod, ".epred")
+  pred_sig <- summarise_draws(cache$scl, mod, "sigma")
+  raw_pred_loc <- approx(pred[[mod]], pred$estimate, xout = raw[[mod]], rule = 2)$y
+  raw_sig <- raw |> dplyr::mutate(abs_resid = abs(yi_lnM_safe - raw_pred_loc))
+
+  p_loc <- ggplot2::ggplot() +
+    ggplot2::geom_hline(yintercept = LNM_REF, linetype = "dotted",
+                        colour = "grey72", linewidth = 0.45) +
+    ggplot2::geom_hline(yintercept = 0, linetype = "dashed", colour = "grey50") +
+    ggplot2::geom_point(
+      data = raw,
+      ggplot2::aes(x = .data[[mod]], y = yi_lnM_safe, size = precision),
+      alpha = 0.22, shape = 21, fill = COL_LOCATION_LIGHT, colour = COL_LOCATION
+    ) +
+    ggplot2::geom_ribbon(
+      data = pred,
+      ggplot2::aes(x = .data[[mod]], ymin = lowerCL, ymax = upperCL),
+      alpha = 0.35, fill = COL_LOCATION
+    ) +
+    ggplot2::geom_line(
+      data = pred,
+      ggplot2::aes(x = .data[[mod]], y = estimate),
+      linewidth = 1.1, colour = COL_LOCATION
+    ) +
+    ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.3, 4),
+                                   guide = PRECISION_GUIDE) +
+    ggplot2::scale_y_continuous(sec.axis = D_EQ_AXIS) +
+    ggplot2::labs(x = lab, y = "lnM", title = "A)") +
+    theme_orchard()
+
+  p_scl <- ggplot2::ggplot() +
+    ggplot2::geom_point(
+      data = raw_sig,
+      ggplot2::aes(x = .data[[mod]], y = abs_resid, size = precision),
+      alpha = 0.20, shape = 21, fill = COL_SCALE_LIGHT, colour = COL_SCALE
+    ) +
+    ggplot2::geom_ribbon(
+      data = pred_sig,
+      ggplot2::aes(x = .data[[mod]], ymin = lowerCL, ymax = upperCL),
+      alpha = 0.35, fill = COL_SCALE_RIBBON
+    ) +
+    ggplot2::geom_line(
+      data = pred_sig,
+      ggplot2::aes(x = .data[[mod]], y = estimate),
+      linewidth = 1.1, colour = COL_SCALE
+    ) +
+    ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.3, 4),
+                                   guide = PRECISION_GUIDE) +
+    ggplot2::scale_y_continuous(
+      limits = c(0, NA),
+      expand = ggplot2::expansion(mult = c(0, 0.05))
+    ) +
+    ggplot2::labs(x = lab, y = "residual lnM (SD)", title = "B)") +
+    theme_orchard()
+
+  list(location = p_loc, scale = p_scl,
+       combined = patchwork::wrap_plots(
+         p_loc + ggplot2::theme(legend.position = "none"),
+         p_scl,
+         ncol = 1,
+         guides = "collect"
+       ) & ggplot2::theme(legend.position = "bottom"),
+       width = 8, height = 5, combined_height = 9)
+}
+
+plot_categorical <- function(cache) {
+  mod <- cache$moderator
+  lab <- cache$label
+  map <- label_maps[[cache$id]]
+
+  shared <- summary_cache[[cache$id]]
+  if (is.null(shared)) stop("No shared table summary for categorical model ", cache$id)
+  loc_lo <- intersect(c("lower.CrI"), names(shared$loc_emmeans))[1]
+  loc_hi <- intersect(c("upper.CrI"), names(shared$loc_emmeans))[1]
+  scl_lo <- intersect(c("lower.CrI"), names(shared$scl_emmeans))[1]
+  scl_hi <- intersect(c("upper.CrI"), names(shared$scl_emmeans))[1]
+  if (anyNA(c(loc_lo, loc_hi, scl_lo, scl_hi))) {
+    stop("Shared summary for ", cache$id, " is not specification v2.")
+  }
+  ests <- shared$loc_emmeans |>
+    dplyr::transmute(
+      level = apply_labels(level, map), estimate = emmean,
+      lowerCL = .data[[loc_lo]], upperCL = .data[[loc_hi]]
+    )
+  sig_ests <- shared$scl_emmeans |>
+    dplyr::transmute(
+      level = apply_labels(level, map), estimate = exp(emmean),
+      lowerCL = exp(.data[[scl_lo]]), upperCL = exp(.data[[scl_hi]])
+    )
+
+  raw <- if (mod %in% names(dat_es)) {
+    dat_es[!is.na(dat_es[[mod]]), ] |>
+      dplyr::mutate(
+        level = apply_labels(.data[[mod]], map),
+        precision = 1 / sqrt(vi_lnM_safe)
+      )
+  } else {
+    NULL
+  }
+
+  lev_order <- ests$level[order(ests$estimate)]
+  ests$level <- factor(ests$level, levels = lev_order)
+  sig_ests$level <- factor(sig_ests$level, levels = lev_order)
+  if (!is.null(raw)) raw$level <- factor(raw$level, levels = lev_order)
+  n_levels <- length(lev_order)
+  level_cols <- CATEGORY_COLS[seq_len(n_levels)]
+  names(level_cols) <- lev_order
+  y_breaks <- seq_len(n_levels)
+  ests <- ests |> dplyr::mutate(y_index = as.numeric(level))
+  sig_ests <- sig_ests |> dplyr::mutate(y_index = as.numeric(level))
+  if (!is.null(raw)) raw <- raw |> dplyr::mutate(y_index = as.numeric(level))
+  cap_half_height <- 0.12
+
+  p_loc <- ggplot2::ggplot() +
+    ggplot2::geom_vline(xintercept = LNM_REF, linetype = "dotted",
+                        colour = "grey72", linewidth = 0.45) +
+    ggplot2::geom_vline(xintercept = 0, linetype = "dashed", colour = "grey50") +
+    { if (!is.null(raw)) ggbeeswarm::geom_quasirandom(
+      data = raw,
+      ggplot2::aes(x = yi_lnM_safe, y = y_index,
+                   size = precision, colour = level, fill = level),
+      alpha = 0.30, shape = 21, groupOnX = FALSE
+    ) } +
+    ggplot2::geom_segment(
+      data = ests,
+      ggplot2::aes(x = lowerCL, xend = upperCL, y = y_index, yend = y_index),
+      linewidth = 1.25, colour = "grey10"
+    ) +
+    ggplot2::geom_segment(
+      data = ests,
+      ggplot2::aes(x = lowerCL, xend = lowerCL,
+                   y = y_index - cap_half_height, yend = y_index + cap_half_height),
+      linewidth = 1.25, colour = "grey10"
+    ) +
+    ggplot2::geom_segment(
+      data = ests,
+      ggplot2::aes(x = upperCL, xend = upperCL,
+                   y = y_index - cap_half_height, yend = y_index + cap_half_height),
+      linewidth = 1.45, colour = "grey10"
+    ) +
+    ggplot2::geom_point(
+      data = ests,
+      ggplot2::aes(x = estimate, y = y_index),
+      size = 3.4, shape = 23, fill = "white", colour = "grey10", stroke = 1.1
+    ) +
+    ggplot2::scale_colour_manual(values = level_cols, guide = "none") +
+    ggplot2::scale_fill_manual(values = level_cols, guide = "none") +
+    ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.4, 4),
+                                   guide = PRECISION_GUIDE) +
+    ggplot2::scale_x_continuous(sec.axis = D_EQ_AXIS) +
+    ggplot2::scale_y_continuous(breaks = y_breaks, labels = lev_order) +
+    ggplot2::labs(x = "lnM", y = NULL, title = "A)") +
+    theme_orchard()
+
+  raw_sig <- if (!is.null(raw)) {
+    raw |>
+      dplyr::left_join(dplyr::select(ests, level, loc_est = estimate), by = "level") |>
+      dplyr::mutate(abs_resid = abs(yi_lnM_safe - loc_est))
+  } else {
+    NULL
+  }
+
+  p_scl <- ggplot2::ggplot() +
+    { if (!is.null(raw_sig)) ggbeeswarm::geom_quasirandom(
+      data = raw_sig,
+      ggplot2::aes(x = abs_resid, y = y_index,
+                   size = precision, colour = level, fill = level),
+      alpha = 0.30, shape = 21, groupOnX = FALSE
+    ) } +
+    ggplot2::geom_segment(
+      data = sig_ests,
+      ggplot2::aes(x = lowerCL, xend = upperCL, y = y_index, yend = y_index),
+      linewidth = 1.25, colour = "grey10"
+    ) +
+    ggplot2::geom_segment(
+      data = sig_ests,
+      ggplot2::aes(x = lowerCL, xend = lowerCL,
+                   y = y_index - cap_half_height, yend = y_index + cap_half_height),
+      linewidth = 1.25, colour = "grey10"
+    ) +
+    ggplot2::geom_segment(
+      data = sig_ests,
+      ggplot2::aes(x = upperCL, xend = upperCL,
+                   y = y_index - cap_half_height, yend = y_index + cap_half_height),
+      linewidth = 1.45, colour = "grey10"
+    ) +
+    ggplot2::geom_point(
+      data = sig_ests,
+      ggplot2::aes(x = estimate, y = y_index),
+      size = 3.4, shape = 23, fill = "white", colour = "grey10", stroke = 1.1
+    ) +
+    ggplot2::scale_colour_manual(values = level_cols, guide = "none") +
+    ggplot2::scale_fill_manual(values = level_cols, guide = "none") +
+    ggplot2::scale_size_continuous(name = PRECISION_LABEL, range = c(0.4, 4),
+                                   guide = PRECISION_GUIDE) +
+    ggplot2::scale_y_continuous(breaks = y_breaks, labels = lev_order) +
+    ggplot2::labs(x = "residual lnM (SD)", y = NULL, title = "B)") +
+    theme_orchard()
+
+  height_single <- max(2.5 + n_levels * 0.55, 5)
+  # Width scales with level count so many-level moderators (e.g. disturbance,
+  # trait_type) get enough horizontal room for their beeswarm spread and
+  # longer level labels, instead of a fixed width that crowds them.
+  width <- max(9, 6 + n_levels * 0.9)
+  list(location = p_loc, scale = p_scl,
+       combined = patchwork::wrap_plots(
+         p_loc + ggplot2::theme(legend.position = "none"), p_scl,
+         ncol = 1, guides = "collect"
+       ) &
+         ggplot2::theme(legend.position = "bottom"),
+       width = width, height = height_single,
+       combined_height = max(height_single * 1.9, 10))
+}
+
+for (id in model_ids) {
+  cache <- readRDS(file.path(cache_dir, paste0(id, ".rds")))
+  if (!identical(cache$summary_spec$version, 2L)) {
+    stop("Legacy epred cache rejected for ", id, ". Rebuild specification v2 first.")
+  }
+  message("\n--- ", id, " from cached epred draws ---")
+
+  plots <- switch(
+    cache$kind,
+    intercept = plot_intercept(cache),
+    continuous = plot_continuous(cache),
+    categorical = plot_categorical(cache),
+    stop("Unsupported cache kind for orchard plot: ", cache$kind)
+  )
+
+  save_plot(plots$location, paste0(id, "_orchard_location"),
+            width = plots$width, height = plots$height)
+  save_plot(plots$scale, paste0(id, "_orchard_scale"),
+            width = plots$width, height = plots$height)
+  save_plot(plots$combined, paste0(id, "_orchard_combined"),
+            width = plots$width, height = plots$combined_height)
+}
+
+saveRDS(
+  list(
+    summary_spec = list(version = 2L, point = "posterior_mean", interval = "equal_tail_95"),
+    model_ids = model_ids,
+    summary_cache_md5 = unname(tools::md5sum(
+      here::here("Rdata", "summaries", "emmeans_contrasts_cache.rds")
+    )),
+    epred_cache_md5 = stats::setNames(
+      unname(tools::md5sum(file.path(cache_dir, paste0(model_ids, ".rds")))),
+      model_ids
+    ),
+    generated = Sys.time()
+  ),
+  file.path(out_dir, "orchard_manifest.rds")
+)

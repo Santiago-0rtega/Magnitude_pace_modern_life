@@ -73,7 +73,7 @@ cmdstanr::install_cmdstan()
 | `outputs/models/sensitivity/` | Sensitivity analysis models (`.rds`) |
 | `outputs/tables/` | Result and diagnostic tables (`.csv`) |
 | `outputs/tables/sensitivity/` | Sensitivity analysis tables (`.csv`) |
-| `outputs/figures/pdf/` | Publication-ready PDF figures |
+| `Figures/` | Publication-ready PDF figures |
 | `outputs/figures/png/` | Web-ready PNG figures |
 
 ---
@@ -158,7 +158,7 @@ The scale submodel is often more informative than the location: even when the me
 
 ## R scripts
 
-All reusable functions live in `R/`:
+All reusable functions live in `Scripts/`:
 
 | Script | Contents |
 |---|---|

@@ -11,7 +11,7 @@ models=(n_se_sigma1 n_v_sigmax)
 pids=()
 for model in "${models[@]}"; do
   EXTENDED_REFIT=true ARTIFACT_SUFFIX=_refit \
-    Rscript remote_fit_one_small_study_brms.R "$model" \
+    Rscript Scripts/remote_fit_one_small_study_brms.R "$model" \
     >"$run_dir/${model}_refit.log" 2>&1 &
   pids+=("$!")
 done

@@ -45,7 +45,7 @@ Keep the `data/`, `Rdata/`, `chapters/`, and `_quarto.yml` paths unchanged.
 
 ## Step 2 — Install R packages
 
-The project checks one package list in `chapters/Rscripts/00_packages.R`. The
+The project checks one package list in `Scripts/00_packages.R`. The
 list includes every non-base R package named in the book and analysis scripts,
 including `ggbeeswarm` and `patchwork`.
 
@@ -70,7 +70,7 @@ remotes::install_github("itchyshin/prepR4pcm")
 Check the complete project list:
 
 ```r
-source(here::here("chapters", "Rscripts", "00_packages.R"))
+source(here::here("Scripts", "00_packages.R"))
 ```
 
 No message means that the package check passed.
@@ -117,15 +117,15 @@ Run the work in this order:
 6. Run the precompute scripts in Step 5 below.
 7. [Create the publication figures](08_publication_figures.qmd).
 
-The fitting scripts live in the project root and run from it. Each one loads the
-fitting toolchain through `chapters/Rscripts/00_packages_fit.R` and resolves
+The fitting scripts live in `Scripts/` and run from the project root. Each one
+loads the fitting toolchain through `Scripts/00_packages_fit.R` and resolves
 every path with `here::here()`, so no path editing is needed:
 
 ```bash
-Rscript remote_rebuild_safe.R
-Rscript run_model_grid.R
-Rscript run_sensitivity.R
-Rscript aggregate_sensitivity.R
+Rscript Scripts/remote_rebuild_safe.R
+Rscript Scripts/run_model_grid.R
+Rscript Scripts/run_sensitivity.R
+Rscript Scripts/aggregate_sensitivity.R
 ```
 
 `remote_rebuild_safe.R` rebuilds the cleaned data and the SAFE lnM effect sizes.
@@ -139,7 +139,7 @@ not during a normal book render.
 ## Step 5 — Prepare small files for the book
 
 Every script builds its output paths with `dir_out()`, defined once in
-`chapters/Rscripts/01_paths.R`. It writes to `Rdata/` by default, so a local run
+`Scripts/01_paths.R`. It writes to `Rdata/` by default, so a local run
 puts files where the book already reads them and no copying is needed. To send
 output somewhere else, set `options(pace.out_root = "outputs")` before sourcing
 `01_paths.R`.
@@ -147,10 +147,10 @@ output somewhere else, set `options(pace.out_root = "outputs")` before sourcing
 After fitting models, run these scripts from the project root in this order:
 
 ```bash
-Rscript chapters/Rscripts/precompute_grid_summaries.R
-Rscript chapters/Rscripts/precompute_epred_draws.R
-Rscript chapters/Rscripts/precompute_emmeans_contrasts.R
-Rscript chapters/Rscripts/precompute_heterogeneity.R
+Rscript Scripts/precompute_grid_summaries.R
+Rscript Scripts/precompute_epred_draws.R
+Rscript Scripts/precompute_emmeans_contrasts.R
+Rscript Scripts/precompute_heterogeneity.R
 ```
 
 These scripts convert large fitted models into small tables and prediction
@@ -189,7 +189,7 @@ copy. Missing saved results cause an error instead of starting a long fit.
 ### Package inventory
 
 ```{r setup}
-source(here::here("chapters", "Rscripts", "00_packages.R"))
+source(here::here("Scripts", "00_packages.R"))
 ```
 
 ```{r package-inventory}
@@ -239,8 +239,8 @@ if (length(git_status)) {
 ### Random seeds
 
 SAFE lnM calculations use `seed = 123`. Model fits use `seed = 123`. The seeds
-are set in `chapters/Rscripts/04_lnm_safe.R` and
-`chapters/Rscripts/08_fit_or_read_model.R`.
+are set in `Scripts/04_lnm_safe.R` and
+`Scripts/08_fit_or_read_model.R`.
 
 ## Step 8 — Check saved results
 

@@ -1,0 +1,2729 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Appendix F — Protocol deviation — leave-one-reference-out check: Oke et al.&nbsp;(2020) – Environmental change leaves no universal signature of phenotypic divergence</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../chapters/appendix/protocol_deviation_time_adjustment.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-531b922294e5101f6db3b3c5f1c89591.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-6b6902fe15582d3ea32858fd6330b29f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-531b922294e5101f6db3b3c5f1c89591.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script src="../../site_libs/kePrint-0.0.1/kePrint.js"></script>
+
+<link href="../../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+<link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+
+<script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/models/m08.html">Appendices</a></li><li class="breadcrumb-item"><a href="../../chapters/appendix/protocol_deviation_leave_oke_out.html"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Protocol deviation — leave-one-reference-out check: Oke et al.&nbsp;(2020)</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Environmental change leaves no universal signature of phenotypic divergence</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/Santiago-0rtega/Magnitude_pace_modern_life" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="../../Environmental-change-leaves-no-universal-signature-of-phenotypic-divergence.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Data &amp; Effect Sizes</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/01_data_preparation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data preparation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/02_lnm_effect_sizes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">lnM effect sizes (SAFE)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/03_descriptive_summaries.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Descriptive summaries</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/03b_moderator_associations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Associations among moderators</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Non-independence</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/04_dependency_structure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Dependency structure</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/04b_phylogeny.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Phylogenetic reconciliation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Location–Scale Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/05_location_scale_model_grid.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Location–scale model grid</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Results — one chapter per model</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/models/m00.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Intercept-only baseline</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/models/m01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Disturbance context</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/models/m02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Comparison design</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/models/m03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Elapsed time (log₁₀ years)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/models/m04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Elapsed time (log₁₀ generations)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/models/m05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Trait type</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/models/m07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Phenotypic vs genetic study</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Figures &amp; Reproducibility</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/07b_small_study_effects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Small-study effects diagnostic</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/07_sensitivity_analyses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Sensitivity analyses</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/08_publication_figures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Publication figures</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/09_reproducibility.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Reproduce this analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/models/m08.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Excluded model: Environmental-change context</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/sensitivity_min_n.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Sensitivity A — Minimum sample size (N ≥ 40)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/sensitivity_no_phylogeny.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Sensitivity B — No phylogenetic random effect</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/sensitivity_sys_id.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Sensitivity C — Study-system (sys_id) random effect</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/protocol_deviation_time_adjustment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Protocol deviation — moderators adjusted for elapsed time</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/appendix/protocol_deviation_leave_oke_out.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Protocol deviation — leave-one-reference-out check: Oke et al.&nbsp;(2020)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#recorded-change" id="toc-recorded-change" class="nav-link active" data-scroll-target="#recorded-change"><span class="header-section-number">F.1</span> Recorded change</a></li>
+  <li><a href="#identifying-oke-et-al.-2020-in-proceed" id="toc-identifying-oke-et-al.-2020-in-proceed" class="nav-link" data-scroll-target="#identifying-oke-et-al.-2020-in-proceed"><span class="header-section-number">F.2</span> Identifying Oke et al.&nbsp;(2020) in PROCEED</a></li>
+  <li><a href="#contribution-to-the-dataset" id="toc-contribution-to-the-dataset" class="nav-link" data-scroll-target="#contribution-to-the-dataset"><span class="header-section-number">F.3</span> Contribution to the dataset</a></li>
+  <li><a href="#huntingharvesting-contrasts-with-and-without-oke-et-al.-2020" id="toc-huntingharvesting-contrasts-with-and-without-oke-et-al.-2020" class="nav-link" data-scroll-target="#huntingharvesting-contrasts-with-and-without-oke-et-al.-2020"><span class="header-section-number">F.4</span> Hunting/harvesting contrasts with and without Oke et al.&nbsp;(2020)</a></li>
+  <li><a href="#model-specification" id="toc-model-specification" class="nav-link" data-scroll-target="#model-specification"><span class="header-section-number">F.5</span> Model specification</a></li>
+  <li><a href="#convergence-diagnostics-and-model-summaries" id="toc-convergence-diagnostics-and-model-summaries" class="nav-link" data-scroll-target="#convergence-diagnostics-and-model-summaries"><span class="header-section-number">F.6</span> Convergence diagnostics and model summaries</a>
+  <ul class="collapse">
+  <li><a href="#location-level-estimates" id="toc-location-level-estimates" class="nav-link" data-scroll-target="#location-level-estimates"><span class="header-section-number">F.6.1</span> Location — level estimates</a></li>
+  <li><a href="#location-pairwise-contrasts" id="toc-location-pairwise-contrasts" class="nav-link" data-scroll-target="#location-pairwise-contrasts"><span class="header-section-number">F.6.2</span> Location — pairwise contrasts</a></li>
+  <li><a href="#scale-level-estimates" id="toc-scale-level-estimates" class="nav-link" data-scroll-target="#scale-level-estimates"><span class="header-section-number">F.6.3</span> Scale — level estimates</a></li>
+  <li><a href="#scale-pairwise-contrasts" id="toc-scale-pairwise-contrasts" class="nav-link" data-scroll-target="#scale-pairwise-contrasts"><span class="header-section-number">F.6.4</span> Scale — pairwise contrasts</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/models/m08.html">Appendices</a></li><li class="breadcrumb-item"><a href="../../chapters/appendix/protocol_deviation_leave_oke_out.html"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Protocol deviation — leave-one-reference-out check: Oke et al.&nbsp;(2020)</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">Appendix F — Protocol deviation — leave-one-reference-out check: Oke et al.&nbsp;(2020)</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="recorded-change" class="level2" data-number="F.1">
+<h2 data-number="F.1" class="anchored" data-anchor-id="recorded-change"><span class="header-section-number">F.1</span> Recorded change</h2>
+<p>This chapter was <strong>not</strong> part of the pre-registered protocol. It was added after a question about how much of the <code>Hunt_harv</code> (hunting/harvesting) disturbance-context level in model m01 is contributed by a single reference, Oke et al.&nbsp;(2020, <em>Nature Communications</em> 11: 4155, with companion dataset Clark 2020, KNB), a long-term monitoring dataset on Pacific salmon (<em>Oncorhynchus</em> spp.) body size.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="What changed—and what did not">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What changed—and what did not
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Changed:</strong> this chapter documents the number of contrasts, references, species, and study systems that Oke et al.&nbsp;(2020) contributes to the <code>Hunt_harv</code> level, and refits m01 on the same data with every Oke et al. (2020) contrast removed (<code>ref_id != "p209"</code>).</p>
+<p><strong>Unchanged:</strong> the dataset construction pipeline, the moderator definitions, the <code>ref_id</code> and phylogenetic random effects, the priors, and the MCMC settings all match the primary m01 model.</p>
+</div>
+</div>
+</section>
+<section id="identifying-oke-et-al.-2020-in-proceed" class="level2" data-number="F.2">
+<h2 data-number="F.2" class="anchored" data-anchor-id="identifying-oke-et-al.-2020-in-proceed"><span class="header-section-number">F.2</span> Identifying Oke et al.&nbsp;(2020) in PROCEED</h2>
+<p>Oke et al.&nbsp;(2020) contrasts are identified by <code>ref_id == "p209"</code>. This matches exactly on DOI and on the database’s <code>reference</code> field.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>oke <span class="ot">&lt;-</span> dat_es <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(ref_id <span class="sc">==</span> <span class="st">"p209"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">ref_id    =</span> <span class="fu">unique</span>(oke<span class="sc">$</span>ref_id),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">doi       =</span> <span class="fu">unique</span>(oke<span class="sc">$</span>doi),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">reference =</span> <span class="fu">unique</span>(oke<span class="sc">$</span>reference)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"Citation fields recorded for ref_id p209."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-striped table-hover caption-top table-sm small">
+<caption>Citation fields recorded for ref_id p209.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">ref_id</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">doi</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">reference</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">p209</td>
+<td style="text-align: left;">10.1038/s41467-020-17726-z; 10.5063/F1707ZTM</td>
+<td style="text-align: left;">Oke, K. B., 2020�Nature communications�11: 4155; Clark, J., 2020 KNB</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="contribution-to-the-dataset" class="level2" data-number="F.3">
+<h2 data-number="F.3" class="anchored" data-anchor-id="contribution-to-the-dataset"><span class="header-section-number">F.3</span> Contribution to the dataset</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>oke_counts <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Field =</span> <span class="fu">c</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Total Oke et al. (2020) contrasts"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Classified `Hunt_harv`"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Classified `Other`"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Unique species"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Unique study systems (`sys_id`)"</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">Value =</span> <span class="fu">c</span>(</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nrow</span>(oke),</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>(oke<span class="sc">$</span>disturbance <span class="sc">==</span> <span class="st">"Hunt_harv"</span>),</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>(oke<span class="sc">$</span>disturbance <span class="sc">==</span> <span class="st">"Other"</span>),</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">n_distinct</span>(oke<span class="sc">$</span>sp_pub),</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">n_distinct</span>(oke<span class="sc">$</span>sys_id)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(oke_counts, <span class="at">caption =</span> <span class="st">"Oke et al. (2020) contrasts in the analysis-ready dataset."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-striped table-hover caption-top table-sm small">
+<caption>Oke et al. (2020) contrasts in the analysis-ready dataset.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Field</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Total Oke et al. (2020) contrasts</td>
+<td style="text-align: right;">1284</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Classified `Hunt_harv`</td>
+<td style="text-align: right;">811</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Classified `Other`</td>
+<td style="text-align: right;">473</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Unique species</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Unique study systems (`sys_id`)</td>
+<td style="text-align: right;">1161</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>oke <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(sp_pub, <span class="at">name =</span> <span class="st">"n_contrasts"</span>, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"Species represented among Oke et al. (2020) contrasts."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-striped table-hover caption-top table-sm small">
+<caption>Species represented among Oke et al. (2020) contrasts.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">sp_pub</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">n_contrasts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Oncorhynchus nerka</td>
+<td style="text-align: right;">407</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Oncorhynchus tshawytscha</td>
+<td style="text-align: right;">330</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Oncorhynchus keta</td>
+<td style="text-align: right;">311</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Oncorhynchus kisutch</td>
+<td style="text-align: right;">214</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Oncorhynchus gorbuscha</td>
+<td style="text-align: right;">22</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>hh_all <span class="ot">&lt;-</span> dat_es <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(disturbance <span class="sc">==</span> <span class="st">"Hunt_harv"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>hh_oke <span class="ot">&lt;-</span> hh_all <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(ref_id <span class="sc">==</span> <span class="st">"p209"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>contribution <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Metric =</span> <span class="fu">c</span>(<span class="st">"Contrasts"</span>, <span class="st">"References"</span>, <span class="st">"Species"</span>, <span class="st">"Study systems (`sys_id`)"</span>),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Hunt_harv total</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nrow</span>(hh_all),</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">n_distinct</span>(hh_all<span class="sc">$</span>ref_id),</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">n_distinct</span>(hh_all<span class="sc">$</span>sp_pub),</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">n_distinct</span>(hh_all<span class="sc">$</span>sys_id)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">From Oke et al. (2020)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nrow</span>(hh_oke),</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>L,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">n_distinct</span>(hh_oke<span class="sc">$</span>sp_pub),</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">n_distinct</span>(hh_oke<span class="sc">$</span>sys_id)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">Oke share (%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="st">`</span><span class="at">From Oke et al. (2020)</span><span class="st">`</span> <span class="sc">/</span> <span class="st">`</span><span class="at">Hunt_harv total</span><span class="st">`</span>, <span class="dv">1</span>))</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(contribution, <span class="at">caption =</span> <span class="st">"Oke et al. (2020) contribution to the Hunt_harv disturbance-context level."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-striped table-hover caption-top table-sm small">
+<caption>Oke et al. (2020) contribution to the Hunt_harv disturbance-context level.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Metric</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Hunt_harv total</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">From Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Oke share (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Contrasts</td>
+<td style="text-align: right;">913</td>
+<td style="text-align: right;">811</td>
+<td style="text-align: right;">88.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">References</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Species</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">29.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Study systems (`sys_id`)</td>
+<td style="text-align: right;">730</td>
+<td style="text-align: right;">711</td>
+<td style="text-align: right;">97.4</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>hh_all <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(ref_id, reference, <span class="at">name =</span> <span class="st">"n_contrasts"</span>, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"All references contributing to the Hunt_harv disturbance-context level, ranked by number of contrasts."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">scroll_box</span>(<span class="at">height =</span> <span class="st">"350px"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:350px; ">
+<table class="table table-striped table-hover caption-top table-sm small">
+<caption>All references contributing to the Hunt_harv disturbance-context level, ranked by number of contrasts.</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF;">ref_id</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF;">reference</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; position: sticky; top: 0; background-color: #FFFFFF;">n_contrasts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">p209</td>
+<td style="text-align: left;">Oke, K. B., 2020�Nature communications�11: 4155; Clark, J., 2020 KNB</td>
+<td style="text-align: right;">811</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p092</td>
+<td style="text-align: left;">Olsen 2004, Nature 428: 932-935</td>
+<td style="text-align: right;">24</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p163</td>
+<td style="text-align: left;">Wolak et al. (2010), Conservation Biology 24(5): 1268-1277</td>
+<td style="text-align: right;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p082</td>
+<td style="text-align: left;">McGraw 2001, Biological Conservation 98: 25-32</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p188</td>
+<td style="text-align: left;">Skogland 1989, Oikos. 55:101-110</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p197</td>
+<td style="text-align: left;">Yoneda &amp; Wright 2004, MEPS 276:237-248</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p205</td>
+<td style="text-align: left;">Pigeon et al. 2016, Evol. App. 9: 521-530</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p183</td>
+<td style="text-align: left;">Engelhard &amp; Heino 2004 Mar. Ecol. Prog. Series, 272:245-256</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p206</td>
+<td style="text-align: left;">van de Walle et al. 2020, Biol. Let., 16: 20190707</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p208</td>
+<td style="text-align: left;">Leclerc 2016, Biol Let 12:20160197</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p029</td>
+<td style="text-align: left;">Coltman 2003, Nature 426: 655-658</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p075</td>
+<td style="text-align: left;">Law 2005, PNAS 102: 10218-10220</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p175</td>
+<td style="text-align: left;">Armstrong 1989, S. African J. Mar. Sci. 8:91-101</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p019</td>
+<td style="text-align: left;">Carlson 2007, Ecology letters 10 : 512-521</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p047</td>
+<td style="text-align: left;">Handford 1977, J. Fish. Res. Board Can. 34: 954-961</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p117</td>
+<td style="text-align: left;">Swain 2007, Proc. R. Soc. B 274 : 1015-1022</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p138</td>
+<td style="text-align: left;">Azorit 2002. Zeitschrift Fur Jagdwissenschaft 48: 137-144</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p189</td>
+<td style="text-align: left;">Pigeon 2017, Ecology. 98: 2456-2467</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p207</td>
+<td style="text-align: left;">Van de Walle et al., 2021 J Anim. Ecol.</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="huntingharvesting-contrasts-with-and-without-oke-et-al.-2020" class="level2" data-number="F.4">
+<h2 data-number="F.4" class="anchored" data-anchor-id="huntingharvesting-contrasts-with-and-without-oke-et-al.-2020"><span class="header-section-number">F.4</span> Hunting/harvesting contrasts with and without Oke et al.&nbsp;(2020)</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>hh_without_oke <span class="ot">&lt;-</span> hh_all <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(ref_id <span class="sc">!=</span> <span class="st">"p209"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>summarize_grp <span class="ot">&lt;-</span> <span class="cf">function</span>(d, label) {</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Group           =</span> label,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_contrasts     =</span> <span class="fu">nrow</span>(d),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_references    =</span> dplyr<span class="sc">::</span><span class="fu">n_distinct</span>(d<span class="sc">$</span>ref_id),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_species       =</span> dplyr<span class="sc">::</span><span class="fu">n_distinct</span>(d<span class="sc">$</span>sp_pub),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_sys_id        =</span> dplyr<span class="sc">::</span><span class="fu">n_distinct</span>(d<span class="sc">$</span>sys_id),</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_lnM        =</span> <span class="fu">round</span>(<span class="fu">mean</span>(d<span class="sc">$</span>yi_lnM_safe, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">3</span>),</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_lnM      =</span> <span class="fu">round</span>(<span class="fu">median</span>(d<span class="sc">$</span>yi_lnM_safe, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">3</span>),</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_lnM          =</span> <span class="fu">round</span>(<span class="fu">sd</span>(d<span class="sc">$</span>yi_lnM_safe, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">3</span>),</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">q2_5_lnM        =</span> <span class="fu">round</span>(<span class="fu">quantile</span>(d<span class="sc">$</span>yi_lnM_safe, <span class="fl">0.025</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">3</span>),</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">q97_5_lnM       =</span> <span class="fu">round</span>(<span class="fu">quantile</span>(d<span class="sc">$</span>yi_lnM_safe, <span class="fl">0.975</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">3</span>),</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_n_total  =</span> <span class="fu">round</span>(<span class="fu">median</span>(d<span class="sc">$</span>n_total, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>),</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_n_total     =</span> <span class="fu">max</span>(d<span class="sc">$</span>n_total, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_grp</span>(hh_all,          <span class="st">"With Oke et al. (2020)"</span>),</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_grp</span>(hh_without_oke,  <span class="st">"Without Oke et al. (2020)"</span>),</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_grp</span>(hh_oke,          <span class="st">"Oke et al. (2020) only"</span>)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"Raw lnM and sample-size summary for the Hunt_harv level, with and without Oke et al. (2020)."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-striped table-hover caption-top table-sm small">
+<caption>Raw lnM and sample-size summary for the Hunt_harv level, with and without Oke et al. (2020).</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Group</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">n_contrasts</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">n_references</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">n_species</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">n_sys_id</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">mean_lnM</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">median_lnM</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">sd_lnM</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">q2_5_lnM</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">q97_5_lnM</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">median_n_total</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">max_n_total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">With Oke et al. (2020)</td>
+<td style="text-align: right;">913</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">730</td>
+<td style="text-align: right;">-1.127</td>
+<td style="text-align: right;">-1.099</td>
+<td style="text-align: right;">0.955</td>
+<td style="text-align: right;">-2.950</td>
+<td style="text-align: right;">0.676</td>
+<td style="text-align: right;">335.0</td>
+<td style="text-align: right;">77352</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Without Oke et al. (2020)</td>
+<td style="text-align: right;">102</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">-0.378</td>
+<td style="text-align: right;">-0.303</td>
+<td style="text-align: right;">1.318</td>
+<td style="text-align: right;">-3.319</td>
+<td style="text-align: right;">1.785</td>
+<td style="text-align: right;">73.5</td>
+<td style="text-align: right;">77352</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Oke et al. (2020) only</td>
+<td style="text-align: right;">811</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">711</td>
+<td style="text-align: right;">-1.221</td>
+<td style="text-align: right;">-1.194</td>
+<td style="text-align: right;">0.855</td>
+<td style="text-align: right;">-2.943</td>
+<td style="text-align: right;">0.370</td>
+<td style="text-align: right;">418.0</td>
+<td style="text-align: right;">14296</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  hh_all         <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">group =</span> <span class="st">"With Oke et al. (2020)"</span>),</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  hh_without_oke <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">group =</span> <span class="st">"Without Oke et al. (2020)"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(group, taxa) <span class="sc">|&gt;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">names_from =</span> group, <span class="at">values_from =</span> n, <span class="at">values_fill =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"Taxonomic composition of the Hunt_harv level, with and without Oke et al. (2020)."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-striped table-hover caption-top table-sm small">
+<caption>Taxonomic composition of the Hunt_harv level, with and without Oke et al. (2020).</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">taxa</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">With Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Without Oke et al. (2020)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Fish</td>
+<td style="text-align: right;">853</td>
+<td style="text-align: right;">42</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mammal</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">27</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Plant</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Reptile</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">21</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>hh_without_oke <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(sp_pub, <span class="at">name =</span> <span class="st">"n_contrasts"</span>, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"Species represented in the Hunt_harv level after excluding Oke et al. (2020)."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-striped table-hover caption-top table-sm small">
+<caption>Species represented in the Hunt_harv level after excluding Oke et al. (2020).</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">sp_pub</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">n_contrasts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Gadus morhua</td>
+<td style="text-align: right;">33</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Malaclemys terrapin</td>
+<td style="text-align: right;">21</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Panax quinquefolius</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ovis canadensis</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ursus arctos</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Rangifer t. tarandus</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Clupea harengus</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sardinops ocellatus</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Saussurea laniceps</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cervus elaphus hispanicus</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Coregonus clupeaformis</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Esox lucius</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="model-specification" class="level2" data-number="F.5">
+<h2 data-number="F.5" class="anchored" data-anchor-id="model-specification"><span class="header-section-number">F.5</span> Model specification</h2>
+<p>Model m01 (<code>yi_lnM_safe ~ disturbance + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V))</code>, <code>sigma ~ disturbance</code>) was refit on the dataset with every Oke et al.&nbsp;(2020) contrast removed. The formula, priors, and MCMC settings are unchanged from the primary m01 fit: 4 chains × 4,000 iterations (2,000 warmup), <code>adapt_delta = 0.97</code>, <code>max_treedepth = 15</code>, <code>cmdstanr</code> backend. The model was fitted on <code>totoro</code>, not while rendering this book.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dat_model <span class="ot">&lt;-</span> dat_es[<span class="sc">!</span><span class="fu">is.na</span>(dat_es[[<span class="st">"disturbance"</span>]]), ]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>dat_model <span class="ot">&lt;-</span> dat_model <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(ref_id <span class="sc">!=</span> <span class="st">"p209"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>dat_model[[<span class="st">"disturbance"</span>]] <span class="ot">&lt;-</span> <span class="fu">droplevels</span>(<span class="fu">factor</span>(dat_model[[<span class="st">"disturbance"</span>]]))</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>dat_model <span class="ot">&lt;-</span> dat_model <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">es_id_model =</span> <span class="fu">factor</span>(<span class="fu">seq_len</span>(dplyr<span class="sc">::</span><span class="fu">n</span>())))</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>phylo <span class="ot">&lt;-</span> <span class="fu">prepare_phylo_and_data</span>(dat_model, A_full, <span class="at">label =</span> <span class="st">"m01_leave_oke_out"</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>dat_model <span class="ot">&lt;-</span> phylo<span class="sc">$</span>dat_model; A_mod <span class="ot">&lt;-</span> phylo<span class="sc">$</span>A_mod; V <span class="ot">&lt;-</span> phylo<span class="sc">$</span>V</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>formula <span class="ot">&lt;-</span> <span class="fu">build_ls_formula</span>(<span class="st">"disturbance"</span>, <span class="at">has_phylogeny =</span> phylo<span class="sc">$</span>has_phylo)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>priors  <span class="ot">&lt;-</span> <span class="fu">build_ls_priors</span>(formula, dat_model, V, <span class="at">A =</span> A_mod)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">fit_ls_model</span>(dat_model, formula, priors, <span class="at">V =</span> V, <span class="at">A =</span> A_mod,</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>                    <span class="at">mcmc_args =</span> default_mcmc_args)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="convergence-diagnostics-and-model-summaries" class="level2" data-number="F.6">
+<h2 data-number="F.6" class="anchored" data-anchor-id="convergence-diagnostics-and-model-summaries"><span class="header-section-number">F.6</span> Convergence diagnostics and model summaries</h2>
+<p>The leave-Oke-out fit finished on <code>totoro</code> in 14.62 hours (4 chains × 4,000 iterations each). Diagnostics for both fits, read from the project’s existing diagnostics table (primary m01) and from the leave-Oke-out fit’s own diagnostics file:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(diag_primary, diag_loo) <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(fit, max_rhat, min_bulk_ess, min_tail_ess, n_divergent, max_treedepth_hits) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">4</span>, <span class="at">caption =</span> <span class="st">"Convergence diagnostics, primary m01 vs. leave-Oke-out refit."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-striped table-hover caption-top table-sm small">
+<caption>Convergence diagnostics, primary m01 vs. leave-Oke-out refit.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">fit</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">max_rhat</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">min_bulk_ess</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">min_tail_ess</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">n_divergent</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">max_treedepth_hits</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">With Oke et al. (2020)</td>
+<td style="text-align: right;">1.0054</td>
+<td style="text-align: right;">727.4961</td>
+<td style="text-align: right;">1703.58</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Without Oke et al. (2020)</td>
+<td style="text-align: right;">1.0042</td>
+<td style="text-align: right;">1092.6731</td>
+<td style="text-align: right;">1742.58</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<section id="location-level-estimates" class="level3" data-number="F.6.1">
+<h3 data-number="F.6.1" class="anchored" data-anchor-id="location-level-estimates"><span class="header-section-number">F.6.1</span> Location — level estimates</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(loc_primary, loc_loo) <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(fit, level, emmean, lower.CrI, upper.CrI) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">names_from =</span> fit, <span class="at">values_from =</span> <span class="fu">c</span>(emmean, lower.CrI, upper.CrI)) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">caption =</span> <span class="st">"Location (mean lnM) estimate per disturbance-context level, primary m01 vs. leave-Oke-out refit."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-striped table-hover caption-top table-sm small">
+<caption>Location (mean lnM) estimate per disturbance-context level, primary m01 vs. leave-Oke-out refit.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">level</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">emmean_With Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">emmean_Without Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">lower.CrI_With Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">lower.CrI_Without Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">upper.CrI_With Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">upper.CrI_Without Oke et al. (2020)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Climate change</td>
+<td style="text-align: right;">-0.530</td>
+<td style="text-align: right;">-0.542</td>
+<td style="text-align: right;">-1.338</td>
+<td style="text-align: right;">-1.455</td>
+<td style="text-align: right;">0.319</td>
+<td style="text-align: right;">0.353</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hunt_harv</td>
+<td style="text-align: right;">-0.806</td>
+<td style="text-align: right;">-0.221</td>
+<td style="text-align: right;">-1.614</td>
+<td style="text-align: right;">-1.128</td>
+<td style="text-align: right;">-0.036</td>
+<td style="text-align: right;">0.659</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Introduction</td>
+<td style="text-align: right;">-0.524</td>
+<td style="text-align: right;">-0.526</td>
+<td style="text-align: right;">-1.319</td>
+<td style="text-align: right;">-1.384</td>
+<td style="text-align: right;">0.240</td>
+<td style="text-align: right;">0.331</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Landscape change</td>
+<td style="text-align: right;">-0.323</td>
+<td style="text-align: right;">-0.298</td>
+<td style="text-align: right;">-1.134</td>
+<td style="text-align: right;">-1.171</td>
+<td style="text-align: right;">0.495</td>
+<td style="text-align: right;">0.578</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Other</td>
+<td style="text-align: right;">-0.811</td>
+<td style="text-align: right;">-0.867</td>
+<td style="text-align: right;">-1.611</td>
+<td style="text-align: right;">-1.728</td>
+<td style="text-align: right;">-0.040</td>
+<td style="text-align: right;">-0.007</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pollution</td>
+<td style="text-align: right;">-0.357</td>
+<td style="text-align: right;">-0.367</td>
+<td style="text-align: right;">-1.214</td>
+<td style="text-align: right;">-1.297</td>
+<td style="text-align: right;">0.503</td>
+<td style="text-align: right;">0.550</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Response to introductions</td>
+<td style="text-align: right;">-0.430</td>
+<td style="text-align: right;">-0.443</td>
+<td style="text-align: right;">-1.348</td>
+<td style="text-align: right;">-1.400</td>
+<td style="text-align: right;">0.434</td>
+<td style="text-align: right;">0.481</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="location-pairwise-contrasts" class="level3" data-number="F.6.2">
+<h3 data-number="F.6.2" class="anchored" data-anchor-id="location-pairwise-contrasts"><span class="header-section-number">F.6.2</span> Location — pairwise contrasts</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(locctr_primary, locctr_loo) <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(fit, contrast, estimate, lower.CrI, upper.CrI, pd) <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">names_from =</span> fit, <span class="at">values_from =</span> <span class="fu">c</span>(estimate, lower.CrI, upper.CrI, pd)) <span class="sc">|&gt;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">caption =</span> <span class="st">"Location pairwise contrasts (difference in mean lnM), primary m01 vs. leave-Oke-out refit."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">"100%"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover caption-top table-sm small">
+<caption>Location pairwise contrasts (difference in mean lnM), primary m01 vs. leave-Oke-out refit.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">contrast</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">estimate_With Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">estimate_Without Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">lower.CrI_With Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">lower.CrI_Without Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">upper.CrI_With Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">upper.CrI_Without Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">pd_With Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">pd_Without Oke et al. (2020)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Climate change - Hunt_harv</td>
+<td style="text-align: right;">0.276</td>
+<td style="text-align: right;">-0.321</td>
+<td style="text-align: right;">-0.079</td>
+<td style="text-align: right;">-0.754</td>
+<td style="text-align: right;">0.630</td>
+<td style="text-align: right;">0.115</td>
+<td style="text-align: right;">0.942</td>
+<td style="text-align: right;">0.929</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Climate change - Introduction</td>
+<td style="text-align: right;">-0.006</td>
+<td style="text-align: right;">-0.016</td>
+<td style="text-align: right;">-0.399</td>
+<td style="text-align: right;">-0.406</td>
+<td style="text-align: right;">0.384</td>
+<td style="text-align: right;">0.389</td>
+<td style="text-align: right;">0.515</td>
+<td style="text-align: right;">0.537</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Climate change - Landscape change</td>
+<td style="text-align: right;">-0.207</td>
+<td style="text-align: right;">-0.244</td>
+<td style="text-align: right;">-0.672</td>
+<td style="text-align: right;">-0.702</td>
+<td style="text-align: right;">0.251</td>
+<td style="text-align: right;">0.215</td>
+<td style="text-align: right;">0.812</td>
+<td style="text-align: right;">0.852</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Climate change - Other</td>
+<td style="text-align: right;">0.281</td>
+<td style="text-align: right;">0.325</td>
+<td style="text-align: right;">-0.063</td>
+<td style="text-align: right;">-0.010</td>
+<td style="text-align: right;">0.623</td>
+<td style="text-align: right;">0.666</td>
+<td style="text-align: right;">0.946</td>
+<td style="text-align: right;">0.971</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Climate change - Pollution</td>
+<td style="text-align: right;">-0.173</td>
+<td style="text-align: right;">-0.175</td>
+<td style="text-align: right;">-0.729</td>
+<td style="text-align: right;">-0.758</td>
+<td style="text-align: right;">0.381</td>
+<td style="text-align: right;">0.414</td>
+<td style="text-align: right;">0.732</td>
+<td style="text-align: right;">0.726</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Climate change - Response to introductions</td>
+<td style="text-align: right;">-0.100</td>
+<td style="text-align: right;">-0.099</td>
+<td style="text-align: right;">-0.692</td>
+<td style="text-align: right;">-0.697</td>
+<td style="text-align: right;">0.503</td>
+<td style="text-align: right;">0.486</td>
+<td style="text-align: right;">0.633</td>
+<td style="text-align: right;">0.628</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hunt_harv - Introduction</td>
+<td style="text-align: right;">-0.282</td>
+<td style="text-align: right;">0.305</td>
+<td style="text-align: right;">-0.543</td>
+<td style="text-align: right;">-0.049</td>
+<td style="text-align: right;">-0.026</td>
+<td style="text-align: right;">0.661</td>
+<td style="text-align: right;">0.984</td>
+<td style="text-align: right;">0.957</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hunt_harv - Landscape change</td>
+<td style="text-align: right;">-0.483</td>
+<td style="text-align: right;">0.077</td>
+<td style="text-align: right;">-0.830</td>
+<td style="text-align: right;">-0.327</td>
+<td style="text-align: right;">-0.133</td>
+<td style="text-align: right;">0.490</td>
+<td style="text-align: right;">0.998</td>
+<td style="text-align: right;">0.639</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hunt_harv - Other</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">0.646</td>
+<td style="text-align: right;">-0.078</td>
+<td style="text-align: right;">0.352</td>
+<td style="text-align: right;">0.087</td>
+<td style="text-align: right;">0.935</td>
+<td style="text-align: right;">0.541</td>
+<td style="text-align: right;">1.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hunt_harv - Pollution</td>
+<td style="text-align: right;">-0.449</td>
+<td style="text-align: right;">0.146</td>
+<td style="text-align: right;">-0.923</td>
+<td style="text-align: right;">-0.385</td>
+<td style="text-align: right;">0.019</td>
+<td style="text-align: right;">0.685</td>
+<td style="text-align: right;">0.970</td>
+<td style="text-align: right;">0.704</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hunt_harv - Response to introductions</td>
+<td style="text-align: right;">-0.376</td>
+<td style="text-align: right;">0.222</td>
+<td style="text-align: right;">-0.885</td>
+<td style="text-align: right;">-0.342</td>
+<td style="text-align: right;">0.130</td>
+<td style="text-align: right;">0.806</td>
+<td style="text-align: right;">0.928</td>
+<td style="text-align: right;">0.780</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Introduction - Landscape change</td>
+<td style="text-align: right;">-0.201</td>
+<td style="text-align: right;">-0.228</td>
+<td style="text-align: right;">-0.549</td>
+<td style="text-align: right;">-0.573</td>
+<td style="text-align: right;">0.138</td>
+<td style="text-align: right;">0.104</td>
+<td style="text-align: right;">0.880</td>
+<td style="text-align: right;">0.907</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Introduction - Other</td>
+<td style="text-align: right;">0.287</td>
+<td style="text-align: right;">0.341</td>
+<td style="text-align: right;">0.038</td>
+<td style="text-align: right;">0.094</td>
+<td style="text-align: right;">0.537</td>
+<td style="text-align: right;">0.591</td>
+<td style="text-align: right;">0.988</td>
+<td style="text-align: right;">0.996</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Introduction - Pollution</td>
+<td style="text-align: right;">-0.167</td>
+<td style="text-align: right;">-0.159</td>
+<td style="text-align: right;">-0.584</td>
+<td style="text-align: right;">-0.606</td>
+<td style="text-align: right;">0.269</td>
+<td style="text-align: right;">0.304</td>
+<td style="text-align: right;">0.777</td>
+<td style="text-align: right;">0.756</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Introduction - Response to introductions</td>
+<td style="text-align: right;">-0.094</td>
+<td style="text-align: right;">-0.083</td>
+<td style="text-align: right;">-0.573</td>
+<td style="text-align: right;">-0.567</td>
+<td style="text-align: right;">0.373</td>
+<td style="text-align: right;">0.409</td>
+<td style="text-align: right;">0.649</td>
+<td style="text-align: right;">0.629</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Landscape change - Other</td>
+<td style="text-align: right;">0.488</td>
+<td style="text-align: right;">0.569</td>
+<td style="text-align: right;">0.148</td>
+<td style="text-align: right;">0.237</td>
+<td style="text-align: right;">0.826</td>
+<td style="text-align: right;">0.904</td>
+<td style="text-align: right;">0.998</td>
+<td style="text-align: right;">1.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Landscape change - Pollution</td>
+<td style="text-align: right;">0.035</td>
+<td style="text-align: right;">0.069</td>
+<td style="text-align: right;">-0.470</td>
+<td style="text-align: right;">-0.436</td>
+<td style="text-align: right;">0.537</td>
+<td style="text-align: right;">0.604</td>
+<td style="text-align: right;">0.547</td>
+<td style="text-align: right;">0.604</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Landscape change - Response to introductions</td>
+<td style="text-align: right;">0.108</td>
+<td style="text-align: right;">0.145</td>
+<td style="text-align: right;">-0.456</td>
+<td style="text-align: right;">-0.418</td>
+<td style="text-align: right;">0.664</td>
+<td style="text-align: right;">0.711</td>
+<td style="text-align: right;">0.652</td>
+<td style="text-align: right;">0.688</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Other - Pollution</td>
+<td style="text-align: right;">-0.453</td>
+<td style="text-align: right;">-0.500</td>
+<td style="text-align: right;">-0.927</td>
+<td style="text-align: right;">-0.986</td>
+<td style="text-align: right;">0.008</td>
+<td style="text-align: right;">-0.015</td>
+<td style="text-align: right;">0.972</td>
+<td style="text-align: right;">0.978</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Other - Response to introductions</td>
+<td style="text-align: right;">-0.380</td>
+<td style="text-align: right;">-0.424</td>
+<td style="text-align: right;">-0.887</td>
+<td style="text-align: right;">-0.937</td>
+<td style="text-align: right;">0.129</td>
+<td style="text-align: right;">0.100</td>
+<td style="text-align: right;">0.933</td>
+<td style="text-align: right;">0.945</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pollution - Response to introductions</td>
+<td style="text-align: right;">0.073</td>
+<td style="text-align: right;">0.076</td>
+<td style="text-align: right;">-0.534</td>
+<td style="text-align: right;">-0.549</td>
+<td style="text-align: right;">0.670</td>
+<td style="text-align: right;">0.695</td>
+<td style="text-align: right;">0.600</td>
+<td style="text-align: right;">0.595</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="scale-level-estimates" class="level3" data-number="F.6.3">
+<h3 data-number="F.6.3" class="anchored" data-anchor-id="scale-level-estimates"><span class="header-section-number">F.6.3</span> Scale — level estimates</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(scl_primary, scl_loo) <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(fit, level, emmean, lower.CrI, upper.CrI, residual_SD) <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">names_from =</span> fit, <span class="at">values_from =</span> <span class="fu">c</span>(emmean, lower.CrI, upper.CrI, residual_SD)) <span class="sc">|&gt;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">caption =</span> <span class="st">"Scale (log-sigma) estimate and implied residual SD per disturbance-context level, primary m01 vs. leave-Oke-out refit."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">"100%"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover caption-top table-sm small">
+<caption>Scale (log-sigma) estimate and implied residual SD per disturbance-context level, primary m01 vs. leave-Oke-out refit.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">level</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">emmean_With Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">emmean_Without Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">lower.CrI_With Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">lower.CrI_Without Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">upper.CrI_With Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">upper.CrI_Without Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">residual_SD_With Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">residual_SD_Without Oke et al. (2020)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Climate change</td>
+<td style="text-align: right;">-0.692</td>
+<td style="text-align: right;">-0.693</td>
+<td style="text-align: right;">-0.871</td>
+<td style="text-align: right;">-0.865</td>
+<td style="text-align: right;">-0.527</td>
+<td style="text-align: right;">-0.525</td>
+<td style="text-align: right;">0.501</td>
+<td style="text-align: right;">0.500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Introduction</td>
+<td style="text-align: right;">-0.677</td>
+<td style="text-align: right;">-0.677</td>
+<td style="text-align: right;">-0.712</td>
+<td style="text-align: right;">-0.714</td>
+<td style="text-align: right;">-0.640</td>
+<td style="text-align: right;">-0.642</td>
+<td style="text-align: right;">0.508</td>
+<td style="text-align: right;">0.508</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Response to introductions</td>
+<td style="text-align: right;">-0.436</td>
+<td style="text-align: right;">-0.435</td>
+<td style="text-align: right;">-0.583</td>
+<td style="text-align: right;">-0.585</td>
+<td style="text-align: right;">-0.287</td>
+<td style="text-align: right;">-0.287</td>
+<td style="text-align: right;">0.647</td>
+<td style="text-align: right;">0.647</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Other</td>
+<td style="text-align: right;">-0.554</td>
+<td style="text-align: right;">-0.875</td>
+<td style="text-align: right;">-0.612</td>
+<td style="text-align: right;">-0.975</td>
+<td style="text-align: right;">-0.495</td>
+<td style="text-align: right;">-0.779</td>
+<td style="text-align: right;">0.575</td>
+<td style="text-align: right;">0.417</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Landscape change</td>
+<td style="text-align: right;">-1.123</td>
+<td style="text-align: right;">-1.127</td>
+<td style="text-align: right;">-1.374</td>
+<td style="text-align: right;">-1.381</td>
+<td style="text-align: right;">-0.899</td>
+<td style="text-align: right;">-0.903</td>
+<td style="text-align: right;">0.325</td>
+<td style="text-align: right;">0.324</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pollution</td>
+<td style="text-align: right;">-0.876</td>
+<td style="text-align: right;">-0.874</td>
+<td style="text-align: right;">-1.142</td>
+<td style="text-align: right;">-1.140</td>
+<td style="text-align: right;">-0.639</td>
+<td style="text-align: right;">-0.637</td>
+<td style="text-align: right;">0.416</td>
+<td style="text-align: right;">0.417</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hunt_harv</td>
+<td style="text-align: right;">-0.327</td>
+<td style="text-align: right;">-0.494</td>
+<td style="text-align: right;">-0.388</td>
+<td style="text-align: right;">-0.723</td>
+<td style="text-align: right;">-0.267</td>
+<td style="text-align: right;">-0.266</td>
+<td style="text-align: right;">0.721</td>
+<td style="text-align: right;">0.610</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="scale-pairwise-contrasts" class="level3" data-number="F.6.4">
+<h3 data-number="F.6.4" class="anchored" data-anchor-id="scale-pairwise-contrasts"><span class="header-section-number">F.6.4</span> Scale — pairwise contrasts</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(sclctr_primary, sclctr_loo) <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(fit, contrast, estimate, lower.CrI, upper.CrI, pd) <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">names_from =</span> fit, <span class="at">values_from =</span> <span class="fu">c</span>(estimate, lower.CrI, upper.CrI, pd)) <span class="sc">|&gt;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">caption =</span> <span class="st">"Scale (log-sigma) pairwise contrasts, primary m01 vs. leave-Oke-out refit."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">"100%"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover caption-top table-sm small">
+<caption>Scale (log-sigma) pairwise contrasts, primary m01 vs. leave-Oke-out refit.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">contrast</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">estimate_With Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">estimate_Without Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">lower.CrI_With Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">lower.CrI_Without Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">upper.CrI_With Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">upper.CrI_Without Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">pd_With Oke et al. (2020)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">pd_Without Oke et al. (2020)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Climate change - Introduction</td>
+<td style="text-align: right;">-0.015</td>
+<td style="text-align: right;">-0.016</td>
+<td style="text-align: right;">-0.199</td>
+<td style="text-align: right;">-0.191</td>
+<td style="text-align: right;">0.155</td>
+<td style="text-align: right;">0.153</td>
+<td style="text-align: right;">0.558</td>
+<td style="text-align: right;">0.566</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Climate change - Response to introductions</td>
+<td style="text-align: right;">-0.256</td>
+<td style="text-align: right;">-0.257</td>
+<td style="text-align: right;">-0.486</td>
+<td style="text-align: right;">-0.484</td>
+<td style="text-align: right;">-0.028</td>
+<td style="text-align: right;">-0.034</td>
+<td style="text-align: right;">0.988</td>
+<td style="text-align: right;">0.988</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Climate change - Other</td>
+<td style="text-align: right;">-0.138</td>
+<td style="text-align: right;">0.182</td>
+<td style="text-align: right;">-0.329</td>
+<td style="text-align: right;">-0.009</td>
+<td style="text-align: right;">0.038</td>
+<td style="text-align: right;">0.380</td>
+<td style="text-align: right;">0.937</td>
+<td style="text-align: right;">0.968</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Climate change - Landscape change</td>
+<td style="text-align: right;">0.431</td>
+<td style="text-align: right;">0.434</td>
+<td style="text-align: right;">0.142</td>
+<td style="text-align: right;">0.155</td>
+<td style="text-align: right;">0.737</td>
+<td style="text-align: right;">0.739</td>
+<td style="text-align: right;">0.999</td>
+<td style="text-align: right;">0.999</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Climate change - Pollution</td>
+<td style="text-align: right;">0.184</td>
+<td style="text-align: right;">0.181</td>
+<td style="text-align: right;">-0.119</td>
+<td style="text-align: right;">-0.113</td>
+<td style="text-align: right;">0.489</td>
+<td style="text-align: right;">0.481</td>
+<td style="text-align: right;">0.877</td>
+<td style="text-align: right;">0.888</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Climate change - Hunt_harv</td>
+<td style="text-align: right;">-0.365</td>
+<td style="text-align: right;">-0.199</td>
+<td style="text-align: right;">-0.554</td>
+<td style="text-align: right;">-0.481</td>
+<td style="text-align: right;">-0.189</td>
+<td style="text-align: right;">0.082</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.919</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Introduction - Response to introductions</td>
+<td style="text-align: right;">-0.241</td>
+<td style="text-align: right;">-0.242</td>
+<td style="text-align: right;">-0.393</td>
+<td style="text-align: right;">-0.394</td>
+<td style="text-align: right;">-0.090</td>
+<td style="text-align: right;">-0.089</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.999</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Introduction - Other</td>
+<td style="text-align: right;">-0.123</td>
+<td style="text-align: right;">0.198</td>
+<td style="text-align: right;">-0.191</td>
+<td style="text-align: right;">0.094</td>
+<td style="text-align: right;">-0.053</td>
+<td style="text-align: right;">0.305</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Introduction - Landscape change</td>
+<td style="text-align: right;">0.447</td>
+<td style="text-align: right;">0.450</td>
+<td style="text-align: right;">0.222</td>
+<td style="text-align: right;">0.219</td>
+<td style="text-align: right;">0.702</td>
+<td style="text-align: right;">0.705</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Introduction - Pollution</td>
+<td style="text-align: right;">0.199</td>
+<td style="text-align: right;">0.197</td>
+<td style="text-align: right;">-0.040</td>
+<td style="text-align: right;">-0.044</td>
+<td style="text-align: right;">0.471</td>
+<td style="text-align: right;">0.465</td>
+<td style="text-align: right;">0.945</td>
+<td style="text-align: right;">0.943</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Introduction - Hunt_harv</td>
+<td style="text-align: right;">-0.350</td>
+<td style="text-align: right;">-0.183</td>
+<td style="text-align: right;">-0.421</td>
+<td style="text-align: right;">-0.413</td>
+<td style="text-align: right;">-0.278</td>
+<td style="text-align: right;">0.045</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.943</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Response to introductions - Other</td>
+<td style="text-align: right;">0.118</td>
+<td style="text-align: right;">0.440</td>
+<td style="text-align: right;">-0.038</td>
+<td style="text-align: right;">0.262</td>
+<td style="text-align: right;">0.276</td>
+<td style="text-align: right;">0.617</td>
+<td style="text-align: right;">0.925</td>
+<td style="text-align: right;">1.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Response to introductions - Landscape change</td>
+<td style="text-align: right;">0.687</td>
+<td style="text-align: right;">0.692</td>
+<td style="text-align: right;">0.419</td>
+<td style="text-align: right;">0.417</td>
+<td style="text-align: right;">0.976</td>
+<td style="text-align: right;">0.989</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Response to introductions - Pollution</td>
+<td style="text-align: right;">0.440</td>
+<td style="text-align: right;">0.439</td>
+<td style="text-align: right;">0.166</td>
+<td style="text-align: right;">0.157</td>
+<td style="text-align: right;">0.746</td>
+<td style="text-align: right;">0.733</td>
+<td style="text-align: right;">0.999</td>
+<td style="text-align: right;">0.999</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Response to introductions - Hunt_harv</td>
+<td style="text-align: right;">-0.109</td>
+<td style="text-align: right;">0.058</td>
+<td style="text-align: right;">-0.270</td>
+<td style="text-align: right;">-0.209</td>
+<td style="text-align: right;">0.053</td>
+<td style="text-align: right;">0.335</td>
+<td style="text-align: right;">0.906</td>
+<td style="text-align: right;">0.659</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Other - Landscape change</td>
+<td style="text-align: right;">0.570</td>
+<td style="text-align: right;">0.252</td>
+<td style="text-align: right;">0.340</td>
+<td style="text-align: right;">0.009</td>
+<td style="text-align: right;">0.826</td>
+<td style="text-align: right;">0.525</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.979</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Other - Pollution</td>
+<td style="text-align: right;">0.322</td>
+<td style="text-align: right;">-0.001</td>
+<td style="text-align: right;">0.080</td>
+<td style="text-align: right;">-0.262</td>
+<td style="text-align: right;">0.597</td>
+<td style="text-align: right;">0.283</td>
+<td style="text-align: right;">0.995</td>
+<td style="text-align: right;">0.518</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Other - Hunt_harv</td>
+<td style="text-align: right;">-0.227</td>
+<td style="text-align: right;">-0.381</td>
+<td style="text-align: right;">-0.311</td>
+<td style="text-align: right;">-0.628</td>
+<td style="text-align: right;">-0.142</td>
+<td style="text-align: right;">-0.129</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.999</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Landscape change - Pollution</td>
+<td style="text-align: right;">-0.248</td>
+<td style="text-align: right;">-0.253</td>
+<td style="text-align: right;">-0.582</td>
+<td style="text-align: right;">-0.596</td>
+<td style="text-align: right;">0.099</td>
+<td style="text-align: right;">0.099</td>
+<td style="text-align: right;">0.920</td>
+<td style="text-align: right;">0.928</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Landscape change - Hunt_harv</td>
+<td style="text-align: right;">-0.796</td>
+<td style="text-align: right;">-0.633</td>
+<td style="text-align: right;">-1.054</td>
+<td style="text-align: right;">-0.972</td>
+<td style="text-align: right;">-0.563</td>
+<td style="text-align: right;">-0.310</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pollution - Hunt_harv</td>
+<td style="text-align: right;">-0.549</td>
+<td style="text-align: right;">-0.380</td>
+<td style="text-align: right;">-0.821</td>
+<td style="text-align: right;">-0.735</td>
+<td style="text-align: right;">-0.307</td>
+<td style="text-align: right;">-0.057</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.989</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+<!-- -->
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../chapters/appendix/protocol_deviation_time_adjustment.html" class="pagination-link" aria-label="Protocol deviation — moderators adjusted for elapsed time">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Protocol deviation — moderators adjusted for elapsed time</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Protocol deviation — leave-one-reference-out check: Oke et al. (2020)"</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Scripts"</span>, <span class="st">"00_packages.R"</span>))</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>dat_es <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"effect_sizes"</span>, <span class="st">"proceed_lnm_safe.rds"</span>))</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## Recorded change</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>This chapter was **not** part of the pre-registered protocol. It was added</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>after a question about how much of the <span class="in">`Hunt_harv`</span> (hunting/harvesting)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>disturbance-context level in model m01 is contributed by a single reference,</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>Oke et al. (2020, *Nature Communications* 11: 4155, with companion dataset</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>Clark 2020, KNB), a long-term monitoring dataset on Pacific salmon</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>(*Oncorhynchus* spp.) body size.</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="What changed—and what did not"}</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>**Changed:** this chapter documents the number of contrasts, references,</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>species, and study systems that Oke et al. (2020) contributes to the</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="in">`Hunt_harv`</span> level, and refits m01 on the same data with every Oke et al.</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>(2020) contrast removed (<span class="in">`ref_id != "p209"`</span>).</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>**Unchanged:** the dataset construction pipeline, the moderator definitions,</span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>the <span class="in">`ref_id`</span> and phylogenetic random effects, the priors, and the MCMC</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>settings all match the primary m01 model.</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## Identifying Oke et al. (2020) in PROCEED</span></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>Oke et al. (2020) contrasts are identified by <span class="in">`ref_id == "p209"`</span>. This</span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>matches exactly on DOI and on the database's <span class="in">`reference`</span> field.</span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a><span class="in">```{r identify-oke}</span></span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>oke <span class="ot">&lt;-</span> dat_es <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(ref_id <span class="sc">==</span> <span class="st">"p209"</span>)</span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>  <span class="at">ref_id    =</span> <span class="fu">unique</span>(oke<span class="sc">$</span>ref_id),</span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a>  <span class="at">doi       =</span> <span class="fu">unique</span>(oke<span class="sc">$</span>doi),</span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>  <span class="at">reference =</span> <span class="fu">unique</span>(oke<span class="sc">$</span>reference)</span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"Citation fields recorded for ref_id p209."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a><span class="fu">## Contribution to the dataset</span></span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a><span class="in">```{r oke-counts}</span></span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a>oke_counts <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a>  <span class="at">Field =</span> <span class="fu">c</span>(</span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Total Oke et al. (2020) contrasts"</span>,</span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Classified `Hunt_harv`"</span>,</span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Classified `Other`"</span>,</span>
+<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Unique species"</span>,</span>
+<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Unique study systems (`sys_id`)"</span></span>
+<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a>  <span class="at">Value =</span> <span class="fu">c</span>(</span>
+<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nrow</span>(oke),</span>
+<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>(oke<span class="sc">$</span>disturbance <span class="sc">==</span> <span class="st">"Hunt_harv"</span>),</span>
+<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>(oke<span class="sc">$</span>disturbance <span class="sc">==</span> <span class="st">"Other"</span>),</span>
+<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">n_distinct</span>(oke<span class="sc">$</span>sp_pub),</span>
+<span id="cb15-64"><a href="#cb15-64" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">n_distinct</span>(oke<span class="sc">$</span>sys_id)</span>
+<span id="cb15-65"><a href="#cb15-65" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-66"><a href="#cb15-66" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-67"><a href="#cb15-67" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(oke_counts, <span class="at">caption =</span> <span class="st">"Oke et al. (2020) contrasts in the analysis-ready dataset."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-68"><a href="#cb15-68" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-69"><a href="#cb15-69" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-70"><a href="#cb15-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-71"><a href="#cb15-71" aria-hidden="true" tabindex="-1"></a><span class="in">```{r oke-species}</span></span>
+<span id="cb15-72"><a href="#cb15-72" aria-hidden="true" tabindex="-1"></a>oke <span class="sc">|&gt;</span></span>
+<span id="cb15-73"><a href="#cb15-73" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(sp_pub, <span class="at">name =</span> <span class="st">"n_contrasts"</span>, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-74"><a href="#cb15-74" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"Species represented among Oke et al. (2020) contrasts."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-75"><a href="#cb15-75" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-76"><a href="#cb15-76" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-77"><a href="#cb15-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-78"><a href="#cb15-78" aria-hidden="true" tabindex="-1"></a><span class="in">```{r hh-full-vs-oke}</span></span>
+<span id="cb15-79"><a href="#cb15-79" aria-hidden="true" tabindex="-1"></a>hh_all <span class="ot">&lt;-</span> dat_es <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(disturbance <span class="sc">==</span> <span class="st">"Hunt_harv"</span>)</span>
+<span id="cb15-80"><a href="#cb15-80" aria-hidden="true" tabindex="-1"></a>hh_oke <span class="ot">&lt;-</span> hh_all <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(ref_id <span class="sc">==</span> <span class="st">"p209"</span>)</span>
+<span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a>contribution <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a>  <span class="at">Metric =</span> <span class="fu">c</span>(<span class="st">"Contrasts"</span>, <span class="st">"References"</span>, <span class="st">"Species"</span>, <span class="st">"Study systems (`sys_id`)"</span>),</span>
+<span id="cb15-84"><a href="#cb15-84" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Hunt_harv total</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(</span>
+<span id="cb15-85"><a href="#cb15-85" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nrow</span>(hh_all),</span>
+<span id="cb15-86"><a href="#cb15-86" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">n_distinct</span>(hh_all<span class="sc">$</span>ref_id),</span>
+<span id="cb15-87"><a href="#cb15-87" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">n_distinct</span>(hh_all<span class="sc">$</span>sp_pub),</span>
+<span id="cb15-88"><a href="#cb15-88" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">n_distinct</span>(hh_all<span class="sc">$</span>sys_id)</span>
+<span id="cb15-89"><a href="#cb15-89" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb15-90"><a href="#cb15-90" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">From Oke et al. (2020)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(</span>
+<span id="cb15-91"><a href="#cb15-91" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nrow</span>(hh_oke),</span>
+<span id="cb15-92"><a href="#cb15-92" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>L,</span>
+<span id="cb15-93"><a href="#cb15-93" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">n_distinct</span>(hh_oke<span class="sc">$</span>sp_pub),</span>
+<span id="cb15-94"><a href="#cb15-94" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">n_distinct</span>(hh_oke<span class="sc">$</span>sys_id)</span>
+<span id="cb15-95"><a href="#cb15-95" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-96"><a href="#cb15-96" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb15-97"><a href="#cb15-97" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">Oke share (%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="st">`</span><span class="at">From Oke et al. (2020)</span><span class="st">`</span> <span class="sc">/</span> <span class="st">`</span><span class="at">Hunt_harv total</span><span class="st">`</span>, <span class="dv">1</span>))</span>
+<span id="cb15-98"><a href="#cb15-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-99"><a href="#cb15-99" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(contribution, <span class="at">caption =</span> <span class="st">"Oke et al. (2020) contribution to the Hunt_harv disturbance-context level."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-100"><a href="#cb15-100" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-101"><a href="#cb15-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-102"><a href="#cb15-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-103"><a href="#cb15-103" aria-hidden="true" tabindex="-1"></a><span class="in">```{r hh-references}</span></span>
+<span id="cb15-104"><a href="#cb15-104" aria-hidden="true" tabindex="-1"></a>hh_all <span class="sc">|&gt;</span></span>
+<span id="cb15-105"><a href="#cb15-105" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(ref_id, reference, <span class="at">name =</span> <span class="st">"n_contrasts"</span>, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-106"><a href="#cb15-106" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"All references contributing to the Hunt_harv disturbance-context level, ranked by number of contrasts."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-107"><a href="#cb15-107" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-108"><a href="#cb15-108" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">scroll_box</span>(<span class="at">height =</span> <span class="st">"350px"</span>)</span>
+<span id="cb15-109"><a href="#cb15-109" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-110"><a href="#cb15-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-111"><a href="#cb15-111" aria-hidden="true" tabindex="-1"></a><span class="fu">## Hunting/harvesting contrasts with and without Oke et al. (2020)</span></span>
+<span id="cb15-112"><a href="#cb15-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-113"><a href="#cb15-113" aria-hidden="true" tabindex="-1"></a><span class="in">```{r hh-with-without}</span></span>
+<span id="cb15-114"><a href="#cb15-114" aria-hidden="true" tabindex="-1"></a>hh_without_oke <span class="ot">&lt;-</span> hh_all <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(ref_id <span class="sc">!=</span> <span class="st">"p209"</span>)</span>
+<span id="cb15-115"><a href="#cb15-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-116"><a href="#cb15-116" aria-hidden="true" tabindex="-1"></a>summarize_grp <span class="ot">&lt;-</span> <span class="cf">function</span>(d, label) {</span>
+<span id="cb15-117"><a href="#cb15-117" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb15-118"><a href="#cb15-118" aria-hidden="true" tabindex="-1"></a>    <span class="at">Group           =</span> label,</span>
+<span id="cb15-119"><a href="#cb15-119" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_contrasts     =</span> <span class="fu">nrow</span>(d),</span>
+<span id="cb15-120"><a href="#cb15-120" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_references    =</span> dplyr<span class="sc">::</span><span class="fu">n_distinct</span>(d<span class="sc">$</span>ref_id),</span>
+<span id="cb15-121"><a href="#cb15-121" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_species       =</span> dplyr<span class="sc">::</span><span class="fu">n_distinct</span>(d<span class="sc">$</span>sp_pub),</span>
+<span id="cb15-122"><a href="#cb15-122" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_sys_id        =</span> dplyr<span class="sc">::</span><span class="fu">n_distinct</span>(d<span class="sc">$</span>sys_id),</span>
+<span id="cb15-123"><a href="#cb15-123" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_lnM        =</span> <span class="fu">round</span>(<span class="fu">mean</span>(d<span class="sc">$</span>yi_lnM_safe, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">3</span>),</span>
+<span id="cb15-124"><a href="#cb15-124" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_lnM      =</span> <span class="fu">round</span>(<span class="fu">median</span>(d<span class="sc">$</span>yi_lnM_safe, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">3</span>),</span>
+<span id="cb15-125"><a href="#cb15-125" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_lnM          =</span> <span class="fu">round</span>(<span class="fu">sd</span>(d<span class="sc">$</span>yi_lnM_safe, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">3</span>),</span>
+<span id="cb15-126"><a href="#cb15-126" aria-hidden="true" tabindex="-1"></a>    <span class="at">q2_5_lnM        =</span> <span class="fu">round</span>(<span class="fu">quantile</span>(d<span class="sc">$</span>yi_lnM_safe, <span class="fl">0.025</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">3</span>),</span>
+<span id="cb15-127"><a href="#cb15-127" aria-hidden="true" tabindex="-1"></a>    <span class="at">q97_5_lnM       =</span> <span class="fu">round</span>(<span class="fu">quantile</span>(d<span class="sc">$</span>yi_lnM_safe, <span class="fl">0.975</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">3</span>),</span>
+<span id="cb15-128"><a href="#cb15-128" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_n_total  =</span> <span class="fu">round</span>(<span class="fu">median</span>(d<span class="sc">$</span>n_total, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>),</span>
+<span id="cb15-129"><a href="#cb15-129" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_n_total     =</span> <span class="fu">max</span>(d<span class="sc">$</span>n_total, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb15-130"><a href="#cb15-130" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-131"><a href="#cb15-131" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-132"><a href="#cb15-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-133"><a href="#cb15-133" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(</span>
+<span id="cb15-134"><a href="#cb15-134" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_grp</span>(hh_all,          <span class="st">"With Oke et al. (2020)"</span>),</span>
+<span id="cb15-135"><a href="#cb15-135" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_grp</span>(hh_without_oke,  <span class="st">"Without Oke et al. (2020)"</span>),</span>
+<span id="cb15-136"><a href="#cb15-136" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_grp</span>(hh_oke,          <span class="st">"Oke et al. (2020) only"</span>)</span>
+<span id="cb15-137"><a href="#cb15-137" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb15-138"><a href="#cb15-138" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"Raw lnM and sample-size summary for the Hunt_harv level, with and without Oke et al. (2020)."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-139"><a href="#cb15-139" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-140"><a href="#cb15-140" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-141"><a href="#cb15-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-142"><a href="#cb15-142" aria-hidden="true" tabindex="-1"></a><span class="in">```{r hh-taxa}</span></span>
+<span id="cb15-143"><a href="#cb15-143" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(</span>
+<span id="cb15-144"><a href="#cb15-144" aria-hidden="true" tabindex="-1"></a>  hh_all         <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">group =</span> <span class="st">"With Oke et al. (2020)"</span>),</span>
+<span id="cb15-145"><a href="#cb15-145" aria-hidden="true" tabindex="-1"></a>  hh_without_oke <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">group =</span> <span class="st">"Without Oke et al. (2020)"</span>)</span>
+<span id="cb15-146"><a href="#cb15-146" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb15-147"><a href="#cb15-147" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(group, taxa) <span class="sc">|&gt;</span></span>
+<span id="cb15-148"><a href="#cb15-148" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">names_from =</span> group, <span class="at">values_from =</span> n, <span class="at">values_fill =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-149"><a href="#cb15-149" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"Taxonomic composition of the Hunt_harv level, with and without Oke et al. (2020)."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-150"><a href="#cb15-150" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-151"><a href="#cb15-151" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-152"><a href="#cb15-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-153"><a href="#cb15-153" aria-hidden="true" tabindex="-1"></a><span class="in">```{r hh-species-without-oke}</span></span>
+<span id="cb15-154"><a href="#cb15-154" aria-hidden="true" tabindex="-1"></a>hh_without_oke <span class="sc">|&gt;</span></span>
+<span id="cb15-155"><a href="#cb15-155" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(sp_pub, <span class="at">name =</span> <span class="st">"n_contrasts"</span>, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-156"><a href="#cb15-156" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"Species represented in the Hunt_harv level after excluding Oke et al. (2020)."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-157"><a href="#cb15-157" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-158"><a href="#cb15-158" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-159"><a href="#cb15-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-160"><a href="#cb15-160" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model specification</span></span>
+<span id="cb15-161"><a href="#cb15-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-162"><a href="#cb15-162" aria-hidden="true" tabindex="-1"></a>Model m01 (<span class="in">`yi_lnM_safe ~ disturbance + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V))`</span>,</span>
+<span id="cb15-163"><a href="#cb15-163" aria-hidden="true" tabindex="-1"></a><span class="in">`sigma ~ disturbance`</span>) was refit on the dataset with every Oke et al. (2020)</span>
+<span id="cb15-164"><a href="#cb15-164" aria-hidden="true" tabindex="-1"></a>contrast removed. The formula, priors, and MCMC settings are unchanged from</span>
+<span id="cb15-165"><a href="#cb15-165" aria-hidden="true" tabindex="-1"></a>the primary m01 fit: 4 chains × 4,000 iterations (2,000 warmup),</span>
+<span id="cb15-166"><a href="#cb15-166" aria-hidden="true" tabindex="-1"></a><span class="in">`adapt_delta = 0.97`</span>, <span class="in">`max_treedepth = 15`</span>, <span class="in">`cmdstanr`</span> backend. The model was</span>
+<span id="cb15-167"><a href="#cb15-167" aria-hidden="true" tabindex="-1"></a>fitted on <span class="in">`totoro`</span>, not while rendering this book.</span>
+<span id="cb15-168"><a href="#cb15-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-169"><a href="#cb15-169" aria-hidden="true" tabindex="-1"></a><span class="in">```{r how-fit, eval=FALSE}</span></span>
+<span id="cb15-170"><a href="#cb15-170" aria-hidden="true" tabindex="-1"></a>dat_model <span class="ot">&lt;-</span> dat_es[<span class="sc">!</span><span class="fu">is.na</span>(dat_es[[<span class="st">"disturbance"</span>]]), ]</span>
+<span id="cb15-171"><a href="#cb15-171" aria-hidden="true" tabindex="-1"></a>dat_model <span class="ot">&lt;-</span> dat_model <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(ref_id <span class="sc">!=</span> <span class="st">"p209"</span>)</span>
+<span id="cb15-172"><a href="#cb15-172" aria-hidden="true" tabindex="-1"></a>dat_model[[<span class="st">"disturbance"</span>]] <span class="ot">&lt;-</span> <span class="fu">droplevels</span>(<span class="fu">factor</span>(dat_model[[<span class="st">"disturbance"</span>]]))</span>
+<span id="cb15-173"><a href="#cb15-173" aria-hidden="true" tabindex="-1"></a>dat_model <span class="ot">&lt;-</span> dat_model <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">es_id_model =</span> <span class="fu">factor</span>(<span class="fu">seq_len</span>(dplyr<span class="sc">::</span><span class="fu">n</span>())))</span>
+<span id="cb15-174"><a href="#cb15-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-175"><a href="#cb15-175" aria-hidden="true" tabindex="-1"></a>phylo <span class="ot">&lt;-</span> <span class="fu">prepare_phylo_and_data</span>(dat_model, A_full, <span class="at">label =</span> <span class="st">"m01_leave_oke_out"</span>)</span>
+<span id="cb15-176"><a href="#cb15-176" aria-hidden="true" tabindex="-1"></a>dat_model <span class="ot">&lt;-</span> phylo<span class="sc">$</span>dat_model; A_mod <span class="ot">&lt;-</span> phylo<span class="sc">$</span>A_mod; V <span class="ot">&lt;-</span> phylo<span class="sc">$</span>V</span>
+<span id="cb15-177"><a href="#cb15-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-178"><a href="#cb15-178" aria-hidden="true" tabindex="-1"></a>formula <span class="ot">&lt;-</span> <span class="fu">build_ls_formula</span>(<span class="st">"disturbance"</span>, <span class="at">has_phylogeny =</span> phylo<span class="sc">$</span>has_phylo)</span>
+<span id="cb15-179"><a href="#cb15-179" aria-hidden="true" tabindex="-1"></a>priors  <span class="ot">&lt;-</span> <span class="fu">build_ls_priors</span>(formula, dat_model, V, <span class="at">A =</span> A_mod)</span>
+<span id="cb15-180"><a href="#cb15-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-181"><a href="#cb15-181" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">fit_ls_model</span>(dat_model, formula, priors, <span class="at">V =</span> V, <span class="at">A =</span> A_mod,</span>
+<span id="cb15-182"><a href="#cb15-182" aria-hidden="true" tabindex="-1"></a>                    <span class="at">mcmc_args =</span> default_mcmc_args)</span>
+<span id="cb15-183"><a href="#cb15-183" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-184"><a href="#cb15-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-185"><a href="#cb15-185" aria-hidden="true" tabindex="-1"></a><span class="fu">## Convergence diagnostics and model summaries</span></span>
+<span id="cb15-186"><a href="#cb15-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-187"><a href="#cb15-187" aria-hidden="true" tabindex="-1"></a>The leave-Oke-out fit finished on <span class="in">`totoro`</span> in 14.62 hours (4 chains × 4,000</span>
+<span id="cb15-188"><a href="#cb15-188" aria-hidden="true" tabindex="-1"></a>iterations each). Diagnostics for both fits, read from the project's</span>
+<span id="cb15-189"><a href="#cb15-189" aria-hidden="true" tabindex="-1"></a>existing diagnostics table (primary m01) and from the leave-Oke-out fit's</span>
+<span id="cb15-190"><a href="#cb15-190" aria-hidden="true" tabindex="-1"></a>own diagnostics file:</span>
+<span id="cb15-191"><a href="#cb15-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-192"><a href="#cb15-192" aria-hidden="true" tabindex="-1"></a><span class="in">```{r loo-diag-setup, include=FALSE}</span></span>
+<span id="cb15-193"><a href="#cb15-193" aria-hidden="true" tabindex="-1"></a>sens_dir <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"tables"</span>, <span class="st">"sensitivity"</span>)</span>
+<span id="cb15-194"><a href="#cb15-194" aria-hidden="true" tabindex="-1"></a>ctr_dir  <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"tables"</span>, <span class="st">"contrasts"</span>)</span>
+<span id="cb15-195"><a href="#cb15-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-196"><a href="#cb15-196" aria-hidden="true" tabindex="-1"></a>diag_primary <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb15-197"><a href="#cb15-197" aria-hidden="true" tabindex="-1"></a>  here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"tables"</span>, <span class="st">"model_diagnostics_all_moderators.csv"</span>),</span>
+<span id="cb15-198"><a href="#cb15-198" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb15-199"><a href="#cb15-199" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb15-200"><a href="#cb15-200" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(model_id <span class="sc">==</span> <span class="st">"m01"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-201"><a href="#cb15-201" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">fit =</span> <span class="st">"With Oke et al. (2020)"</span>)</span>
+<span id="cb15-202"><a href="#cb15-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-203"><a href="#cb15-203" aria-hidden="true" tabindex="-1"></a>diag_loo <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb15-204"><a href="#cb15-204" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.path</span>(sens_dir, <span class="st">"leave_oke_out_diagnostics.csv"</span>),</span>
+<span id="cb15-205"><a href="#cb15-205" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb15-206"><a href="#cb15-206" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb15-207"><a href="#cb15-207" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">fit =</span> <span class="st">"Without Oke et al. (2020)"</span>)</span>
+<span id="cb15-208"><a href="#cb15-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-209"><a href="#cb15-209" aria-hidden="true" tabindex="-1"></a>loc_primary <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">file.path</span>(ctr_dir, <span class="st">"m01_location_emmeans.csv"</span>), <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-210"><a href="#cb15-210" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">fit =</span> <span class="st">"With Oke et al. (2020)"</span>)</span>
+<span id="cb15-211"><a href="#cb15-211" aria-hidden="true" tabindex="-1"></a>loc_loo <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">file.path</span>(sens_dir, <span class="st">"leave_oke_out_location_emmeans.csv"</span>), <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-212"><a href="#cb15-212" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">fit =</span> <span class="st">"Without Oke et al. (2020)"</span>)</span>
+<span id="cb15-213"><a href="#cb15-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-214"><a href="#cb15-214" aria-hidden="true" tabindex="-1"></a>locctr_primary <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">file.path</span>(ctr_dir, <span class="st">"m01_location_contrasts.csv"</span>), <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-215"><a href="#cb15-215" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">fit =</span> <span class="st">"With Oke et al. (2020)"</span>)</span>
+<span id="cb15-216"><a href="#cb15-216" aria-hidden="true" tabindex="-1"></a>locctr_loo <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">file.path</span>(sens_dir, <span class="st">"leave_oke_out_location_contrasts.csv"</span>), <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-217"><a href="#cb15-217" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">fit =</span> <span class="st">"Without Oke et al. (2020)"</span>)</span>
+<span id="cb15-218"><a href="#cb15-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-219"><a href="#cb15-219" aria-hidden="true" tabindex="-1"></a>scl_primary <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">file.path</span>(ctr_dir, <span class="st">"m01_scale_emmeans.csv"</span>), <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-220"><a href="#cb15-220" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">fit =</span> <span class="st">"With Oke et al. (2020)"</span>)</span>
+<span id="cb15-221"><a href="#cb15-221" aria-hidden="true" tabindex="-1"></a>scl_loo <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">file.path</span>(sens_dir, <span class="st">"leave_oke_out_scale_emmeans.csv"</span>), <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-222"><a href="#cb15-222" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">fit =</span> <span class="st">"Without Oke et al. (2020)"</span>)</span>
+<span id="cb15-223"><a href="#cb15-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-224"><a href="#cb15-224" aria-hidden="true" tabindex="-1"></a>sclctr_primary <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">file.path</span>(ctr_dir, <span class="st">"m01_scale_contrasts.csv"</span>), <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-225"><a href="#cb15-225" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">fit =</span> <span class="st">"With Oke et al. (2020)"</span>)</span>
+<span id="cb15-226"><a href="#cb15-226" aria-hidden="true" tabindex="-1"></a>sclctr_loo <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">file.path</span>(sens_dir, <span class="st">"leave_oke_out_scale_contrasts.csv"</span>), <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-227"><a href="#cb15-227" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">fit =</span> <span class="st">"Without Oke et al. (2020)"</span>)</span>
+<span id="cb15-228"><a href="#cb15-228" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-229"><a href="#cb15-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-230"><a href="#cb15-230" aria-hidden="true" tabindex="-1"></a><span class="in">```{r loo-diag-table}</span></span>
+<span id="cb15-231"><a href="#cb15-231" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(diag_primary, diag_loo) <span class="sc">|&gt;</span></span>
+<span id="cb15-232"><a href="#cb15-232" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(fit, max_rhat, min_bulk_ess, min_tail_ess, n_divergent, max_treedepth_hits) <span class="sc">|&gt;</span></span>
+<span id="cb15-233"><a href="#cb15-233" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">4</span>, <span class="at">caption =</span> <span class="st">"Convergence diagnostics, primary m01 vs. leave-Oke-out refit."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-234"><a href="#cb15-234" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-235"><a href="#cb15-235" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-236"><a href="#cb15-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-237"><a href="#cb15-237" aria-hidden="true" tabindex="-1"></a><span class="fu">### Location — level estimates</span></span>
+<span id="cb15-238"><a href="#cb15-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-239"><a href="#cb15-239" aria-hidden="true" tabindex="-1"></a><span class="in">```{r loo-location-emmeans}</span></span>
+<span id="cb15-240"><a href="#cb15-240" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(loc_primary, loc_loo) <span class="sc">|&gt;</span></span>
+<span id="cb15-241"><a href="#cb15-241" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(fit, level, emmean, lower.CrI, upper.CrI) <span class="sc">|&gt;</span></span>
+<span id="cb15-242"><a href="#cb15-242" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">names_from =</span> fit, <span class="at">values_from =</span> <span class="fu">c</span>(emmean, lower.CrI, upper.CrI)) <span class="sc">|&gt;</span></span>
+<span id="cb15-243"><a href="#cb15-243" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">caption =</span> <span class="st">"Location (mean lnM) estimate per disturbance-context level, primary m01 vs. leave-Oke-out refit."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-244"><a href="#cb15-244" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-245"><a href="#cb15-245" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-246"><a href="#cb15-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-247"><a href="#cb15-247" aria-hidden="true" tabindex="-1"></a><span class="fu">### Location — pairwise contrasts</span></span>
+<span id="cb15-248"><a href="#cb15-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-249"><a href="#cb15-249" aria-hidden="true" tabindex="-1"></a><span class="in">```{r loo-location-contrasts}</span></span>
+<span id="cb15-250"><a href="#cb15-250" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(locctr_primary, locctr_loo) <span class="sc">|&gt;</span></span>
+<span id="cb15-251"><a href="#cb15-251" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(fit, contrast, estimate, lower.CrI, upper.CrI, pd) <span class="sc">|&gt;</span></span>
+<span id="cb15-252"><a href="#cb15-252" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">names_from =</span> fit, <span class="at">values_from =</span> <span class="fu">c</span>(estimate, lower.CrI, upper.CrI, pd)) <span class="sc">|&gt;</span></span>
+<span id="cb15-253"><a href="#cb15-253" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">caption =</span> <span class="st">"Location pairwise contrasts (difference in mean lnM), primary m01 vs. leave-Oke-out refit."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-254"><a href="#cb15-254" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-255"><a href="#cb15-255" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">"100%"</span>)</span>
+<span id="cb15-256"><a href="#cb15-256" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-257"><a href="#cb15-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-258"><a href="#cb15-258" aria-hidden="true" tabindex="-1"></a><span class="fu">### Scale — level estimates</span></span>
+<span id="cb15-259"><a href="#cb15-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-260"><a href="#cb15-260" aria-hidden="true" tabindex="-1"></a><span class="in">```{r loo-scale-emmeans}</span></span>
+<span id="cb15-261"><a href="#cb15-261" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(scl_primary, scl_loo) <span class="sc">|&gt;</span></span>
+<span id="cb15-262"><a href="#cb15-262" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(fit, level, emmean, lower.CrI, upper.CrI, residual_SD) <span class="sc">|&gt;</span></span>
+<span id="cb15-263"><a href="#cb15-263" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">names_from =</span> fit, <span class="at">values_from =</span> <span class="fu">c</span>(emmean, lower.CrI, upper.CrI, residual_SD)) <span class="sc">|&gt;</span></span>
+<span id="cb15-264"><a href="#cb15-264" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">caption =</span> <span class="st">"Scale (log-sigma) estimate and implied residual SD per disturbance-context level, primary m01 vs. leave-Oke-out refit."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-265"><a href="#cb15-265" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-266"><a href="#cb15-266" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">"100%"</span>)</span>
+<span id="cb15-267"><a href="#cb15-267" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-268"><a href="#cb15-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-269"><a href="#cb15-269" aria-hidden="true" tabindex="-1"></a><span class="fu">### Scale — pairwise contrasts</span></span>
+<span id="cb15-270"><a href="#cb15-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-271"><a href="#cb15-271" aria-hidden="true" tabindex="-1"></a><span class="in">```{r loo-scale-contrasts}</span></span>
+<span id="cb15-272"><a href="#cb15-272" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(sclctr_primary, sclctr_loo) <span class="sc">|&gt;</span></span>
+<span id="cb15-273"><a href="#cb15-273" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(fit, contrast, estimate, lower.CrI, upper.CrI, pd) <span class="sc">|&gt;</span></span>
+<span id="cb15-274"><a href="#cb15-274" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">names_from =</span> fit, <span class="at">values_from =</span> <span class="fu">c</span>(estimate, lower.CrI, upper.CrI, pd)) <span class="sc">|&gt;</span></span>
+<span id="cb15-275"><a href="#cb15-275" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">caption =</span> <span class="st">"Scale (log-sigma) pairwise contrasts, primary m01 vs. leave-Oke-out refit."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-276"><a href="#cb15-276" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-277"><a href="#cb15-277" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">"100%"</span>)</span>
+<span id="cb15-278"><a href="#cb15-278" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

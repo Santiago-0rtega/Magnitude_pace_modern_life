@@ -23,7 +23,7 @@ Continue to the next model chapter.
 
 
 ```{r setup, include=FALSE}
-source(here::here("chapters", "Rscripts", "14_epred_cache.R"))
+source(here::here("Scripts", "14_epred_cache.R"))
 cache_dir <- here::here("Rdata", "epred_draws")
 cache     <- read_epred_cache("m00", cache_dir)
 ```
@@ -96,7 +96,7 @@ $d_{\mathrm{eq}} \approx \sqrt{2\exp(2\ln M)}$. The transformation is applied
 to the posterior 95% credible-interval endpoints.
 
 ```{r overall-d-eq}
-source(here::here("chapters", "Rscripts", "18_contrasts_cache.R"))
+source(here::here("Scripts", "18_contrasts_cache.R"))
 kable_contrasts(
   format_posterior_d_eq(cache$post$b_Intercept, "Overall mean"),
   caption = "Overall mean lnM and equivalent d with 95% credible intervals."
@@ -143,7 +143,7 @@ W = V^{-1}.
 $$
 
 ```{r het-components}
-source(here::here("chapters", "Rscripts", "18_contrasts_cache.R"))
+source(here::here("Scripts", "18_contrasts_cache.R"))
 kable_contrasts(format_heterogeneity_components(read_heterogeneity()),
                 caption = "Precomputed variance components used in the m00 heterogeneity denominator.")
 ```
@@ -167,7 +167,9 @@ library(ggbeeswarm)
 library(patchwork)
 
 out_dir <- here::here("Rdata", "figures", "publication", "orchard")
+out_dir_pdf <- here::here("Figures", "publication", "orchard")
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
+dir.create(out_dir_pdf, recursive = TRUE, showWarnings = FALSE)
 
 dat_es <- readRDS(here::here("Rdata", "effect_sizes", "proceed_lnm_safe.rds"))
 fit <- readRDS(here::here("Rdata", "models", "m00_ls_intercept_only.rds"))
@@ -187,7 +189,7 @@ theme_orchard <- function() {
 }
 
 save_plot <- function(p, stem, width = 9, height = 6) {
-  ggplot2::ggsave(file.path(out_dir, paste0(stem, ".pdf")), p,
+  ggplot2::ggsave(file.path(out_dir_pdf, paste0(stem, ".pdf")), p,
                   width = width, height = height, device = cairo_pdf)
   ggplot2::ggsave(file.path(out_dir, paste0(stem, ".png")), p,
                   width = width, height = height, dpi = 300, type = "cairo")

@@ -1,0 +1,278 @@
+---
+title: "Protocol deviation — leave-one-reference-out check: Oke et al. (2020)"
+---
+
+```{r setup, include=FALSE}
+source(here::here("Scripts", "00_packages.R"))
+
+dat_es <- readRDS(here::here("Rdata", "effect_sizes", "proceed_lnm_safe.rds"))
+```
+
+## Recorded change
+
+This chapter was **not** part of the pre-registered protocol. It was added
+after a question about how much of the `Hunt_harv` (hunting/harvesting)
+disturbance-context level in model m01 is contributed by a single reference,
+Oke et al. (2020, *Nature Communications* 11: 4155, with companion dataset
+Clark 2020, KNB), a long-term monitoring dataset on Pacific salmon
+(*Oncorhynchus* spp.) body size.
+
+::: {.callout-note title="What changed—and what did not"}
+**Changed:** this chapter documents the number of contrasts, references,
+species, and study systems that Oke et al. (2020) contributes to the
+`Hunt_harv` level, and refits m01 on the same data with every Oke et al.
+(2020) contrast removed (`ref_id != "p209"`).
+
+**Unchanged:** the dataset construction pipeline, the moderator definitions,
+the `ref_id` and phylogenetic random effects, the priors, and the MCMC
+settings all match the primary m01 model.
+:::
+
+## Identifying Oke et al. (2020) in PROCEED
+
+Oke et al. (2020) contrasts are identified by `ref_id == "p209"`. This
+matches exactly on DOI and on the database's `reference` field.
+
+```{r identify-oke}
+oke <- dat_es |> dplyr::filter(ref_id == "p209")
+
+tibble::tibble(
+  ref_id    = unique(oke$ref_id),
+  doi       = unique(oke$doi),
+  reference = unique(oke$reference)
+) |>
+  knitr::kable(caption = "Citation fields recorded for ref_id p209.") |>
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+```
+
+## Contribution to the dataset
+
+```{r oke-counts}
+oke_counts <- tibble::tibble(
+  Field = c(
+    "Total Oke et al. (2020) contrasts",
+    "Classified `Hunt_harv`",
+    "Classified `Other`",
+    "Unique species",
+    "Unique study systems (`sys_id`)"
+  ),
+  Value = c(
+    nrow(oke),
+    sum(oke$disturbance == "Hunt_harv"),
+    sum(oke$disturbance == "Other"),
+    dplyr::n_distinct(oke$sp_pub),
+    dplyr::n_distinct(oke$sys_id)
+  )
+)
+knitr::kable(oke_counts, caption = "Oke et al. (2020) contrasts in the analysis-ready dataset.") |>
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+```
+
+```{r oke-species}
+oke |>
+  dplyr::count(sp_pub, name = "n_contrasts", sort = TRUE) |>
+  knitr::kable(caption = "Species represented among Oke et al. (2020) contrasts.") |>
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+```
+
+```{r hh-full-vs-oke}
+hh_all <- dat_es |> dplyr::filter(disturbance == "Hunt_harv")
+hh_oke <- hh_all |> dplyr::filter(ref_id == "p209")
+
+contribution <- tibble::tibble(
+  Metric = c("Contrasts", "References", "Species", "Study systems (`sys_id`)"),
+  `Hunt_harv total` = c(
+    nrow(hh_all),
+    dplyr::n_distinct(hh_all$ref_id),
+    dplyr::n_distinct(hh_all$sp_pub),
+    dplyr::n_distinct(hh_all$sys_id)
+  ),
+  `From Oke et al. (2020)` = c(
+    nrow(hh_oke),
+    1L,
+    dplyr::n_distinct(hh_oke$sp_pub),
+    dplyr::n_distinct(hh_oke$sys_id)
+  )
+) |>
+  dplyr::mutate(`Oke share (%)` = round(100 * `From Oke et al. (2020)` / `Hunt_harv total`, 1))
+
+knitr::kable(contribution, caption = "Oke et al. (2020) contribution to the Hunt_harv disturbance-context level.") |>
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+```
+
+```{r hh-references}
+hh_all |>
+  dplyr::count(ref_id, reference, name = "n_contrasts", sort = TRUE) |>
+  knitr::kable(caption = "All references contributing to the Hunt_harv disturbance-context level, ranked by number of contrasts.") |>
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE) |>
+  kableExtra::scroll_box(height = "350px")
+```
+
+## Hunting/harvesting contrasts with and without Oke et al. (2020)
+
+```{r hh-with-without}
+hh_without_oke <- hh_all |> dplyr::filter(ref_id != "p209")
+
+summarize_grp <- function(d, label) {
+  tibble::tibble(
+    Group           = label,
+    n_contrasts     = nrow(d),
+    n_references    = dplyr::n_distinct(d$ref_id),
+    n_species       = dplyr::n_distinct(d$sp_pub),
+    n_sys_id        = dplyr::n_distinct(d$sys_id),
+    mean_lnM        = round(mean(d$yi_lnM_safe, na.rm = TRUE), 3),
+    median_lnM      = round(median(d$yi_lnM_safe, na.rm = TRUE), 3),
+    sd_lnM          = round(sd(d$yi_lnM_safe, na.rm = TRUE), 3),
+    q2_5_lnM        = round(quantile(d$yi_lnM_safe, 0.025, na.rm = TRUE), 3),
+    q97_5_lnM       = round(quantile(d$yi_lnM_safe, 0.975, na.rm = TRUE), 3),
+    median_n_total  = round(median(d$n_total, na.rm = TRUE), 1),
+    max_n_total     = max(d$n_total, na.rm = TRUE)
+  )
+}
+
+dplyr::bind_rows(
+  summarize_grp(hh_all,          "With Oke et al. (2020)"),
+  summarize_grp(hh_without_oke,  "Without Oke et al. (2020)"),
+  summarize_grp(hh_oke,          "Oke et al. (2020) only")
+) |>
+  knitr::kable(caption = "Raw lnM and sample-size summary for the Hunt_harv level, with and without Oke et al. (2020).") |>
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+```
+
+```{r hh-taxa}
+dplyr::bind_rows(
+  hh_all         |> dplyr::mutate(group = "With Oke et al. (2020)"),
+  hh_without_oke |> dplyr::mutate(group = "Without Oke et al. (2020)")
+) |>
+  dplyr::count(group, taxa) |>
+  tidyr::pivot_wider(names_from = group, values_from = n, values_fill = 0) |>
+  knitr::kable(caption = "Taxonomic composition of the Hunt_harv level, with and without Oke et al. (2020).") |>
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+```
+
+```{r hh-species-without-oke}
+hh_without_oke |>
+  dplyr::count(sp_pub, name = "n_contrasts", sort = TRUE) |>
+  knitr::kable(caption = "Species represented in the Hunt_harv level after excluding Oke et al. (2020).") |>
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+```
+
+## Model specification
+
+Model m01 (`yi_lnM_safe ~ disturbance + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V))`,
+`sigma ~ disturbance`) was refit on the dataset with every Oke et al. (2020)
+contrast removed. The formula, priors, and MCMC settings are unchanged from
+the primary m01 fit: 4 chains × 4,000 iterations (2,000 warmup),
+`adapt_delta = 0.97`, `max_treedepth = 15`, `cmdstanr` backend. The model was
+fitted on `totoro`, not while rendering this book.
+
+```{r how-fit, eval=FALSE}
+dat_model <- dat_es[!is.na(dat_es[["disturbance"]]), ]
+dat_model <- dat_model |> dplyr::filter(ref_id != "p209")
+dat_model[["disturbance"]] <- droplevels(factor(dat_model[["disturbance"]]))
+dat_model <- dat_model |> dplyr::mutate(es_id_model = factor(seq_len(dplyr::n())))
+
+phylo <- prepare_phylo_and_data(dat_model, A_full, label = "m01_leave_oke_out")
+dat_model <- phylo$dat_model; A_mod <- phylo$A_mod; V <- phylo$V
+
+formula <- build_ls_formula("disturbance", has_phylogeny = phylo$has_phylo)
+priors  <- build_ls_priors(formula, dat_model, V, A = A_mod)
+
+fit <- fit_ls_model(dat_model, formula, priors, V = V, A = A_mod,
+                    mcmc_args = default_mcmc_args)
+```
+
+## Convergence diagnostics and model summaries
+
+The leave-Oke-out fit finished on `totoro` in 14.62 hours (4 chains × 4,000
+iterations each). Diagnostics for both fits, read from the project's
+existing diagnostics table (primary m01) and from the leave-Oke-out fit's
+own diagnostics file:
+
+```{r loo-diag-setup, include=FALSE}
+sens_dir <- here::here("Rdata", "tables", "sensitivity")
+ctr_dir  <- here::here("Rdata", "tables", "contrasts")
+
+diag_primary <- readr::read_csv(
+  here::here("Rdata", "tables", "model_diagnostics_all_moderators.csv"),
+  show_col_types = FALSE
+) |>
+  dplyr::filter(model_id == "m01") |>
+  dplyr::mutate(fit = "With Oke et al. (2020)")
+
+diag_loo <- readr::read_csv(
+  file.path(sens_dir, "leave_oke_out_diagnostics.csv"),
+  show_col_types = FALSE
+) |>
+  dplyr::mutate(fit = "Without Oke et al. (2020)")
+
+loc_primary <- readr::read_csv(file.path(ctr_dir, "m01_location_emmeans.csv"), show_col_types = FALSE) |>
+  dplyr::mutate(fit = "With Oke et al. (2020)")
+loc_loo <- readr::read_csv(file.path(sens_dir, "leave_oke_out_location_emmeans.csv"), show_col_types = FALSE) |>
+  dplyr::mutate(fit = "Without Oke et al. (2020)")
+
+locctr_primary <- readr::read_csv(file.path(ctr_dir, "m01_location_contrasts.csv"), show_col_types = FALSE) |>
+  dplyr::mutate(fit = "With Oke et al. (2020)")
+locctr_loo <- readr::read_csv(file.path(sens_dir, "leave_oke_out_location_contrasts.csv"), show_col_types = FALSE) |>
+  dplyr::mutate(fit = "Without Oke et al. (2020)")
+
+scl_primary <- readr::read_csv(file.path(ctr_dir, "m01_scale_emmeans.csv"), show_col_types = FALSE) |>
+  dplyr::mutate(fit = "With Oke et al. (2020)")
+scl_loo <- readr::read_csv(file.path(sens_dir, "leave_oke_out_scale_emmeans.csv"), show_col_types = FALSE) |>
+  dplyr::mutate(fit = "Without Oke et al. (2020)")
+
+sclctr_primary <- readr::read_csv(file.path(ctr_dir, "m01_scale_contrasts.csv"), show_col_types = FALSE) |>
+  dplyr::mutate(fit = "With Oke et al. (2020)")
+sclctr_loo <- readr::read_csv(file.path(sens_dir, "leave_oke_out_scale_contrasts.csv"), show_col_types = FALSE) |>
+  dplyr::mutate(fit = "Without Oke et al. (2020)")
+```
+
+```{r loo-diag-table}
+dplyr::bind_rows(diag_primary, diag_loo) |>
+  dplyr::select(fit, max_rhat, min_bulk_ess, min_tail_ess, n_divergent, max_treedepth_hits) |>
+  knitr::kable(digits = 4, caption = "Convergence diagnostics, primary m01 vs. leave-Oke-out refit.") |>
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+```
+
+### Location — level estimates
+
+```{r loo-location-emmeans}
+dplyr::bind_rows(loc_primary, loc_loo) |>
+  dplyr::select(fit, level, emmean, lower.CrI, upper.CrI) |>
+  tidyr::pivot_wider(names_from = fit, values_from = c(emmean, lower.CrI, upper.CrI)) |>
+  knitr::kable(digits = 3, caption = "Location (mean lnM) estimate per disturbance-context level, primary m01 vs. leave-Oke-out refit.") |>
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+```
+
+### Location — pairwise contrasts
+
+```{r loo-location-contrasts}
+dplyr::bind_rows(locctr_primary, locctr_loo) |>
+  dplyr::select(fit, contrast, estimate, lower.CrI, upper.CrI, pd) |>
+  tidyr::pivot_wider(names_from = fit, values_from = c(estimate, lower.CrI, upper.CrI, pd)) |>
+  knitr::kable(digits = 3, caption = "Location pairwise contrasts (difference in mean lnM), primary m01 vs. leave-Oke-out refit.") |>
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE) |>
+  kableExtra::scroll_box(width = "100%")
+```
+
+### Scale — level estimates
+
+```{r loo-scale-emmeans}
+dplyr::bind_rows(scl_primary, scl_loo) |>
+  dplyr::select(fit, level, emmean, lower.CrI, upper.CrI, residual_SD) |>
+  tidyr::pivot_wider(names_from = fit, values_from = c(emmean, lower.CrI, upper.CrI, residual_SD)) |>
+  knitr::kable(digits = 3, caption = "Scale (log-sigma) estimate and implied residual SD per disturbance-context level, primary m01 vs. leave-Oke-out refit.") |>
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE) |>
+  kableExtra::scroll_box(width = "100%")
+```
+
+### Scale — pairwise contrasts
+
+```{r loo-scale-contrasts}
+dplyr::bind_rows(sclctr_primary, sclctr_loo) |>
+  dplyr::select(fit, contrast, estimate, lower.CrI, upper.CrI, pd) |>
+  tidyr::pivot_wider(names_from = fit, values_from = c(estimate, lower.CrI, upper.CrI, pd)) |>
+  knitr::kable(digits = 3, caption = "Scale (log-sigma) pairwise contrasts, primary m01 vs. leave-Oke-out refit.") |>
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE) |>
+  kableExtra::scroll_box(width = "100%")
+```

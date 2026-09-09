@@ -34,7 +34,7 @@ level skewing toward longer elapsed time) is exactly the pattern that would
 let a moderator effect and a time effect be confounded.
 
 ```{r setup}
-source(here::here("chapters", "Rscripts", "00_packages.R"))
+source(here::here("Scripts", "00_packages.R"))
 
 dat_es <- readRDS(here::here("Rdata", "effect_sizes", "proceed_lnm_safe.rds"))
 

@@ -22,11 +22,11 @@ Run the reproducibility checks.
 :::
 
 ```{r setup}
-source(here::here("chapters", "Rscripts", "00_packages.R"))
-source(here::here("chapters", "Rscripts", "01_paths.R"))
-source(here::here("chapters", "Rscripts", "06_model_registry.R"))
-source(here::here("chapters", "Rscripts", "11_plotting_orchard_like.R"))
-source(here::here("chapters", "Rscripts", "12_save_figures.R"))
+source(here::here("Scripts", "00_packages.R"))
+source(here::here("Scripts", "01_paths.R"))
+source(here::here("Scripts", "06_model_registry.R"))
+source(here::here("Scripts", "11_plotting_orchard_like.R"))
+source(here::here("Scripts", "12_save_figures.R"))
 ```
 
 This chapter reads saved model results and generates figures. It does not fit
@@ -146,7 +146,7 @@ cat("Figure generation complete.\n")
 
 ```{r figure-inventory}
 png_files <- list.files(here::here("Rdata", "figures", "png"), pattern = "\\.png$")
-pdf_files <- list.files(here::here("Rdata", "figures", "pdf"), pattern = "\\.pdf$")
+pdf_files <- list.files(here::here("Figures", "pdf"), pattern = "\\.pdf$")
 
 cat("PNG figures:", length(png_files), "\n")
 cat("PDF figures:", length(pdf_files), "\n")

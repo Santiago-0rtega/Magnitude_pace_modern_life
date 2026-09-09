@@ -1,0 +1,2 @@
+model_id,moderator,max_rhat,min_bulk_ess,min_tail_ess,n_divergent,max_treedepth_hits
+m01_leave_oke_out,disturbance,1.0041940061524608,1092.6730516793593,1742.579605581551,0,0

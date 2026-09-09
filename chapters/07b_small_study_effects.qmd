@@ -22,8 +22,8 @@ Check whether conclusions are robust to alternative analysis specifications.
 :::
 
 ```{r setup, include=FALSE}
-source(here::here("chapters", "Rscripts", "00_packages.R"))
-source(here::here("chapters", "Rscripts", "20_small_study_effects.R"))
+source(here::here("Scripts", "00_packages.R"))
+source(here::here("Scripts", "20_small_study_effects.R"))
 
 cache_se <- read_small_study_cache("n_se_sigmax")
 cache_v <- read_small_study_cache("n_v_sigma1")
@@ -324,7 +324,7 @@ fits themselves are run on Totoro:
 bash remote_run_small_study_brms_parallel.sh
 
 # 2. Build the small draw caches from the fits that converged
-Rscript remote_precompute_small_study_brms_cache.R
+Rscript Scripts/remote_precompute_small_study_brms_cache.R
 
 # 3. Copy the caches into the book mirror
 scp totoro:'~/Documents/PACE/outputs/epred_draws/small_study_*.rds' Rdata/epred_draws/
@@ -333,7 +333,7 @@ scp totoro:'~/Documents/PACE/outputs/epred_draws/small_study_*.rds' Rdata/epred_
 To regenerate the REML cross-check locally:
 
 ```{r reproduce, eval=FALSE}
-source(here::here("chapters", "Rscripts", "00_packages.R"))
-source(here::here("chapters", "Rscripts", "20_small_study_effects.R"))
+source(here::here("Scripts", "00_packages.R"))
+source(here::here("Scripts", "20_small_study_effects.R"))
 run_small_study_analysis()
 ```

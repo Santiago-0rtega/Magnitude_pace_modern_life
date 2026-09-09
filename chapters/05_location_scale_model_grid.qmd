@@ -22,15 +22,15 @@ Open the chapter for each fitted model.
 :::
 
 ```{r setup}
-source(here::here("chapters", "Rscripts", "00_packages.R"))
-source(here::here("chapters", "Rscripts", "01_paths.R"))
-source(here::here("chapters", "Rscripts", "05_phylogeny.R"))
-source(here::here("chapters", "Rscripts", "06_model_registry.R"))
-source(here::here("chapters", "Rscripts", "07_model_formulas.R"))
-source(here::here("chapters", "Rscripts", "08_fit_or_read_model.R"))
-source(here::here("chapters", "Rscripts", "09_model_summaries.R"))
-source(here::here("chapters", "Rscripts", "10_model_diagnostics.R"))
-source(here::here("chapters", "Rscripts", "15_render_guard.R"))   # read-only: never refit / rebuild phylogeny
+source(here::here("Scripts", "00_packages.R"))
+source(here::here("Scripts", "01_paths.R"))
+source(here::here("Scripts", "05_phylogeny.R"))
+source(here::here("Scripts", "06_model_registry.R"))
+source(here::here("Scripts", "07_model_formulas.R"))
+source(here::here("Scripts", "08_fit_or_read_model.R"))
+source(here::here("Scripts", "09_model_summaries.R"))
+source(here::here("Scripts", "10_model_diagnostics.R"))
+source(here::here("Scripts", "15_render_guard.R"))   # read-only: never refit / rebuild phylogeny
 
 # Change to TRUE only when you want to refit all models from scratch
 refit_models <- FALSE
@@ -43,7 +43,7 @@ rebuild_grid <- FALSE
 
 ## Overview
 
-This chapter fits (or reads) one independent location–scale meta-regression for each moderator in the registry. No multi-moderator model is fitted. The registry is defined in `chapters/Rscripts/06_model_registry.R`.
+This chapter fits (or reads) one independent location–scale meta-regression for each moderator in the registry. No multi-moderator model is fitted. The registry is defined in `Scripts/06_model_registry.R`.
 
 ::: {.callout-important title="Render and fitting are separate tasks"}
 **Normal book render:** keep `refit_models <- FALSE` and

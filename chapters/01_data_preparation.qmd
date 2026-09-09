@@ -22,11 +22,11 @@ Calculate SAFE lnM effect sizes.
 :::
 
 ```{r setup}
-source(here::here("chapters", "Rscripts", "00_packages.R"))
-source(here::here("chapters", "Rscripts", "01_paths.R"))
-source(here::here("chapters", "Rscripts", "02_read_clean_data.R"))
-source(here::here("chapters", "Rscripts", "03_filters.R"))
-source(here::here("chapters", "Rscripts", "15_render_guard.R"))   # read-only: never rebuild the database
+source(here::here("Scripts", "00_packages.R"))
+source(here::here("Scripts", "01_paths.R"))
+source(here::here("Scripts", "02_read_clean_data.R"))
+source(here::here("Scripts", "03_filters.R"))
+source(here::here("Scripts", "15_render_guard.R"))   # read-only: never rebuild the database
 
 # The cleaned/filtered contrast dataset is cached as an .rds. The book READS it
 # by default. Set to TRUE only to rebuild the database from the raw PROCEED CSV.

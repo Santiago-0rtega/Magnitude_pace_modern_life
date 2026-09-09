@@ -3,8 +3,8 @@ title: "Sensitivity A — Minimum sample size (N ≥ 40)"
 ---
 
 ```{r setup, include=FALSE}
-source(here::here("chapters", "Rscripts", "00_packages.R"))
-source(here::here("chapters", "Rscripts", "19_sensitivity_tables.R"))
+source(here::here("Scripts", "00_packages.R"))
+source(here::here("Scripts", "19_sensitivity_tables.R"))
 variant <- "sens1_n40"
 sens_dat <- readRDS(here::here("Rdata", "effect_sizes", "proceed_lnm_safe.rds"))
 sens_total <- nrow(sens_dat)

@@ -1,7 +1,7 @@
 project:
   type: book
   output-dir: docs
-  pre-render: Rscript chapters/Rscripts/21_validate_summary_artifacts.R
+  pre-render: Rscript Scripts/21_validate_summary_artifacts.R
   resources:
     - .nojekyll   # disable GitHub Pages Jekyll processing of the rendered site
 
@@ -68,6 +68,7 @@ book:
     - chapters/appendix/sensitivity_no_phylogeny.qmd
     - chapters/appendix/sensitivity_sys_id.qmd
     - chapters/appendix/protocol_deviation_time_adjustment.qmd
+    - chapters/appendix/protocol_deviation_leave_oke_out.qmd
 
 format:
   html:

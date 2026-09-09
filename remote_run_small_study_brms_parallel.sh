@@ -10,7 +10,7 @@ echo "$run_dir" > logs/current_small_study_brms_dir.txt
 models=(n_se_sigma1 n_se_sigmax n_v_sigma1 n_v_sigmax)
 pids=()
 for model in "${models[@]}"; do
-  Rscript remote_fit_one_small_study_brms.R "$model" >"$run_dir/${model}.log" 2>&1 &
+  Rscript Scripts/remote_fit_one_small_study_brms.R "$model" >"$run_dir/${model}.log" 2>&1 &
   pids+=("$!")
 done
 
