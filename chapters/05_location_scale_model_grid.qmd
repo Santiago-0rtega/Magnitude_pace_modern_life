@@ -419,18 +419,26 @@ model_status |>
 
 ## Convergence overview
 
+Convergence criteria: max $\hat{R} \leq 1.01$, bulk and tail ESS $\geq 400$,
+and no divergent transitions.
+
 ```{r convergence}
 model_status |>
   dplyr::filter(status == "fitted") |>
-  dplyr::select(model_id, moderator, max_rhat, min_bulk_ess, n_divergent) |>
+  dplyr::select(model_id, moderator, max_rhat, min_bulk_ess, min_tail_ess,
+                n_divergent) |>
   dplyr::mutate(
     rhat_ok = dplyr::if_else(max_rhat <= 1.01, "ok", "warn"),
-    ess_ok  = dplyr::if_else(min_bulk_ess >= 400, "ok", "warn"),
-    div_ok  = dplyr::if_else(n_divergent < 10, "ok", "warn")
+    ess_ok  = dplyr::if_else(min_bulk_ess >= 400 & min_tail_ess >= 400, "ok", "warn"),
+    div_ok  = dplyr::if_else(n_divergent == 0, "ok", "warn")
   )
 ```
 
-## Excluded model attempts
+## Excluded and dropped models
+
+These models were fitted but are not part of the reported results. Models
+m06, m08, m09, and m10 did not meet the convergence criteria; m11
+(measurement scale) was dropped by the authors.
 
 ```{r non-primary-models}
 excluded_grid |>

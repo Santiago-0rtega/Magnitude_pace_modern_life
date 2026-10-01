@@ -250,8 +250,9 @@ knitr::include_graphics(here::here("Rdata", "figures", "publication",
 
 ::: {.callout-warning title="Read the diagnostics table before the figures above"}
 The disturbance and trait_type models did not meet the convergence criteria
-used elsewhere in this book (max Rhat ≤ 1.01, min ESS ≥ 400, divergent
-transitions ≤ 10), particularly with `log10_generations`. Their summaries and
+used elsewhere in this book (max Rhat ≤ 1.01, bulk and tail ESS ≥ 400, and no
+divergent transitions) with either elapsed-time variable; the failures were
+most severe with `log10_generations`. Their summaries and
 figures are shown here for transparency, but should not be read as reliable
 estimates. The design and genphen models converged cleanly.
 :::

@@ -9,7 +9,7 @@ Saved SAFE lnM dataset.
 :::
 ::: {}
 **Action**
-Count rows and draw data-distribution plots.
+Count the 7,186 analysed (m00) contrasts and draw data-distribution plots.
 :::
 ::: {}
 **Output**
@@ -77,29 +77,55 @@ dat_es <- readRDS(here::here("Rdata", "effect_sizes", "proceed_lnm_safe.rds"))
 m00_fit <- readRDS(
   here::here("Rdata", "models", "m00_ls_intercept_only.rds")
 )
-m00_ids <- as.character(m00_fit$data$es_id_model)
-m00_index <- match(m00_ids, as.character(dat_es$es_id_model))
+name_map <- readRDS(
+  here::here("Rdata", "phylogeny", "proceed_name_map.rds")
+)
+canonical_lookup <- stats::setNames(
+  as.character(name_map$sp_ncbi_canonical),
+  as.character(name_map$sp_ncbi_original)
+)
 
-if (anyNA(m00_index) || anyDuplicated(m00_ids)) {
-  stop("The m00 effect-size IDs do not map uniquely to the descriptive dataset.")
+# The model data renumber es_id_model 1..k after rows without a canonical
+# species name are dropped (Scripts/05_phylogeny.R), so the IDs cannot be
+# matched back to dat_es directly. Rebuild the same filter, keeping row order,
+# and verify it row by row against the data stored in the m00 fit.
+dat_es_canonical <- unname(canonical_lookup[as.character(dat_es$sp_ncbi)])
+m00_dat <- dat_es[
+  !is.na(dat_es_canonical) & nzchar(dat_es_canonical), , drop = FALSE
+]
+m00_check <- nrow(m00_dat) == nrow(m00_fit$data) &&
+  isTRUE(all.equal(m00_dat$yi_lnM_safe, m00_fit$data$yi_lnM_safe)) &&
+  identical(as.character(m00_dat$ref_id), as.character(m00_fit$data$ref_id)) &&
+  identical(
+    unname(canonical_lookup[as.character(m00_dat$sp_ncbi)]),
+    as.character(m00_fit$data$sp_ncbi)
+  )
+
+if (!m00_check) {
+  stop("The descriptive dataset does not reproduce the rows retained by m00.")
 }
-
-# All model-coverage summaries use the exact rows retained by m00, in model order.
-m00_dat <- dat_es[m00_index, , drop = FALSE]
 
 cat("SAFE contrasts:", nrow(dat_es), "\n")
 cat("m00 contrasts:", nrow(m00_dat), "\n")
+cat("Excluded before modelling:", nrow(dat_es) - nrow(m00_dat), "\n")
 ```
+
+All counts, tables, donut plots, and distributions in this chapter describe
+the analysed dataset: the `r scales::comma(nrow(m00_dat))` contrasts retained
+by the baseline model `m00`. The saved SAFE dataset contains
+`r scales::comma(nrow(dat_es))` contrasts; the
+`r nrow(dat_es) - nrow(m00_dat)` contrasts whose species names could not be
+resolved were excluded before modelling and are not counted here.
 
 ## Check: overview counts
 
 ```{r overview}
-dat_es |>
+m00_dat |>
   dplyr::summarise(
     k_contrasts  = dplyr::n(),
     n_studies    = dplyr::n_distinct(ref_id),
     n_systems    = dplyr::n_distinct(sys_id),
-    n_species    = dplyr::n_distinct(sp_ncbi),
+    n_species    = dplyr::n_distinct(canonical_lookup[as.character(sp_ncbi)]),
     n_allochronic = sum(design == "Allochronic", na.rm = TRUE),
     n_synchronic  = sum(design == "Synchronic",  na.rm = TRUE)
   )
@@ -107,10 +133,11 @@ dat_es |>
 
 ## Counts by moderator
 
-The tables report the exact counts. The plots display the same category totals.
+The tables report the exact counts among the `r scales::comma(nrow(m00_dat))`
+analysed contrasts. The plots display the same category totals.
 
 ```{r by-disturbance}
-dat_es |> dplyr::count(disturbance, sort = TRUE)
+m00_dat |> dplyr::count(disturbance, sort = TRUE)
 ```
 
 ## Analytical coverage and dominant evidence pathways
@@ -164,39 +191,33 @@ m00_coverage |>
 ```
 
 ```{r by-design}
-dat_es |> dplyr::count(design, sort = TRUE)
+m00_dat |> dplyr::count(design, sort = TRUE)
 ```
 
 ```{r by-trait-type}
-dat_es |> dplyr::count(trait_type, sort = TRUE)
+m00_dat |> dplyr::count(trait_type, sort = TRUE)
 ```
 
 ```{r by-taxa}
-dat_es |> dplyr::count(taxa, sort = TRUE)
+m00_dat |> dplyr::count(taxa, sort = TRUE)
 ```
 
 ## Taxonomic representation
 
-This figure counts the unique species and contrasts used by the baseline model (`m00`). Tile area is proportional to the number of contrasts per species. Each label gives the contrast count and species count. Records from the complete PROCEED database that were not included in the model are not counted.
+This figure counts the unique species and contrasts used by the baseline model (`m00`). Tile area is proportional to the number of contrasts in each taxonomic group. Each label gives the contrast count and species count. Groups whose tiles are too small to hold a label (reptiles, molluscs and amphibians) are labelled above the chart and joined to their tiles by leader lines. Records from the complete PROCEED database that were not included in the model are not counted.
 
 ```{r}
 #| label: fig-taxonomic-representation
-#| fig-cap: "Taxonomic representation in model m00. Tile size is relative to the number of contrasts per species. Labels give the number of contrasts and species in each group."
-#| fig-alt: "A proportional tile chart showing 81 birds, 74 plants, 47 mammals, 29 fishes, 11 arthropods, 4 amphibians, 4 reptiles, and 3 molluscs. Each tile includes a white taxon silhouette."
+#| fig-cap: "Taxonomic representation in model m00. Tile area is proportional to the number of contrasts in each taxonomic group. Labels give the number of contrasts and species in each group; the three smallest groups are labelled above the chart."
+#| fig-alt: "A proportional tile chart of the 7,186 m00 contrasts: fishes 3,084 contrasts (29 species), plants 1,519 (74), arthropods 1,065 (11), birds 842 (81), mammals 542 (47), reptiles 92 (4), molluscs 25 (3), and amphibians 17 (4). Each tile includes a white taxon silhouette; the three smallest groups are labelled above the chart with leader lines."
 #| fig-width: 12
 #| fig-height: 8.2
 
 # Read the exact species names used by the baseline model.
 m00_species <- unique(as.character(m00_fit$data$sp_ncbi))
 
-# Connect the original species names to the canonical names used by m00.
-name_map <- readRDS(
-  here::here("Rdata", "phylogeny", "proceed_name_map.rds")
-)
-canonical_lookup <- stats::setNames(
-  as.character(name_map$sp_ncbi_canonical),
-  as.character(name_map$sp_ncbi_original)
-)
+# canonical_lookup (built in the load chunk) connects the original species
+# names to the canonical names used by m00.
 
 # Keep the exact contrasts used by m00 and count species and contrasts.
 taxon_counts <- m00_dat |>
@@ -215,15 +236,16 @@ taxon_counts <- m00_dat |>
   dplyr::filter(species > 0) |>
   dplyr::mutate(
     taxa = as.character(taxa),
-    contrasts_per_species = contrasts / species,
-    weight = contrasts_per_species
+    # Tile area is proportional to the number of contrasts in each group.
+    weight = contrasts
   )
 
-# Use a wide layout. Small groups share a full-width strip.
+# Use a wide layout. Smaller groups share a full-width strip at the top; the
+# smallest groups sit at its right-hand end and are labelled outside the chart.
 make_taxon_layout <- function(dat, total_width = 1.6) {
-  small_order <- c("Bird", "Mammal", "Amphibian", "Mollusc")
+  small_order <- c("Bird", "Mammal", "Reptile", "Mollusc", "Amphibian")
   left_order <- c("Fish", "Arthropod")
-  right_order <- c("Reptile", "Plant")
+  right_order <- c("Plant")
   total_weight <- sum(dat$weight)
 
   small <- dat[match(small_order, dat$taxa), , drop = FALSE]
@@ -270,11 +292,32 @@ taxon_tiles <- make_taxon_layout(taxon_counts) |>
       scales::comma(contrasts), " contrasts\n",
       species, " spp."
     ),
-    is_small = taxa %in% c("Bird", "Mammal", "Amphibian", "Mollusc"),
+    is_small = taxa %in% c("Bird", "Mammal"),
+    # Tiles too small to hold a label are keyed above the chart instead.
+    is_external = taxa %in% c("Reptile", "Mollusc", "Amphibian"),
     label_size = 13 / ggplot2::.pt,
     label_x = xmin + ifelse(is_small, 0.012, 0.018),
     label_y = ifelse(is_small, (ymin + ymax) / 2, ymax - 0.018),
     label_vjust = ifelse(is_small, 0.5, 1)
+  )
+
+# Keys for the smallest groups: a coloured square carrying the silhouette, a
+# label to its right, and a leader line from the tile's top edge to the key.
+key_side <- 0.07
+key_ymin <- 1.04
+external_keys <- taxon_tiles |>
+  dplyr::filter(is_external) |>
+  dplyr::mutate(
+    key_xmin = c(Reptile = 0.78, Mollusc = 1.07, Amphibian = 1.36)[taxa],
+    key_xmax = key_xmin + key_side,
+    key_ymin = key_ymin,
+    key_ymax = key_ymin + key_side,
+    leader_x = (xmin + xmax) / 2,
+    leader_y = ymax,
+    leader_xend = key_xmin + key_side / 2,
+    leader_yend = key_ymin,
+    key_label_x = key_xmax + 0.012,
+    key_label_y = key_ymin + key_side / 2
   )
 
 # Read the supplied silhouettes from Rdata/figures/Animals.
@@ -303,8 +346,10 @@ read_white_silhouette <- function(path) {
   white
 }
 
-icon_layers <- lapply(seq_len(nrow(taxon_tiles)), function(i) {
-  tile <- taxon_tiles[i, ]
+internal_tiles <- dplyr::filter(taxon_tiles, !is_external)
+
+icon_layers <- lapply(seq_len(nrow(internal_tiles)), function(i) {
+  tile <- internal_tiles[i, ]
   image <- read_white_silhouette(icon_paths[[tile$taxa]])
   tile_width <- tile$xmax - tile$xmin
   tile_height <- tile$ymax - tile$ymin
@@ -336,6 +381,24 @@ icon_layers <- lapply(seq_len(nrow(taxon_tiles)), function(i) {
   )
 })
 
+key_icon_layers <- lapply(seq_len(nrow(external_keys)), function(i) {
+  key <- external_keys[i, ]
+  image <- read_white_silhouette(icon_paths[[key$taxa]])
+  image_ratio <- dim(image)[2] / dim(image)[1]
+  icon_width <- min(key_side * 0.80, key_side * 0.80 * image_ratio)
+  icon_height <- icon_width / image_ratio
+  centre_x <- (key$key_xmin + key$key_xmax) / 2
+  centre_y <- (key$key_ymin + key$key_ymax) / 2
+
+  ggplot2::annotation_custom(
+    grid::rasterGrob(image, interpolate = TRUE),
+    xmin = centre_x - icon_width / 2,
+    xmax = centre_x + icon_width / 2,
+    ymin = centre_y - icon_height / 2,
+    ymax = centre_y + icon_height / 2
+  )
+})
+
 taxon_colours <- c(
   Bird = "#5B6FA8", Plant = "#2F6B55", Mammal = "#8A5A44",
   Fish = "#356A8A", Arthropod = "#B56A3A", Amphibian = "#4E8C8C",
@@ -348,20 +411,45 @@ p_taxa <- ggplot2::ggplot(taxon_tiles) +
     colour = "white", linewidth = 1.2
   )
 
-for (icon_layer in icon_layers) {
+p_taxa <- p_taxa +
+  ggplot2::geom_segment(
+    data = external_keys,
+    ggplot2::aes(x = leader_x, y = leader_y,
+                 xend = leader_xend, yend = leader_yend),
+    colour = "#4A4A4A", linewidth = 0.45
+  ) +
+  ggplot2::geom_rect(
+    data = external_keys,
+    ggplot2::aes(xmin = key_xmin, xmax = key_xmax,
+                 ymin = key_ymin, ymax = key_ymax, fill = taxa),
+    colour = "white", linewidth = 1.2
+  )
+
+for (icon_layer in c(icon_layers, key_icon_layers)) {
   p_taxa <- p_taxa + icon_layer
 }
 
 p_taxa <- p_taxa +
   ggplot2::geom_text(
+    data = internal_tiles,
     ggplot2::aes(x = label_x, y = label_y, label = label,
                  size = label_size, vjust = label_vjust),
     colour = "white", fontface = "bold", hjust = 0,
     lineheight = 0.9
   ) +
+  ggplot2::geom_text(
+    data = external_keys,
+    ggplot2::aes(x = key_label_x, y = key_label_y, label = label,
+                 size = label_size, colour = taxa),
+    fontface = "bold", hjust = 0, vjust = 0.5, lineheight = 0.9
+  ) +
   ggplot2::scale_fill_manual(values = taxon_colours) +
+  ggplot2::scale_colour_manual(values = taxon_colours) +
   ggplot2::scale_size_identity() +
-  ggplot2::coord_fixed(ratio = 1, expand = FALSE, clip = "off") +
+  ggplot2::coord_fixed(
+    ratio = 1, xlim = c(0, 1.6), ylim = c(0, key_ymin + key_side + 0.01),
+    expand = FALSE, clip = "off"
+  ) +
   ggplot2::theme_void(base_size = 13) +
   ggplot2::theme(
     legend.position = "none",
@@ -678,54 +766,67 @@ ggplot2::ggsave(
 p_disturbance_taxa_trait
 ```
 
-Introductions supplied the broadest stream of evidence (57.1% of contrasts),
-with most contrasts being synchronic (64.5%) and phenotypic (63.9%). Size and
-other-morphology traits together accounted for 70.9% of the analytical sample.
-The largest single pathway was allochronic, phenotypic size evidence under
-hunting or harvesting (878 contrasts; 12.2%), while the next four largest
+```{r pathway-summary}
+pct_m00 <- function(x) sprintf("%.1f%%", 100 * mean(x, na.rm = TRUE))
+m00_pathways <- m00_dat |>
+  dplyr::count(disturbance, design, genphen, trait_type, sort = TRUE)
+top_pathway <- m00_pathways[1, ]
+```
+
+Introductions supplied the broadest stream of evidence
+(`r pct_m00(m00_dat$disturbance == "Introduction")` of contrasts),
+with most contrasts being synchronic (`r pct_m00(m00_dat$design == "Synchronic")`)
+and phenotypic (`r pct_m00(m00_dat$genphen == "Phenotypic")`). Size and
+other-morphology traits together accounted for
+`r pct_m00(m00_dat$trait_type %in% c("size", "othermorphology"))` of the
+analytical sample. The largest single pathway was allochronic, phenotypic size
+evidence under hunting or harvesting (`r top_pathway$n` contrasts;
+`r sprintf("%.1f%%", 100 * top_pathway$n / nrow(m00_dat))`), while the next four largest
 pathways all arose from synchronic comparisons of introduced systems. Thus,
 coverage was substantial but concentrated in a small number of recurring
 design–trait–evidence combinations.
 
 ```{r by-genphen}
-dat_es |> dplyr::count(genphen, sort = TRUE)
+m00_dat |> dplyr::count(genphen, sort = TRUE)
 ```
 
 ```{r by-env-change}
-dat_es |> dplyr::count(env_change, sort = TRUE)
+m00_dat |> dplyr::count(env_change, sort = TRUE)
 ```
 
 ```{r by-data-type}
-dat_es |> dplyr::count(data_type, sort = TRUE)
+m00_dat |> dplyr::count(data_type, sort = TRUE)
 ```
 
 ```{r by-transf-data}
-dat_es |> dplyr::count(transf_data, sort = TRUE)
+m00_dat |> dplyr::count(transf_data, sort = TRUE)
 ```
 
 ```{r by-data-scale}
-dat_es |> dplyr::count(data_scale, sort = TRUE)
+m00_dat |> dplyr::count(data_scale, sort = TRUE)
 ```
 
 ## Donut summaries
 
+Each donut counts the `r scales::comma(nrow(m00_dat))` analysed contrasts.
+
 ```{r donut-design-disturbance, fig.width=10, fig.height=5}
-plot_count_donut(dat_es, "design", "Comparison design") +
-  plot_count_donut(dat_es, "disturbance", "Disturbance context") +
+plot_count_donut(m00_dat, "design", "Comparison design") +
+  plot_count_donut(m00_dat, "disturbance", "Disturbance context") +
   patchwork::plot_layout(guides = "keep") &
   ggplot2::theme(legend.position = "bottom", legend.text = ggplot2::element_text(size = 8))
 ```
 
 ```{r donut-trait-taxa, fig.width=10, fig.height=5}
-plot_count_donut(dat_es, "trait_type", "Trait type") +
-  plot_count_donut(dat_es, "taxa", "Taxonomic group") +
+plot_count_donut(m00_dat, "trait_type", "Trait type") +
+  plot_count_donut(m00_dat, "taxa", "Taxonomic group") +
   patchwork::plot_layout(guides = "keep") &
   ggplot2::theme(legend.position = "bottom", legend.text = ggplot2::element_text(size = 8))
 ```
 
 ```{r donut-data, fig.width=10, fig.height=5}
-plot_count_donut(dat_es, "genphen", "Phenotypic vs genetic data") +
-  plot_count_donut(dat_es, "data_scale", "Measurement scale") +
+plot_count_donut(m00_dat, "genphen", "Phenotypic vs genetic data") +
+  plot_count_donut(m00_dat, "data_scale", "Measurement scale") +
   patchwork::plot_layout(guides = "keep") &
   ggplot2::theme(legend.position = "bottom", legend.text = ggplot2::element_text(size = 8))
 ```
@@ -735,7 +836,7 @@ plot_count_donut(dat_es, "genphen", "Phenotypic vs genetic data") +
 ### lnM estimates
 
 ```{r dist-yi}
-ggplot2::ggplot(dat_es, ggplot2::aes(x = yi_lnM_safe)) +
+ggplot2::ggplot(m00_dat, ggplot2::aes(x = yi_lnM_safe)) +
   ggplot2::geom_histogram(bins = 50, fill = "steelblue", colour = "white") +
   ggplot2::geom_vline(xintercept = 0, linetype = "dashed") +
   ggplot2::labs(x = "lnM (SAFE)", y = "Count",
@@ -746,7 +847,7 @@ ggplot2::ggplot(dat_es, ggplot2::aes(x = yi_lnM_safe)) +
 ### Sampling variances
 
 ```{r dist-vi}
-ggplot2::ggplot(dat_es, ggplot2::aes(x = (vi_lnM_safe))) +
+ggplot2::ggplot(m00_dat, ggplot2::aes(x = (vi_lnM_safe))) +
   ggplot2::geom_histogram(bins = 50, fill = "coral", colour = "white") +
   ggplot2::labs(x = "sampling variance", y = "Count",
                 title = "Distribution of sampling variances") +
@@ -756,7 +857,7 @@ ggplot2::ggplot(dat_es, ggplot2::aes(x = (vi_lnM_safe))) +
 ### Elapsed years
 
 ```{r dist-years}
-dat_es |>
+m00_dat |>
   dplyr::filter(!is.na(log10_years)) |>
   ggplot2::ggplot(ggplot2::aes(x = log10_years)) +
   ggplot2::geom_histogram(bins = 40, fill = "seagreen", colour = "white") +
@@ -768,7 +869,7 @@ dat_es |>
 ### Elapsed generations
 
 ```{r dist-gen}
-dat_es |>
+m00_dat |>
   dplyr::filter(!is.na(log10_generations)) |>
   ggplot2::ggplot(ggplot2::aes(x = log10_generations)) +
   ggplot2::geom_histogram(bins = 40, fill = "mediumpurple", colour = "white") +
@@ -780,7 +881,7 @@ dat_es |>
 ### Sample sizes
 
 ```{r dist-n}
-dat_es |>
+m00_dat |>
   dplyr::filter(!is.na(n_total)) |>
   ggplot2::ggplot(ggplot2::aes(x = n_total)) +
   ggplot2::geom_histogram(bins = 50, fill = "goldenrod", colour = "white") +
@@ -793,12 +894,12 @@ dat_es |>
 ## Save descriptive tables
 
 ```{r save-tables}
-tab_overview <- dat_es |>
+tab_overview <- m00_dat |>
   dplyr::summarise(
     k_contrasts   = dplyr::n(),
     n_studies     = dplyr::n_distinct(ref_id),
     n_systems     = dplyr::n_distinct(sys_id),
-    n_species     = dplyr::n_distinct(sp_ncbi),
+    n_species     = dplyr::n_distinct(canonical_lookup[as.character(sp_ncbi)]),
     n_allochronic = sum(design == "Allochronic", na.rm = TRUE),
     n_synchronic  = sum(design == "Synchronic",  na.rm = TRUE)
   )
@@ -808,7 +909,7 @@ readr::write_csv(tab_overview,
 
 for (var in c("disturbance", "design", "trait_type", "taxa",
                "genphen", "env_change", "data_type", "transf_data", "data_scale")) {
-  tbl <- dat_es |> dplyr::count(.data[[var]], sort = TRUE)
+  tbl <- m00_dat |> dplyr::count(.data[[var]], sort = TRUE)
   readr::write_csv(
     tbl,
     here::here("Rdata", "tables", paste0("counts_by_", var, ".csv"))

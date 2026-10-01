@@ -19,3 +19,14 @@ None flagged. All active R scripts (`R/00_packages.R` … `R/13_epred_draws_plot
 ## Restoration
 
 To restore any archived file, move it back to its original path relative to the repo root. No data was deleted.
+
+## 2026-10-01 — stale artifacts (`stale_2026-10-01/`)
+
+| Original path | Reason |
+|---|---|
+| `Rdata/summaries/model_summaries_emmeans.txt` | Text dump from an older fit (7,455 observations; current analysis set is 7,186). Written by `Scripts/model_summaries_emmeans.R`; not read by any `.qmd`, `.R`, or `_quarto.yml`. Moved, not deleted. |
+
+`Rdata/tables/small_study_effects.csv` was reviewed and **kept**: it is read by
+`chapters/07b_small_study_effects.qmd` as the labelled REML (metafor,
+homoscedastic) cross-check, and its saved model (`Rdata/models/small_study_effects.rds`)
+uses the current k = 7,186 contrasts.

@@ -28,7 +28,8 @@ source(here::here("Scripts", "19_sensitivity_tables.R"))
 
 ## Comparison setup
 
-The seven moderator models were repeated under three prespecified alternatives:
+The six reported moderator models (m01–m05, m07) were repeated under three
+prespecified alternatives, giving 18 sensitivity models:
 
 | Analysis | Recorded change | Fixed comparison |
 |---|---|---|
@@ -42,10 +43,15 @@ match the corresponding comparison model. The no-phylogeny analysis necessarily 
 phylogenetic effect; the minimum-sample-size analysis necessarily uses fewer
 contrasts.
 
+The environmental-change model (m08) was also refit under each alternative,
+but it is excluded here because the primary m08 fit did not meet the
+convergence criteria (max $\hat{R}$ = 1.0143; see the m08 appendix). Its
+sensitivity fits are therefore not reported or counted.
+
 ## At-a-glance results
 
 The table below is generated from the latest synced model summaries. “Models
-available” should equal seven for a complete analysis. “Changed coefficients”
+available” should equal six for a complete analysis. “Changed coefficients”
 excludes intercepts and counts a coefficient when either:
 
 1. its posterior median changes sign; or

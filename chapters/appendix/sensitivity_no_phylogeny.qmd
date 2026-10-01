@@ -42,6 +42,11 @@ fit     <- fit_ls_model(
 
 ## Convergence diagnostics
 
+Six moderator models are reported (m01–m05, m07). The environmental-change
+model (m08) is excluded because its primary fit did not converge. Convergence
+criteria: max $\hat{R} \leq 1.01$, bulk and tail ESS $\geq 400$, and no
+divergent transitions.
+
 ```{r diagnostics}
 sens_diagnostics_table(variant)
 ```
@@ -65,7 +70,7 @@ cat("**Overall:** ", sens_stability_summary(variant), "\n")
 
 Each table reports raw treatment-coded coefficients for the location
 (mean `ln M`) and scale (log-SD) submodels. See the
-[sensitivity overview](../07_sensitivity_analyses.qmd#how-to-read-the-detailed-results)
+[sensitivity overview](../07_sensitivity_analyses.qmd#output-columns)
 for column definitions.
 
 ```{r results, results='asis'}

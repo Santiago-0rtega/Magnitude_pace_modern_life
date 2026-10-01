@@ -1,14 +1,13 @@
 Disturbance context,Taxonomic group,Trait type,Contrasts,Within-context (%)
-Climate change,Amphibian,size,6,2.5
-Climate change,Bird,otherLH,2,0.8333333333333334
-Climate change,Bird,othermorphology,2,0.8333333333333334
-Climate change,Bird,phenology,76,31.666666666666668
-Climate change,Mammal,othermorphology,106,44.166666666666664
-Climate change,Mammal,size,5,2.0833333333333335
-Climate change,Plant,otherLH,14,5.833333333333333
-Climate change,Plant,othermorphology,8,3.3333333333333335
-Climate change,Plant,phenology,17,7.083333333333333
-Climate change,Plant,size,4,1.6666666666666667
+Climate change,Bird,otherLH,2,0.8968609865470852
+Climate change,Bird,othermorphology,2,0.8968609865470852
+Climate change,Bird,phenology,76,34.08071748878924
+Climate change,Mammal,othermorphology,95,42.600896860986545
+Climate change,Mammal,size,5,2.242152466367713
+Climate change,Plant,otherLH,14,6.278026905829597
+Climate change,Plant,othermorphology,8,3.587443946188341
+Climate change,Plant,phenology,17,7.623318385650224
+Climate change,Plant,size,4,1.7937219730941705
 Hunt_harv,Fish,otherLH,2,0.21905805038335158
 Hunt_harv,Fish,othermorphology,1,0.10952902519167579
 Hunt_harv,Fish,size,850,93.09967141292442
@@ -20,69 +19,68 @@ Hunt_harv,Plant,othermorphology,9,0.9857612267250822
 Hunt_harv,Plant,size,2,0.21905805038335158
 Hunt_harv,Reptile,othermorphology,7,0.7667031763417306
 Hunt_harv,Reptile,size,14,1.5334063526834611
-Introduction,Amphibian,othermorphology,4,0.0974184120798831
-Introduction,Arthropod,growth,108,2.6302971261568437
-Introduction,Arthropod,otherLH,108,2.6302971261568437
-Introduction,Arthropod,othermorphology,574,13.979542133463225
-Introduction,Arthropod,size,121,2.946906965416464
-Introduction,Bird,othermorphology,459,11.178762786166585
-Introduction,Bird,size,1,0.024354603019970774
-Introduction,Fish,behaviour,6,0.14612761811982464
-Introduction,Fish,growth,21,0.5114466634193863
-Introduction,Fish,otherLH,678,16.512420847540184
-Introduction,Fish,othermorphology,111,2.703360935216756
-Introduction,Fish,phenology,2,0.04870920603994155
-Introduction,Fish,physio,48,1.169020944958597
-Introduction,Fish,size,695,16.926449098879687
-Introduction,Mammal,behaviour,10,0.24354603019970775
-Introduction,Mammal,otherLH,30,0.7306380905991232
-Introduction,Mammal,othermorphology,20,0.4870920603994155
-Introduction,Mollusc,growth,6,0.14612761811982464
-Introduction,Mollusc,size,6,0.14612761811982464
-Introduction,Plant,growth,52,1.2664393570384802
-Introduction,Plant,otherLH,288,7.014125669751583
-Introduction,Plant,othermorphology,153,3.7262542620555283
-Introduction,Plant,phenology,6,0.14612761811982464
-Introduction,Plant,physio,241,5.869459327812956
-Introduction,Plant,response,7,0.17048222113979541
-Introduction,Plant,size,281,6.843643448611788
-Introduction,Reptile,behaviour,2,0.04870920603994155
-Introduction,Reptile,othermorphology,54,1.3151485630784219
-Introduction,Reptile,physio,4,0.0974184120798831
-Introduction,Reptile,size,10,0.24354603019970775
-Landscape change,Amphibian,physio,1,0.43859649122807015
-Landscape change,Bird,othermorphology,5,2.192982456140351
-Landscape change,Bird,size,1,0.43859649122807015
-Landscape change,Fish,othermorphology,105,46.05263157894737
-Landscape change,Fish,size,24,10.526315789473685
-Landscape change,Plant,growth,4,1.7543859649122806
-Landscape change,Plant,otherLH,27,11.842105263157896
-Landscape change,Plant,othermorphology,32,14.035087719298245
-Landscape change,Plant,phenology,1,0.43859649122807015
-Landscape change,Plant,physio,9,3.9473684210526314
-Landscape change,Plant,response,6,2.6315789473684212
-Landscape change,Plant,size,13,5.701754385964913
-Other,Arthropod,growth,1,0.07434944237918216
-Other,Arthropod,otherLH,4,0.29739776951672864
-Other,Arthropod,othermorphology,14,1.0408921933085502
-Other,Arthropod,phenology,1,0.07434944237918216
-Other,Arthropod,physio,5,0.37174721189591076
-Other,Arthropod,size,8,0.5947955390334573
-Other,Bird,otherLH,20,1.486988847583643
-Other,Bird,othermorphology,252,18.736059479553905
-Other,Bird,phenology,6,0.44609665427509293
-Other,Bird,size,23,1.7100371747211895
-Other,Fish,otherLH,4,0.29739776951672864
-Other,Fish,othermorphology,21,1.5613382899628252
-Other,Fish,size,512,38.066914498141266
-Other,Mammal,otherLH,1,0.07434944237918216
-Other,Mammal,othermorphology,334,24.83271375464684
-Other,Mammal,size,33,2.453531598513011
-Other,Plant,otherLH,32,2.379182156133829
-Other,Plant,othermorphology,38,2.825278810408922
-Other,Plant,phenology,2,0.14869888475836432
-Other,Plant,physio,30,2.2304832713754648
-Other,Plant,size,4,0.29739776951672864
+Introduction,Amphibian,othermorphology,4,0.09624639076034648
+Introduction,Arthropod,growth,108,2.598652550529355
+Introduction,Arthropod,otherLH,108,2.598652550529355
+Introduction,Arthropod,othermorphology,574,13.81135707410972
+Introduction,Arthropod,size,121,2.911453320500481
+Introduction,Bird,othermorphology,459,11.04427333974976
+Introduction,Bird,size,1,0.02406159769008662
+Introduction,Fish,behaviour,6,0.14436958614051973
+Introduction,Fish,growth,21,0.5052935514918191
+Introduction,Fish,otherLH,678,16.31376323387873
+Introduction,Fish,othermorphology,111,2.670837343599615
+Introduction,Fish,phenology,2,0.04812319538017324
+Introduction,Fish,physio,48,1.1549566891241578
+Introduction,Fish,size,695,16.722810394610203
+Introduction,Mammal,behaviour,10,0.24061597690086622
+Introduction,Mammal,otherLH,30,0.7218479307025987
+Introduction,Mammal,othermorphology,20,0.48123195380173245
+Introduction,Mollusc,growth,6,0.14436958614051973
+Introduction,Mollusc,size,6,0.14436958614051973
+Introduction,Plant,growth,56,1.3474494706448508
+Introduction,Plant,otherLH,288,6.929740134744947
+Introduction,Plant,othermorphology,171,4.114533205004812
+Introduction,Plant,phenology,6,0.14436958614051973
+Introduction,Plant,physio,256,6.159769008662175
+Introduction,Plant,response,7,0.16843118383060635
+Introduction,Plant,size,294,7.074109720885467
+Introduction,Reptile,behaviour,2,0.04812319538017324
+Introduction,Reptile,othermorphology,54,1.2993262752646775
+Introduction,Reptile,physio,4,0.09624639076034648
+Introduction,Reptile,size,10,0.24061597690086622
+Landscape change,Amphibian,physio,1,0.4484304932735426
+Landscape change,Bird,size,1,0.4484304932735426
+Landscape change,Fish,othermorphology,105,47.08520179372197
+Landscape change,Fish,size,24,10.762331838565023
+Landscape change,Plant,growth,4,1.7937219730941705
+Landscape change,Plant,otherLH,27,12.10762331838565
+Landscape change,Plant,othermorphology,32,14.349775784753364
+Landscape change,Plant,phenology,1,0.4484304932735426
+Landscape change,Plant,physio,9,4.0358744394618835
+Landscape change,Plant,response,6,2.690582959641256
+Landscape change,Plant,size,13,5.829596412556054
+Other,Arthropod,growth,1,0.07598784194528875
+Other,Arthropod,otherLH,4,0.303951367781155
+Other,Arthropod,othermorphology,14,1.0638297872340425
+Other,Arthropod,phenology,1,0.07598784194528875
+Other,Arthropod,physio,5,0.3799392097264438
+Other,Arthropod,size,8,0.60790273556231
+Other,Bird,otherLH,20,1.5197568389057752
+Other,Bird,othermorphology,252,19.148936170212767
+Other,Bird,phenology,6,0.45592705167173253
+Other,Bird,size,23,1.7477203647416413
+Other,Fish,otherLH,4,0.303951367781155
+Other,Fish,othermorphology,21,1.5957446808510638
+Other,Fish,size,512,38.90577507598784
+Other,Mammal,otherLH,1,0.07598784194528875
+Other,Mammal,othermorphology,321,24.39209726443769
+Other,Mammal,size,32,2.43161094224924
+Other,Plant,otherLH,23,1.7477203647416413
+Other,Plant,othermorphology,32,2.43161094224924
+Other,Plant,phenology,2,0.1519756838905775
+Other,Plant,physio,30,2.2796352583586628
+Other,Plant,size,4,0.303951367781155
 Pollution,Amphibian,response,12,7.100591715976331
 Pollution,Arthropod,growth,2,1.183431952662722
 Pollution,Fish,physio,2,1.183431952662722
@@ -94,16 +92,16 @@ Pollution,Plant,phenology,3,1.7751479289940828
 Pollution,Plant,physio,57,33.72781065088758
 Pollution,Plant,response,8,4.733727810650888
 Pollution,Plant,size,19,11.242603550295858
-Response to introductions,Arthropod,otherLH,46,24.864864864864863
-Response to introductions,Arthropod,othermorphology,58,31.35135135135135
-Response to introductions,Arthropod,size,15,8.108108108108109
-Response to introductions,Fish,size,2,1.0810810810810811
-Response to introductions,Mammal,behaviour,1,0.5405405405405406
-Response to introductions,Mollusc,othermorphology,5,2.7027027027027026
-Response to introductions,Mollusc,size,5,2.7027027027027026
-Response to introductions,Plant,growth,6,3.2432432432432434
-Response to introductions,Plant,otherLH,20,10.81081081081081
-Response to introductions,Plant,othermorphology,2,1.0810810810810811
-Response to introductions,Plant,physio,7,3.7837837837837838
-Response to introductions,Plant,size,17,9.18918918918919
-Response to introductions,Reptile,response,1,0.5405405405405406
+Response to introductions,Arthropod,otherLH,46,24.731182795698924
+Response to introductions,Arthropod,othermorphology,58,31.182795698924732
+Response to introductions,Arthropod,size,15,8.064516129032258
+Response to introductions,Fish,size,2,1.075268817204301
+Response to introductions,Mammal,behaviour,1,0.5376344086021505
+Response to introductions,Mollusc,othermorphology,5,2.6881720430107525
+Response to introductions,Mollusc,size,5,2.6881720430107525
+Response to introductions,Plant,growth,7,3.763440860215054
+Response to introductions,Plant,otherLH,20,10.75268817204301
+Response to introductions,Plant,othermorphology,2,1.075268817204301
+Response to introductions,Plant,physio,7,3.763440860215054
+Response to introductions,Plant,size,17,9.13978494623656
+Response to introductions,Reptile,response,1,0.5376344086021505

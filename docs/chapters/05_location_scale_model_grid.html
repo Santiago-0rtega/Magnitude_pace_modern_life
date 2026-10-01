@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>8&nbsp; Location–scale model grid – Human disturbance and the magnitude and predictability of phenotypic separation</title>
+<title>8&nbsp; Location–scale model grid – Human disturbance and the magnitude and predictability of phenotypic divergence</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -120,6 +120,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -310,10 +339,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">Human disturbance and the magnitude and predictability of phenotypic separation</a> 
+      <a href="../">Human disturbance and the magnitude and predictability of phenotypic divergence</a> 
         <div class="sidebar-tools-main tools-wide">
     <a href="https://github.com/Santiago-0rtega/Magnitude_pace_modern_life" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="../Human-disturbance-and-the-magnitude-and-predictability-of-phenotypic-separation.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="../Human-disturbance-and-the-magnitude-and-predictability-of-phenotypic-divergence.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
     </div>
@@ -561,7 +590,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#output-assemble-grid-summaries" id="toc-output-assemble-grid-summaries" class="nav-link" data-scroll-target="#output-assemble-grid-summaries"><span class="header-section-number">8.5</span> Output: assemble grid summaries</a></li>
   <li><a href="#model-status-table" id="toc-model-status-table" class="nav-link" data-scroll-target="#model-status-table"><span class="header-section-number">8.6</span> Model status table</a></li>
   <li><a href="#convergence-overview" id="toc-convergence-overview" class="nav-link" data-scroll-target="#convergence-overview"><span class="header-section-number">8.7</span> Convergence overview</a></li>
-  <li><a href="#excluded-model-attempts" id="toc-excluded-model-attempts" class="nav-link" data-scroll-target="#excluded-model-attempts"><span class="header-section-number">8.8</span> Excluded model attempts</a></li>
+  <li><a href="#excluded-and-dropped-models" id="toc-excluded-and-dropped-models" class="nav-link" data-scroll-target="#excluded-and-dropped-models"><span class="header-section-number">8.8</span> Excluded and dropped models</a></li>
   </ul>
 </nav>
     </div>
@@ -1041,29 +1070,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="convergence-overview" class="level2" data-number="8.7">
 <h2 data-number="8.7" class="anchored" data-anchor-id="convergence-overview"><span class="header-section-number">8.7</span> Convergence overview</h2>
+<p>Convergence criteria: max <span class="math inline">\(\hat{R} \leq 1.01\)</span>, bulk and tail ESS <span class="math inline">\(\geq 400\)</span>, and no divergent transitions.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>model_status <span class="sc">|&gt;</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(status <span class="sc">==</span> <span class="st">"fitted"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(model_id, moderator, max_rhat, min_bulk_ess, n_divergent) <span class="sc">|&gt;</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">rhat_ok =</span> dplyr<span class="sc">::</span><span class="fu">if_else</span>(max_rhat <span class="sc">&lt;=</span> <span class="fl">1.01</span>, <span class="st">"ok"</span>, <span class="st">"warn"</span>),</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">ess_ok  =</span> dplyr<span class="sc">::</span><span class="fu">if_else</span>(min_bulk_ess <span class="sc">&gt;=</span> <span class="dv">400</span>, <span class="st">"ok"</span>, <span class="st">"warn"</span>),</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">div_ok  =</span> dplyr<span class="sc">::</span><span class="fu">if_else</span>(n_divergent <span class="sc">&lt;</span> <span class="dv">10</span>, <span class="st">"ok"</span>, <span class="st">"warn"</span>)</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(model_id, moderator, max_rhat, min_bulk_ess, min_tail_ess,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                n_divergent) <span class="sc">|&gt;</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">rhat_ok =</span> dplyr<span class="sc">::</span><span class="fu">if_else</span>(max_rhat <span class="sc">&lt;=</span> <span class="fl">1.01</span>, <span class="st">"ok"</span>, <span class="st">"warn"</span>),</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">ess_ok  =</span> dplyr<span class="sc">::</span><span class="fu">if_else</span>(min_bulk_ess <span class="sc">&gt;=</span> <span class="dv">400</span> <span class="sc">&amp;</span> min_tail_ess <span class="sc">&gt;=</span> <span class="dv">400</span>, <span class="st">"ok"</span>, <span class="st">"warn"</span>),</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">div_ok  =</span> dplyr<span class="sc">::</span><span class="fu">if_else</span>(n_divergent <span class="sc">==</span> <span class="dv">0</span>, <span class="st">"ok"</span>, <span class="st">"warn"</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["model_id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["moderator"],"name":[2],"type":["chr"],"align":["left"]},{"label":["max_rhat"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["min_bulk_ess"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["n_divergent"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["rhat_ok"],"name":[6],"type":["chr"],"align":["left"]},{"label":["ess_ok"],"name":[7],"type":["chr"],"align":["left"]},{"label":["div_ok"],"name":[8],"type":["chr"],"align":["left"]}],"data":[{"1":"m01","2":"disturbance","3":"1.005388","4":"727.4961","5":"0","6":"ok","7":"ok","8":"ok"},{"1":"m02","2":"design","3":"1.005619","4":"903.2349","5":"0","6":"ok","7":"ok","8":"ok"},{"1":"m03","2":"log10_years","3":"1.003838","4":"733.4218","5":"0","6":"ok","7":"ok","8":"ok"},{"1":"m04","2":"log10_generations","3":"1.005644","4":"904.8396","5":"0","6":"ok","7":"ok","8":"ok"},{"1":"m05","2":"trait_type","3":"1.007823","4":"739.3589","5":"0","6":"ok","7":"ok","8":"ok"},{"1":"m07","2":"genphen","3":"1.005198","4":"999.5873","5":"0","6":"ok","7":"ok","8":"ok"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["model_id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["moderator"],"name":[2],"type":["chr"],"align":["left"]},{"label":["max_rhat"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["min_bulk_ess"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["min_tail_ess"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["n_divergent"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["rhat_ok"],"name":[7],"type":["chr"],"align":["left"]},{"label":["ess_ok"],"name":[8],"type":["chr"],"align":["left"]},{"label":["div_ok"],"name":[9],"type":["chr"],"align":["left"]}],"data":[{"1":"m01","2":"disturbance","3":"1.005388","4":"727.4961","5":"1703.5796","6":"0","7":"ok","8":"ok","9":"ok"},{"1":"m02","2":"design","3":"1.005619","4":"903.2349","5":"1446.1392","6":"0","7":"ok","8":"ok","9":"ok"},{"1":"m03","2":"log10_years","3":"1.003838","4":"733.4218","5":"1845.6007","6":"0","7":"ok","8":"ok","9":"ok"},{"1":"m04","2":"log10_generations","3":"1.005644","4":"904.8396","5":"1913.0071","6":"0","7":"ok","8":"ok","9":"ok"},{"1":"m05","2":"trait_type","3":"1.007823","4":"739.3589","5":"939.7719","6":"0","7":"ok","8":"ok","9":"ok"},{"1":"m07","2":"genphen","3":"1.005198","4":"999.5873","5":"1839.2373","6":"0","7":"ok","8":"ok","9":"ok"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
 </section>
-<section id="excluded-model-attempts" class="level2" data-number="8.8">
-<h2 data-number="8.8" class="anchored" data-anchor-id="excluded-model-attempts"><span class="header-section-number">8.8</span> Excluded model attempts</h2>
+<section id="excluded-and-dropped-models" class="level2" data-number="8.8">
+<h2 data-number="8.8" class="anchored" data-anchor-id="excluded-and-dropped-models"><span class="header-section-number">8.8</span> Excluded and dropped models</h2>
+<p>These models were fitted but are not part of the reported results. Models m06, m08, m09, and m10 did not meet the convergence criteria; m11 (measurement scale) was dropped by the authors.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1105,6 +1137,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">m10</td>
 <td style="text-align: left;">Transformation status</td>
 <td style="text-align: left;">The original seven-level fit stopped because of memory limits. The simplified two-level m10b refit had max Rhat 1.0128, minimum bulk ESS 230, minimum tail ESS 363, and 0 divergences.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">m11</td>
+<td style="text-align: left;">Measurement scale</td>
+<td style="text-align: left;">Dropped by the authors; not part of the reported model set. The fitted model file is retained but its results are not reported.</td>
 </tr>
 </tbody>
 </table>
@@ -2016,24 +2053,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb18-419"><a href="#cb18-419" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-420"><a href="#cb18-420" aria-hidden="true" tabindex="-1"></a><span class="fu">## Convergence overview</span></span>
 <span id="cb18-421"><a href="#cb18-421" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-422"><a href="#cb18-422" aria-hidden="true" tabindex="-1"></a><span class="in">```{r convergence}</span></span>
-<span id="cb18-423"><a href="#cb18-423" aria-hidden="true" tabindex="-1"></a>model_status <span class="sc">|&gt;</span></span>
-<span id="cb18-424"><a href="#cb18-424" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(status <span class="sc">==</span> <span class="st">"fitted"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb18-425"><a href="#cb18-425" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(model_id, moderator, max_rhat, min_bulk_ess, n_divergent) <span class="sc">|&gt;</span></span>
-<span id="cb18-426"><a href="#cb18-426" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb18-427"><a href="#cb18-427" aria-hidden="true" tabindex="-1"></a>    <span class="at">rhat_ok =</span> dplyr<span class="sc">::</span><span class="fu">if_else</span>(max_rhat <span class="sc">&lt;=</span> <span class="fl">1.01</span>, <span class="st">"ok"</span>, <span class="st">"warn"</span>),</span>
-<span id="cb18-428"><a href="#cb18-428" aria-hidden="true" tabindex="-1"></a>    <span class="at">ess_ok  =</span> dplyr<span class="sc">::</span><span class="fu">if_else</span>(min_bulk_ess <span class="sc">&gt;=</span> <span class="dv">400</span>, <span class="st">"ok"</span>, <span class="st">"warn"</span>),</span>
-<span id="cb18-429"><a href="#cb18-429" aria-hidden="true" tabindex="-1"></a>    <span class="at">div_ok  =</span> dplyr<span class="sc">::</span><span class="fu">if_else</span>(n_divergent <span class="sc">&lt;</span> <span class="dv">10</span>, <span class="st">"ok"</span>, <span class="st">"warn"</span>)</span>
-<span id="cb18-430"><a href="#cb18-430" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb18-431"><a href="#cb18-431" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-432"><a href="#cb18-432" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-433"><a href="#cb18-433" aria-hidden="true" tabindex="-1"></a><span class="fu">## Excluded model attempts</span></span>
-<span id="cb18-434"><a href="#cb18-434" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-435"><a href="#cb18-435" aria-hidden="true" tabindex="-1"></a><span class="in">```{r non-primary-models}</span></span>
-<span id="cb18-436"><a href="#cb18-436" aria-hidden="true" tabindex="-1"></a>excluded_grid <span class="sc">|&gt;</span></span>
-<span id="cb18-437"><a href="#cb18-437" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(model_id, label, reason) <span class="sc">|&gt;</span></span>
-<span id="cb18-438"><a href="#cb18-438" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Model"</span>, <span class="st">"Field"</span>, <span class="st">"Recorded status"</span>))</span>
-<span id="cb18-439"><a href="#cb18-439" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb18-422"><a href="#cb18-422" aria-hidden="true" tabindex="-1"></a>Convergence criteria: max $\hat{R} \leq 1.01$, bulk and tail ESS $\geq 400$,</span>
+<span id="cb18-423"><a href="#cb18-423" aria-hidden="true" tabindex="-1"></a>and no divergent transitions.</span>
+<span id="cb18-424"><a href="#cb18-424" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-425"><a href="#cb18-425" aria-hidden="true" tabindex="-1"></a><span class="in">```{r convergence}</span></span>
+<span id="cb18-426"><a href="#cb18-426" aria-hidden="true" tabindex="-1"></a>model_status <span class="sc">|&gt;</span></span>
+<span id="cb18-427"><a href="#cb18-427" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(status <span class="sc">==</span> <span class="st">"fitted"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb18-428"><a href="#cb18-428" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(model_id, moderator, max_rhat, min_bulk_ess, min_tail_ess,</span>
+<span id="cb18-429"><a href="#cb18-429" aria-hidden="true" tabindex="-1"></a>                n_divergent) <span class="sc">|&gt;</span></span>
+<span id="cb18-430"><a href="#cb18-430" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb18-431"><a href="#cb18-431" aria-hidden="true" tabindex="-1"></a>    <span class="at">rhat_ok =</span> dplyr<span class="sc">::</span><span class="fu">if_else</span>(max_rhat <span class="sc">&lt;=</span> <span class="fl">1.01</span>, <span class="st">"ok"</span>, <span class="st">"warn"</span>),</span>
+<span id="cb18-432"><a href="#cb18-432" aria-hidden="true" tabindex="-1"></a>    <span class="at">ess_ok  =</span> dplyr<span class="sc">::</span><span class="fu">if_else</span>(min_bulk_ess <span class="sc">&gt;=</span> <span class="dv">400</span> <span class="sc">&amp;</span> min_tail_ess <span class="sc">&gt;=</span> <span class="dv">400</span>, <span class="st">"ok"</span>, <span class="st">"warn"</span>),</span>
+<span id="cb18-433"><a href="#cb18-433" aria-hidden="true" tabindex="-1"></a>    <span class="at">div_ok  =</span> dplyr<span class="sc">::</span><span class="fu">if_else</span>(n_divergent <span class="sc">==</span> <span class="dv">0</span>, <span class="st">"ok"</span>, <span class="st">"warn"</span>)</span>
+<span id="cb18-434"><a href="#cb18-434" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb18-435"><a href="#cb18-435" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-436"><a href="#cb18-436" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-437"><a href="#cb18-437" aria-hidden="true" tabindex="-1"></a><span class="fu">## Excluded and dropped models</span></span>
+<span id="cb18-438"><a href="#cb18-438" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-439"><a href="#cb18-439" aria-hidden="true" tabindex="-1"></a>These models were fitted but are not part of the reported results. Models</span>
+<span id="cb18-440"><a href="#cb18-440" aria-hidden="true" tabindex="-1"></a>m06, m08, m09, and m10 did not meet the convergence criteria; m11</span>
+<span id="cb18-441"><a href="#cb18-441" aria-hidden="true" tabindex="-1"></a>(measurement scale) was dropped by the authors.</span>
+<span id="cb18-442"><a href="#cb18-442" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-443"><a href="#cb18-443" aria-hidden="true" tabindex="-1"></a><span class="in">```{r non-primary-models}</span></span>
+<span id="cb18-444"><a href="#cb18-444" aria-hidden="true" tabindex="-1"></a>excluded_grid <span class="sc">|&gt;</span></span>
+<span id="cb18-445"><a href="#cb18-445" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(model_id, label, reason) <span class="sc">|&gt;</span></span>
+<span id="cb18-446"><a href="#cb18-446" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Model"</span>, <span class="st">"Field"</span>, <span class="st">"Recorded status"</span>))</span>
+<span id="cb18-447"><a href="#cb18-447" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

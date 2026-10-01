@@ -1,5 +1,6 @@
 # Primary moderator grid: models included in the reported supplementary results.
-# m06 (taxa) and m09 (data_type) were fit but are EXCLUDED here — see
+# m06 (taxa), m08 (env_change), m09 (data_type), m10 (transf_data) and m11
+# (data_scale) were fit but are EXCLUDED here — see
 # excluded_grid below for rationale. Keeping them out of this table means they
 # are never loaded into the grid status / effect-summary tables that drive the
 # publication figures (ch08).
@@ -23,5 +24,7 @@ excluded_grid <- tibble::tribble(
   "m09",     "data_type", "Data type",
     "The original fit had bulk ESS near 350 for sigma terms. The simplified m09b refit removed two sparse levels but retained 5 of 8000 post-warmup divergent transitions.",
   "m10",     "transf_data", "Transformation status",
-    "The original seven-level fit stopped because of memory limits. The simplified two-level m10b refit had max Rhat 1.0128, minimum bulk ESS 230, minimum tail ESS 363, and 0 divergences."
+    "The original seven-level fit stopped because of memory limits. The simplified two-level m10b refit had max Rhat 1.0128, minimum bulk ESS 230, minimum tail ESS 363, and 0 divergences.",
+  "m11",     "data_scale", "Measurement scale",
+    "Dropped by the authors; not part of the reported model set. The fitted model file is retained but its results are not reported."
 )

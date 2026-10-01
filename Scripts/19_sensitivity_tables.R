@@ -40,21 +40,28 @@ sens_variant_meta <- function(variant) {
   log10_years       = "Elapsed time — log₁₀ years (m03)",
   log10_generations = "Elapsed time — log₁₀ generations (m04)",
   trait_type        = "Trait type (m05)",
-  genphen           = "Phenotypic vs genetic study (m07)",
-  env_change        = "Environmental-change context (m08)"
+  genphen           = "Phenotypic vs genetic study (m07)"
 )
 sens_moderators <- names(.sens_mod_labels)
+
+# Moderators excluded from reporting. m08 (env_change) failed convergence in
+# the primary grid (max Rhat 1.0143) and is excluded from the primary results,
+# so its sensitivity variants are excluded too. The fitted CSV rows are kept on
+# disk but dropped at read time.
+.sens_excluded_moderators <- c("env_change")
 
 # Readers ----------------------------------------------------------------------
 .sens_read <- function(variant, kind) {
   f <- here::here("Rdata", "tables", "sensitivity", paste0(variant, "_", kind, ".csv"))
   if (!file.exists(f)) return(NULL)
-  readr::read_csv(f, show_col_types = FALSE)
+  readr::read_csv(f, show_col_types = FALSE) |>
+    dplyr::filter(!moderator %in% .sens_excluded_moderators)
 }
 .primary_read <- function() {
   f <- here::here("Rdata", "tables", "primary", "primary_fixef.csv")
   if (!file.exists(f)) return(NULL)
-  readr::read_csv(f, show_col_types = FALSE)
+  readr::read_csv(f, show_col_types = FALSE) |>
+    dplyr::filter(!moderator %in% .sens_excluded_moderators)
 }
 
 # Formatting helpers -----------------------------------------------------------
@@ -153,19 +160,21 @@ sens_diagnostic_flags <- function(variant) {
     log10_years = "Elapsed time in log10 years (m03)",
     log10_generations = "Elapsed time in log10 generations (m04)",
     trait_type = "Trait type (m05)",
-    genphen = "Phenotypic vs genetic study (m07)",
-    env_change = "Environmental-change context (m08)"
+    genphen = "Phenotypic vs genetic study (m07)"
   )
+  # Manuscript convergence criteria: max Rhat <= 1.01, bulk and tail ESS >= 400,
+  # and no divergent transitions.
   flagged <- d |>
-    dplyr::filter(n_divergent > 0 | max_rhat > 1.01) |>
+    dplyr::filter(n_divergent > 0 | max_rhat > 1.01 |
+                    min_bulk_ess < 400 | min_tail_ess < 400) |>
     dplyr::mutate(
       label = unname(diagnostic_labels[as.character(moderator)]),
-      detail = sprintf("%s: max Rhat = %.4f, divergences = %d",
-                       label, max_rhat, n_divergent)
+      detail = sprintf("%s: max Rhat = %.4f, min bulk/tail ESS = %.0f/%.0f, divergences = %d",
+                       label, max_rhat, min_bulk_ess, min_tail_ess, n_divergent)
     )
   if (nrow(flagged) == 0) {
-    return(sprintf("All seven models had max Rhat <= 1.01 and zero divergences (largest max Rhat = %.4f).",
-                   max(d$max_rhat, na.rm = TRUE)))
+    return(sprintf("All %d models had max Rhat <= 1.01, bulk and tail ESS >= 400, and zero divergences (largest max Rhat = %.4f).",
+                   nrow(d), max(d$max_rhat, na.rm = TRUE)))
   }
   paste0(
     "Models requiring convergence caution: ",

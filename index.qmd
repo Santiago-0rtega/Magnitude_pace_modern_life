@@ -6,7 +6,7 @@ title: "Introduction"
 
 This computational supplement accompanies the manuscript:
 
-> **Human disturbance and the magnitude and predictability of phenotypic separation.**
+> **Human disturbance and the magnitude and predictability of phenotypic divergence.**
 >
 > Santiago Ortega, Eduardo S.A. Santos, Kiyoko Gotanda, Sarah Sanderson,
 > Lucas Damian Gorné, Andrew Hendry, and Shinichi Nakagawa.
@@ -50,7 +50,7 @@ The analyses use the **PROCEED v6.2** database of rates of evolutionary and phen
 ## Purpose of lnM
 
 The effect size used in this book is $\ln M$, which records the magnitude of
-separation between two groups without retaining direction. Its formula and SAFE
+divergence between two groups without retaining direction. Its formula and SAFE
 calculation are given in @sec-lnm-measures.
 
 ## Location-scale meta-regression
