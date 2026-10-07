@@ -23,3 +23,12 @@ outputs/phylogeny/*.rds
 
 # Local dated archives of superseded reruns and derived summaries
 /Rdata/archive/
+
+# Render leftovers and local scratch (moved out 2026-10-06; keep them out)
+/_freeze/
+chapters/**/*_cache/
+chapters/**/*_files/
+chapters/models/*.html
+Rplots.pdf
+/tmp/
+/Overleaf/

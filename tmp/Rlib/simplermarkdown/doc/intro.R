@@ -1,4 +1,0 @@
-# codeblock1
-a <- 1+1
-a
-
