@@ -682,7 +682,7 @@ n_0 = \frac{2n_1n_2}{n_1+n_2},
 <li>The plug-in estimate is undefined when <span class="math inline">\(MS_B \le MS_W\)</span>, because <span class="math inline">\(s_B^2\)</span> is then zero or negative.</li>
 </ul>
 <p>The SAFE estimator repeatedly draws values of the group means and standard deviations from their finite-sample distributions. It transforms each draw with <span class="math inline">\(MS_B^\ast &gt; MS_W^\ast\)</span> to <span class="math inline">\(\ln M^\ast\)</span>, then saves the bias-corrected estimate and sampling variance.</p>
-<p>The book uses the cached SAFE results by default. Recomputing all contrasts is intentionally opt-in because the Monte Carlo step is slow.</p>
+<p>The book uses the cached SAFE results by default. Recomputing all contrasts is opt-in. The Monte Carlo step is slow.</p>
 </section>
 <section id="load-cleaned-data" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="load-cleaned-data"><span class="header-section-number">3.3</span> Load cleaned data</h2>
@@ -1389,7 +1389,7 @@ n_0 = \frac{2n_1n_2}{n_1+n_2},
 <span id="cb11-90"><a href="#cb11-90" aria-hidden="true" tabindex="-1"></a>$MS_B^\ast &gt; MS_W^\ast$ to $\ln M^\ast$, then saves the bias-corrected estimate</span>
 <span id="cb11-91"><a href="#cb11-91" aria-hidden="true" tabindex="-1"></a>and sampling variance.</span>
 <span id="cb11-92"><a href="#cb11-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-93"><a href="#cb11-93" aria-hidden="true" tabindex="-1"></a>The book uses the cached SAFE results by default. Recomputing all contrasts is intentionally opt-in because the Monte Carlo step is slow.</span>
+<span id="cb11-93"><a href="#cb11-93" aria-hidden="true" tabindex="-1"></a>The book uses the cached SAFE results by default. Recomputing all contrasts is opt-in. The Monte Carlo step is slow.</span>
 <span id="cb11-94"><a href="#cb11-94" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-95"><a href="#cb11-95" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load cleaned data</span></span>
 <span id="cb11-96"><a href="#cb11-96" aria-hidden="true" tabindex="-1"></a></span>

@@ -3,7 +3,7 @@ title: "Taxonomic group (excluded)"
 ---
 
 ::: {.callout-warning}
-**Excluded from the primary supplementary results.** Taxonomic group is not reported as a moderator in this book. This page documents what was attempted and why it was dropped.
+**Excluded from the primary supplementary results.** Taxonomic group is not reported as a moderator in this book. This page documents the attempted refits and the exclusion decision.
 :::
 
 ## What was attempted
@@ -11,10 +11,10 @@ title: "Taxonomic group (excluded)"
 The raw `taxa` moderator has several sparsely populated levels (Reptile n = 92, Mollusc n = 25, Amphibian n = 23), which caused divergent transitions in the scale submodel. Two collapsing schemes were tried to fix this:
 
 1. **`taxa_v2`** (m06b) — Fish, Insect, Bird, Mammal, Reptile, Plant, with everything else pooled. Still contained a small Reptile level.
-2. **`taxa3`** (m06c) — a coarser 3-group split: Vertebrate (Fish+Bird+Mammal+Reptile+Amphibian, n = 4649), Invertebrate (Arthropod+Mollusc+Annelid, n = 1090), Plant (n = 1772). Chosen specifically to avoid a fish ecto/endotherm split — the sample was checked and contains no regionally endothermic fish species (tuna, lamnid sharks, billfish, opah), so that concern doesn't arise here.
+2. **`taxa3`** (m06c) — a coarser 3-group split: Vertebrate (Fish+Bird+Mammal+Reptile+Amphibian, n = 4649), Invertebrate (Arthropod+Mollusc+Annelid, n = 1090), Plant (n = 1772). No fish ecto/endotherm split is made. The sample was checked and contains no regionally endothermic fish species (tuna, lamnid sharks, billfish, opah).
 
-## Why it was dropped
+## Fitting status and exclusion
 
-Both refits fit far more slowly than every other moderator model in the registry, with `taxa3` still in early warmup after multiple days of sampling on the same hardware that fits the other models in hours. The likely explanation is not the taxonomic grouping itself, but that **taxonomic identity is largely redundant with the phylogenetic random effect** already in every model (`(1 | gr(sp_ncbi, cov = A))`). With both terms in the model, they compete to explain the same clade-level signal, producing a poorly identified, slow-mixing posterior. This is a structural issue with fitting taxonomic group *alongside* a phylogenetic correlation matrix, not a data quality problem — refitting with more iterations would not resolve it.
+Both refits fit far more slowly than every other moderator model in the registry, with `taxa3` still in early warmup after multiple days of sampling on the same hardware that fits the other models in hours. **Taxonomic identity is largely redundant with the phylogenetic random effect** already in every model (`(1 | gr(sp_ncbi, cov = A))`).
 
-**Decision:** m06 (taxa) is excluded from the primary results as computationally infeasible given this redundancy with the phylogenetic term. The base fit, `m06b`, and (if ever completed) `m06c` remain in `outputs/models/` for reference, but are not summarized, plotted, or fed into the aggregated effect tables or publication figures.
+**Decision:** m06 (taxa) is excluded from the primary results as computationally infeasible. The base fit, `m06b`, and (if ever completed) `m06c` remain in `outputs/models/` for reference, but are not summarized, plotted, or fed into the aggregated effect tables or publication figures.

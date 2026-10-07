@@ -205,7 +205,7 @@ knitr::kable(
 )
 ```
 
-`r sum(categorical_results$min_expected < 5)` of `r nrow(categorical_results)` categorical comparisons contain at least one expected cell count below five. Their chi-square *p*-values should therefore be read cautiously; Cramér's *V*, which is the primary overlap diagnostic, remains the focus.
+`r sum(categorical_results$min_expected < 5)` of `r nrow(categorical_results)` categorical comparisons contain at least one expected cell count below five. Their chi-square *p*-values are based on these small expected counts.
 
 ```{r categorical-plot, fig.width=14, fig.height=10, fig.cap="Bias-corrected Cramér's V among categorical moderators. Stars denote Holm-adjusted significance: * p < .05, ** p < .01, *** p < .001."}
 cat_levels <- unname(categorical_vars)
@@ -247,7 +247,7 @@ p_categorical
 
 ## Continuous–categorical associations
 
-For each mixed pair, η² is the proportion of variation in the continuous moderator explained by the categorical grouping in a one-way model. Because η² is non-negative, the heatmap shows strength but not direction; group distributions should be consulted when direction matters.
+For each mixed pair, η² is the proportion of variation in the continuous moderator explained by the categorical grouping in a one-way model. Because η² is non-negative, the heatmap shows strength but not direction.
 
 ```{r mixed-analysis}
 mixed_grid <- tidyr::crossing(

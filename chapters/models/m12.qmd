@@ -8,7 +8,7 @@ cache_dir <- here::here("Rdata", "epred_draws")
 cache     <- read_epred_cache("m12", cache_dir)
 ```
 
-Interaction: does the rate of divergence over time depend on the type of disturbance? Prediction ribbons are faceted by disturbance.
+Interaction between elapsed time and disturbance. Prediction ribbons are faceted by disturbance.
 
 ## Model summary
 

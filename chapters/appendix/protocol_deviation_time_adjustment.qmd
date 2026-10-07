@@ -4,12 +4,8 @@ title: "Protocol deviation — moderators adjusted for elapsed time"
 
 ## Recorded change
 
-This chapter was **not** part of the pre-registered protocol. It was added in
-response to reviewer feedback (Lucas Damián Gorné) questioning whether the
-primary moderators (`disturbance`, `design`, `trait_type`, `genphen`) were
-analysed one at a time without adjusting for elapsed time, and whether the
-reported effects could partly reflect uneven elapsed-time coverage across
-moderator levels rather than the moderator itself.
+This chapter was **not** part of the pre-registered protocol. It refits the primary moderators
+(`disturbance`, `design`, `trait_type`, `genphen`) with elapsed time added as an additive covariate.
 
 ::: {.callout-note title="What changed—and what did not"}
 **Changed:** for each of the four primary moderators, we fitted an additive
@@ -28,10 +24,8 @@ This produces eight models: four moderators × two elapsed-time scales.
 
 ## Moderator–time relationships
 
-The plots below motivate the check: they show how elapsed time is
-distributed across the levels of each moderator. Uneven coverage (e.g. one
-level skewing toward longer elapsed time) is exactly the pattern that would
-let a moderator effect and a time effect be confounded.
+The plots below show how elapsed time is
+distributed across the levels of each moderator.
 
 ```{r setup}
 source(here::here("Scripts", "00_packages.R"))
@@ -85,7 +79,7 @@ make_time_panel(dat_es, "log10_generations", expression(log[10]("elapsed generat
 
 ## Model specification
 
-Models were fitted on the labs server (`totoro`), not while rendering this book, using the same
+Models were fitted on a remote server, not while rendering this book, using the same
 priors and MCMC settings as the primary models: 4 chains × 4,000 iterations
 (2,000 warmup), `adapt_delta = 0.97`, `max_treedepth = 15`, `cmdstanr` backend.
 

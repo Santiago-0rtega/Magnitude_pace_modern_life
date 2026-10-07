@@ -49,18 +49,15 @@ crosscheck <- if (file.exists(crosscheck_path)) {
 }
 ```
 
-## Why sample size, rather than sampling error?
+## Predictor: sample size rather than sampling error
 
 We assess whether estimated effect magnitudes vary systematically with study
-size. Such a pattern is a **small-study effect**: it can be consistent with
-publication bias, but it can also arise from genuine heterogeneity or design
-differences. It is therefore a diagnostic, not a direct test of the publication
-process.
+size. Such a pattern is a **small-study effect**. It is a diagnostic, not a direct test of the
+publication process.
 
 The usual Egger regression uses an effect's sampling standard error as the
 predictor. For lnM, however, the effect and its estimated standard error share
-underlying variance components. Their structural dependence can create
-artefactual asymmetry. Following the
+underlying variance components. Following the
 [lnM worked example](https://itchyshin.github.io/meta-analysis_of_magnitude/)
 and Nakagawa et al. (2022), we instead use a predictor calculated only from the
 two group sample sizes.
@@ -244,9 +241,7 @@ p
 
 ::: {.callout-note}
 The infinite-sample intercept is an extrapolation to $1/\tilde{n}_0=0$, outside
-the observed finite-sample data. It is most useful as a sensitivity analysis when
-the slope diagnostic indicates small-study effects and the model is otherwise
-well specified.
+the observed finite-sample data. It is reported as a sensitivity analysis.
 :::
 
 ### Residual SD across study size
@@ -301,7 +296,7 @@ if (is.null(crosscheck)) {
 ## Reproduce the cached outputs
 
 Normal book renders read the small draw caches under `Rdata/epred_draws/`. The
-fits themselves are run on the labs server (`totoro`):
+fits themselves are run on a remote server:
 
 ```bash
 # 1. Fit the specification grid (four models, parallel)

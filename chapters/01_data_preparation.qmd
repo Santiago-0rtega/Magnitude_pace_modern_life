@@ -46,7 +46,7 @@ The steps applied when (re)building the dataset:
 1. `read_proceed()` - read the raw PROCEED v6.2 rates database.
 2. `clean_proceed()` - coerce grouping/categorical variables to factors.
 3. `require_lnm_vars()` - keep contrasts with the two-group summary statistics required for $\ln M$: means, standard deviations, and sample sizes for both groups.
-4. `filter_generations(max_gen = 300)` - retain contrasts with a known, positive elapsed-generation value no greater than 300; missing generation information is excluded because eligibility cannot be established.
+4. `filter_generations(max_gen = 300)` - retain contrasts with a known, positive elapsed-generation value no greater than 300; missing generation information is excluded.
 5. `add_derived_vars()` - add `n_total`, `log10_years`, `log10_generations`.
 
 ```{r rebuild, eval=rebuild_clean_data}

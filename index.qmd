@@ -79,13 +79,13 @@ Every main model includes:
 - `(1 | gr(sp_ncbi, cov = A))` - phylogenetic relatedness among species.
 - `(1 | gr(es_id_model, cov = V))` - known sampling variance from SAFE estimates, using the brms known-variance trick with a `constant(1)` prior on the corresponding SD.
 
-`sys_id` (study system) is reserved for sensitivity analyses because it is highly associated with `ref_id` and `sp_ncbi` and can make variance components hard to identify.
+`sys_id` (study system) is used only in sensitivity analyses. It is highly associated with `ref_id` and `sp_ncbi`.
 
 ## Saved files and reproducibility
 
 Long computations are saved as `.rds` files in `Rdata/`. The book reads these
-files by default. This makes a normal render fast and prevents model fitting from
-starting by accident. To rebuild files, follow the full route in the
+files by default, so a normal render does not refit models. To rebuild files, follow the full
+route in the
 [Reproducibility chapter](chapters/09_reproducibility.qmd).
 
 - **Effect sizes:** set `recompute_effect_sizes <- TRUE` in `02_lnm_effect_sizes.qmd`.

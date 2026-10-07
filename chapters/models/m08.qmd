@@ -39,7 +39,7 @@ fit <- brms::brm(formula, data = dat_model,
                  data2 = list(A = A, V = V))
 ```
 
-Type of environmental change driving the divergence.
+Type of environmental change.
 
 ## Model summary
 
@@ -83,7 +83,7 @@ knitr::include_graphics(
 ```
 ### Editable plotting code
 
-The figure above is actually built by `Scripts/17_plot_orchard_from_epred_cache.R`, which reads the credible intervals for each env_change level from `Rdata/summaries/emmeans_contrasts_cache.rds` (`emmeans::emmeans(fit, ~ env_change, epred = TRUE, re_formula = NA)`, i.e. quantiles of the joint posterior of `Intercept + coefficient`). The self-contained variant below is kept for portability; its `get_level_estimates()` now uses the same joint-posterior-draws approach rather than adding the separately-computed `Q2.5`/`Q97.5` of the intercept and the coefficient, which would ignore their posterior covariance and roughly double the interval width.
+The figure above is actually built by `Scripts/17_plot_orchard_from_epred_cache.R`, which reads the credible intervals for each env_change level from `Rdata/summaries/emmeans_contrasts_cache.rds` (`emmeans::emmeans(fit, ~ env_change, epred = TRUE, re_formula = NA)`, i.e. quantiles of the joint posterior of `Intercept + coefficient`). The self-contained variant below is kept for portability; its `get_level_estimates()` uses the same joint-posterior-draws approach rather than the separately computed `Q2.5`/`Q97.5` of the intercept and the coefficient.
 
 ```{r build-orchard-m08, eval=FALSE}
 library(here)

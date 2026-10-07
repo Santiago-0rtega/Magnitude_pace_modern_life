@@ -627,7 +627,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="building-the-tree-and-the-correlation-matrix" class="level2" data-number="7.3">
 <h2 data-number="7.3" class="anchored" data-anchor-id="building-the-tree-and-the-correlation-matrix"><span class="header-section-number">7.3</span> Building the tree and the correlation matrix</h2>
-<p>Species names in PROCEED were matched to the Open Tree of Life synthetic tree (Hinchliff et al.&nbsp;2015) via the <code>rotl</code> package, retrieving the induced subtree for the matched taxa. Because PROCEED spans plant, invertebrate, and vertebrate species, name matching was not restricted to a single higher-level taxonomic context.</p>
+<p>Species names in PROCEED were matched to the Open Tree of Life synthetic tree (Hinchliff et al.&nbsp;2015) via the <code>rotl</code> package, retrieving the induced subtree for the matched taxa. PROCEED spans plant, invertebrate, and vertebrate species, and name matching was not restricted to a single higher-level taxonomic context.</p>
 <p>The tree’s tip labels were then reconciled against the original PROCEED species names using a four-stage cascade implemented in <code>prepR4pcm</code>:</p>
 <ol type="1">
 <li><strong>Exact match</strong></li>
@@ -641,7 +641,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="prepr4pcm-source" class="level2" data-number="7.4">
 <h2 data-number="7.4" class="anchored" data-anchor-id="prepr4pcm-source"><span class="header-section-number">7.4</span> The <code>prepR4pcm</code> reconciliation functions</h2>
-<p>The cascade above is implemented in the <code>prepR4pcm</code> package (<code>itchyshin/prepR4pcm</code>, v0.5.0.9000, commit <code>cca21b9</code>). Because those functions are the black box behind <code>build_or_read_phylogeny()</code>, the exported functions this chapter’s pipeline actually calls — <code>pr_normalize_names()</code>, <code>pr_get_tree()</code>, <code>reconcile_tree()</code>, <code>reconcile_apply()</code>, <code>reconcile_mapping()</code>, and <code>pr_phylo_cor()</code> — are reproduced below for the record. The block is <strong>not evaluated</strong> (<code>eval=FALSE</code>): rendering this chapter reads the cached <code>.rds</code> reconciliation outputs (next section), it does not re-run the package. Internal helpers (prefixed <code>.pr_*</code>, together with <code>pr_run_cascade()</code>, <code>pr_align_tree()</code>, <code>pr_strip_authority()</code>, etc.) are not shown here; see the <a href="https://github.com/itchyshin/prepR4pcm">package source</a> for those.</p>
+<p>The cascade above is implemented in the <code>prepR4pcm</code> package (<code>itchyshin/prepR4pcm</code>, v0.5.0.9000, commit <code>cca21b9</code>). The exported functions this chapter’s pipeline calls — <code>pr_normalize_names()</code>, <code>pr_get_tree()</code>, <code>reconcile_tree()</code>, <code>reconcile_apply()</code>, <code>reconcile_mapping()</code>, and <code>pr_phylo_cor()</code> — are reproduced below. The block is <strong>not evaluated</strong> (<code>eval=FALSE</code>): rendering this chapter reads the cached <code>.rds</code> reconciliation outputs (next section), it does not re-run the package. Internal helpers (prefixed <code>.pr_*</code>, together with <code>pr_run_cascade()</code>, <code>pr_align_tree()</code>, <code>pr_strip_authority()</code>, etc.) are not shown here; see the <a href="https://github.com/itchyshin/prepR4pcm">package source</a> for those.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1187,7 +1187,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="unmatched-species" class="level2" data-number="7.7">
 <h2 data-number="7.7" class="anchored" data-anchor-id="unmatched-species"><span class="header-section-number">7.7</span> Unmatched species</h2>
-<p>These current species names could not be reconciled to a tree tip at any stage of the cached cascade (exact, normalized, synonym via GNVerifier, or fuzzy). Because primary models require the phylogenetic term, their contrasts are excluded from the complete fitted row set before model fitting.</p>
+<p>These current species names could not be reconciled to a tree tip at any stage of the cached cascade (exact, normalized, synonym via GNVerifier, or fuzzy). Their contrasts are excluded from the complete fitted row set before model fitting.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1766,503 +1766,501 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>Species names in PROCEED were matched to the Open Tree of Life synthetic tree</span>
 <span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a>(Hinchliff et al. 2015) via the <span class="in">`rotl`</span> package, retrieving the induced subtree</span>
-<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a>for the matched taxa. Because PROCEED spans plant, invertebrate, and vertebrate</span>
-<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a>species, name matching was not restricted to a single higher-level taxonomic</span>
-<span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a>context.</span>
-<span id="cb13-54"><a href="#cb13-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-55"><a href="#cb13-55" aria-hidden="true" tabindex="-1"></a>The tree's tip labels were then reconciled against the original PROCEED species</span>
-<span id="cb13-56"><a href="#cb13-56" aria-hidden="true" tabindex="-1"></a>names using a four-stage cascade implemented in <span class="in">`prepR4pcm`</span>:</span>
-<span id="cb13-57"><a href="#cb13-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-58"><a href="#cb13-58" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Exact match**</span>
-<span id="cb13-59"><a href="#cb13-59" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Normalized match** — case, whitespace, and underscore differences resolved</span>
-<span id="cb13-60"><a href="#cb13-60" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Synonym resolution** — via GNVerifier (<span class="in">`authority = "gnverifier"`</span>), checking</span>
-<span id="cb13-61"><a href="#cb13-61" aria-hidden="true" tabindex="-1"></a>   the name against external taxonomic databases for accepted synonyms</span>
-<span id="cb13-62"><a href="#cb13-62" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Fuzzy match** — approximate string matching for names still unresolved</span>
-<span id="cb13-63"><a href="#cb13-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-64"><a href="#cb13-64" aria-hidden="true" tabindex="-1"></a>Species that cannot be resolved at any stage receive no canonical label. Their</span>
-<span id="cb13-65"><a href="#cb13-65" aria-hidden="true" tabindex="-1"></a>contrasts are excluded from the complete primary-model dataset before fitting</span>
-<span id="cb13-66"><a href="#cb13-66" aria-hidden="true" tabindex="-1"></a>(see <span class="co">[</span><span class="ot">Unmatched species</span><span class="co">](#unmatched-species)</span> below).</span>
-<span id="cb13-67"><a href="#cb13-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-68"><a href="#cb13-68" aria-hidden="true" tabindex="-1"></a>Multifurcations in the retrieved tree were randomly resolved into bifurcations</span>
-<span id="cb13-69"><a href="#cb13-69" aria-hidden="true" tabindex="-1"></a>with zero-length branches (<span class="in">`ape::multi2di`</span>). Where branch lengths were not</span>
-<span id="cb13-70"><a href="#cb13-70" aria-hidden="true" tabindex="-1"></a>available from Open Tree of Life, Grafen branch lengths (power ρ = 1) were</span>
-<span id="cb13-71"><a href="#cb13-71" aria-hidden="true" tabindex="-1"></a>assigned (<span class="in">`ape::compute.brlen`</span>). The resulting tree was converted to a</span>
-<span id="cb13-72"><a href="#cb13-72" aria-hidden="true" tabindex="-1"></a>phylogenetic correlation matrix under a Brownian-motion model of trait</span>
-<span id="cb13-73"><a href="#cb13-73" aria-hidden="true" tabindex="-1"></a>evolution (<span class="in">`prepR4pcm::pr_phylo_cor`</span>, falling back to <span class="in">`ape::vcv.phylo`</span> if</span>
-<span id="cb13-74"><a href="#cb13-74" aria-hidden="true" tabindex="-1"></a>unavailable).</span>
-<span id="cb13-75"><a href="#cb13-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-76"><a href="#cb13-76" aria-hidden="true" tabindex="-1"></a>All of this logic lives in</span>
-<span id="cb13-77"><a href="#cb13-77" aria-hidden="true" tabindex="-1"></a><span class="in">`Scripts/05_phylogeny.R::build_or_read_phylogeny()`</span>; this</span>
-<span id="cb13-78"><a href="#cb13-78" aria-hidden="true" tabindex="-1"></a>chapter only *reads* the cached result — rebuilding it requires network access</span>
-<span id="cb13-79"><a href="#cb13-79" aria-hidden="true" tabindex="-1"></a>to Open Tree of Life and GNVerifier and is not done automatically on render.</span>
-<span id="cb13-80"><a href="#cb13-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-81"><a href="#cb13-81" aria-hidden="true" tabindex="-1"></a><span class="fu">## The `prepR4pcm` reconciliation functions {#prepr4pcm-source}</span></span>
-<span id="cb13-82"><a href="#cb13-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-83"><a href="#cb13-83" aria-hidden="true" tabindex="-1"></a>The cascade above is implemented in the <span class="in">`prepR4pcm`</span> package</span>
-<span id="cb13-84"><a href="#cb13-84" aria-hidden="true" tabindex="-1"></a>(<span class="in">`itchyshin/prepR4pcm`</span>, v0.5.0.9000, commit <span class="in">`cca21b9`</span>). Because those functions</span>
-<span id="cb13-85"><a href="#cb13-85" aria-hidden="true" tabindex="-1"></a>are the black box behind <span class="in">`build_or_read_phylogeny()`</span>, the exported functions</span>
-<span id="cb13-86"><a href="#cb13-86" aria-hidden="true" tabindex="-1"></a>this chapter's pipeline actually calls — <span class="in">`pr_normalize_names()`</span>,</span>
-<span id="cb13-87"><a href="#cb13-87" aria-hidden="true" tabindex="-1"></a><span class="in">`pr_get_tree()`</span>, <span class="in">`reconcile_tree()`</span>, <span class="in">`reconcile_apply()`</span>, <span class="in">`reconcile_mapping()`</span>,</span>
-<span id="cb13-88"><a href="#cb13-88" aria-hidden="true" tabindex="-1"></a>and <span class="in">`pr_phylo_cor()`</span> — are reproduced below for the record. The block is</span>
-<span id="cb13-89"><a href="#cb13-89" aria-hidden="true" tabindex="-1"></a>**not evaluated** (<span class="in">`eval=FALSE`</span>): rendering this chapter reads the cached</span>
-<span id="cb13-90"><a href="#cb13-90" aria-hidden="true" tabindex="-1"></a><span class="in">`.rds`</span> reconciliation outputs (next section), it does not re-run the package.</span>
-<span id="cb13-91"><a href="#cb13-91" aria-hidden="true" tabindex="-1"></a>Internal helpers (prefixed <span class="in">`.pr_*`</span>, together with <span class="in">`pr_run_cascade()`</span>,</span>
-<span id="cb13-92"><a href="#cb13-92" aria-hidden="true" tabindex="-1"></a><span class="in">`pr_align_tree()`</span>, <span class="in">`pr_strip_authority()`</span>, etc.) are not shown here; see the</span>
-<span id="cb13-93"><a href="#cb13-93" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">package source</span><span class="co">](https://github.com/itchyshin/prepR4pcm)</span> for those.</span>
-<span id="cb13-94"><a href="#cb13-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-95"><a href="#cb13-95" aria-hidden="true" tabindex="-1"></a><span class="in">```{r prepr4pcm-source, eval=FALSE}</span></span>
-<span id="cb13-96"><a href="#cb13-96" aria-hidden="true" tabindex="-1"></a><span class="co"># ── prepR4pcm exported functions used by build_or_read_phylogeny() ────────────</span></span>
-<span id="cb13-97"><a href="#cb13-97" aria-hidden="true" tabindex="-1"></a><span class="co"># Source: itchyshin/prepR4pcm v0.5.0.9000 (commit cca21b9). Reproduced for the</span></span>
-<span id="cb13-98"><a href="#cb13-98" aria-hidden="true" tabindex="-1"></a><span class="co"># record only; this chapter reads the cached .rds outputs instead of running it.</span></span>
-<span id="cb13-99"><a href="#cb13-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-100"><a href="#cb13-100" aria-hidden="true" tabindex="-1"></a>pr_normalize_names <span class="ot">&lt;-</span> <span class="cf">function</span> (names, <span class="at">rank =</span> <span class="fu">c</span>(<span class="st">"species"</span>, <span class="st">"subspecies"</span>), <span class="at">parser =</span> <span class="fu">c</span>(<span class="st">"internal"</span>,</span>
-<span id="cb13-101"><a href="#cb13-101" aria-hidden="true" tabindex="-1"></a>    <span class="st">"gnparser"</span>))</span>
-<span id="cb13-102"><a href="#cb13-102" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb13-103"><a href="#cb13-103" aria-hidden="true" tabindex="-1"></a>    rank <span class="ot">&lt;-</span> <span class="fu">match.arg</span>(rank)</span>
-<span id="cb13-104"><a href="#cb13-104" aria-hidden="true" tabindex="-1"></a>    parser <span class="ot">&lt;-</span> <span class="fu">match.arg</span>(parser)</span>
-<span id="cb13-105"><a href="#cb13-105" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (parser <span class="sc">==</span> <span class="st">"gnparser"</span>) {</span>
-<span id="cb13-106"><a href="#cb13-106" aria-hidden="true" tabindex="-1"></a>        <span class="fu">return</span>(<span class="fu">.pr_normalize_gnparser</span>(names, rank))</span>
-<span id="cb13-107"><a href="#cb13-107" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-108"><a href="#cb13-108" aria-hidden="true" tabindex="-1"></a>    original <span class="ot">&lt;-</span> names</span>
-<span id="cb13-109"><a href="#cb13-109" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">as.character</span>(names)</span>
-<span id="cb13-110"><a href="#cb13-110" aria-hidden="true" tabindex="-1"></a>    is_na <span class="ot">&lt;-</span> <span class="fu">is.na</span>(names)</span>
-<span id="cb13-111"><a href="#cb13-111" aria-hidden="true" tabindex="-1"></a>    names[is_na] <span class="ot">&lt;-</span> <span class="st">""</span></span>
-<span id="cb13-112"><a href="#cb13-112" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">trimws</span>(names)</span>
-<span id="cb13-113"><a href="#cb13-113" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"_"</span>, <span class="st">" "</span>, names, <span class="at">fixed =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb13-114"><a href="#cb13-114" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">s+"</span>, <span class="st">" "</span>, names)</span>
-<span id="cb13-115"><a href="#cb13-115" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">s+ott</span><span class="sc">\\</span><span class="st">d+$"</span>, <span class="st">""</span>, names, <span class="at">perl =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb13-116"><a href="#cb13-116" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">pr_strip_authority</span>(names)</span>
-<span id="cb13-117"><a href="#cb13-117" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">s*</span><span class="sc">\\</span><span class="st">([^()]*</span><span class="sc">\\</span><span class="st">)</span><span class="sc">\\</span><span class="st">s*$"</span>, <span class="st">""</span>, names, <span class="at">perl =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb13-118"><a href="#cb13-118" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">s*×</span><span class="sc">\\</span><span class="st">s*"</span>, <span class="st">" x "</span>, names)</span>
-<span id="cb13-119"><a href="#cb13-119" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"^x</span><span class="sc">\\</span><span class="st">s+"</span>, <span class="st">"x "</span>, names)</span>
-<span id="cb13-120"><a href="#cb13-120" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">s+x</span><span class="sc">\\</span><span class="st">s+"</span>, <span class="st">" x "</span>, names)</span>
-<span id="cb13-121"><a href="#cb13-121" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">bsubsp</span><span class="sc">\\</span><span class="st">.?</span><span class="sc">\\</span><span class="st">s+"</span>, <span class="st">"subsp. "</span>, names, <span class="at">perl =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb13-122"><a href="#cb13-122" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">bssp</span><span class="sc">\\</span><span class="st">.?</span><span class="sc">\\</span><span class="st">s+"</span>, <span class="st">"subsp. "</span>, names, <span class="at">perl =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb13-123"><a href="#cb13-123" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">bvar</span><span class="sc">\\</span><span class="st">.?</span><span class="sc">\\</span><span class="st">s+"</span>, <span class="st">"var. "</span>, names, <span class="at">perl =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb13-124"><a href="#cb13-124" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">bf</span><span class="sc">\\</span><span class="st">.?</span><span class="sc">\\</span><span class="st">s+"</span>, <span class="st">"f. "</span>, names, <span class="at">perl =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb13-125"><a href="#cb13-125" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (rank <span class="sc">==</span> <span class="st">"species"</span>) {</span>
-<span id="cb13-126"><a href="#cb13-126" aria-hidden="true" tabindex="-1"></a>        names <span class="ot">&lt;-</span> <span class="fu">pr_strip_infraspecific</span>(names)</span>
-<span id="cb13-127"><a href="#cb13-127" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-128"><a href="#cb13-128" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">pr_standardise_case</span>(names)</span>
-<span id="cb13-129"><a href="#cb13-129" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">trimws</span>(names)</span>
-<span id="cb13-130"><a href="#cb13-130" aria-hidden="true" tabindex="-1"></a>    names[is_na] <span class="ot">&lt;-</span> <span class="cn">NA_character_</span></span>
-<span id="cb13-131"><a href="#cb13-131" aria-hidden="true" tabindex="-1"></a>    changed <span class="ot">&lt;-</span> <span class="sc">!</span>is_na <span class="sc">&amp;</span> (original <span class="sc">!=</span> names)</span>
-<span id="cb13-132"><a href="#cb13-132" aria-hidden="true" tabindex="-1"></a>    log <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">original =</span> original, <span class="at">normalised =</span> names, <span class="at">changed =</span> changed)</span>
-<span id="cb13-133"><a href="#cb13-133" aria-hidden="true" tabindex="-1"></a>    <span class="fu">attr</span>(names, <span class="st">"normalisation_log"</span>) <span class="ot">&lt;-</span> log</span>
-<span id="cb13-134"><a href="#cb13-134" aria-hidden="true" tabindex="-1"></a>    names</span>
-<span id="cb13-135"><a href="#cb13-135" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-136"><a href="#cb13-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-137"><a href="#cb13-137" aria-hidden="true" tabindex="-1"></a>pr_get_tree <span class="ot">&lt;-</span> <span class="cf">function</span> (x, <span class="at">source =</span> <span class="fu">c</span>(<span class="st">"rotl"</span>, <span class="st">"rtrees"</span>, <span class="st">"clootl"</span>, <span class="st">"fishtree"</span>,</span>
-<span id="cb13-138"><a href="#cb13-138" aria-hidden="true" tabindex="-1"></a>    <span class="st">"datelife"</span>, <span class="st">"auto"</span>), <span class="at">species_col =</span> <span class="cn">NULL</span>, <span class="at">taxon =</span> <span class="cn">NULL</span>, <span class="at">n_tree =</span> <span class="dv">1</span>L,</span>
-<span id="cb13-139"><a href="#cb13-139" aria-hidden="true" tabindex="-1"></a>    <span class="at">cache =</span> <span class="cn">FALSE</span>, <span class="at">tnrs =</span> <span class="fu">c</span>(<span class="st">"auto"</span>, <span class="st">"always"</span>, <span class="st">"never"</span>), <span class="at">min_match =</span> <span class="fl">0.8</span>,</span>
-<span id="cb13-140"><a href="#cb13-140" aria-hidden="true" tabindex="-1"></a>    <span class="at">check_ultrametric =</span> <span class="cn">TRUE</span>, <span class="at">resolve_polytomies =</span> <span class="cn">FALSE</span>, <span class="at">branch_lengths =</span> <span class="cn">NULL</span>,</span>
-<span id="cb13-141"><a href="#cb13-141" aria-hidden="true" tabindex="-1"></a>    ...)</span>
-<span id="cb13-142"><a href="#cb13-142" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb13-143"><a href="#cb13-143" aria-hidden="true" tabindex="-1"></a>    source <span class="ot">&lt;-</span> <span class="fu">match.arg</span>(source)</span>
-<span id="cb13-144"><a href="#cb13-144" aria-hidden="true" tabindex="-1"></a>    tnrs <span class="ot">&lt;-</span> <span class="fu">match.arg</span>(tnrs)</span>
-<span id="cb13-145"><a href="#cb13-145" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(branch_lengths)) {</span>
-<span id="cb13-146"><a href="#cb13-146" aria-hidden="true" tabindex="-1"></a>        branch_lengths <span class="ot">&lt;-</span> <span class="fu">match.arg</span>(branch_lengths, <span class="at">choices =</span> <span class="fu">c</span>(<span class="st">"grafen"</span>,</span>
-<span id="cb13-147"><a href="#cb13-147" aria-hidden="true" tabindex="-1"></a>            <span class="st">"compute.brlen"</span>, <span class="st">"unit"</span>))</span>
-<span id="cb13-148"><a href="#cb13-148" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-149"><a href="#cb13-149" aria-hidden="true" tabindex="-1"></a>    n_tree <span class="ot">&lt;-</span> <span class="fu">.pr_validate_positive_integer</span>(n_tree, <span class="st">"n_tree"</span>)</span>
-<span id="cb13-150"><a href="#cb13-150" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(min_match) <span class="sc">||</span> <span class="fu">length</span>(min_match) <span class="sc">!=</span> <span class="dv">1</span>L <span class="sc">||</span></span>
-<span id="cb13-151"><a href="#cb13-151" aria-hidden="true" tabindex="-1"></a>        <span class="fu">is.na</span>(min_match) <span class="sc">||</span> <span class="sc">!</span><span class="fu">is.finite</span>(min_match) <span class="sc">||</span> min_match <span class="sc">&lt;</span></span>
-<span id="cb13-152"><a href="#cb13-152" aria-hidden="true" tabindex="-1"></a>        <span class="dv">0</span> <span class="sc">||</span> min_match <span class="sc">&gt;</span> <span class="dv">1</span>) {</span>
-<span id="cb13-153"><a href="#cb13-153" aria-hidden="true" tabindex="-1"></a>        cli<span class="sc">::</span><span class="fu">cli_abort</span>(<span class="fu">c</span>(<span class="st">"{.arg min_match} must be a length-1 numeric in [0, 1]."</span>,</span>
-<span id="cb13-154"><a href="#cb13-154" aria-hidden="true" tabindex="-1"></a>            <span class="at">i =</span> <span class="st">"Got: {.val {min_match}}."</span>))</span>
-<span id="cb13-155"><a href="#cb13-155" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-156"><a href="#cb13-156" aria-hidden="true" tabindex="-1"></a>    species <span class="ot">&lt;-</span> <span class="fu">.pr_extract_species_for_tree</span>(x, species_col)</span>
-<span id="cb13-157"><a href="#cb13-157" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">length</span>(species) <span class="sc">==</span> <span class="dv">0</span>) {</span>
-<span id="cb13-158"><a href="#cb13-158" aria-hidden="true" tabindex="-1"></a>        cli<span class="sc">::</span><span class="fu">cli_abort</span>(<span class="fu">c</span>(<span class="st">"No species names available to query the backend."</span>,</span>
-<span id="cb13-159"><a href="#cb13-159" aria-hidden="true" tabindex="-1"></a>            <span class="at">i =</span> <span class="st">"If you passed a {.cls reconciliation} object, ensure {.code mapping$name_y} contains resolved names."</span>))</span>
-<span id="cb13-160"><a href="#cb13-160" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-161"><a href="#cb13-161" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (source <span class="sc">==</span> <span class="st">"auto"</span>) {</span>
-<span id="cb13-162"><a href="#cb13-162" aria-hidden="true" tabindex="-1"></a>        <span class="fu">return</span>(<span class="fu">.pr_get_tree_auto</span>(species, <span class="at">taxon =</span> taxon, <span class="at">n_tree =</span> n_tree,</span>
-<span id="cb13-163"><a href="#cb13-163" aria-hidden="true" tabindex="-1"></a>            <span class="at">cache =</span> cache, <span class="at">tnrs =</span> tnrs, <span class="at">min_match =</span> min_match,</span>
-<span id="cb13-164"><a href="#cb13-164" aria-hidden="true" tabindex="-1"></a>            ...))</span>
-<span id="cb13-165"><a href="#cb13-165" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-166"><a href="#cb13-166" aria-hidden="true" tabindex="-1"></a>    resolved <span class="ot">&lt;-</span> <span class="fu">.pr_resolve_query</span>(species, source, tnrs)</span>
-<span id="cb13-167"><a href="#cb13-167" aria-hidden="true" tabindex="-1"></a>    species_query <span class="ot">&lt;-</span> resolved<span class="sc">$</span>query</span>
-<span id="cb13-168"><a href="#cb13-168" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">isTRUE</span>(cache)) {</span>
-<span id="cb13-169"><a href="#cb13-169" aria-hidden="true" tabindex="-1"></a>        key <span class="ot">&lt;-</span> <span class="fu">.pr_tree_cache_key</span>(resolved<span class="sc">$</span>original, <span class="at">source =</span> source,</span>
-<span id="cb13-170"><a href="#cb13-170" aria-hidden="true" tabindex="-1"></a>            <span class="at">n_tree =</span> n_tree, <span class="at">taxon =</span> taxon, <span class="at">tnrs =</span> tnrs, <span class="at">query =</span> species_query,</span>
-<span id="cb13-171"><a href="#cb13-171" aria-hidden="true" tabindex="-1"></a>            ...)</span>
-<span id="cb13-172"><a href="#cb13-172" aria-hidden="true" tabindex="-1"></a>        cached <span class="ot">&lt;-</span> <span class="fu">.pr_tree_cache_get</span>(key, source)</span>
-<span id="cb13-173"><a href="#cb13-173" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(cached)) {</span>
-<span id="cb13-174"><a href="#cb13-174" aria-hidden="true" tabindex="-1"></a>            <span class="fu">return</span>(cached)</span>
-<span id="cb13-175"><a href="#cb13-175" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb13-176"><a href="#cb13-176" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-177"><a href="#cb13-177" aria-hidden="true" tabindex="-1"></a>    result <span class="ot">&lt;-</span> <span class="cf">switch</span>(source, <span class="at">rotl =</span> <span class="fu">.pr_get_tree_rotl</span>(species_query,</span>
-<span id="cb13-178"><a href="#cb13-178" aria-hidden="true" tabindex="-1"></a>        <span class="at">n_tree =</span> n_tree, ...), <span class="at">rtrees =</span> <span class="fu">.pr_get_tree_rtrees</span>(species_query,</span>
-<span id="cb13-179"><a href="#cb13-179" aria-hidden="true" tabindex="-1"></a>        <span class="at">n_tree =</span> n_tree, <span class="at">taxon =</span> taxon, ...), <span class="at">clootl =</span> <span class="fu">.pr_get_tree_clootl</span>(species_query,</span>
-<span id="cb13-180"><a href="#cb13-180" aria-hidden="true" tabindex="-1"></a>        <span class="at">n_tree =</span> n_tree, ...), <span class="at">fishtree =</span> <span class="fu">.pr_get_tree_fishtree</span>(species_query,</span>
-<span id="cb13-181"><a href="#cb13-181" aria-hidden="true" tabindex="-1"></a>        <span class="at">n_tree =</span> n_tree, ...), <span class="at">datelife =</span> <span class="fu">.pr_get_tree_datelife</span>(species_query,</span>
-<span id="cb13-182"><a href="#cb13-182" aria-hidden="true" tabindex="-1"></a>        <span class="at">n_tree =</span> n_tree, ...))</span>
-<span id="cb13-183"><a href="#cb13-183" aria-hidden="true" tabindex="-1"></a>    in_query <span class="ot">&lt;-</span> result<span class="sc">$</span>in_query</span>
-<span id="cb13-184"><a href="#cb13-184" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.logical</span>(in_query) <span class="sc">||</span> <span class="fu">length</span>(in_query) <span class="sc">!=</span> <span class="fu">length</span>(resolved<span class="sc">$</span>original)) {</span>
-<span id="cb13-185"><a href="#cb13-185" aria-hidden="true" tabindex="-1"></a>        cli<span class="sc">::</span><span class="fu">cli_abort</span>(<span class="fu">c</span>(<span class="st">"Internal: backend wrapper returned malformed {.code in_query}."</span>,</span>
-<span id="cb13-186"><a href="#cb13-186" aria-hidden="true" tabindex="-1"></a>            <span class="at">i =</span> <span class="st">"Expected {.cls logical} of length {length(resolved$original)}; got {.cls {class(in_query)[1]}} of length {length(in_query)}."</span>))</span>
-<span id="cb13-187"><a href="#cb13-187" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-188"><a href="#cb13-188" aria-hidden="true" tabindex="-1"></a>    matched <span class="ot">&lt;-</span> resolved<span class="sc">$</span>original[in_query]</span>
-<span id="cb13-189"><a href="#cb13-189" aria-hidden="true" tabindex="-1"></a>    unmatched <span class="ot">&lt;-</span> resolved<span class="sc">$</span>original[<span class="sc">!</span>in_query]</span>
-<span id="cb13-190"><a href="#cb13-190" aria-hidden="true" tabindex="-1"></a>    is_multi <span class="ot">&lt;-</span> <span class="fu">inherits</span>(result<span class="sc">$</span>tree, <span class="st">"multiPhylo"</span>)</span>
-<span id="cb13-191"><a href="#cb13-191" aria-hidden="true" tabindex="-1"></a>    n_returned <span class="ot">&lt;-</span> <span class="cf">if</span> (is_multi)</span>
-<span id="cb13-192"><a href="#cb13-192" aria-hidden="true" tabindex="-1"></a>        <span class="fu">length</span>(result<span class="sc">$</span>tree)</span>
-<span id="cb13-193"><a href="#cb13-193" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="dv">1</span>L</span>
-<span id="cb13-194"><a href="#cb13-194" aria-hidden="true" tabindex="-1"></a>    tip_set_consistent <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
-<span id="cb13-195"><a href="#cb13-195" aria-hidden="true" tabindex="-1"></a>    dropped_per_tree <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb13-196"><a href="#cb13-196" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (is_multi <span class="sc">&amp;&amp;</span> <span class="fu">length</span>(result<span class="sc">$</span>tree) <span class="sc">&gt;</span> <span class="dv">1</span>L) {</span>
-<span id="cb13-197"><a href="#cb13-197" aria-hidden="true" tabindex="-1"></a>        tip_sets <span class="ot">&lt;-</span> <span class="fu">lapply</span>(result<span class="sc">$</span>tree, <span class="cf">function</span>(t) <span class="fu">sort</span>(t<span class="sc">$</span>tip.label))</span>
-<span id="cb13-198"><a href="#cb13-198" aria-hidden="true" tabindex="-1"></a>        tip_set_consistent <span class="ot">&lt;-</span> <span class="fu">all</span>(<span class="fu">vapply</span>(tip_sets[<span class="sc">-</span><span class="dv">1</span>L], <span class="cf">function</span>(s) <span class="fu">identical</span>(s,</span>
-<span id="cb13-199"><a href="#cb13-199" aria-hidden="true" tabindex="-1"></a>            tip_sets[[<span class="dv">1</span>L]]), <span class="fu">logical</span>(<span class="dv">1</span>L)))</span>
-<span id="cb13-200"><a href="#cb13-200" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="sc">!</span>tip_set_consistent) {</span>
-<span id="cb13-201"><a href="#cb13-201" aria-hidden="true" tabindex="-1"></a>            union_tips <span class="ot">&lt;-</span> <span class="fu">Reduce</span>(union, tip_sets)</span>
-<span id="cb13-202"><a href="#cb13-202" aria-hidden="true" tabindex="-1"></a>            dropped_per_tree <span class="ot">&lt;-</span> <span class="fu">lapply</span>(tip_sets, <span class="cf">function</span>(s) <span class="fu">setdiff</span>(union_tips,</span>
-<span id="cb13-203"><a href="#cb13-203" aria-hidden="true" tabindex="-1"></a>                s))</span>
-<span id="cb13-204"><a href="#cb13-204" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb13-205"><a href="#cb13-205" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-206"><a href="#cb13-206" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stopifnot</span>(<span class="st">`</span><span class="at">matched must be a subset of unique input</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">all</span>(matched <span class="sc">%in%</span></span>
-<span id="cb13-207"><a href="#cb13-207" aria-hidden="true" tabindex="-1"></a>        resolved<span class="sc">$</span>original), <span class="st">`</span><span class="at">unmatched must be a subset of unique input</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">all</span>(unmatched <span class="sc">%in%</span></span>
-<span id="cb13-208"><a href="#cb13-208" aria-hidden="true" tabindex="-1"></a>        resolved<span class="sc">$</span>original), <span class="st">`</span><span class="at">matched + unmatched must cover unique input</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">length</span>(matched) <span class="sc">+</span></span>
-<span id="cb13-209"><a href="#cb13-209" aria-hidden="true" tabindex="-1"></a>        <span class="fu">length</span>(unmatched) <span class="sc">==</span> <span class="fu">length</span>(resolved<span class="sc">$</span>original), <span class="st">`</span><span class="at">matched and unmatched must be disjoint</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">length</span>(<span class="fu">intersect</span>(matched,</span>
-<span id="cb13-210"><a href="#cb13-210" aria-hidden="true" tabindex="-1"></a>        unmatched)) <span class="sc">==</span> <span class="dv">0</span>L)</span>
-<span id="cb13-211"><a href="#cb13-211" aria-hidden="true" tabindex="-1"></a>    wrapper_meta <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">is.list</span>(result<span class="sc">$</span>backend_meta)) {</span>
-<span id="cb13-212"><a href="#cb13-212" aria-hidden="true" tabindex="-1"></a>        result<span class="sc">$</span>backend_meta</span>
-<span id="cb13-213"><a href="#cb13-213" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-214"><a href="#cb13-214" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> {</span>
-<span id="cb13-215"><a href="#cb13-215" aria-hidden="true" tabindex="-1"></a>        <span class="fu">list</span>()</span>
-<span id="cb13-216"><a href="#cb13-216" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-217"><a href="#cb13-217" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">identical</span>(source, <span class="st">"rtrees"</span>) <span class="sc">&amp;&amp;</span> <span class="fu">is.data.frame</span>(wrapper_meta<span class="sc">$</span>placement) <span class="sc">&amp;&amp;</span></span>
-<span id="cb13-218"><a href="#cb13-218" aria-hidden="true" tabindex="-1"></a>        <span class="fu">nrow</span>(wrapper_meta<span class="sc">$</span>placement) <span class="sc">==</span> <span class="fu">length</span>(resolved<span class="sc">$</span>original)) {</span>
-<span id="cb13-219"><a href="#cb13-219" aria-hidden="true" tabindex="-1"></a>        wrapper_meta<span class="sc">$</span>placement<span class="sc">$</span>input_name <span class="ot">&lt;-</span> resolved<span class="sc">$</span>original</span>
-<span id="cb13-220"><a href="#cb13-220" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-221"><a href="#cb13-221" aria-hidden="true" tabindex="-1"></a>    backend_meta <span class="ot">&lt;-</span> utils<span class="sc">::</span><span class="fu">modifyList</span>(wrapper_meta, <span class="fu">list</span>(<span class="at">n_queried =</span> <span class="fu">length</span>(resolved<span class="sc">$</span>original),</span>
-<span id="cb13-222"><a href="#cb13-222" aria-hidden="true" tabindex="-1"></a>        <span class="at">n_requested =</span> <span class="fu">as.integer</span>(n_tree), <span class="at">n_returned =</span> n_returned,</span>
-<span id="cb13-223"><a href="#cb13-223" aria-hidden="true" tabindex="-1"></a>        <span class="at">n_matched =</span> <span class="fu">length</span>(matched), <span class="at">tnrs_replacements =</span> resolved<span class="sc">$</span>tnrs_replacements,</span>
-<span id="cb13-224"><a href="#cb13-224" aria-hidden="true" tabindex="-1"></a>        <span class="at">tip_set_consistent =</span> tip_set_consistent, <span class="at">dropped_per_tree =</span> dropped_per_tree))</span>
-<span id="cb13-225"><a href="#cb13-225" aria-hidden="true" tabindex="-1"></a>    backend_meta <span class="ot">&lt;-</span> <span class="fu">.pr_ensure_tree_provenance</span>(result<span class="sc">$</span>tree, backend_meta,</span>
-<span id="cb13-226"><a href="#cb13-226" aria-hidden="true" tabindex="-1"></a>        source)</span>
-<span id="cb13-227"><a href="#cb13-227" aria-hidden="true" tabindex="-1"></a>    result<span class="sc">$</span>tree <span class="ot">&lt;-</span> <span class="fu">.pr_post_process_tree</span>(result<span class="sc">$</span>tree, <span class="at">resolve_polytomies =</span> resolve_polytomies,</span>
-<span id="cb13-228"><a href="#cb13-228" aria-hidden="true" tabindex="-1"></a>        <span class="at">branch_lengths =</span> branch_lengths)</span>
-<span id="cb13-229"><a href="#cb13-229" aria-hidden="true" tabindex="-1"></a>    mapping <span class="ot">&lt;-</span> <span class="fu">.pr_build_tree_mapping</span>(<span class="at">input_name =</span> resolved<span class="sc">$</span>original,</span>
-<span id="cb13-230"><a href="#cb13-230" aria-hidden="true" tabindex="-1"></a>        <span class="at">normalized_name =</span> resolved<span class="sc">$</span>normalised, <span class="at">query_name =</span> resolved<span class="sc">$</span>query,</span>
-<span id="cb13-231"><a href="#cb13-231" aria-hidden="true" tabindex="-1"></a>        <span class="at">in_tree =</span> in_query, <span class="at">tree =</span> result<span class="sc">$</span>tree, <span class="at">backend_meta =</span> backend_meta,</span>
-<span id="cb13-232"><a href="#cb13-232" aria-hidden="true" tabindex="-1"></a>        <span class="at">tnrs_audit =</span> resolved<span class="sc">$</span>tnrs_audit)</span>
-<span id="cb13-233"><a href="#cb13-233" aria-hidden="true" tabindex="-1"></a>    out <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">tree =</span> result<span class="sc">$</span>tree, <span class="at">matched =</span> matched, <span class="at">unmatched =</span> unmatched,</span>
-<span id="cb13-234"><a href="#cb13-234" aria-hidden="true" tabindex="-1"></a>        <span class="at">mapping =</span> mapping, <span class="at">source =</span> source, <span class="at">backend_meta =</span> backend_meta)</span>
-<span id="cb13-235"><a href="#cb13-235" aria-hidden="true" tabindex="-1"></a>    <span class="fu">class</span>(out) <span class="ot">&lt;-</span> <span class="st">"pr_tree_result"</span></span>
-<span id="cb13-236"><a href="#cb13-236" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">isTRUE</span>(cache)) {</span>
-<span id="cb13-237"><a href="#cb13-237" aria-hidden="true" tabindex="-1"></a>        <span class="fu">.pr_tree_cache_put</span>(key, source, out)</span>
-<span id="cb13-238"><a href="#cb13-238" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-239"><a href="#cb13-239" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">isTRUE</span>(check_ultrametric)) {</span>
-<span id="cb13-240"><a href="#cb13-240" aria-hidden="true" tabindex="-1"></a>        <span class="fu">.pr_check_tree_ultrametric</span>(out<span class="sc">$</span>tree, source)</span>
-<span id="cb13-241"><a href="#cb13-241" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-242"><a href="#cb13-242" aria-hidden="true" tabindex="-1"></a>    out</span>
-<span id="cb13-243"><a href="#cb13-243" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-244"><a href="#cb13-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-245"><a href="#cb13-245" aria-hidden="true" tabindex="-1"></a>reconcile_tree <span class="ot">&lt;-</span> <span class="cf">function</span> (x, tree, <span class="at">x_species =</span> <span class="cn">NULL</span>, <span class="at">authority =</span> <span class="st">"col"</span>, <span class="at">rank =</span> <span class="fu">c</span>(<span class="st">"species"</span>,</span>
-<span id="cb13-246"><a href="#cb13-246" aria-hidden="true" tabindex="-1"></a>    <span class="st">"subspecies"</span>), <span class="at">overrides =</span> <span class="cn">NULL</span>, <span class="at">db_version =</span> <span class="cn">NULL</span>, <span class="at">fuzzy =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb13-247"><a href="#cb13-247" aria-hidden="true" tabindex="-1"></a>    <span class="at">fuzzy_threshold =</span> <span class="fl">0.9</span>, <span class="at">flag_threshold =</span> <span class="fl">0.95</span>, <span class="at">resolve =</span> <span class="fu">c</span>(<span class="st">"flag"</span>,</span>
-<span id="cb13-248"><a href="#cb13-248" aria-hidden="true" tabindex="-1"></a>        <span class="st">"first"</span>), <span class="at">quiet =</span> <span class="cn">FALSE</span>, <span class="at">x_label =</span> <span class="cn">NULL</span>)</span>
-<span id="cb13-249"><a href="#cb13-249" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb13-250"><a href="#cb13-250" aria-hidden="true" tabindex="-1"></a>    x_source <span class="ot">&lt;-</span> x_label <span class="sc">%||%</span> <span class="fu">deparse</span>(<span class="fu">substitute</span>(x))</span>
-<span id="cb13-251"><a href="#cb13-251" aria-hidden="true" tabindex="-1"></a>    rank <span class="ot">&lt;-</span> <span class="fu">match.arg</span>(rank)</span>
-<span id="cb13-252"><a href="#cb13-252" aria-hidden="true" tabindex="-1"></a>    resolve <span class="ot">&lt;-</span> <span class="fu">match.arg</span>(resolve)</span>
-<span id="cb13-253"><a href="#cb13-253" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.data.frame</span>(x))</span>
-<span id="cb13-254"><a href="#cb13-254" aria-hidden="true" tabindex="-1"></a>        <span class="fu">abort</span>(<span class="st">"`x` must be a data frame."</span>, <span class="at">call =</span> <span class="fu">caller_env</span>())</span>
-<span id="cb13-255"><a href="#cb13-255" aria-hidden="true" tabindex="-1"></a>    authority <span class="ot">&lt;-</span> <span class="fu">pr_validate_authority</span>(authority)</span>
-<span id="cb13-256"><a href="#cb13-256" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(x_species))</span>
-<span id="cb13-257"><a href="#cb13-257" aria-hidden="true" tabindex="-1"></a>        x_species <span class="ot">&lt;-</span> <span class="fu">pr_detect_species_column</span>(x, <span class="st">"x_species"</span>)</span>
-<span id="cb13-258"><a href="#cb13-258" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span>x_species <span class="sc">%in%</span> <span class="fu">names</span>(x)) {</span>
-<span id="cb13-259"><a href="#cb13-259" aria-hidden="true" tabindex="-1"></a>        <span class="fu">abort</span>(<span class="fu">paste0</span>(<span class="st">"Column '"</span>, x_species, <span class="st">"' not found in `x`."</span>),</span>
-<span id="cb13-260"><a href="#cb13-260" aria-hidden="true" tabindex="-1"></a>            <span class="at">call =</span> <span class="fu">caller_env</span>())</span>
-<span id="cb13-261"><a href="#cb13-261" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-262"><a href="#cb13-262" aria-hidden="true" tabindex="-1"></a>    tree_obj <span class="ot">&lt;-</span> <span class="fu">pr_load_tree</span>(tree)</span>
-<span id="cb13-263"><a href="#cb13-263" aria-hidden="true" tabindex="-1"></a>    tips <span class="ot">&lt;-</span> tree_obj<span class="sc">$</span>tip.label</span>
-<span id="cb13-264"><a href="#cb13-264" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">nrow</span>(x) <span class="sc">==</span> <span class="dv">0</span>)</span>
-<span id="cb13-265"><a href="#cb13-265" aria-hidden="true" tabindex="-1"></a>        <span class="fu">abort</span>(<span class="st">"`x` has 0 rows."</span>, <span class="at">call =</span> <span class="fu">caller_env</span>())</span>
-<span id="cb13-266"><a href="#cb13-266" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.factor</span>(x[[x_species]])) {</span>
-<span id="cb13-267"><a href="#cb13-267" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cli_alert_warning</span>(<span class="st">"Converting factor column '{x_species}' in `x` to character."</span>)</span>
-<span id="cb13-268"><a href="#cb13-268" aria-hidden="true" tabindex="-1"></a>        x[[x_species]] <span class="ot">&lt;-</span> <span class="fu">as.character</span>(x[[x_species]])</span>
-<span id="cb13-269"><a href="#cb13-269" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-270"><a href="#cb13-270" aria-hidden="true" tabindex="-1"></a>    names_x <span class="ot">&lt;-</span> <span class="fu">as.character</span>(x[[x_species]])</span>
-<span id="cb13-271"><a href="#cb13-271" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">all</span>(<span class="fu">is.na</span>(names_x))) {</span>
-<span id="cb13-272"><a href="#cb13-272" aria-hidden="true" tabindex="-1"></a>        <span class="fu">abort</span>(<span class="st">"All species names in `x` are NA."</span>, <span class="at">call =</span> <span class="fu">caller_env</span>())</span>
-<span id="cb13-273"><a href="#cb13-273" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-274"><a href="#cb13-274" aria-hidden="true" tabindex="-1"></a>    tree_source <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">is.character</span>(tree)) {</span>
-<span id="cb13-275"><a href="#cb13-275" aria-hidden="true" tabindex="-1"></a>        <span class="fu">basename</span>(tree)</span>
-<span id="cb13-276"><a href="#cb13-276" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-277"><a href="#cb13-277" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> {</span>
-<span id="cb13-278"><a href="#cb13-278" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sprintf</span>(<span class="st">"phylo (%d tips)"</span>, <span class="fu">length</span>(tips))</span>
-<span id="cb13-279"><a href="#cb13-279" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-280"><a href="#cb13-280" aria-hidden="true" tabindex="-1"></a>    overrides_df <span class="ot">&lt;-</span> <span class="fu">pr_load_overrides</span>(overrides)</span>
-<span id="cb13-281"><a href="#cb13-281" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span>quiet) {</span>
-<span id="cb13-282"><a href="#cb13-282" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cli_alert_info</span>(<span class="st">"Reconciling {length(unique(names_x))} data names vs {length(tips)} tree tips"</span>)</span>
-<span id="cb13-283"><a href="#cb13-283" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-284"><a href="#cb13-284" aria-hidden="true" tabindex="-1"></a>    mapping <span class="ot">&lt;-</span> <span class="fu">pr_run_cascade</span>(<span class="at">names_x =</span> names_x, <span class="at">names_y =</span> tips,</span>
-<span id="cb13-285"><a href="#cb13-285" aria-hidden="true" tabindex="-1"></a>        <span class="at">authority =</span> authority, <span class="at">db_version =</span> db_version, <span class="at">rank =</span> rank,</span>
-<span id="cb13-286"><a href="#cb13-286" aria-hidden="true" tabindex="-1"></a>        <span class="at">overrides =</span> overrides_df, <span class="at">fuzzy =</span> fuzzy, <span class="at">fuzzy_threshold =</span> fuzzy_threshold,</span>
-<span id="cb13-287"><a href="#cb13-287" aria-hidden="true" tabindex="-1"></a>        <span class="at">flag_threshold =</span> flag_threshold, <span class="at">resolve =</span> resolve, <span class="at">quiet =</span> quiet)</span>
-<span id="cb13-288"><a href="#cb13-288" aria-hidden="true" tabindex="-1"></a>    meta <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">call =</span> <span class="fu">match.call</span>(), <span class="at">type =</span> <span class="st">"data_tree"</span>, <span class="at">timestamp =</span> <span class="fu">Sys.time</span>(),</span>
-<span id="cb13-289"><a href="#cb13-289" aria-hidden="true" tabindex="-1"></a>        <span class="at">authority =</span> authority <span class="sc">%||%</span> <span class="st">"none"</span>, <span class="at">db_version =</span> db_version <span class="sc">%||%</span></span>
-<span id="cb13-290"><a href="#cb13-290" aria-hidden="true" tabindex="-1"></a>            <span class="st">"latest"</span>, <span class="at">fuzzy =</span> fuzzy, <span class="at">fuzzy_threshold =</span> <span class="cf">if</span> (fuzzy) fuzzy_threshold <span class="cf">else</span> <span class="cn">NA_real_</span>,</span>
-<span id="cb13-291"><a href="#cb13-291" aria-hidden="true" tabindex="-1"></a>        <span class="at">fuzzy_method =</span> <span class="cf">if</span> (fuzzy) <span class="st">"component_levenshtein"</span> <span class="cf">else</span> <span class="cn">NA_character_</span>,</span>
-<span id="cb13-292"><a href="#cb13-292" aria-hidden="true" tabindex="-1"></a>        <span class="at">resolve =</span> resolve, <span class="at">prepR4pcm_version =</span> <span class="fu">as.character</span>(utils<span class="sc">::</span><span class="fu">packageVersion</span>(<span class="st">"prepR4pcm"</span>)),</span>
-<span id="cb13-293"><a href="#cb13-293" aria-hidden="true" tabindex="-1"></a>        <span class="at">x_source =</span> x_source, <span class="at">y_source =</span> tree_source, <span class="at">rank =</span> rank)</span>
-<span id="cb13-294"><a href="#cb13-294" aria-hidden="true" tabindex="-1"></a>    result <span class="ot">&lt;-</span> <span class="fu">new_reconciliation</span>(<span class="at">mapping =</span> mapping, <span class="at">meta =</span> meta)</span>
-<span id="cb13-295"><a href="#cb13-295" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span>quiet <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(result<span class="sc">$</span>unused_overrides) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb13-296"><a href="#cb13-296" aria-hidden="true" tabindex="-1"></a>        <span class="fu">pr_warn_unused_overrides</span>(result<span class="sc">$</span>unused_overrides)</span>
-<span id="cb13-297"><a href="#cb13-297" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-298"><a href="#cb13-298" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span>quiet) {</span>
-<span id="cb13-299"><a href="#cb13-299" aria-hidden="true" tabindex="-1"></a>        n_matched <span class="ot">&lt;-</span> <span class="fu">sum</span>(mapping<span class="sc">$</span>in_x <span class="sc">&amp;</span> mapping<span class="sc">$</span>in_y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb13-300"><a href="#cb13-300" aria-hidden="true" tabindex="-1"></a>        n_total <span class="ot">&lt;-</span> result<span class="sc">$</span>counts<span class="sc">$</span>n_x</span>
-<span id="cb13-301"><a href="#cb13-301" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cli_alert_success</span>(<span class="st">"Matched {n_matched}/{n_total} data names to tree tips"</span>)</span>
-<span id="cb13-302"><a href="#cb13-302" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-303"><a href="#cb13-303" aria-hidden="true" tabindex="-1"></a>    result</span>
-<span id="cb13-304"><a href="#cb13-304" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-305"><a href="#cb13-305" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-306"><a href="#cb13-306" aria-hidden="true" tabindex="-1"></a>reconcile_apply <span class="ot">&lt;-</span> <span class="cf">function</span> (reconciliation, <span class="at">data =</span> <span class="cn">NULL</span>, <span class="at">tree =</span> <span class="cn">NULL</span>, <span class="at">species_col =</span> <span class="cn">NULL</span>,</span>
-<span id="cb13-307"><a href="#cb13-307" aria-hidden="true" tabindex="-1"></a>    <span class="at">drop_unresolved =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb13-308"><a href="#cb13-308" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb13-309"><a href="#cb13-309" aria-hidden="true" tabindex="-1"></a>    <span class="fu">validate_reconciliation</span>(reconciliation)</span>
-<span id="cb13-310"><a href="#cb13-310" aria-hidden="true" tabindex="-1"></a>    mapping <span class="ot">&lt;-</span> reconciliation<span class="sc">$</span>mapping</span>
-<span id="cb13-311"><a href="#cb13-311" aria-hidden="true" tabindex="-1"></a>    matched <span class="ot">&lt;-</span> mapping[mapping<span class="sc">$</span>in_x <span class="sc">&amp;</span> mapping<span class="sc">$</span>in_y, ]</span>
-<span id="cb13-312"><a href="#cb13-312" aria-hidden="true" tabindex="-1"></a>    result <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">data =</span> <span class="cn">NULL</span>, <span class="at">tree =</span> <span class="cn">NULL</span>)</span>
-<span id="cb13-313"><a href="#cb13-313" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(data)) {</span>
-<span id="cb13-314"><a href="#cb13-314" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.data.frame</span>(data)) {</span>
-<span id="cb13-315"><a href="#cb13-315" aria-hidden="true" tabindex="-1"></a>            <span class="fu">abort</span>(<span class="st">"`data` must be a data frame."</span>, <span class="at">call =</span> <span class="fu">caller_env</span>())</span>
-<span id="cb13-316"><a href="#cb13-316" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb13-317"><a href="#cb13-317" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">is.null</span>(species_col)) {</span>
-<span id="cb13-318"><a href="#cb13-318" aria-hidden="true" tabindex="-1"></a>            species_col <span class="ot">&lt;-</span> <span class="fu">pr_detect_species_column</span>(data, <span class="st">"species_col"</span>)</span>
-<span id="cb13-319"><a href="#cb13-319" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb13-320"><a href="#cb13-320" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="sc">!</span>species_col <span class="sc">%in%</span> <span class="fu">names</span>(data)) {</span>
-<span id="cb13-321"><a href="#cb13-321" aria-hidden="true" tabindex="-1"></a>            cli<span class="sc">::</span><span class="fu">cli_abort</span>(<span class="fu">c</span>(<span class="st">"Column {.val {species_col}} not found in {.arg data}."</span>,</span>
-<span id="cb13-322"><a href="#cb13-322" aria-hidden="true" tabindex="-1"></a>                <span class="at">i =</span> <span class="st">"Available columns: {.val {names(data)}}."</span>))</span>
-<span id="cb13-323"><a href="#cb13-323" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb13-324"><a href="#cb13-324" aria-hidden="true" tabindex="-1"></a>        data_names <span class="ot">&lt;-</span> <span class="fu">as.character</span>(data[[species_col]])</span>
-<span id="cb13-325"><a href="#cb13-325" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (drop_unresolved) {</span>
-<span id="cb13-326"><a href="#cb13-326" aria-hidden="true" tabindex="-1"></a>            keep <span class="ot">&lt;-</span> data_names <span class="sc">%in%</span> matched<span class="sc">$</span>name_x</span>
-<span id="cb13-327"><a href="#cb13-327" aria-hidden="true" tabindex="-1"></a>            data <span class="ot">&lt;-</span> data[keep, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
-<span id="cb13-328"><a href="#cb13-328" aria-hidden="true" tabindex="-1"></a>            n_dropped <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="sc">!</span>keep)</span>
-<span id="cb13-329"><a href="#cb13-329" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> (n_dropped <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb13-330"><a href="#cb13-330" aria-hidden="true" tabindex="-1"></a>                <span class="fu">cli_alert_warning</span>(<span class="st">"Dropped {n_dropped} rows with unresolved species from data"</span>)</span>
-<span id="cb13-331"><a href="#cb13-331" aria-hidden="true" tabindex="-1"></a>            }</span>
-<span id="cb13-332"><a href="#cb13-332" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb13-333"><a href="#cb13-333" aria-hidden="true" tabindex="-1"></a>        result<span class="sc">$</span>data <span class="ot">&lt;-</span> data</span>
-<span id="cb13-334"><a href="#cb13-334" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-335"><a href="#cb13-335" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(tree)) {</span>
-<span id="cb13-336"><a href="#cb13-336" aria-hidden="true" tabindex="-1"></a>        tree <span class="ot">&lt;-</span> <span class="fu">pr_load_tree</span>(tree)</span>
-<span id="cb13-337"><a href="#cb13-337" aria-hidden="true" tabindex="-1"></a>        tree <span class="ot">&lt;-</span> <span class="fu">pr_align_tree</span>(tree, mapping, <span class="at">drop_unresolved =</span> drop_unresolved)</span>
-<span id="cb13-338"><a href="#cb13-338" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (drop_unresolved) {</span>
-<span id="cb13-339"><a href="#cb13-339" aria-hidden="true" tabindex="-1"></a>            n_tips <span class="ot">&lt;-</span> <span class="fu">length</span>(tree<span class="sc">$</span>tip.label)</span>
-<span id="cb13-340"><a href="#cb13-340" aria-hidden="true" tabindex="-1"></a>            <span class="fu">cli_alert_info</span>(<span class="st">"Tree has {n_tips} tips after alignment"</span>)</span>
-<span id="cb13-341"><a href="#cb13-341" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb13-342"><a href="#cb13-342" aria-hidden="true" tabindex="-1"></a>        result<span class="sc">$</span>tree <span class="ot">&lt;-</span> tree</span>
-<span id="cb13-343"><a href="#cb13-343" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-344"><a href="#cb13-344" aria-hidden="true" tabindex="-1"></a>    result</span>
-<span id="cb13-345"><a href="#cb13-345" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-346"><a href="#cb13-346" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-347"><a href="#cb13-347" aria-hidden="true" tabindex="-1"></a>reconcile_mapping <span class="ot">&lt;-</span> <span class="cf">function</span> (reconciliation, <span class="at">include_unused_overrides =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb13-348"><a href="#cb13-348" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb13-349"><a href="#cb13-349" aria-hidden="true" tabindex="-1"></a>    <span class="fu">validate_reconciliation</span>(reconciliation)</span>
-<span id="cb13-350"><a href="#cb13-350" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">isTRUE</span>(include_unused_overrides)) {</span>
-<span id="cb13-351"><a href="#cb13-351" aria-hidden="true" tabindex="-1"></a>        <span class="fu">return</span>(reconciliation<span class="sc">$</span>mapping)</span>
-<span id="cb13-352"><a href="#cb13-352" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-353"><a href="#cb13-353" aria-hidden="true" tabindex="-1"></a>    unused <span class="ot">&lt;-</span> reconciliation<span class="sc">$</span>unused_overrides</span>
-<span id="cb13-354"><a href="#cb13-354" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(unused) <span class="sc">||</span> <span class="fu">nrow</span>(unused) <span class="sc">==</span> <span class="dv">0</span>) {</span>
-<span id="cb13-355"><a href="#cb13-355" aria-hidden="true" tabindex="-1"></a>        <span class="fu">return</span>(reconciliation<span class="sc">$</span>mapping)</span>
-<span id="cb13-356"><a href="#cb13-356" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-357"><a href="#cb13-357" aria-hidden="true" tabindex="-1"></a>    unused_rows <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">name_x =</span> unused<span class="sc">$</span>name_x, <span class="at">name_y =</span> unused<span class="sc">$</span>name_y,</span>
-<span id="cb13-358"><a href="#cb13-358" aria-hidden="true" tabindex="-1"></a>        <span class="at">name_resolved =</span> <span class="cn">NA_character_</span>, <span class="at">match_type =</span> <span class="st">"override_unused"</span>,</span>
-<span id="cb13-359"><a href="#cb13-359" aria-hidden="true" tabindex="-1"></a>        <span class="at">match_score =</span> <span class="cn">NA_real_</span>, <span class="at">match_source =</span> <span class="st">"user_override"</span>,</span>
-<span id="cb13-360"><a href="#cb13-360" aria-hidden="true" tabindex="-1"></a>        <span class="at">in_x =</span> <span class="cn">FALSE</span>, <span class="at">in_y =</span> <span class="cn">FALSE</span>, <span class="at">notes =</span> unused<span class="sc">$</span>reason)</span>
-<span id="cb13-361"><a href="#cb13-361" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rbind</span>(reconciliation<span class="sc">$</span>mapping, unused_rows)</span>
-<span id="cb13-362"><a href="#cb13-362" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-363"><a href="#cb13-363" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-364"><a href="#cb13-364" aria-hidden="true" tabindex="-1"></a>pr_phylo_cor <span class="ot">&lt;-</span> <span class="cf">function</span> (x, <span class="at">corr =</span> <span class="cn">TRUE</span>, ...)</span>
-<span id="cb13-365"><a href="#cb13-365" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb13-366"><a href="#cb13-366" aria-hidden="true" tabindex="-1"></a>    tree <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">inherits</span>(x, <span class="st">"pr_tree_result"</span>))</span>
-<span id="cb13-367"><a href="#cb13-367" aria-hidden="true" tabindex="-1"></a>        x<span class="sc">$</span>tree</span>
-<span id="cb13-368"><a href="#cb13-368" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> x</span>
-<span id="cb13-369"><a href="#cb13-369" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">inherits</span>(tree, <span class="st">"multiPhylo"</span>)) {</span>
-<span id="cb13-370"><a href="#cb13-370" aria-hidden="true" tabindex="-1"></a>        <span class="fu">return</span>(<span class="fu">lapply</span>(tree, pr_phylo_cor, <span class="at">corr =</span> corr, ...))</span>
-<span id="cb13-371"><a href="#cb13-371" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-372"><a href="#cb13-372" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">inherits</span>(tree, <span class="st">"phylo"</span>)) {</span>
-<span id="cb13-373"><a href="#cb13-373" aria-hidden="true" tabindex="-1"></a>        cli<span class="sc">::</span><span class="fu">cli_abort</span>(<span class="fu">c</span>(<span class="st">"{.arg x} must be a {.cls phylo}, {.cls multiPhylo}, or {.cls pr_tree_result}."</span>,</span>
-<span id="cb13-374"><a href="#cb13-374" aria-hidden="true" tabindex="-1"></a>            <span class="at">i =</span> <span class="st">"Got: {.cls {class(x)[1]}}."</span>))</span>
-<span id="cb13-375"><a href="#cb13-375" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-376"><a href="#cb13-376" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(tree<span class="sc">$</span>edge.length)) {</span>
-<span id="cb13-377"><a href="#cb13-377" aria-hidden="true" tabindex="-1"></a>        cli<span class="sc">::</span><span class="fu">cli_abort</span>(<span class="fu">c</span>(<span class="st">"Tree has no branch lengths --- {.fn pr_phylo_cor} cannot compute a correlation matrix."</span>,</span>
-<span id="cb13-378"><a href="#cb13-378" aria-hidden="true" tabindex="-1"></a>            <span class="at">i =</span> <span class="st">"If your tree came from {.code source = </span><span class="sc">\"</span><span class="st">rotl</span><span class="sc">\"</span><span class="st">}, run {.fn pr_get_tree} again with {.code branch_lengths = </span><span class="sc">\"</span><span class="st">grafen</span><span class="sc">\"</span><span class="st">} to assign Grafen's method-based lengths."</span>,</span>
-<span id="cb13-379"><a href="#cb13-379" aria-hidden="true" tabindex="-1"></a>            <span class="st">`</span><span class="at">&gt;</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Or transform manually: {.code tree &lt;- ape::compute.brlen(tree, method = </span><span class="sc">\"</span><span class="st">Grafen</span><span class="sc">\"</span><span class="st">)}."</span>))</span>
-<span id="cb13-380"><a href="#cb13-380" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb13-381"><a href="#cb13-381" aria-hidden="true" tabindex="-1"></a>    ape<span class="sc">::</span><span class="fu">vcv</span>(tree, <span class="at">corr =</span> corr, ...)</span>
-<span id="cb13-382"><a href="#cb13-382" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-383"><a href="#cb13-383" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-384"><a href="#cb13-384" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-385"><a href="#cb13-385" aria-hidden="true" tabindex="-1"></a><span class="in">```{r recompute-toggle}</span></span>
-<span id="cb13-386"><a href="#cb13-386" aria-hidden="true" tabindex="-1"></a><span class="co"># Change to TRUE only to force a full network rebuild of the tree (slow,</span></span>
-<span id="cb13-387"><a href="#cb13-387" aria-hidden="true" tabindex="-1"></a><span class="co"># requires internet access). Normal renders read the cache below.</span></span>
-<span id="cb13-388"><a href="#cb13-388" aria-hidden="true" tabindex="-1"></a>recompute_phylogeny <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
-<span id="cb13-389"><a href="#cb13-389" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a>for the matched taxa. PROCEED spans plant, invertebrate, and vertebrate species,</span>
+<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a>and name matching was not restricted to a single higher-level taxonomic context.</span>
+<span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-54"><a href="#cb13-54" aria-hidden="true" tabindex="-1"></a>The tree's tip labels were then reconciled against the original PROCEED species</span>
+<span id="cb13-55"><a href="#cb13-55" aria-hidden="true" tabindex="-1"></a>names using a four-stage cascade implemented in <span class="in">`prepR4pcm`</span>:</span>
+<span id="cb13-56"><a href="#cb13-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-57"><a href="#cb13-57" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Exact match**</span>
+<span id="cb13-58"><a href="#cb13-58" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Normalized match** — case, whitespace, and underscore differences resolved</span>
+<span id="cb13-59"><a href="#cb13-59" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Synonym resolution** — via GNVerifier (<span class="in">`authority = "gnverifier"`</span>), checking</span>
+<span id="cb13-60"><a href="#cb13-60" aria-hidden="true" tabindex="-1"></a>   the name against external taxonomic databases for accepted synonyms</span>
+<span id="cb13-61"><a href="#cb13-61" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Fuzzy match** — approximate string matching for names still unresolved</span>
+<span id="cb13-62"><a href="#cb13-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-63"><a href="#cb13-63" aria-hidden="true" tabindex="-1"></a>Species that cannot be resolved at any stage receive no canonical label. Their</span>
+<span id="cb13-64"><a href="#cb13-64" aria-hidden="true" tabindex="-1"></a>contrasts are excluded from the complete primary-model dataset before fitting</span>
+<span id="cb13-65"><a href="#cb13-65" aria-hidden="true" tabindex="-1"></a>(see <span class="co">[</span><span class="ot">Unmatched species</span><span class="co">](#unmatched-species)</span> below).</span>
+<span id="cb13-66"><a href="#cb13-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-67"><a href="#cb13-67" aria-hidden="true" tabindex="-1"></a>Multifurcations in the retrieved tree were randomly resolved into bifurcations</span>
+<span id="cb13-68"><a href="#cb13-68" aria-hidden="true" tabindex="-1"></a>with zero-length branches (<span class="in">`ape::multi2di`</span>). Where branch lengths were not</span>
+<span id="cb13-69"><a href="#cb13-69" aria-hidden="true" tabindex="-1"></a>available from Open Tree of Life, Grafen branch lengths (power ρ = 1) were</span>
+<span id="cb13-70"><a href="#cb13-70" aria-hidden="true" tabindex="-1"></a>assigned (<span class="in">`ape::compute.brlen`</span>). The resulting tree was converted to a</span>
+<span id="cb13-71"><a href="#cb13-71" aria-hidden="true" tabindex="-1"></a>phylogenetic correlation matrix under a Brownian-motion model of trait</span>
+<span id="cb13-72"><a href="#cb13-72" aria-hidden="true" tabindex="-1"></a>evolution (<span class="in">`prepR4pcm::pr_phylo_cor`</span>, falling back to <span class="in">`ape::vcv.phylo`</span> if</span>
+<span id="cb13-73"><a href="#cb13-73" aria-hidden="true" tabindex="-1"></a>unavailable).</span>
+<span id="cb13-74"><a href="#cb13-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-75"><a href="#cb13-75" aria-hidden="true" tabindex="-1"></a>All of this logic lives in</span>
+<span id="cb13-76"><a href="#cb13-76" aria-hidden="true" tabindex="-1"></a><span class="in">`Scripts/05_phylogeny.R::build_or_read_phylogeny()`</span>; this</span>
+<span id="cb13-77"><a href="#cb13-77" aria-hidden="true" tabindex="-1"></a>chapter only *reads* the cached result — rebuilding it requires network access</span>
+<span id="cb13-78"><a href="#cb13-78" aria-hidden="true" tabindex="-1"></a>to Open Tree of Life and GNVerifier and is not done automatically on render.</span>
+<span id="cb13-79"><a href="#cb13-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-80"><a href="#cb13-80" aria-hidden="true" tabindex="-1"></a><span class="fu">## The `prepR4pcm` reconciliation functions {#prepr4pcm-source}</span></span>
+<span id="cb13-81"><a href="#cb13-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-82"><a href="#cb13-82" aria-hidden="true" tabindex="-1"></a>The cascade above is implemented in the <span class="in">`prepR4pcm`</span> package</span>
+<span id="cb13-83"><a href="#cb13-83" aria-hidden="true" tabindex="-1"></a>(<span class="in">`itchyshin/prepR4pcm`</span>, v0.5.0.9000, commit <span class="in">`cca21b9`</span>). The exported functions</span>
+<span id="cb13-84"><a href="#cb13-84" aria-hidden="true" tabindex="-1"></a>this chapter's pipeline calls — <span class="in">`pr_normalize_names()`</span>,</span>
+<span id="cb13-85"><a href="#cb13-85" aria-hidden="true" tabindex="-1"></a><span class="in">`pr_get_tree()`</span>, <span class="in">`reconcile_tree()`</span>, <span class="in">`reconcile_apply()`</span>, <span class="in">`reconcile_mapping()`</span>,</span>
+<span id="cb13-86"><a href="#cb13-86" aria-hidden="true" tabindex="-1"></a>and <span class="in">`pr_phylo_cor()`</span> — are reproduced below. The block is</span>
+<span id="cb13-87"><a href="#cb13-87" aria-hidden="true" tabindex="-1"></a>**not evaluated** (<span class="in">`eval=FALSE`</span>): rendering this chapter reads the cached</span>
+<span id="cb13-88"><a href="#cb13-88" aria-hidden="true" tabindex="-1"></a><span class="in">`.rds`</span> reconciliation outputs (next section), it does not re-run the package.</span>
+<span id="cb13-89"><a href="#cb13-89" aria-hidden="true" tabindex="-1"></a>Internal helpers (prefixed <span class="in">`.pr_*`</span>, together with <span class="in">`pr_run_cascade()`</span>,</span>
+<span id="cb13-90"><a href="#cb13-90" aria-hidden="true" tabindex="-1"></a><span class="in">`pr_align_tree()`</span>, <span class="in">`pr_strip_authority()`</span>, etc.) are not shown here; see the</span>
+<span id="cb13-91"><a href="#cb13-91" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">package source</span><span class="co">](https://github.com/itchyshin/prepR4pcm)</span> for those.</span>
+<span id="cb13-92"><a href="#cb13-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-93"><a href="#cb13-93" aria-hidden="true" tabindex="-1"></a><span class="in">```{r prepr4pcm-source, eval=FALSE}</span></span>
+<span id="cb13-94"><a href="#cb13-94" aria-hidden="true" tabindex="-1"></a><span class="co"># ── prepR4pcm exported functions used by build_or_read_phylogeny() ────────────</span></span>
+<span id="cb13-95"><a href="#cb13-95" aria-hidden="true" tabindex="-1"></a><span class="co"># Source: itchyshin/prepR4pcm v0.5.0.9000 (commit cca21b9). Reproduced for the</span></span>
+<span id="cb13-96"><a href="#cb13-96" aria-hidden="true" tabindex="-1"></a><span class="co"># record only; this chapter reads the cached .rds outputs instead of running it.</span></span>
+<span id="cb13-97"><a href="#cb13-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-98"><a href="#cb13-98" aria-hidden="true" tabindex="-1"></a>pr_normalize_names <span class="ot">&lt;-</span> <span class="cf">function</span> (names, <span class="at">rank =</span> <span class="fu">c</span>(<span class="st">"species"</span>, <span class="st">"subspecies"</span>), <span class="at">parser =</span> <span class="fu">c</span>(<span class="st">"internal"</span>,</span>
+<span id="cb13-99"><a href="#cb13-99" aria-hidden="true" tabindex="-1"></a>    <span class="st">"gnparser"</span>))</span>
+<span id="cb13-100"><a href="#cb13-100" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb13-101"><a href="#cb13-101" aria-hidden="true" tabindex="-1"></a>    rank <span class="ot">&lt;-</span> <span class="fu">match.arg</span>(rank)</span>
+<span id="cb13-102"><a href="#cb13-102" aria-hidden="true" tabindex="-1"></a>    parser <span class="ot">&lt;-</span> <span class="fu">match.arg</span>(parser)</span>
+<span id="cb13-103"><a href="#cb13-103" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (parser <span class="sc">==</span> <span class="st">"gnparser"</span>) {</span>
+<span id="cb13-104"><a href="#cb13-104" aria-hidden="true" tabindex="-1"></a>        <span class="fu">return</span>(<span class="fu">.pr_normalize_gnparser</span>(names, rank))</span>
+<span id="cb13-105"><a href="#cb13-105" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-106"><a href="#cb13-106" aria-hidden="true" tabindex="-1"></a>    original <span class="ot">&lt;-</span> names</span>
+<span id="cb13-107"><a href="#cb13-107" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">as.character</span>(names)</span>
+<span id="cb13-108"><a href="#cb13-108" aria-hidden="true" tabindex="-1"></a>    is_na <span class="ot">&lt;-</span> <span class="fu">is.na</span>(names)</span>
+<span id="cb13-109"><a href="#cb13-109" aria-hidden="true" tabindex="-1"></a>    names[is_na] <span class="ot">&lt;-</span> <span class="st">""</span></span>
+<span id="cb13-110"><a href="#cb13-110" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">trimws</span>(names)</span>
+<span id="cb13-111"><a href="#cb13-111" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"_"</span>, <span class="st">" "</span>, names, <span class="at">fixed =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-112"><a href="#cb13-112" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">s+"</span>, <span class="st">" "</span>, names)</span>
+<span id="cb13-113"><a href="#cb13-113" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">s+ott</span><span class="sc">\\</span><span class="st">d+$"</span>, <span class="st">""</span>, names, <span class="at">perl =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-114"><a href="#cb13-114" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">pr_strip_authority</span>(names)</span>
+<span id="cb13-115"><a href="#cb13-115" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">s*</span><span class="sc">\\</span><span class="st">([^()]*</span><span class="sc">\\</span><span class="st">)</span><span class="sc">\\</span><span class="st">s*$"</span>, <span class="st">""</span>, names, <span class="at">perl =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-116"><a href="#cb13-116" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">s*×</span><span class="sc">\\</span><span class="st">s*"</span>, <span class="st">" x "</span>, names)</span>
+<span id="cb13-117"><a href="#cb13-117" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"^x</span><span class="sc">\\</span><span class="st">s+"</span>, <span class="st">"x "</span>, names)</span>
+<span id="cb13-118"><a href="#cb13-118" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">s+x</span><span class="sc">\\</span><span class="st">s+"</span>, <span class="st">" x "</span>, names)</span>
+<span id="cb13-119"><a href="#cb13-119" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">bsubsp</span><span class="sc">\\</span><span class="st">.?</span><span class="sc">\\</span><span class="st">s+"</span>, <span class="st">"subsp. "</span>, names, <span class="at">perl =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-120"><a href="#cb13-120" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">bssp</span><span class="sc">\\</span><span class="st">.?</span><span class="sc">\\</span><span class="st">s+"</span>, <span class="st">"subsp. "</span>, names, <span class="at">perl =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-121"><a href="#cb13-121" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">bvar</span><span class="sc">\\</span><span class="st">.?</span><span class="sc">\\</span><span class="st">s+"</span>, <span class="st">"var. "</span>, names, <span class="at">perl =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-122"><a href="#cb13-122" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">bf</span><span class="sc">\\</span><span class="st">.?</span><span class="sc">\\</span><span class="st">s+"</span>, <span class="st">"f. "</span>, names, <span class="at">perl =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-123"><a href="#cb13-123" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (rank <span class="sc">==</span> <span class="st">"species"</span>) {</span>
+<span id="cb13-124"><a href="#cb13-124" aria-hidden="true" tabindex="-1"></a>        names <span class="ot">&lt;-</span> <span class="fu">pr_strip_infraspecific</span>(names)</span>
+<span id="cb13-125"><a href="#cb13-125" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-126"><a href="#cb13-126" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">pr_standardise_case</span>(names)</span>
+<span id="cb13-127"><a href="#cb13-127" aria-hidden="true" tabindex="-1"></a>    names <span class="ot">&lt;-</span> <span class="fu">trimws</span>(names)</span>
+<span id="cb13-128"><a href="#cb13-128" aria-hidden="true" tabindex="-1"></a>    names[is_na] <span class="ot">&lt;-</span> <span class="cn">NA_character_</span></span>
+<span id="cb13-129"><a href="#cb13-129" aria-hidden="true" tabindex="-1"></a>    changed <span class="ot">&lt;-</span> <span class="sc">!</span>is_na <span class="sc">&amp;</span> (original <span class="sc">!=</span> names)</span>
+<span id="cb13-130"><a href="#cb13-130" aria-hidden="true" tabindex="-1"></a>    log <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">original =</span> original, <span class="at">normalised =</span> names, <span class="at">changed =</span> changed)</span>
+<span id="cb13-131"><a href="#cb13-131" aria-hidden="true" tabindex="-1"></a>    <span class="fu">attr</span>(names, <span class="st">"normalisation_log"</span>) <span class="ot">&lt;-</span> log</span>
+<span id="cb13-132"><a href="#cb13-132" aria-hidden="true" tabindex="-1"></a>    names</span>
+<span id="cb13-133"><a href="#cb13-133" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-134"><a href="#cb13-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-135"><a href="#cb13-135" aria-hidden="true" tabindex="-1"></a>pr_get_tree <span class="ot">&lt;-</span> <span class="cf">function</span> (x, <span class="at">source =</span> <span class="fu">c</span>(<span class="st">"rotl"</span>, <span class="st">"rtrees"</span>, <span class="st">"clootl"</span>, <span class="st">"fishtree"</span>,</span>
+<span id="cb13-136"><a href="#cb13-136" aria-hidden="true" tabindex="-1"></a>    <span class="st">"datelife"</span>, <span class="st">"auto"</span>), <span class="at">species_col =</span> <span class="cn">NULL</span>, <span class="at">taxon =</span> <span class="cn">NULL</span>, <span class="at">n_tree =</span> <span class="dv">1</span>L,</span>
+<span id="cb13-137"><a href="#cb13-137" aria-hidden="true" tabindex="-1"></a>    <span class="at">cache =</span> <span class="cn">FALSE</span>, <span class="at">tnrs =</span> <span class="fu">c</span>(<span class="st">"auto"</span>, <span class="st">"always"</span>, <span class="st">"never"</span>), <span class="at">min_match =</span> <span class="fl">0.8</span>,</span>
+<span id="cb13-138"><a href="#cb13-138" aria-hidden="true" tabindex="-1"></a>    <span class="at">check_ultrametric =</span> <span class="cn">TRUE</span>, <span class="at">resolve_polytomies =</span> <span class="cn">FALSE</span>, <span class="at">branch_lengths =</span> <span class="cn">NULL</span>,</span>
+<span id="cb13-139"><a href="#cb13-139" aria-hidden="true" tabindex="-1"></a>    ...)</span>
+<span id="cb13-140"><a href="#cb13-140" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb13-141"><a href="#cb13-141" aria-hidden="true" tabindex="-1"></a>    source <span class="ot">&lt;-</span> <span class="fu">match.arg</span>(source)</span>
+<span id="cb13-142"><a href="#cb13-142" aria-hidden="true" tabindex="-1"></a>    tnrs <span class="ot">&lt;-</span> <span class="fu">match.arg</span>(tnrs)</span>
+<span id="cb13-143"><a href="#cb13-143" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(branch_lengths)) {</span>
+<span id="cb13-144"><a href="#cb13-144" aria-hidden="true" tabindex="-1"></a>        branch_lengths <span class="ot">&lt;-</span> <span class="fu">match.arg</span>(branch_lengths, <span class="at">choices =</span> <span class="fu">c</span>(<span class="st">"grafen"</span>,</span>
+<span id="cb13-145"><a href="#cb13-145" aria-hidden="true" tabindex="-1"></a>            <span class="st">"compute.brlen"</span>, <span class="st">"unit"</span>))</span>
+<span id="cb13-146"><a href="#cb13-146" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-147"><a href="#cb13-147" aria-hidden="true" tabindex="-1"></a>    n_tree <span class="ot">&lt;-</span> <span class="fu">.pr_validate_positive_integer</span>(n_tree, <span class="st">"n_tree"</span>)</span>
+<span id="cb13-148"><a href="#cb13-148" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(min_match) <span class="sc">||</span> <span class="fu">length</span>(min_match) <span class="sc">!=</span> <span class="dv">1</span>L <span class="sc">||</span></span>
+<span id="cb13-149"><a href="#cb13-149" aria-hidden="true" tabindex="-1"></a>        <span class="fu">is.na</span>(min_match) <span class="sc">||</span> <span class="sc">!</span><span class="fu">is.finite</span>(min_match) <span class="sc">||</span> min_match <span class="sc">&lt;</span></span>
+<span id="cb13-150"><a href="#cb13-150" aria-hidden="true" tabindex="-1"></a>        <span class="dv">0</span> <span class="sc">||</span> min_match <span class="sc">&gt;</span> <span class="dv">1</span>) {</span>
+<span id="cb13-151"><a href="#cb13-151" aria-hidden="true" tabindex="-1"></a>        cli<span class="sc">::</span><span class="fu">cli_abort</span>(<span class="fu">c</span>(<span class="st">"{.arg min_match} must be a length-1 numeric in [0, 1]."</span>,</span>
+<span id="cb13-152"><a href="#cb13-152" aria-hidden="true" tabindex="-1"></a>            <span class="at">i =</span> <span class="st">"Got: {.val {min_match}}."</span>))</span>
+<span id="cb13-153"><a href="#cb13-153" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-154"><a href="#cb13-154" aria-hidden="true" tabindex="-1"></a>    species <span class="ot">&lt;-</span> <span class="fu">.pr_extract_species_for_tree</span>(x, species_col)</span>
+<span id="cb13-155"><a href="#cb13-155" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">length</span>(species) <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb13-156"><a href="#cb13-156" aria-hidden="true" tabindex="-1"></a>        cli<span class="sc">::</span><span class="fu">cli_abort</span>(<span class="fu">c</span>(<span class="st">"No species names available to query the backend."</span>,</span>
+<span id="cb13-157"><a href="#cb13-157" aria-hidden="true" tabindex="-1"></a>            <span class="at">i =</span> <span class="st">"If you passed a {.cls reconciliation} object, ensure {.code mapping$name_y} contains resolved names."</span>))</span>
+<span id="cb13-158"><a href="#cb13-158" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-159"><a href="#cb13-159" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (source <span class="sc">==</span> <span class="st">"auto"</span>) {</span>
+<span id="cb13-160"><a href="#cb13-160" aria-hidden="true" tabindex="-1"></a>        <span class="fu">return</span>(<span class="fu">.pr_get_tree_auto</span>(species, <span class="at">taxon =</span> taxon, <span class="at">n_tree =</span> n_tree,</span>
+<span id="cb13-161"><a href="#cb13-161" aria-hidden="true" tabindex="-1"></a>            <span class="at">cache =</span> cache, <span class="at">tnrs =</span> tnrs, <span class="at">min_match =</span> min_match,</span>
+<span id="cb13-162"><a href="#cb13-162" aria-hidden="true" tabindex="-1"></a>            ...))</span>
+<span id="cb13-163"><a href="#cb13-163" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-164"><a href="#cb13-164" aria-hidden="true" tabindex="-1"></a>    resolved <span class="ot">&lt;-</span> <span class="fu">.pr_resolve_query</span>(species, source, tnrs)</span>
+<span id="cb13-165"><a href="#cb13-165" aria-hidden="true" tabindex="-1"></a>    species_query <span class="ot">&lt;-</span> resolved<span class="sc">$</span>query</span>
+<span id="cb13-166"><a href="#cb13-166" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">isTRUE</span>(cache)) {</span>
+<span id="cb13-167"><a href="#cb13-167" aria-hidden="true" tabindex="-1"></a>        key <span class="ot">&lt;-</span> <span class="fu">.pr_tree_cache_key</span>(resolved<span class="sc">$</span>original, <span class="at">source =</span> source,</span>
+<span id="cb13-168"><a href="#cb13-168" aria-hidden="true" tabindex="-1"></a>            <span class="at">n_tree =</span> n_tree, <span class="at">taxon =</span> taxon, <span class="at">tnrs =</span> tnrs, <span class="at">query =</span> species_query,</span>
+<span id="cb13-169"><a href="#cb13-169" aria-hidden="true" tabindex="-1"></a>            ...)</span>
+<span id="cb13-170"><a href="#cb13-170" aria-hidden="true" tabindex="-1"></a>        cached <span class="ot">&lt;-</span> <span class="fu">.pr_tree_cache_get</span>(key, source)</span>
+<span id="cb13-171"><a href="#cb13-171" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(cached)) {</span>
+<span id="cb13-172"><a href="#cb13-172" aria-hidden="true" tabindex="-1"></a>            <span class="fu">return</span>(cached)</span>
+<span id="cb13-173"><a href="#cb13-173" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb13-174"><a href="#cb13-174" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-175"><a href="#cb13-175" aria-hidden="true" tabindex="-1"></a>    result <span class="ot">&lt;-</span> <span class="cf">switch</span>(source, <span class="at">rotl =</span> <span class="fu">.pr_get_tree_rotl</span>(species_query,</span>
+<span id="cb13-176"><a href="#cb13-176" aria-hidden="true" tabindex="-1"></a>        <span class="at">n_tree =</span> n_tree, ...), <span class="at">rtrees =</span> <span class="fu">.pr_get_tree_rtrees</span>(species_query,</span>
+<span id="cb13-177"><a href="#cb13-177" aria-hidden="true" tabindex="-1"></a>        <span class="at">n_tree =</span> n_tree, <span class="at">taxon =</span> taxon, ...), <span class="at">clootl =</span> <span class="fu">.pr_get_tree_clootl</span>(species_query,</span>
+<span id="cb13-178"><a href="#cb13-178" aria-hidden="true" tabindex="-1"></a>        <span class="at">n_tree =</span> n_tree, ...), <span class="at">fishtree =</span> <span class="fu">.pr_get_tree_fishtree</span>(species_query,</span>
+<span id="cb13-179"><a href="#cb13-179" aria-hidden="true" tabindex="-1"></a>        <span class="at">n_tree =</span> n_tree, ...), <span class="at">datelife =</span> <span class="fu">.pr_get_tree_datelife</span>(species_query,</span>
+<span id="cb13-180"><a href="#cb13-180" aria-hidden="true" tabindex="-1"></a>        <span class="at">n_tree =</span> n_tree, ...))</span>
+<span id="cb13-181"><a href="#cb13-181" aria-hidden="true" tabindex="-1"></a>    in_query <span class="ot">&lt;-</span> result<span class="sc">$</span>in_query</span>
+<span id="cb13-182"><a href="#cb13-182" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.logical</span>(in_query) <span class="sc">||</span> <span class="fu">length</span>(in_query) <span class="sc">!=</span> <span class="fu">length</span>(resolved<span class="sc">$</span>original)) {</span>
+<span id="cb13-183"><a href="#cb13-183" aria-hidden="true" tabindex="-1"></a>        cli<span class="sc">::</span><span class="fu">cli_abort</span>(<span class="fu">c</span>(<span class="st">"Internal: backend wrapper returned malformed {.code in_query}."</span>,</span>
+<span id="cb13-184"><a href="#cb13-184" aria-hidden="true" tabindex="-1"></a>            <span class="at">i =</span> <span class="st">"Expected {.cls logical} of length {length(resolved$original)}; got {.cls {class(in_query)[1]}} of length {length(in_query)}."</span>))</span>
+<span id="cb13-185"><a href="#cb13-185" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-186"><a href="#cb13-186" aria-hidden="true" tabindex="-1"></a>    matched <span class="ot">&lt;-</span> resolved<span class="sc">$</span>original[in_query]</span>
+<span id="cb13-187"><a href="#cb13-187" aria-hidden="true" tabindex="-1"></a>    unmatched <span class="ot">&lt;-</span> resolved<span class="sc">$</span>original[<span class="sc">!</span>in_query]</span>
+<span id="cb13-188"><a href="#cb13-188" aria-hidden="true" tabindex="-1"></a>    is_multi <span class="ot">&lt;-</span> <span class="fu">inherits</span>(result<span class="sc">$</span>tree, <span class="st">"multiPhylo"</span>)</span>
+<span id="cb13-189"><a href="#cb13-189" aria-hidden="true" tabindex="-1"></a>    n_returned <span class="ot">&lt;-</span> <span class="cf">if</span> (is_multi)</span>
+<span id="cb13-190"><a href="#cb13-190" aria-hidden="true" tabindex="-1"></a>        <span class="fu">length</span>(result<span class="sc">$</span>tree)</span>
+<span id="cb13-191"><a href="#cb13-191" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="dv">1</span>L</span>
+<span id="cb13-192"><a href="#cb13-192" aria-hidden="true" tabindex="-1"></a>    tip_set_consistent <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb13-193"><a href="#cb13-193" aria-hidden="true" tabindex="-1"></a>    dropped_per_tree <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb13-194"><a href="#cb13-194" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (is_multi <span class="sc">&amp;&amp;</span> <span class="fu">length</span>(result<span class="sc">$</span>tree) <span class="sc">&gt;</span> <span class="dv">1</span>L) {</span>
+<span id="cb13-195"><a href="#cb13-195" aria-hidden="true" tabindex="-1"></a>        tip_sets <span class="ot">&lt;-</span> <span class="fu">lapply</span>(result<span class="sc">$</span>tree, <span class="cf">function</span>(t) <span class="fu">sort</span>(t<span class="sc">$</span>tip.label))</span>
+<span id="cb13-196"><a href="#cb13-196" aria-hidden="true" tabindex="-1"></a>        tip_set_consistent <span class="ot">&lt;-</span> <span class="fu">all</span>(<span class="fu">vapply</span>(tip_sets[<span class="sc">-</span><span class="dv">1</span>L], <span class="cf">function</span>(s) <span class="fu">identical</span>(s,</span>
+<span id="cb13-197"><a href="#cb13-197" aria-hidden="true" tabindex="-1"></a>            tip_sets[[<span class="dv">1</span>L]]), <span class="fu">logical</span>(<span class="dv">1</span>L)))</span>
+<span id="cb13-198"><a href="#cb13-198" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="sc">!</span>tip_set_consistent) {</span>
+<span id="cb13-199"><a href="#cb13-199" aria-hidden="true" tabindex="-1"></a>            union_tips <span class="ot">&lt;-</span> <span class="fu">Reduce</span>(union, tip_sets)</span>
+<span id="cb13-200"><a href="#cb13-200" aria-hidden="true" tabindex="-1"></a>            dropped_per_tree <span class="ot">&lt;-</span> <span class="fu">lapply</span>(tip_sets, <span class="cf">function</span>(s) <span class="fu">setdiff</span>(union_tips,</span>
+<span id="cb13-201"><a href="#cb13-201" aria-hidden="true" tabindex="-1"></a>                s))</span>
+<span id="cb13-202"><a href="#cb13-202" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb13-203"><a href="#cb13-203" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-204"><a href="#cb13-204" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stopifnot</span>(<span class="st">`</span><span class="at">matched must be a subset of unique input</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">all</span>(matched <span class="sc">%in%</span></span>
+<span id="cb13-205"><a href="#cb13-205" aria-hidden="true" tabindex="-1"></a>        resolved<span class="sc">$</span>original), <span class="st">`</span><span class="at">unmatched must be a subset of unique input</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">all</span>(unmatched <span class="sc">%in%</span></span>
+<span id="cb13-206"><a href="#cb13-206" aria-hidden="true" tabindex="-1"></a>        resolved<span class="sc">$</span>original), <span class="st">`</span><span class="at">matched + unmatched must cover unique input</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">length</span>(matched) <span class="sc">+</span></span>
+<span id="cb13-207"><a href="#cb13-207" aria-hidden="true" tabindex="-1"></a>        <span class="fu">length</span>(unmatched) <span class="sc">==</span> <span class="fu">length</span>(resolved<span class="sc">$</span>original), <span class="st">`</span><span class="at">matched and unmatched must be disjoint</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">length</span>(<span class="fu">intersect</span>(matched,</span>
+<span id="cb13-208"><a href="#cb13-208" aria-hidden="true" tabindex="-1"></a>        unmatched)) <span class="sc">==</span> <span class="dv">0</span>L)</span>
+<span id="cb13-209"><a href="#cb13-209" aria-hidden="true" tabindex="-1"></a>    wrapper_meta <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">is.list</span>(result<span class="sc">$</span>backend_meta)) {</span>
+<span id="cb13-210"><a href="#cb13-210" aria-hidden="true" tabindex="-1"></a>        result<span class="sc">$</span>backend_meta</span>
+<span id="cb13-211"><a href="#cb13-211" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-212"><a href="#cb13-212" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> {</span>
+<span id="cb13-213"><a href="#cb13-213" aria-hidden="true" tabindex="-1"></a>        <span class="fu">list</span>()</span>
+<span id="cb13-214"><a href="#cb13-214" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-215"><a href="#cb13-215" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">identical</span>(source, <span class="st">"rtrees"</span>) <span class="sc">&amp;&amp;</span> <span class="fu">is.data.frame</span>(wrapper_meta<span class="sc">$</span>placement) <span class="sc">&amp;&amp;</span></span>
+<span id="cb13-216"><a href="#cb13-216" aria-hidden="true" tabindex="-1"></a>        <span class="fu">nrow</span>(wrapper_meta<span class="sc">$</span>placement) <span class="sc">==</span> <span class="fu">length</span>(resolved<span class="sc">$</span>original)) {</span>
+<span id="cb13-217"><a href="#cb13-217" aria-hidden="true" tabindex="-1"></a>        wrapper_meta<span class="sc">$</span>placement<span class="sc">$</span>input_name <span class="ot">&lt;-</span> resolved<span class="sc">$</span>original</span>
+<span id="cb13-218"><a href="#cb13-218" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-219"><a href="#cb13-219" aria-hidden="true" tabindex="-1"></a>    backend_meta <span class="ot">&lt;-</span> utils<span class="sc">::</span><span class="fu">modifyList</span>(wrapper_meta, <span class="fu">list</span>(<span class="at">n_queried =</span> <span class="fu">length</span>(resolved<span class="sc">$</span>original),</span>
+<span id="cb13-220"><a href="#cb13-220" aria-hidden="true" tabindex="-1"></a>        <span class="at">n_requested =</span> <span class="fu">as.integer</span>(n_tree), <span class="at">n_returned =</span> n_returned,</span>
+<span id="cb13-221"><a href="#cb13-221" aria-hidden="true" tabindex="-1"></a>        <span class="at">n_matched =</span> <span class="fu">length</span>(matched), <span class="at">tnrs_replacements =</span> resolved<span class="sc">$</span>tnrs_replacements,</span>
+<span id="cb13-222"><a href="#cb13-222" aria-hidden="true" tabindex="-1"></a>        <span class="at">tip_set_consistent =</span> tip_set_consistent, <span class="at">dropped_per_tree =</span> dropped_per_tree))</span>
+<span id="cb13-223"><a href="#cb13-223" aria-hidden="true" tabindex="-1"></a>    backend_meta <span class="ot">&lt;-</span> <span class="fu">.pr_ensure_tree_provenance</span>(result<span class="sc">$</span>tree, backend_meta,</span>
+<span id="cb13-224"><a href="#cb13-224" aria-hidden="true" tabindex="-1"></a>        source)</span>
+<span id="cb13-225"><a href="#cb13-225" aria-hidden="true" tabindex="-1"></a>    result<span class="sc">$</span>tree <span class="ot">&lt;-</span> <span class="fu">.pr_post_process_tree</span>(result<span class="sc">$</span>tree, <span class="at">resolve_polytomies =</span> resolve_polytomies,</span>
+<span id="cb13-226"><a href="#cb13-226" aria-hidden="true" tabindex="-1"></a>        <span class="at">branch_lengths =</span> branch_lengths)</span>
+<span id="cb13-227"><a href="#cb13-227" aria-hidden="true" tabindex="-1"></a>    mapping <span class="ot">&lt;-</span> <span class="fu">.pr_build_tree_mapping</span>(<span class="at">input_name =</span> resolved<span class="sc">$</span>original,</span>
+<span id="cb13-228"><a href="#cb13-228" aria-hidden="true" tabindex="-1"></a>        <span class="at">normalized_name =</span> resolved<span class="sc">$</span>normalised, <span class="at">query_name =</span> resolved<span class="sc">$</span>query,</span>
+<span id="cb13-229"><a href="#cb13-229" aria-hidden="true" tabindex="-1"></a>        <span class="at">in_tree =</span> in_query, <span class="at">tree =</span> result<span class="sc">$</span>tree, <span class="at">backend_meta =</span> backend_meta,</span>
+<span id="cb13-230"><a href="#cb13-230" aria-hidden="true" tabindex="-1"></a>        <span class="at">tnrs_audit =</span> resolved<span class="sc">$</span>tnrs_audit)</span>
+<span id="cb13-231"><a href="#cb13-231" aria-hidden="true" tabindex="-1"></a>    out <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">tree =</span> result<span class="sc">$</span>tree, <span class="at">matched =</span> matched, <span class="at">unmatched =</span> unmatched,</span>
+<span id="cb13-232"><a href="#cb13-232" aria-hidden="true" tabindex="-1"></a>        <span class="at">mapping =</span> mapping, <span class="at">source =</span> source, <span class="at">backend_meta =</span> backend_meta)</span>
+<span id="cb13-233"><a href="#cb13-233" aria-hidden="true" tabindex="-1"></a>    <span class="fu">class</span>(out) <span class="ot">&lt;-</span> <span class="st">"pr_tree_result"</span></span>
+<span id="cb13-234"><a href="#cb13-234" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">isTRUE</span>(cache)) {</span>
+<span id="cb13-235"><a href="#cb13-235" aria-hidden="true" tabindex="-1"></a>        <span class="fu">.pr_tree_cache_put</span>(key, source, out)</span>
+<span id="cb13-236"><a href="#cb13-236" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-237"><a href="#cb13-237" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">isTRUE</span>(check_ultrametric)) {</span>
+<span id="cb13-238"><a href="#cb13-238" aria-hidden="true" tabindex="-1"></a>        <span class="fu">.pr_check_tree_ultrametric</span>(out<span class="sc">$</span>tree, source)</span>
+<span id="cb13-239"><a href="#cb13-239" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-240"><a href="#cb13-240" aria-hidden="true" tabindex="-1"></a>    out</span>
+<span id="cb13-241"><a href="#cb13-241" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-242"><a href="#cb13-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-243"><a href="#cb13-243" aria-hidden="true" tabindex="-1"></a>reconcile_tree <span class="ot">&lt;-</span> <span class="cf">function</span> (x, tree, <span class="at">x_species =</span> <span class="cn">NULL</span>, <span class="at">authority =</span> <span class="st">"col"</span>, <span class="at">rank =</span> <span class="fu">c</span>(<span class="st">"species"</span>,</span>
+<span id="cb13-244"><a href="#cb13-244" aria-hidden="true" tabindex="-1"></a>    <span class="st">"subspecies"</span>), <span class="at">overrides =</span> <span class="cn">NULL</span>, <span class="at">db_version =</span> <span class="cn">NULL</span>, <span class="at">fuzzy =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb13-245"><a href="#cb13-245" aria-hidden="true" tabindex="-1"></a>    <span class="at">fuzzy_threshold =</span> <span class="fl">0.9</span>, <span class="at">flag_threshold =</span> <span class="fl">0.95</span>, <span class="at">resolve =</span> <span class="fu">c</span>(<span class="st">"flag"</span>,</span>
+<span id="cb13-246"><a href="#cb13-246" aria-hidden="true" tabindex="-1"></a>        <span class="st">"first"</span>), <span class="at">quiet =</span> <span class="cn">FALSE</span>, <span class="at">x_label =</span> <span class="cn">NULL</span>)</span>
+<span id="cb13-247"><a href="#cb13-247" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb13-248"><a href="#cb13-248" aria-hidden="true" tabindex="-1"></a>    x_source <span class="ot">&lt;-</span> x_label <span class="sc">%||%</span> <span class="fu">deparse</span>(<span class="fu">substitute</span>(x))</span>
+<span id="cb13-249"><a href="#cb13-249" aria-hidden="true" tabindex="-1"></a>    rank <span class="ot">&lt;-</span> <span class="fu">match.arg</span>(rank)</span>
+<span id="cb13-250"><a href="#cb13-250" aria-hidden="true" tabindex="-1"></a>    resolve <span class="ot">&lt;-</span> <span class="fu">match.arg</span>(resolve)</span>
+<span id="cb13-251"><a href="#cb13-251" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.data.frame</span>(x))</span>
+<span id="cb13-252"><a href="#cb13-252" aria-hidden="true" tabindex="-1"></a>        <span class="fu">abort</span>(<span class="st">"`x` must be a data frame."</span>, <span class="at">call =</span> <span class="fu">caller_env</span>())</span>
+<span id="cb13-253"><a href="#cb13-253" aria-hidden="true" tabindex="-1"></a>    authority <span class="ot">&lt;-</span> <span class="fu">pr_validate_authority</span>(authority)</span>
+<span id="cb13-254"><a href="#cb13-254" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(x_species))</span>
+<span id="cb13-255"><a href="#cb13-255" aria-hidden="true" tabindex="-1"></a>        x_species <span class="ot">&lt;-</span> <span class="fu">pr_detect_species_column</span>(x, <span class="st">"x_species"</span>)</span>
+<span id="cb13-256"><a href="#cb13-256" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span>x_species <span class="sc">%in%</span> <span class="fu">names</span>(x)) {</span>
+<span id="cb13-257"><a href="#cb13-257" aria-hidden="true" tabindex="-1"></a>        <span class="fu">abort</span>(<span class="fu">paste0</span>(<span class="st">"Column '"</span>, x_species, <span class="st">"' not found in `x`."</span>),</span>
+<span id="cb13-258"><a href="#cb13-258" aria-hidden="true" tabindex="-1"></a>            <span class="at">call =</span> <span class="fu">caller_env</span>())</span>
+<span id="cb13-259"><a href="#cb13-259" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-260"><a href="#cb13-260" aria-hidden="true" tabindex="-1"></a>    tree_obj <span class="ot">&lt;-</span> <span class="fu">pr_load_tree</span>(tree)</span>
+<span id="cb13-261"><a href="#cb13-261" aria-hidden="true" tabindex="-1"></a>    tips <span class="ot">&lt;-</span> tree_obj<span class="sc">$</span>tip.label</span>
+<span id="cb13-262"><a href="#cb13-262" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">nrow</span>(x) <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb13-263"><a href="#cb13-263" aria-hidden="true" tabindex="-1"></a>        <span class="fu">abort</span>(<span class="st">"`x` has 0 rows."</span>, <span class="at">call =</span> <span class="fu">caller_env</span>())</span>
+<span id="cb13-264"><a href="#cb13-264" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.factor</span>(x[[x_species]])) {</span>
+<span id="cb13-265"><a href="#cb13-265" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cli_alert_warning</span>(<span class="st">"Converting factor column '{x_species}' in `x` to character."</span>)</span>
+<span id="cb13-266"><a href="#cb13-266" aria-hidden="true" tabindex="-1"></a>        x[[x_species]] <span class="ot">&lt;-</span> <span class="fu">as.character</span>(x[[x_species]])</span>
+<span id="cb13-267"><a href="#cb13-267" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-268"><a href="#cb13-268" aria-hidden="true" tabindex="-1"></a>    names_x <span class="ot">&lt;-</span> <span class="fu">as.character</span>(x[[x_species]])</span>
+<span id="cb13-269"><a href="#cb13-269" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">all</span>(<span class="fu">is.na</span>(names_x))) {</span>
+<span id="cb13-270"><a href="#cb13-270" aria-hidden="true" tabindex="-1"></a>        <span class="fu">abort</span>(<span class="st">"All species names in `x` are NA."</span>, <span class="at">call =</span> <span class="fu">caller_env</span>())</span>
+<span id="cb13-271"><a href="#cb13-271" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-272"><a href="#cb13-272" aria-hidden="true" tabindex="-1"></a>    tree_source <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">is.character</span>(tree)) {</span>
+<span id="cb13-273"><a href="#cb13-273" aria-hidden="true" tabindex="-1"></a>        <span class="fu">basename</span>(tree)</span>
+<span id="cb13-274"><a href="#cb13-274" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-275"><a href="#cb13-275" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> {</span>
+<span id="cb13-276"><a href="#cb13-276" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sprintf</span>(<span class="st">"phylo (%d tips)"</span>, <span class="fu">length</span>(tips))</span>
+<span id="cb13-277"><a href="#cb13-277" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-278"><a href="#cb13-278" aria-hidden="true" tabindex="-1"></a>    overrides_df <span class="ot">&lt;-</span> <span class="fu">pr_load_overrides</span>(overrides)</span>
+<span id="cb13-279"><a href="#cb13-279" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span>quiet) {</span>
+<span id="cb13-280"><a href="#cb13-280" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cli_alert_info</span>(<span class="st">"Reconciling {length(unique(names_x))} data names vs {length(tips)} tree tips"</span>)</span>
+<span id="cb13-281"><a href="#cb13-281" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-282"><a href="#cb13-282" aria-hidden="true" tabindex="-1"></a>    mapping <span class="ot">&lt;-</span> <span class="fu">pr_run_cascade</span>(<span class="at">names_x =</span> names_x, <span class="at">names_y =</span> tips,</span>
+<span id="cb13-283"><a href="#cb13-283" aria-hidden="true" tabindex="-1"></a>        <span class="at">authority =</span> authority, <span class="at">db_version =</span> db_version, <span class="at">rank =</span> rank,</span>
+<span id="cb13-284"><a href="#cb13-284" aria-hidden="true" tabindex="-1"></a>        <span class="at">overrides =</span> overrides_df, <span class="at">fuzzy =</span> fuzzy, <span class="at">fuzzy_threshold =</span> fuzzy_threshold,</span>
+<span id="cb13-285"><a href="#cb13-285" aria-hidden="true" tabindex="-1"></a>        <span class="at">flag_threshold =</span> flag_threshold, <span class="at">resolve =</span> resolve, <span class="at">quiet =</span> quiet)</span>
+<span id="cb13-286"><a href="#cb13-286" aria-hidden="true" tabindex="-1"></a>    meta <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">call =</span> <span class="fu">match.call</span>(), <span class="at">type =</span> <span class="st">"data_tree"</span>, <span class="at">timestamp =</span> <span class="fu">Sys.time</span>(),</span>
+<span id="cb13-287"><a href="#cb13-287" aria-hidden="true" tabindex="-1"></a>        <span class="at">authority =</span> authority <span class="sc">%||%</span> <span class="st">"none"</span>, <span class="at">db_version =</span> db_version <span class="sc">%||%</span></span>
+<span id="cb13-288"><a href="#cb13-288" aria-hidden="true" tabindex="-1"></a>            <span class="st">"latest"</span>, <span class="at">fuzzy =</span> fuzzy, <span class="at">fuzzy_threshold =</span> <span class="cf">if</span> (fuzzy) fuzzy_threshold <span class="cf">else</span> <span class="cn">NA_real_</span>,</span>
+<span id="cb13-289"><a href="#cb13-289" aria-hidden="true" tabindex="-1"></a>        <span class="at">fuzzy_method =</span> <span class="cf">if</span> (fuzzy) <span class="st">"component_levenshtein"</span> <span class="cf">else</span> <span class="cn">NA_character_</span>,</span>
+<span id="cb13-290"><a href="#cb13-290" aria-hidden="true" tabindex="-1"></a>        <span class="at">resolve =</span> resolve, <span class="at">prepR4pcm_version =</span> <span class="fu">as.character</span>(utils<span class="sc">::</span><span class="fu">packageVersion</span>(<span class="st">"prepR4pcm"</span>)),</span>
+<span id="cb13-291"><a href="#cb13-291" aria-hidden="true" tabindex="-1"></a>        <span class="at">x_source =</span> x_source, <span class="at">y_source =</span> tree_source, <span class="at">rank =</span> rank)</span>
+<span id="cb13-292"><a href="#cb13-292" aria-hidden="true" tabindex="-1"></a>    result <span class="ot">&lt;-</span> <span class="fu">new_reconciliation</span>(<span class="at">mapping =</span> mapping, <span class="at">meta =</span> meta)</span>
+<span id="cb13-293"><a href="#cb13-293" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span>quiet <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(result<span class="sc">$</span>unused_overrides) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb13-294"><a href="#cb13-294" aria-hidden="true" tabindex="-1"></a>        <span class="fu">pr_warn_unused_overrides</span>(result<span class="sc">$</span>unused_overrides)</span>
+<span id="cb13-295"><a href="#cb13-295" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-296"><a href="#cb13-296" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span>quiet) {</span>
+<span id="cb13-297"><a href="#cb13-297" aria-hidden="true" tabindex="-1"></a>        n_matched <span class="ot">&lt;-</span> <span class="fu">sum</span>(mapping<span class="sc">$</span>in_x <span class="sc">&amp;</span> mapping<span class="sc">$</span>in_y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-298"><a href="#cb13-298" aria-hidden="true" tabindex="-1"></a>        n_total <span class="ot">&lt;-</span> result<span class="sc">$</span>counts<span class="sc">$</span>n_x</span>
+<span id="cb13-299"><a href="#cb13-299" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cli_alert_success</span>(<span class="st">"Matched {n_matched}/{n_total} data names to tree tips"</span>)</span>
+<span id="cb13-300"><a href="#cb13-300" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-301"><a href="#cb13-301" aria-hidden="true" tabindex="-1"></a>    result</span>
+<span id="cb13-302"><a href="#cb13-302" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-303"><a href="#cb13-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-304"><a href="#cb13-304" aria-hidden="true" tabindex="-1"></a>reconcile_apply <span class="ot">&lt;-</span> <span class="cf">function</span> (reconciliation, <span class="at">data =</span> <span class="cn">NULL</span>, <span class="at">tree =</span> <span class="cn">NULL</span>, <span class="at">species_col =</span> <span class="cn">NULL</span>,</span>
+<span id="cb13-305"><a href="#cb13-305" aria-hidden="true" tabindex="-1"></a>    <span class="at">drop_unresolved =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb13-306"><a href="#cb13-306" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb13-307"><a href="#cb13-307" aria-hidden="true" tabindex="-1"></a>    <span class="fu">validate_reconciliation</span>(reconciliation)</span>
+<span id="cb13-308"><a href="#cb13-308" aria-hidden="true" tabindex="-1"></a>    mapping <span class="ot">&lt;-</span> reconciliation<span class="sc">$</span>mapping</span>
+<span id="cb13-309"><a href="#cb13-309" aria-hidden="true" tabindex="-1"></a>    matched <span class="ot">&lt;-</span> mapping[mapping<span class="sc">$</span>in_x <span class="sc">&amp;</span> mapping<span class="sc">$</span>in_y, ]</span>
+<span id="cb13-310"><a href="#cb13-310" aria-hidden="true" tabindex="-1"></a>    result <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">data =</span> <span class="cn">NULL</span>, <span class="at">tree =</span> <span class="cn">NULL</span>)</span>
+<span id="cb13-311"><a href="#cb13-311" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(data)) {</span>
+<span id="cb13-312"><a href="#cb13-312" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.data.frame</span>(data)) {</span>
+<span id="cb13-313"><a href="#cb13-313" aria-hidden="true" tabindex="-1"></a>            <span class="fu">abort</span>(<span class="st">"`data` must be a data frame."</span>, <span class="at">call =</span> <span class="fu">caller_env</span>())</span>
+<span id="cb13-314"><a href="#cb13-314" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb13-315"><a href="#cb13-315" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">is.null</span>(species_col)) {</span>
+<span id="cb13-316"><a href="#cb13-316" aria-hidden="true" tabindex="-1"></a>            species_col <span class="ot">&lt;-</span> <span class="fu">pr_detect_species_column</span>(data, <span class="st">"species_col"</span>)</span>
+<span id="cb13-317"><a href="#cb13-317" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb13-318"><a href="#cb13-318" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="sc">!</span>species_col <span class="sc">%in%</span> <span class="fu">names</span>(data)) {</span>
+<span id="cb13-319"><a href="#cb13-319" aria-hidden="true" tabindex="-1"></a>            cli<span class="sc">::</span><span class="fu">cli_abort</span>(<span class="fu">c</span>(<span class="st">"Column {.val {species_col}} not found in {.arg data}."</span>,</span>
+<span id="cb13-320"><a href="#cb13-320" aria-hidden="true" tabindex="-1"></a>                <span class="at">i =</span> <span class="st">"Available columns: {.val {names(data)}}."</span>))</span>
+<span id="cb13-321"><a href="#cb13-321" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb13-322"><a href="#cb13-322" aria-hidden="true" tabindex="-1"></a>        data_names <span class="ot">&lt;-</span> <span class="fu">as.character</span>(data[[species_col]])</span>
+<span id="cb13-323"><a href="#cb13-323" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (drop_unresolved) {</span>
+<span id="cb13-324"><a href="#cb13-324" aria-hidden="true" tabindex="-1"></a>            keep <span class="ot">&lt;-</span> data_names <span class="sc">%in%</span> matched<span class="sc">$</span>name_x</span>
+<span id="cb13-325"><a href="#cb13-325" aria-hidden="true" tabindex="-1"></a>            data <span class="ot">&lt;-</span> data[keep, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb13-326"><a href="#cb13-326" aria-hidden="true" tabindex="-1"></a>            n_dropped <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="sc">!</span>keep)</span>
+<span id="cb13-327"><a href="#cb13-327" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> (n_dropped <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb13-328"><a href="#cb13-328" aria-hidden="true" tabindex="-1"></a>                <span class="fu">cli_alert_warning</span>(<span class="st">"Dropped {n_dropped} rows with unresolved species from data"</span>)</span>
+<span id="cb13-329"><a href="#cb13-329" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb13-330"><a href="#cb13-330" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb13-331"><a href="#cb13-331" aria-hidden="true" tabindex="-1"></a>        result<span class="sc">$</span>data <span class="ot">&lt;-</span> data</span>
+<span id="cb13-332"><a href="#cb13-332" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-333"><a href="#cb13-333" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(tree)) {</span>
+<span id="cb13-334"><a href="#cb13-334" aria-hidden="true" tabindex="-1"></a>        tree <span class="ot">&lt;-</span> <span class="fu">pr_load_tree</span>(tree)</span>
+<span id="cb13-335"><a href="#cb13-335" aria-hidden="true" tabindex="-1"></a>        tree <span class="ot">&lt;-</span> <span class="fu">pr_align_tree</span>(tree, mapping, <span class="at">drop_unresolved =</span> drop_unresolved)</span>
+<span id="cb13-336"><a href="#cb13-336" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (drop_unresolved) {</span>
+<span id="cb13-337"><a href="#cb13-337" aria-hidden="true" tabindex="-1"></a>            n_tips <span class="ot">&lt;-</span> <span class="fu">length</span>(tree<span class="sc">$</span>tip.label)</span>
+<span id="cb13-338"><a href="#cb13-338" aria-hidden="true" tabindex="-1"></a>            <span class="fu">cli_alert_info</span>(<span class="st">"Tree has {n_tips} tips after alignment"</span>)</span>
+<span id="cb13-339"><a href="#cb13-339" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb13-340"><a href="#cb13-340" aria-hidden="true" tabindex="-1"></a>        result<span class="sc">$</span>tree <span class="ot">&lt;-</span> tree</span>
+<span id="cb13-341"><a href="#cb13-341" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-342"><a href="#cb13-342" aria-hidden="true" tabindex="-1"></a>    result</span>
+<span id="cb13-343"><a href="#cb13-343" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-344"><a href="#cb13-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-345"><a href="#cb13-345" aria-hidden="true" tabindex="-1"></a>reconcile_mapping <span class="ot">&lt;-</span> <span class="cf">function</span> (reconciliation, <span class="at">include_unused_overrides =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb13-346"><a href="#cb13-346" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb13-347"><a href="#cb13-347" aria-hidden="true" tabindex="-1"></a>    <span class="fu">validate_reconciliation</span>(reconciliation)</span>
+<span id="cb13-348"><a href="#cb13-348" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">isTRUE</span>(include_unused_overrides)) {</span>
+<span id="cb13-349"><a href="#cb13-349" aria-hidden="true" tabindex="-1"></a>        <span class="fu">return</span>(reconciliation<span class="sc">$</span>mapping)</span>
+<span id="cb13-350"><a href="#cb13-350" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-351"><a href="#cb13-351" aria-hidden="true" tabindex="-1"></a>    unused <span class="ot">&lt;-</span> reconciliation<span class="sc">$</span>unused_overrides</span>
+<span id="cb13-352"><a href="#cb13-352" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(unused) <span class="sc">||</span> <span class="fu">nrow</span>(unused) <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb13-353"><a href="#cb13-353" aria-hidden="true" tabindex="-1"></a>        <span class="fu">return</span>(reconciliation<span class="sc">$</span>mapping)</span>
+<span id="cb13-354"><a href="#cb13-354" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-355"><a href="#cb13-355" aria-hidden="true" tabindex="-1"></a>    unused_rows <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">name_x =</span> unused<span class="sc">$</span>name_x, <span class="at">name_y =</span> unused<span class="sc">$</span>name_y,</span>
+<span id="cb13-356"><a href="#cb13-356" aria-hidden="true" tabindex="-1"></a>        <span class="at">name_resolved =</span> <span class="cn">NA_character_</span>, <span class="at">match_type =</span> <span class="st">"override_unused"</span>,</span>
+<span id="cb13-357"><a href="#cb13-357" aria-hidden="true" tabindex="-1"></a>        <span class="at">match_score =</span> <span class="cn">NA_real_</span>, <span class="at">match_source =</span> <span class="st">"user_override"</span>,</span>
+<span id="cb13-358"><a href="#cb13-358" aria-hidden="true" tabindex="-1"></a>        <span class="at">in_x =</span> <span class="cn">FALSE</span>, <span class="at">in_y =</span> <span class="cn">FALSE</span>, <span class="at">notes =</span> unused<span class="sc">$</span>reason)</span>
+<span id="cb13-359"><a href="#cb13-359" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rbind</span>(reconciliation<span class="sc">$</span>mapping, unused_rows)</span>
+<span id="cb13-360"><a href="#cb13-360" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-361"><a href="#cb13-361" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-362"><a href="#cb13-362" aria-hidden="true" tabindex="-1"></a>pr_phylo_cor <span class="ot">&lt;-</span> <span class="cf">function</span> (x, <span class="at">corr =</span> <span class="cn">TRUE</span>, ...)</span>
+<span id="cb13-363"><a href="#cb13-363" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb13-364"><a href="#cb13-364" aria-hidden="true" tabindex="-1"></a>    tree <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">inherits</span>(x, <span class="st">"pr_tree_result"</span>))</span>
+<span id="cb13-365"><a href="#cb13-365" aria-hidden="true" tabindex="-1"></a>        x<span class="sc">$</span>tree</span>
+<span id="cb13-366"><a href="#cb13-366" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> x</span>
+<span id="cb13-367"><a href="#cb13-367" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">inherits</span>(tree, <span class="st">"multiPhylo"</span>)) {</span>
+<span id="cb13-368"><a href="#cb13-368" aria-hidden="true" tabindex="-1"></a>        <span class="fu">return</span>(<span class="fu">lapply</span>(tree, pr_phylo_cor, <span class="at">corr =</span> corr, ...))</span>
+<span id="cb13-369"><a href="#cb13-369" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-370"><a href="#cb13-370" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">inherits</span>(tree, <span class="st">"phylo"</span>)) {</span>
+<span id="cb13-371"><a href="#cb13-371" aria-hidden="true" tabindex="-1"></a>        cli<span class="sc">::</span><span class="fu">cli_abort</span>(<span class="fu">c</span>(<span class="st">"{.arg x} must be a {.cls phylo}, {.cls multiPhylo}, or {.cls pr_tree_result}."</span>,</span>
+<span id="cb13-372"><a href="#cb13-372" aria-hidden="true" tabindex="-1"></a>            <span class="at">i =</span> <span class="st">"Got: {.cls {class(x)[1]}}."</span>))</span>
+<span id="cb13-373"><a href="#cb13-373" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-374"><a href="#cb13-374" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(tree<span class="sc">$</span>edge.length)) {</span>
+<span id="cb13-375"><a href="#cb13-375" aria-hidden="true" tabindex="-1"></a>        cli<span class="sc">::</span><span class="fu">cli_abort</span>(<span class="fu">c</span>(<span class="st">"Tree has no branch lengths --- {.fn pr_phylo_cor} cannot compute a correlation matrix."</span>,</span>
+<span id="cb13-376"><a href="#cb13-376" aria-hidden="true" tabindex="-1"></a>            <span class="at">i =</span> <span class="st">"If your tree came from {.code source = </span><span class="sc">\"</span><span class="st">rotl</span><span class="sc">\"</span><span class="st">}, run {.fn pr_get_tree} again with {.code branch_lengths = </span><span class="sc">\"</span><span class="st">grafen</span><span class="sc">\"</span><span class="st">} to assign Grafen's method-based lengths."</span>,</span>
+<span id="cb13-377"><a href="#cb13-377" aria-hidden="true" tabindex="-1"></a>            <span class="st">`</span><span class="at">&gt;</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Or transform manually: {.code tree &lt;- ape::compute.brlen(tree, method = </span><span class="sc">\"</span><span class="st">Grafen</span><span class="sc">\"</span><span class="st">)}."</span>))</span>
+<span id="cb13-378"><a href="#cb13-378" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-379"><a href="#cb13-379" aria-hidden="true" tabindex="-1"></a>    ape<span class="sc">::</span><span class="fu">vcv</span>(tree, <span class="at">corr =</span> corr, ...)</span>
+<span id="cb13-380"><a href="#cb13-380" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-381"><a href="#cb13-381" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-382"><a href="#cb13-382" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-383"><a href="#cb13-383" aria-hidden="true" tabindex="-1"></a><span class="in">```{r recompute-toggle}</span></span>
+<span id="cb13-384"><a href="#cb13-384" aria-hidden="true" tabindex="-1"></a><span class="co"># Change to TRUE only to force a full network rebuild of the tree (slow,</span></span>
+<span id="cb13-385"><a href="#cb13-385" aria-hidden="true" tabindex="-1"></a><span class="co"># requires internet access). Normal renders read the cache below.</span></span>
+<span id="cb13-386"><a href="#cb13-386" aria-hidden="true" tabindex="-1"></a>recompute_phylogeny <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
+<span id="cb13-387"><a href="#cb13-387" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-388"><a href="#cb13-388" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-389"><a href="#cb13-389" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load cached phylogeny</span></span>
 <span id="cb13-390"><a href="#cb13-390" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-391"><a href="#cb13-391" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load cached phylogeny</span></span>
-<span id="cb13-392"><a href="#cb13-392" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-393"><a href="#cb13-393" aria-hidden="true" tabindex="-1"></a><span class="in">```{r load-phylo}</span></span>
-<span id="cb13-394"><a href="#cb13-394" aria-hidden="true" tabindex="-1"></a>tree_path      <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"phylogeny"</span>, <span class="st">"proceed_tree.rds"</span>)</span>
-<span id="cb13-395"><a href="#cb13-395" aria-hidden="true" tabindex="-1"></a>A_path         <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"phylogeny"</span>, <span class="st">"proceed_A_matrix.rds"</span>)</span>
-<span id="cb13-396"><a href="#cb13-396" aria-hidden="true" tabindex="-1"></a>name_map_path  <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"phylogeny"</span>, <span class="st">"proceed_name_map.rds"</span>)</span>
-<span id="cb13-397"><a href="#cb13-397" aria-hidden="true" tabindex="-1"></a>unmatched_path <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"phylogeny"</span>, <span class="st">"unmatched_species.csv"</span>)</span>
-<span id="cb13-398"><a href="#cb13-398" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-399"><a href="#cb13-399" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (recompute_phylogeny) {</span>
-<span id="cb13-400"><a href="#cb13-400" aria-hidden="true" tabindex="-1"></a>  dat_es <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"effect_sizes"</span>, <span class="st">"proceed_lnm_safe.rds"</span>))</span>
-<span id="cb13-401"><a href="#cb13-401" aria-hidden="true" tabindex="-1"></a>  phylo_out <span class="ot">&lt;-</span> <span class="fu">build_or_read_phylogeny</span>(</span>
-<span id="cb13-402"><a href="#cb13-402" aria-hidden="true" tabindex="-1"></a>    <span class="at">species_vec =</span> <span class="fu">unique</span>(<span class="fu">as.character</span>(dat_es<span class="sc">$</span>sp_ncbi)),</span>
-<span id="cb13-403"><a href="#cb13-403" aria-hidden="true" tabindex="-1"></a>    <span class="at">recompute   =</span> <span class="cn">TRUE</span></span>
-<span id="cb13-404"><a href="#cb13-404" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb13-405"><a href="#cb13-405" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb13-406"><a href="#cb13-406" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pace_need</span>(A_path,        <span class="st">"phylogenetic correlation matrix"</span>)</span>
-<span id="cb13-407"><a href="#cb13-407" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pace_need</span>(name_map_path, <span class="st">"phylogenetic name map"</span>)</span>
-<span id="cb13-408"><a href="#cb13-408" aria-hidden="true" tabindex="-1"></a>  phylo_out <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">A =</span> <span class="fu">readRDS</span>(A_path), <span class="at">name_map =</span> <span class="fu">readRDS</span>(name_map_path))</span>
-<span id="cb13-409"><a href="#cb13-409" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-410"><a href="#cb13-410" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-411"><a href="#cb13-411" aria-hidden="true" tabindex="-1"></a>A_full     <span class="ot">&lt;-</span> phylo_out<span class="sc">$</span>A</span>
-<span id="cb13-412"><a href="#cb13-412" aria-hidden="true" tabindex="-1"></a>name_map   <span class="ot">&lt;-</span> phylo_out<span class="sc">$</span>name_map</span>
-<span id="cb13-413"><a href="#cb13-413" aria-hidden="true" tabindex="-1"></a>tree_final <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(<span class="fu">readRDS</span>(tree_path), <span class="at">error =</span> <span class="cf">function</span>(e) <span class="cn">NULL</span>)</span>
-<span id="cb13-414"><a href="#cb13-414" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-415"><a href="#cb13-415" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the current effect-size dataset for reported analysis counts. The cached</span></span>
-<span id="cb13-416"><a href="#cb13-416" aria-hidden="true" tabindex="-1"></a><span class="co"># scaffold can contain tips from an earlier, larger data snapshot.</span></span>
-<span id="cb13-417"><a href="#cb13-417" aria-hidden="true" tabindex="-1"></a>dat_es <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"effect_sizes"</span>, <span class="st">"proceed_lnm_safe.rds"</span>))</span>
-<span id="cb13-418"><a href="#cb13-418" aria-hidden="true" tabindex="-1"></a>dat_mapped <span class="ot">&lt;-</span> <span class="fu">apply_phylo_name_map</span>(dat_es, name_map)</span>
-<span id="cb13-419"><a href="#cb13-419" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-391"><a href="#cb13-391" aria-hidden="true" tabindex="-1"></a><span class="in">```{r load-phylo}</span></span>
+<span id="cb13-392"><a href="#cb13-392" aria-hidden="true" tabindex="-1"></a>tree_path      <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"phylogeny"</span>, <span class="st">"proceed_tree.rds"</span>)</span>
+<span id="cb13-393"><a href="#cb13-393" aria-hidden="true" tabindex="-1"></a>A_path         <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"phylogeny"</span>, <span class="st">"proceed_A_matrix.rds"</span>)</span>
+<span id="cb13-394"><a href="#cb13-394" aria-hidden="true" tabindex="-1"></a>name_map_path  <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"phylogeny"</span>, <span class="st">"proceed_name_map.rds"</span>)</span>
+<span id="cb13-395"><a href="#cb13-395" aria-hidden="true" tabindex="-1"></a>unmatched_path <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"phylogeny"</span>, <span class="st">"unmatched_species.csv"</span>)</span>
+<span id="cb13-396"><a href="#cb13-396" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-397"><a href="#cb13-397" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (recompute_phylogeny) {</span>
+<span id="cb13-398"><a href="#cb13-398" aria-hidden="true" tabindex="-1"></a>  dat_es <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"effect_sizes"</span>, <span class="st">"proceed_lnm_safe.rds"</span>))</span>
+<span id="cb13-399"><a href="#cb13-399" aria-hidden="true" tabindex="-1"></a>  phylo_out <span class="ot">&lt;-</span> <span class="fu">build_or_read_phylogeny</span>(</span>
+<span id="cb13-400"><a href="#cb13-400" aria-hidden="true" tabindex="-1"></a>    <span class="at">species_vec =</span> <span class="fu">unique</span>(<span class="fu">as.character</span>(dat_es<span class="sc">$</span>sp_ncbi)),</span>
+<span id="cb13-401"><a href="#cb13-401" aria-hidden="true" tabindex="-1"></a>    <span class="at">recompute   =</span> <span class="cn">TRUE</span></span>
+<span id="cb13-402"><a href="#cb13-402" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-403"><a href="#cb13-403" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb13-404"><a href="#cb13-404" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pace_need</span>(A_path,        <span class="st">"phylogenetic correlation matrix"</span>)</span>
+<span id="cb13-405"><a href="#cb13-405" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pace_need</span>(name_map_path, <span class="st">"phylogenetic name map"</span>)</span>
+<span id="cb13-406"><a href="#cb13-406" aria-hidden="true" tabindex="-1"></a>  phylo_out <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">A =</span> <span class="fu">readRDS</span>(A_path), <span class="at">name_map =</span> <span class="fu">readRDS</span>(name_map_path))</span>
+<span id="cb13-407"><a href="#cb13-407" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-408"><a href="#cb13-408" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-409"><a href="#cb13-409" aria-hidden="true" tabindex="-1"></a>A_full     <span class="ot">&lt;-</span> phylo_out<span class="sc">$</span>A</span>
+<span id="cb13-410"><a href="#cb13-410" aria-hidden="true" tabindex="-1"></a>name_map   <span class="ot">&lt;-</span> phylo_out<span class="sc">$</span>name_map</span>
+<span id="cb13-411"><a href="#cb13-411" aria-hidden="true" tabindex="-1"></a>tree_final <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(<span class="fu">readRDS</span>(tree_path), <span class="at">error =</span> <span class="cf">function</span>(e) <span class="cn">NULL</span>)</span>
+<span id="cb13-412"><a href="#cb13-412" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-413"><a href="#cb13-413" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the current effect-size dataset for reported analysis counts. The cached</span></span>
+<span id="cb13-414"><a href="#cb13-414" aria-hidden="true" tabindex="-1"></a><span class="co"># scaffold can contain tips from an earlier, larger data snapshot.</span></span>
+<span id="cb13-415"><a href="#cb13-415" aria-hidden="true" tabindex="-1"></a>dat_es <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"effect_sizes"</span>, <span class="st">"proceed_lnm_safe.rds"</span>))</span>
+<span id="cb13-416"><a href="#cb13-416" aria-hidden="true" tabindex="-1"></a>dat_mapped <span class="ot">&lt;-</span> <span class="fu">apply_phylo_name_map</span>(dat_es, name_map)</span>
+<span id="cb13-417"><a href="#cb13-417" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-418"><a href="#cb13-418" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-419"><a href="#cb13-419" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reconciliation counts</span></span>
 <span id="cb13-420"><a href="#cb13-420" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-421"><a href="#cb13-421" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reconciliation counts</span></span>
-<span id="cb13-422"><a href="#cb13-422" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-423"><a href="#cb13-423" aria-hidden="true" tabindex="-1"></a><span class="in">```{r reconciliation-summary}</span></span>
-<span id="cb13-424"><a href="#cb13-424" aria-hidden="true" tabindex="-1"></a>raw_species <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">as.character</span>(dat_mapped<span class="sc">$</span>sp_ncbi))</span>
-<span id="cb13-425"><a href="#cb13-425" aria-hidden="true" tabindex="-1"></a>raw_species <span class="ot">&lt;-</span> raw_species[<span class="sc">!</span><span class="fu">is.na</span>(raw_species) <span class="sc">&amp;</span> <span class="fu">nzchar</span>(<span class="fu">trimws</span>(raw_species))]</span>
-<span id="cb13-426"><a href="#cb13-426" aria-hidden="true" tabindex="-1"></a>current_map <span class="ot">&lt;-</span> name_map <span class="sc">|&gt;</span></span>
-<span id="cb13-427"><a href="#cb13-427" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(sp_ncbi_original <span class="sc">%in%</span> raw_species)</span>
-<span id="cb13-428"><a href="#cb13-428" aria-hidden="true" tabindex="-1"></a>current_canonical <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">as.character</span>(dat_mapped<span class="sc">$</span>sp_ncbi_canonical))</span>
-<span id="cb13-429"><a href="#cb13-429" aria-hidden="true" tabindex="-1"></a>current_canonical <span class="ot">&lt;-</span> current_canonical[</span>
-<span id="cb13-430"><a href="#cb13-430" aria-hidden="true" tabindex="-1"></a>  <span class="sc">!</span><span class="fu">is.na</span>(current_canonical) <span class="sc">&amp;</span> <span class="fu">nzchar</span>(current_canonical)</span>
-<span id="cb13-431"><a href="#cb13-431" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb13-432"><a href="#cb13-432" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-433"><a href="#cb13-433" aria-hidden="true" tabindex="-1"></a>n_current_names <span class="ot">&lt;-</span> <span class="fu">length</span>(raw_species)</span>
-<span id="cb13-434"><a href="#cb13-434" aria-hidden="true" tabindex="-1"></a>n_current_resolved_names <span class="ot">&lt;-</span> <span class="fu">sum</span>(</span>
-<span id="cb13-435"><a href="#cb13-435" aria-hidden="true" tabindex="-1"></a>  <span class="sc">!</span><span class="fu">is.na</span>(current_map<span class="sc">$</span>sp_ncbi_canonical) <span class="sc">&amp;</span> <span class="fu">nzchar</span>(current_map<span class="sc">$</span>sp_ncbi_canonical)</span>
-<span id="cb13-436"><a href="#cb13-436" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb13-437"><a href="#cb13-437" aria-hidden="true" tabindex="-1"></a>n_current_unresolved_names <span class="ot">&lt;-</span> n_current_names <span class="sc">-</span> n_current_resolved_names</span>
-<span id="cb13-438"><a href="#cb13-438" aria-hidden="true" tabindex="-1"></a>n_current_tips <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">intersect</span>(current_canonical, <span class="fu">rownames</span>(A_full)))</span>
-<span id="cb13-439"><a href="#cb13-439" aria-hidden="true" tabindex="-1"></a>n_cached_tips <span class="ot">&lt;-</span> <span class="fu">nrow</span>(A_full)</span>
-<span id="cb13-440"><a href="#cb13-440" aria-hidden="true" tabindex="-1"></a>n_names_combined <span class="ot">&lt;-</span> n_current_resolved_names <span class="sc">-</span> <span class="fu">length</span>(current_canonical)</span>
-<span id="cb13-441"><a href="#cb13-441" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-442"><a href="#cb13-442" aria-hidden="true" tabindex="-1"></a>current_counts <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb13-443"><a href="#cb13-443" aria-hidden="true" tabindex="-1"></a>  <span class="at">Metric =</span> <span class="fu">c</span>(</span>
-<span id="cb13-444"><a href="#cb13-444" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Distinct input names in current effect-size dataset"</span>,</span>
-<span id="cb13-445"><a href="#cb13-445" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Input names successfully resolved"</span>,</span>
-<span id="cb13-446"><a href="#cb13-446" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Input names unresolved"</span>,</span>
-<span id="cb13-447"><a href="#cb13-447" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Additional resolved names combined under shared canonical labels"</span>,</span>
-<span id="cb13-448"><a href="#cb13-448" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Unique canonical species used by current models"</span>,</span>
-<span id="cb13-449"><a href="#cb13-449" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Contrasts used by current models"</span>,</span>
-<span id="cb13-450"><a href="#cb13-450" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Contrasts excluded because their species name was unresolved"</span></span>
-<span id="cb13-451"><a href="#cb13-451" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb13-452"><a href="#cb13-452" aria-hidden="true" tabindex="-1"></a>  <span class="at">N =</span> <span class="fu">c</span>(</span>
-<span id="cb13-453"><a href="#cb13-453" aria-hidden="true" tabindex="-1"></a>    n_current_names, n_current_resolved_names, n_current_unresolved_names,</span>
-<span id="cb13-454"><a href="#cb13-454" aria-hidden="true" tabindex="-1"></a>    n_names_combined, n_current_tips,</span>
-<span id="cb13-455"><a href="#cb13-455" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(dat_mapped<span class="sc">$</span>sp_ncbi_canonical)),</span>
-<span id="cb13-456"><a href="#cb13-456" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>(<span class="fu">is.na</span>(dat_mapped<span class="sc">$</span>sp_ncbi_canonical))</span>
-<span id="cb13-457"><a href="#cb13-457" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb13-458"><a href="#cb13-458" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb13-459"><a href="#cb13-459" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-460"><a href="#cb13-460" aria-hidden="true" tabindex="-1"></a>scaffold_counts <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb13-461"><a href="#cb13-461" aria-hidden="true" tabindex="-1"></a>  <span class="at">Metric =</span> <span class="fu">c</span>(</span>
-<span id="cb13-462"><a href="#cb13-462" aria-hidden="true" tabindex="-1"></a>    <span class="st">"All tips stored in cached A matrix"</span>,</span>
-<span id="cb13-463"><a href="#cb13-463" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Cached A tips used by current dataset"</span>,</span>
-<span id="cb13-464"><a href="#cb13-464" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Cached A tips not used by current dataset"</span></span>
-<span id="cb13-465"><a href="#cb13-465" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb13-466"><a href="#cb13-466" aria-hidden="true" tabindex="-1"></a>  <span class="at">N =</span> <span class="fu">c</span>(</span>
-<span id="cb13-467"><a href="#cb13-467" aria-hidden="true" tabindex="-1"></a>    n_cached_tips,</span>
-<span id="cb13-468"><a href="#cb13-468" aria-hidden="true" tabindex="-1"></a>    n_current_tips,</span>
-<span id="cb13-469"><a href="#cb13-469" aria-hidden="true" tabindex="-1"></a>    <span class="fu">length</span>(<span class="fu">setdiff</span>(<span class="fu">rownames</span>(A_full), current_canonical))</span>
-<span id="cb13-470"><a href="#cb13-470" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb13-471"><a href="#cb13-471" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb13-472"><a href="#cb13-472" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-473"><a href="#cb13-473" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb13-474"><a href="#cb13-474" aria-hidden="true" tabindex="-1"></a>  current_counts,</span>
-<span id="cb13-475"><a href="#cb13-475" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Current-data reconciliation: 267 input labels become 253 model species."</span></span>
-<span id="cb13-476"><a href="#cb13-476" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb13-477"><a href="#cb13-477" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-478"><a href="#cb13-478" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb13-479"><a href="#cb13-479" aria-hidden="true" tabindex="-1"></a>  scaffold_counts,</span>
-<span id="cb13-480"><a href="#cb13-480" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Cached phylogenetic scaffold: only 253 of its 265 tips are used by the current data."</span></span>
-<span id="cb13-481"><a href="#cb13-481" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb13-482"><a href="#cb13-482" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-483"><a href="#cb13-483" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-484"><a href="#cb13-484" aria-hidden="true" tabindex="-1"></a>The count of 253 therefore describes the current model dataset. The count of</span>
-<span id="cb13-485"><a href="#cb13-485" aria-hidden="true" tabindex="-1"></a>265 describes the reusable cached matrix, not the current sample. The 12</span>
-<span id="cb13-486"><a href="#cb13-486" aria-hidden="true" tabindex="-1"></a>unused cached tips are removed when <span class="in">`A`</span> is subset for a model.</span>
+<span id="cb13-421"><a href="#cb13-421" aria-hidden="true" tabindex="-1"></a><span class="in">```{r reconciliation-summary}</span></span>
+<span id="cb13-422"><a href="#cb13-422" aria-hidden="true" tabindex="-1"></a>raw_species <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">as.character</span>(dat_mapped<span class="sc">$</span>sp_ncbi))</span>
+<span id="cb13-423"><a href="#cb13-423" aria-hidden="true" tabindex="-1"></a>raw_species <span class="ot">&lt;-</span> raw_species[<span class="sc">!</span><span class="fu">is.na</span>(raw_species) <span class="sc">&amp;</span> <span class="fu">nzchar</span>(<span class="fu">trimws</span>(raw_species))]</span>
+<span id="cb13-424"><a href="#cb13-424" aria-hidden="true" tabindex="-1"></a>current_map <span class="ot">&lt;-</span> name_map <span class="sc">|&gt;</span></span>
+<span id="cb13-425"><a href="#cb13-425" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(sp_ncbi_original <span class="sc">%in%</span> raw_species)</span>
+<span id="cb13-426"><a href="#cb13-426" aria-hidden="true" tabindex="-1"></a>current_canonical <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">as.character</span>(dat_mapped<span class="sc">$</span>sp_ncbi_canonical))</span>
+<span id="cb13-427"><a href="#cb13-427" aria-hidden="true" tabindex="-1"></a>current_canonical <span class="ot">&lt;-</span> current_canonical[</span>
+<span id="cb13-428"><a href="#cb13-428" aria-hidden="true" tabindex="-1"></a>  <span class="sc">!</span><span class="fu">is.na</span>(current_canonical) <span class="sc">&amp;</span> <span class="fu">nzchar</span>(current_canonical)</span>
+<span id="cb13-429"><a href="#cb13-429" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb13-430"><a href="#cb13-430" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-431"><a href="#cb13-431" aria-hidden="true" tabindex="-1"></a>n_current_names <span class="ot">&lt;-</span> <span class="fu">length</span>(raw_species)</span>
+<span id="cb13-432"><a href="#cb13-432" aria-hidden="true" tabindex="-1"></a>n_current_resolved_names <span class="ot">&lt;-</span> <span class="fu">sum</span>(</span>
+<span id="cb13-433"><a href="#cb13-433" aria-hidden="true" tabindex="-1"></a>  <span class="sc">!</span><span class="fu">is.na</span>(current_map<span class="sc">$</span>sp_ncbi_canonical) <span class="sc">&amp;</span> <span class="fu">nzchar</span>(current_map<span class="sc">$</span>sp_ncbi_canonical)</span>
+<span id="cb13-434"><a href="#cb13-434" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-435"><a href="#cb13-435" aria-hidden="true" tabindex="-1"></a>n_current_unresolved_names <span class="ot">&lt;-</span> n_current_names <span class="sc">-</span> n_current_resolved_names</span>
+<span id="cb13-436"><a href="#cb13-436" aria-hidden="true" tabindex="-1"></a>n_current_tips <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">intersect</span>(current_canonical, <span class="fu">rownames</span>(A_full)))</span>
+<span id="cb13-437"><a href="#cb13-437" aria-hidden="true" tabindex="-1"></a>n_cached_tips <span class="ot">&lt;-</span> <span class="fu">nrow</span>(A_full)</span>
+<span id="cb13-438"><a href="#cb13-438" aria-hidden="true" tabindex="-1"></a>n_names_combined <span class="ot">&lt;-</span> n_current_resolved_names <span class="sc">-</span> <span class="fu">length</span>(current_canonical)</span>
+<span id="cb13-439"><a href="#cb13-439" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-440"><a href="#cb13-440" aria-hidden="true" tabindex="-1"></a>current_counts <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb13-441"><a href="#cb13-441" aria-hidden="true" tabindex="-1"></a>  <span class="at">Metric =</span> <span class="fu">c</span>(</span>
+<span id="cb13-442"><a href="#cb13-442" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Distinct input names in current effect-size dataset"</span>,</span>
+<span id="cb13-443"><a href="#cb13-443" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Input names successfully resolved"</span>,</span>
+<span id="cb13-444"><a href="#cb13-444" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Input names unresolved"</span>,</span>
+<span id="cb13-445"><a href="#cb13-445" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Additional resolved names combined under shared canonical labels"</span>,</span>
+<span id="cb13-446"><a href="#cb13-446" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Unique canonical species used by current models"</span>,</span>
+<span id="cb13-447"><a href="#cb13-447" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Contrasts used by current models"</span>,</span>
+<span id="cb13-448"><a href="#cb13-448" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Contrasts excluded because their species name was unresolved"</span></span>
+<span id="cb13-449"><a href="#cb13-449" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb13-450"><a href="#cb13-450" aria-hidden="true" tabindex="-1"></a>  <span class="at">N =</span> <span class="fu">c</span>(</span>
+<span id="cb13-451"><a href="#cb13-451" aria-hidden="true" tabindex="-1"></a>    n_current_names, n_current_resolved_names, n_current_unresolved_names,</span>
+<span id="cb13-452"><a href="#cb13-452" aria-hidden="true" tabindex="-1"></a>    n_names_combined, n_current_tips,</span>
+<span id="cb13-453"><a href="#cb13-453" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(dat_mapped<span class="sc">$</span>sp_ncbi_canonical)),</span>
+<span id="cb13-454"><a href="#cb13-454" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>(<span class="fu">is.na</span>(dat_mapped<span class="sc">$</span>sp_ncbi_canonical))</span>
+<span id="cb13-455"><a href="#cb13-455" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-456"><a href="#cb13-456" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-457"><a href="#cb13-457" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-458"><a href="#cb13-458" aria-hidden="true" tabindex="-1"></a>scaffold_counts <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb13-459"><a href="#cb13-459" aria-hidden="true" tabindex="-1"></a>  <span class="at">Metric =</span> <span class="fu">c</span>(</span>
+<span id="cb13-460"><a href="#cb13-460" aria-hidden="true" tabindex="-1"></a>    <span class="st">"All tips stored in cached A matrix"</span>,</span>
+<span id="cb13-461"><a href="#cb13-461" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Cached A tips used by current dataset"</span>,</span>
+<span id="cb13-462"><a href="#cb13-462" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Cached A tips not used by current dataset"</span></span>
+<span id="cb13-463"><a href="#cb13-463" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb13-464"><a href="#cb13-464" aria-hidden="true" tabindex="-1"></a>  <span class="at">N =</span> <span class="fu">c</span>(</span>
+<span id="cb13-465"><a href="#cb13-465" aria-hidden="true" tabindex="-1"></a>    n_cached_tips,</span>
+<span id="cb13-466"><a href="#cb13-466" aria-hidden="true" tabindex="-1"></a>    n_current_tips,</span>
+<span id="cb13-467"><a href="#cb13-467" aria-hidden="true" tabindex="-1"></a>    <span class="fu">length</span>(<span class="fu">setdiff</span>(<span class="fu">rownames</span>(A_full), current_canonical))</span>
+<span id="cb13-468"><a href="#cb13-468" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-469"><a href="#cb13-469" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-470"><a href="#cb13-470" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-471"><a href="#cb13-471" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb13-472"><a href="#cb13-472" aria-hidden="true" tabindex="-1"></a>  current_counts,</span>
+<span id="cb13-473"><a href="#cb13-473" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Current-data reconciliation: 267 input labels become 253 model species."</span></span>
+<span id="cb13-474"><a href="#cb13-474" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-475"><a href="#cb13-475" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-476"><a href="#cb13-476" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb13-477"><a href="#cb13-477" aria-hidden="true" tabindex="-1"></a>  scaffold_counts,</span>
+<span id="cb13-478"><a href="#cb13-478" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Cached phylogenetic scaffold: only 253 of its 265 tips are used by the current data."</span></span>
+<span id="cb13-479"><a href="#cb13-479" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-480"><a href="#cb13-480" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-481"><a href="#cb13-481" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-482"><a href="#cb13-482" aria-hidden="true" tabindex="-1"></a>The count of 253 therefore describes the current model dataset. The count of</span>
+<span id="cb13-483"><a href="#cb13-483" aria-hidden="true" tabindex="-1"></a>265 describes the reusable cached matrix, not the current sample. The 12</span>
+<span id="cb13-484"><a href="#cb13-484" aria-hidden="true" tabindex="-1"></a>unused cached tips are removed when <span class="in">`A`</span> is subset for a model.</span>
+<span id="cb13-485"><a href="#cb13-485" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-486"><a href="#cb13-486" aria-hidden="true" tabindex="-1"></a><span class="fu">### Input names combined under canonical species</span></span>
 <span id="cb13-487"><a href="#cb13-487" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-488"><a href="#cb13-488" aria-hidden="true" tabindex="-1"></a><span class="fu">### Input names combined under canonical species</span></span>
-<span id="cb13-489"><a href="#cb13-489" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-490"><a href="#cb13-490" aria-hidden="true" tabindex="-1"></a><span class="in">```{r canonical-collapses}</span></span>
-<span id="cb13-491"><a href="#cb13-491" aria-hidden="true" tabindex="-1"></a>collapse_table <span class="ot">&lt;-</span> current_map <span class="sc">|&gt;</span></span>
-<span id="cb13-492"><a href="#cb13-492" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
-<span id="cb13-493"><a href="#cb13-493" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span><span class="fu">is.na</span>(sp_ncbi_canonical),</span>
-<span id="cb13-494"><a href="#cb13-494" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nzchar</span>(sp_ncbi_canonical)</span>
-<span id="cb13-495"><a href="#cb13-495" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb13-496"><a href="#cb13-496" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sp_ncbi_canonical) <span class="sc">|&gt;</span></span>
-<span id="cb13-497"><a href="#cb13-497" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
-<span id="cb13-498"><a href="#cb13-498" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Input names</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">paste</span>(<span class="fu">sort</span>(sp_ncbi_original), <span class="at">collapse =</span> <span class="st">"; "</span>),</span>
-<span id="cb13-499"><a href="#cb13-499" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Number of input names</span><span class="st">`</span> <span class="ot">=</span> dplyr<span class="sc">::</span><span class="fu">n</span>(),</span>
-<span id="cb13-500"><a href="#cb13-500" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb13-501"><a href="#cb13-501" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb13-502"><a href="#cb13-502" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="st">`</span><span class="at">Number of input names</span><span class="st">`</span> <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
-<span id="cb13-503"><a href="#cb13-503" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="st">`</span><span class="at">Canonical species</span><span class="st">`</span> <span class="ot">=</span> sp_ncbi_canonical)</span>
-<span id="cb13-504"><a href="#cb13-504" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-505"><a href="#cb13-505" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb13-506"><a href="#cb13-506" aria-hidden="true" tabindex="-1"></a>  collapse_table,</span>
-<span id="cb13-507"><a href="#cb13-507" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Resolved input labels that share a canonical species label."</span></span>
-<span id="cb13-508"><a href="#cb13-508" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb13-509"><a href="#cb13-509" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-488"><a href="#cb13-488" aria-hidden="true" tabindex="-1"></a><span class="in">```{r canonical-collapses}</span></span>
+<span id="cb13-489"><a href="#cb13-489" aria-hidden="true" tabindex="-1"></a>collapse_table <span class="ot">&lt;-</span> current_map <span class="sc">|&gt;</span></span>
+<span id="cb13-490"><a href="#cb13-490" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
+<span id="cb13-491"><a href="#cb13-491" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span><span class="fu">is.na</span>(sp_ncbi_canonical),</span>
+<span id="cb13-492"><a href="#cb13-492" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nzchar</span>(sp_ncbi_canonical)</span>
+<span id="cb13-493"><a href="#cb13-493" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb13-494"><a href="#cb13-494" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sp_ncbi_canonical) <span class="sc">|&gt;</span></span>
+<span id="cb13-495"><a href="#cb13-495" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
+<span id="cb13-496"><a href="#cb13-496" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Input names</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">paste</span>(<span class="fu">sort</span>(sp_ncbi_original), <span class="at">collapse =</span> <span class="st">"; "</span>),</span>
+<span id="cb13-497"><a href="#cb13-497" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Number of input names</span><span class="st">`</span> <span class="ot">=</span> dplyr<span class="sc">::</span><span class="fu">n</span>(),</span>
+<span id="cb13-498"><a href="#cb13-498" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb13-499"><a href="#cb13-499" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb13-500"><a href="#cb13-500" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="st">`</span><span class="at">Number of input names</span><span class="st">`</span> <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-501"><a href="#cb13-501" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="st">`</span><span class="at">Canonical species</span><span class="st">`</span> <span class="ot">=</span> sp_ncbi_canonical)</span>
+<span id="cb13-502"><a href="#cb13-502" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-503"><a href="#cb13-503" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb13-504"><a href="#cb13-504" aria-hidden="true" tabindex="-1"></a>  collapse_table,</span>
+<span id="cb13-505"><a href="#cb13-505" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Resolved input labels that share a canonical species label."</span></span>
+<span id="cb13-506"><a href="#cb13-506" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-507"><a href="#cb13-507" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-508"><a href="#cb13-508" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-509"><a href="#cb13-509" aria-hidden="true" tabindex="-1"></a><span class="fu">## Unmatched species</span></span>
 <span id="cb13-510"><a href="#cb13-510" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-511"><a href="#cb13-511" aria-hidden="true" tabindex="-1"></a><span class="fu">## Unmatched species</span></span>
-<span id="cb13-512"><a href="#cb13-512" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-513"><a href="#cb13-513" aria-hidden="true" tabindex="-1"></a>These current species names could not be reconciled to a tree tip at any stage</span>
-<span id="cb13-514"><a href="#cb13-514" aria-hidden="true" tabindex="-1"></a>of the cached cascade (exact, normalized, synonym via GNVerifier, or fuzzy).</span>
-<span id="cb13-515"><a href="#cb13-515" aria-hidden="true" tabindex="-1"></a>Because primary models require the phylogenetic term, their contrasts are</span>
-<span id="cb13-516"><a href="#cb13-516" aria-hidden="true" tabindex="-1"></a>excluded from the complete fitted row set before model fitting.</span>
-<span id="cb13-517"><a href="#cb13-517" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-518"><a href="#cb13-518" aria-hidden="true" tabindex="-1"></a><span class="in">```{r unmatched-table}</span></span>
-<span id="cb13-519"><a href="#cb13-519" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(unmatched_path)) {</span>
-<span id="cb13-520"><a href="#cb13-520" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(unmatched_path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb13-521"><a href="#cb13-521" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(sp_ncbi_original <span class="sc">%in%</span> raw_species)</span>
-<span id="cb13-522"><a href="#cb13-522" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb13-523"><a href="#cb13-523" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"No unmatched-species file found — all species were resolved.</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb13-524"><a href="#cb13-524" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-525"><a href="#cb13-525" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-511"><a href="#cb13-511" aria-hidden="true" tabindex="-1"></a>These current species names could not be reconciled to a tree tip at any stage</span>
+<span id="cb13-512"><a href="#cb13-512" aria-hidden="true" tabindex="-1"></a>of the cached cascade (exact, normalized, synonym via GNVerifier, or fuzzy).</span>
+<span id="cb13-513"><a href="#cb13-513" aria-hidden="true" tabindex="-1"></a>Their contrasts are</span>
+<span id="cb13-514"><a href="#cb13-514" aria-hidden="true" tabindex="-1"></a>excluded from the complete fitted row set before model fitting.</span>
+<span id="cb13-515"><a href="#cb13-515" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-516"><a href="#cb13-516" aria-hidden="true" tabindex="-1"></a><span class="in">```{r unmatched-table}</span></span>
+<span id="cb13-517"><a href="#cb13-517" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(unmatched_path)) {</span>
+<span id="cb13-518"><a href="#cb13-518" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(unmatched_path, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-519"><a href="#cb13-519" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(sp_ncbi_original <span class="sc">%in%</span> raw_species)</span>
+<span id="cb13-520"><a href="#cb13-520" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb13-521"><a href="#cb13-521" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"No unmatched-species file found — all species were resolved.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb13-522"><a href="#cb13-522" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-523"><a href="#cb13-523" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-524"><a href="#cb13-524" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-525"><a href="#cb13-525" aria-hidden="true" tabindex="-1"></a><span class="fu">## Species retained but absent from the tree ("star" species)</span></span>
 <span id="cb13-526"><a href="#cb13-526" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-527"><a href="#cb13-527" aria-hidden="true" tabindex="-1"></a><span class="fu">## Species retained but absent from the tree ("star" species)</span></span>
-<span id="cb13-528"><a href="#cb13-528" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-529"><a href="#cb13-529" aria-hidden="true" tabindex="-1"></a>A separate, smaller category of row loss can occur *inside* an individual</span>
-<span id="cb13-530"><a href="#cb13-530" aria-hidden="true" tabindex="-1"></a>model: a species can be reconciled to a canonical name (and so appear in</span>
-<span id="cb13-531"><a href="#cb13-531" aria-hidden="true" tabindex="-1"></a><span class="in">`name_map`</span>) but still be absent from the tree subset used to build <span class="in">`A`</span> for a</span>
-<span id="cb13-532"><a href="#cb13-532" aria-hidden="true" tabindex="-1"></a>particular moderator's data. <span class="in">`prepare_phylo_and_data()`</span>, called once per model</span>
-<span id="cb13-533"><a href="#cb13-533" aria-hidden="true" tabindex="-1"></a>in the location–scale model grid, assigns these species zero phylogenetic</span>
-<span id="cb13-534"><a href="#cb13-534" aria-hidden="true" tabindex="-1"></a>correlation with every other species — a star-phylogeny contribution — rather</span>
-<span id="cb13-535"><a href="#cb13-535" aria-hidden="true" tabindex="-1"></a>than dropping them. See the Dependency structure chapter for the per-contrast</span>
-<span id="cb13-536"><a href="#cb13-536" aria-hidden="true" tabindex="-1"></a>accounting of this. This applies only to a non-missing canonical name absent</span>
-<span id="cb13-537"><a href="#cb13-537" aria-hidden="true" tabindex="-1"></a>from <span class="in">`A`</span>; it does not apply to an unresolved original name. The current data</span>
-<span id="cb13-538"><a href="#cb13-538" aria-hidden="true" tabindex="-1"></a>contain <span class="in">`r length(setdiff(current_canonical, rownames(A_full)))`</span> star species.</span>
+<span id="cb13-527"><a href="#cb13-527" aria-hidden="true" tabindex="-1"></a>A separate, smaller category of row loss can occur *inside* an individual</span>
+<span id="cb13-528"><a href="#cb13-528" aria-hidden="true" tabindex="-1"></a>model: a species can be reconciled to a canonical name (and so appear in</span>
+<span id="cb13-529"><a href="#cb13-529" aria-hidden="true" tabindex="-1"></a><span class="in">`name_map`</span>) but still be absent from the tree subset used to build <span class="in">`A`</span> for a</span>
+<span id="cb13-530"><a href="#cb13-530" aria-hidden="true" tabindex="-1"></a>particular moderator's data. <span class="in">`prepare_phylo_and_data()`</span>, called once per model</span>
+<span id="cb13-531"><a href="#cb13-531" aria-hidden="true" tabindex="-1"></a>in the location–scale model grid, assigns these species zero phylogenetic</span>
+<span id="cb13-532"><a href="#cb13-532" aria-hidden="true" tabindex="-1"></a>correlation with every other species — a star-phylogeny contribution — rather</span>
+<span id="cb13-533"><a href="#cb13-533" aria-hidden="true" tabindex="-1"></a>than dropping them. See the Dependency structure chapter for the per-contrast</span>
+<span id="cb13-534"><a href="#cb13-534" aria-hidden="true" tabindex="-1"></a>accounting of this. This applies only to a non-missing canonical name absent</span>
+<span id="cb13-535"><a href="#cb13-535" aria-hidden="true" tabindex="-1"></a>from <span class="in">`A`</span>; it does not apply to an unresolved original name. The current data</span>
+<span id="cb13-536"><a href="#cb13-536" aria-hidden="true" tabindex="-1"></a>contain <span class="in">`r length(setdiff(current_canonical, rownames(A_full)))`</span> star species.</span>
+<span id="cb13-537"><a href="#cb13-537" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-538"><a href="#cb13-538" aria-hidden="true" tabindex="-1"></a><span class="fu">## Phylogenetic correlation matrix — summary</span></span>
 <span id="cb13-539"><a href="#cb13-539" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-540"><a href="#cb13-540" aria-hidden="true" tabindex="-1"></a><span class="fu">## Phylogenetic correlation matrix — summary</span></span>
-<span id="cb13-541"><a href="#cb13-541" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-542"><a href="#cb13-542" aria-hidden="true" tabindex="-1"></a><span class="in">```{r a-matrix-summary}</span></span>
-<span id="cb13-543"><a href="#cb13-543" aria-hidden="true" tabindex="-1"></a>off_diag <span class="ot">&lt;-</span> A_full[<span class="fu">row</span>(A_full) <span class="sc">!=</span> <span class="fu">col</span>(A_full)]</span>
-<span id="cb13-544"><a href="#cb13-544" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"A matrix dimensions:"</span>, <span class="fu">nrow</span>(A_full), <span class="st">"×"</span>, <span class="fu">ncol</span>(A_full), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb13-545"><a href="#cb13-545" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Off-diagonal correlation range: ["</span>,</span>
-<span id="cb13-546"><a href="#cb13-546" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">min</span>(off_diag), <span class="dv">3</span>), <span class="st">", "</span>, <span class="fu">round</span>(<span class="fu">max</span>(off_diag), <span class="dv">3</span>), <span class="st">"]</span><span class="sc">\n</span><span class="st">"</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
-<span id="cb13-547"><a href="#cb13-547" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb13-540"><a href="#cb13-540" aria-hidden="true" tabindex="-1"></a><span class="in">```{r a-matrix-summary}</span></span>
+<span id="cb13-541"><a href="#cb13-541" aria-hidden="true" tabindex="-1"></a>off_diag <span class="ot">&lt;-</span> A_full[<span class="fu">row</span>(A_full) <span class="sc">!=</span> <span class="fu">col</span>(A_full)]</span>
+<span id="cb13-542"><a href="#cb13-542" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"A matrix dimensions:"</span>, <span class="fu">nrow</span>(A_full), <span class="st">"×"</span>, <span class="fu">ncol</span>(A_full), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb13-543"><a href="#cb13-543" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Off-diagonal correlation range: ["</span>,</span>
+<span id="cb13-544"><a href="#cb13-544" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">min</span>(off_diag), <span class="dv">3</span>), <span class="st">", "</span>, <span class="fu">round</span>(<span class="fu">max</span>(off_diag), <span class="dv">3</span>), <span class="st">"]</span><span class="sc">\n</span><span class="st">"</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb13-545"><a href="#cb13-545" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

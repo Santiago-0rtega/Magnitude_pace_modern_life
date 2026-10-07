@@ -558,7 +558,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#input-load-effect-size-dataset" id="toc-input-load-effect-size-dataset" class="nav-link active" data-scroll-target="#input-load-effect-size-dataset"><span class="header-section-number">4.1</span> Input: load effect-size dataset</a></li>
   <li><a href="#check-overview-counts" id="toc-check-overview-counts" class="nav-link" data-scroll-target="#check-overview-counts"><span class="header-section-number">4.2</span> Check: overview counts</a></li>
   <li><a href="#counts-by-moderator" id="toc-counts-by-moderator" class="nav-link" data-scroll-target="#counts-by-moderator"><span class="header-section-number">4.3</span> Counts by moderator</a></li>
-  <li><a href="#analytical-coverage-and-dominant-evidence-pathways" id="toc-analytical-coverage-and-dominant-evidence-pathways" class="nav-link" data-scroll-target="#analytical-coverage-and-dominant-evidence-pathways"><span class="header-section-number">4.4</span> Analytical coverage and dominant evidence pathways</a></li>
+  <li><a href="#analytical-coverage-and-evidence-pathways" id="toc-analytical-coverage-and-evidence-pathways" class="nav-link" data-scroll-target="#analytical-coverage-and-evidence-pathways"><span class="header-section-number">4.4</span> Analytical coverage and evidence pathways</a></li>
   <li><a href="#taxonomic-representation" id="toc-taxonomic-representation" class="nav-link" data-scroll-target="#taxonomic-representation"><span class="header-section-number">4.5</span> Taxonomic representation</a>
   <ul class="collapse">
   <li><a href="#evidence-pathways" id="toc-evidence-pathways" class="nav-link" data-scroll-target="#evidence-pathways"><span class="header-section-number">4.5.1</span> Evidence pathways</a></li>
@@ -765,8 +765,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="analytical-coverage-and-dominant-evidence-pathways" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="analytical-coverage-and-dominant-evidence-pathways"><span class="header-section-number">4.4</span> Analytical coverage and dominant evidence pathways</h2>
+<section id="analytical-coverage-and-evidence-pathways" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="analytical-coverage-and-evidence-pathways"><span class="header-section-number">4.4</span> Analytical coverage and evidence pathways</h2>
 <p>The baseline analysis retained 7,186 contrasts from 254 references and 1,533 study systems. After taxonomic reconciliation, these contrasts represented 253 species. The table and figure below use only these model-retained contrasts; their denominator therefore agrees with the sample size reported for <code>m00</code>.</p>
 <div class="cell">
 <details class="code-fold">
@@ -2369,7 +2369,7 @@ Figure&nbsp;4.3: Disturbance context, taxonomic representation, and trait type a
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>top_pathway <span class="ot">&lt;-</span> m00_pathways[<span class="dv">1</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>Introductions supplied the broadest stream of evidence (57.8% of contrasts), with most contrasts being synchronic (65.1%) and phenotypic (63.4%). Size and other-morphology traits together accounted for 70.7% of the analytical sample. The largest single pathway was allochronic, phenotypic size evidence under hunting or harvesting (878 contrasts; 12.2%), while the next four largest pathways all arose from synchronic comparisons of introduced systems. Thus, coverage was substantial but concentrated in a small number of recurring design–trait–evidence combinations.</p>
+<p>Introductions contributed 57.8% of contrasts, and most contrasts were synchronic (65.1%) and phenotypic (63.4%). Size and other-morphology traits together accounted for 70.7% of the analytical sample. The largest single pathway was allochronic, phenotypic size evidence under hunting or harvesting (878 contrasts; 12.2%). The next four largest pathways all arose from synchronic comparisons of introduced systems.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -3260,7 +3260,7 @@ Figure&nbsp;4.3: Disturbance context, taxonomic representation, and trait type a
 <span id="cb34-140"><a href="#cb34-140" aria-hidden="true" tabindex="-1"></a>m00_dat <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">count</span>(disturbance, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb34-141"><a href="#cb34-141" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb34-142"><a href="#cb34-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-143"><a href="#cb34-143" aria-hidden="true" tabindex="-1"></a><span class="fu">## Analytical coverage and dominant evidence pathways</span></span>
+<span id="cb34-143"><a href="#cb34-143" aria-hidden="true" tabindex="-1"></a><span class="fu">## Analytical coverage and evidence pathways</span></span>
 <span id="cb34-144"><a href="#cb34-144" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-145"><a href="#cb34-145" aria-hidden="true" tabindex="-1"></a>The baseline analysis retained <span class="in">`r scales::comma(nrow(m00_dat))`</span> contrasts from</span>
 <span id="cb34-146"><a href="#cb34-146" aria-hidden="true" tabindex="-1"></a><span class="in">`r dplyr::n_distinct(m00_dat$ref_id)`</span> references and</span>
@@ -3893,151 +3893,148 @@ Figure&nbsp;4.3: Disturbance context, taxonomic representation, and trait type a
 <span id="cb34-783"><a href="#cb34-783" aria-hidden="true" tabindex="-1"></a>top_pathway <span class="ot">&lt;-</span> m00_pathways[<span class="dv">1</span>, ]</span>
 <span id="cb34-784"><a href="#cb34-784" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb34-785"><a href="#cb34-785" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-786"><a href="#cb34-786" aria-hidden="true" tabindex="-1"></a>Introductions supplied the broadest stream of evidence</span>
-<span id="cb34-787"><a href="#cb34-787" aria-hidden="true" tabindex="-1"></a>(<span class="in">`r pct_m00(m00_dat$disturbance == "Introduction")`</span> of contrasts),</span>
-<span id="cb34-788"><a href="#cb34-788" aria-hidden="true" tabindex="-1"></a>with most contrasts being synchronic (<span class="in">`r pct_m00(m00_dat$design == "Synchronic")`</span>)</span>
-<span id="cb34-789"><a href="#cb34-789" aria-hidden="true" tabindex="-1"></a>and phenotypic (<span class="in">`r pct_m00(m00_dat$genphen == "Phenotypic")`</span>). Size and</span>
-<span id="cb34-790"><a href="#cb34-790" aria-hidden="true" tabindex="-1"></a>other-morphology traits together accounted for</span>
-<span id="cb34-791"><a href="#cb34-791" aria-hidden="true" tabindex="-1"></a><span class="in">`r pct_m00(m00_dat$trait_type %in% c("size", "othermorphology"))`</span> of the</span>
-<span id="cb34-792"><a href="#cb34-792" aria-hidden="true" tabindex="-1"></a>analytical sample. The largest single pathway was allochronic, phenotypic size</span>
-<span id="cb34-793"><a href="#cb34-793" aria-hidden="true" tabindex="-1"></a>evidence under hunting or harvesting (<span class="in">`r top_pathway$n`</span> contrasts;</span>
-<span id="cb34-794"><a href="#cb34-794" aria-hidden="true" tabindex="-1"></a><span class="in">`r sprintf("%.1f%%", 100 * top_pathway$n / nrow(m00_dat))`</span>), while the next four largest</span>
-<span id="cb34-795"><a href="#cb34-795" aria-hidden="true" tabindex="-1"></a>pathways all arose from synchronic comparisons of introduced systems. Thus,</span>
-<span id="cb34-796"><a href="#cb34-796" aria-hidden="true" tabindex="-1"></a>coverage was substantial but concentrated in a small number of recurring</span>
-<span id="cb34-797"><a href="#cb34-797" aria-hidden="true" tabindex="-1"></a>design–trait–evidence combinations.</span>
-<span id="cb34-798"><a href="#cb34-798" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-799"><a href="#cb34-799" aria-hidden="true" tabindex="-1"></a><span class="in">```{r by-genphen}</span></span>
-<span id="cb34-800"><a href="#cb34-800" aria-hidden="true" tabindex="-1"></a>m00_dat <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">count</span>(genphen, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb34-801"><a href="#cb34-801" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-802"><a href="#cb34-802" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-803"><a href="#cb34-803" aria-hidden="true" tabindex="-1"></a><span class="in">```{r by-env-change}</span></span>
-<span id="cb34-804"><a href="#cb34-804" aria-hidden="true" tabindex="-1"></a>m00_dat <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">count</span>(env_change, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb34-805"><a href="#cb34-805" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-806"><a href="#cb34-806" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-807"><a href="#cb34-807" aria-hidden="true" tabindex="-1"></a><span class="in">```{r by-data-type}</span></span>
-<span id="cb34-808"><a href="#cb34-808" aria-hidden="true" tabindex="-1"></a>m00_dat <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">count</span>(data_type, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb34-809"><a href="#cb34-809" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-810"><a href="#cb34-810" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-811"><a href="#cb34-811" aria-hidden="true" tabindex="-1"></a><span class="in">```{r by-transf-data}</span></span>
-<span id="cb34-812"><a href="#cb34-812" aria-hidden="true" tabindex="-1"></a>m00_dat <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">count</span>(transf_data, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb34-813"><a href="#cb34-813" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-814"><a href="#cb34-814" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-815"><a href="#cb34-815" aria-hidden="true" tabindex="-1"></a><span class="in">```{r by-data-scale}</span></span>
-<span id="cb34-816"><a href="#cb34-816" aria-hidden="true" tabindex="-1"></a>m00_dat <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">count</span>(data_scale, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb34-817"><a href="#cb34-817" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-818"><a href="#cb34-818" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-819"><a href="#cb34-819" aria-hidden="true" tabindex="-1"></a><span class="fu">## Donut summaries</span></span>
-<span id="cb34-820"><a href="#cb34-820" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-821"><a href="#cb34-821" aria-hidden="true" tabindex="-1"></a>Each donut counts the <span class="in">`r scales::comma(nrow(m00_dat))`</span> analysed contrasts.</span>
-<span id="cb34-822"><a href="#cb34-822" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-823"><a href="#cb34-823" aria-hidden="true" tabindex="-1"></a><span class="in">```{r donut-design-disturbance, fig.width=10, fig.height=5}</span></span>
-<span id="cb34-824"><a href="#cb34-824" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_count_donut</span>(m00_dat, <span class="st">"design"</span>, <span class="st">"Comparison design"</span>) <span class="sc">+</span></span>
-<span id="cb34-825"><a href="#cb34-825" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_count_donut</span>(m00_dat, <span class="st">"disturbance"</span>, <span class="st">"Disturbance context"</span>) <span class="sc">+</span></span>
-<span id="cb34-826"><a href="#cb34-826" aria-hidden="true" tabindex="-1"></a>  patchwork<span class="sc">::</span><span class="fu">plot_layout</span>(<span class="at">guides =</span> <span class="st">"keep"</span>) <span class="sc">&amp;</span></span>
-<span id="cb34-827"><a href="#cb34-827" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>, <span class="at">legend.text =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>))</span>
-<span id="cb34-828"><a href="#cb34-828" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-829"><a href="#cb34-829" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-830"><a href="#cb34-830" aria-hidden="true" tabindex="-1"></a><span class="in">```{r donut-trait-taxa, fig.width=10, fig.height=5}</span></span>
-<span id="cb34-831"><a href="#cb34-831" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_count_donut</span>(m00_dat, <span class="st">"trait_type"</span>, <span class="st">"Trait type"</span>) <span class="sc">+</span></span>
-<span id="cb34-832"><a href="#cb34-832" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_count_donut</span>(m00_dat, <span class="st">"taxa"</span>, <span class="st">"Taxonomic group"</span>) <span class="sc">+</span></span>
-<span id="cb34-833"><a href="#cb34-833" aria-hidden="true" tabindex="-1"></a>  patchwork<span class="sc">::</span><span class="fu">plot_layout</span>(<span class="at">guides =</span> <span class="st">"keep"</span>) <span class="sc">&amp;</span></span>
-<span id="cb34-834"><a href="#cb34-834" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>, <span class="at">legend.text =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>))</span>
-<span id="cb34-835"><a href="#cb34-835" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-836"><a href="#cb34-836" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-837"><a href="#cb34-837" aria-hidden="true" tabindex="-1"></a><span class="in">```{r donut-data, fig.width=10, fig.height=5}</span></span>
-<span id="cb34-838"><a href="#cb34-838" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_count_donut</span>(m00_dat, <span class="st">"genphen"</span>, <span class="st">"Phenotypic vs genetic data"</span>) <span class="sc">+</span></span>
-<span id="cb34-839"><a href="#cb34-839" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_count_donut</span>(m00_dat, <span class="st">"data_scale"</span>, <span class="st">"Measurement scale"</span>) <span class="sc">+</span></span>
-<span id="cb34-840"><a href="#cb34-840" aria-hidden="true" tabindex="-1"></a>  patchwork<span class="sc">::</span><span class="fu">plot_layout</span>(<span class="at">guides =</span> <span class="st">"keep"</span>) <span class="sc">&amp;</span></span>
-<span id="cb34-841"><a href="#cb34-841" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>, <span class="at">legend.text =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>))</span>
-<span id="cb34-842"><a href="#cb34-842" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-843"><a href="#cb34-843" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-844"><a href="#cb34-844" aria-hidden="true" tabindex="-1"></a><span class="fu">## Distributions</span></span>
-<span id="cb34-845"><a href="#cb34-845" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-846"><a href="#cb34-846" aria-hidden="true" tabindex="-1"></a><span class="fu">### lnM estimates</span></span>
-<span id="cb34-847"><a href="#cb34-847" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-848"><a href="#cb34-848" aria-hidden="true" tabindex="-1"></a><span class="in">```{r dist-yi}</span></span>
-<span id="cb34-849"><a href="#cb34-849" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(m00_dat, ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> yi_lnM_safe)) <span class="sc">+</span></span>
-<span id="cb34-850"><a href="#cb34-850" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">50</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb34-851"><a href="#cb34-851" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb34-852"><a href="#cb34-852" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"lnM (SAFE)"</span>, <span class="at">y =</span> <span class="st">"Count"</span>,</span>
-<span id="cb34-853"><a href="#cb34-853" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">"Distribution of lnM effect sizes"</span>) <span class="sc">+</span></span>
-<span id="cb34-854"><a href="#cb34-854" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_classic</span>()</span>
-<span id="cb34-855"><a href="#cb34-855" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-856"><a href="#cb34-856" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-857"><a href="#cb34-857" aria-hidden="true" tabindex="-1"></a><span class="fu">### Sampling variances</span></span>
-<span id="cb34-858"><a href="#cb34-858" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-859"><a href="#cb34-859" aria-hidden="true" tabindex="-1"></a><span class="in">```{r dist-vi}</span></span>
-<span id="cb34-860"><a href="#cb34-860" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(m00_dat, ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> (vi_lnM_safe))) <span class="sc">+</span></span>
-<span id="cb34-861"><a href="#cb34-861" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">50</span>, <span class="at">fill =</span> <span class="st">"coral"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb34-862"><a href="#cb34-862" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"sampling variance"</span>, <span class="at">y =</span> <span class="st">"Count"</span>,</span>
-<span id="cb34-863"><a href="#cb34-863" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">"Distribution of sampling variances"</span>) <span class="sc">+</span></span>
-<span id="cb34-864"><a href="#cb34-864" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_classic</span>()</span>
-<span id="cb34-865"><a href="#cb34-865" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-866"><a href="#cb34-866" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-867"><a href="#cb34-867" aria-hidden="true" tabindex="-1"></a><span class="fu">### Elapsed years</span></span>
-<span id="cb34-868"><a href="#cb34-868" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-869"><a href="#cb34-869" aria-hidden="true" tabindex="-1"></a><span class="in">```{r dist-years}</span></span>
-<span id="cb34-870"><a href="#cb34-870" aria-hidden="true" tabindex="-1"></a>m00_dat <span class="sc">|&gt;</span></span>
-<span id="cb34-871"><a href="#cb34-871" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(log10_years)) <span class="sc">|&gt;</span></span>
-<span id="cb34-872"><a href="#cb34-872" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> log10_years)) <span class="sc">+</span></span>
-<span id="cb34-873"><a href="#cb34-873" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">40</span>, <span class="at">fill =</span> <span class="st">"seagreen"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb34-874"><a href="#cb34-874" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"log10(years)"</span>, <span class="at">y =</span> <span class="st">"Count"</span>,</span>
-<span id="cb34-875"><a href="#cb34-875" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">"Distribution of elapsed time (years)"</span>) <span class="sc">+</span></span>
-<span id="cb34-876"><a href="#cb34-876" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_classic</span>()</span>
-<span id="cb34-877"><a href="#cb34-877" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-878"><a href="#cb34-878" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-879"><a href="#cb34-879" aria-hidden="true" tabindex="-1"></a><span class="fu">### Elapsed generations</span></span>
-<span id="cb34-880"><a href="#cb34-880" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-881"><a href="#cb34-881" aria-hidden="true" tabindex="-1"></a><span class="in">```{r dist-gen}</span></span>
-<span id="cb34-882"><a href="#cb34-882" aria-hidden="true" tabindex="-1"></a>m00_dat <span class="sc">|&gt;</span></span>
-<span id="cb34-883"><a href="#cb34-883" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(log10_generations)) <span class="sc">|&gt;</span></span>
-<span id="cb34-884"><a href="#cb34-884" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> log10_generations)) <span class="sc">+</span></span>
-<span id="cb34-885"><a href="#cb34-885" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">40</span>, <span class="at">fill =</span> <span class="st">"mediumpurple"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb34-886"><a href="#cb34-886" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"log10(generations)"</span>, <span class="at">y =</span> <span class="st">"Count"</span>,</span>
-<span id="cb34-887"><a href="#cb34-887" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">"Distribution of elapsed time (generations)"</span>) <span class="sc">+</span></span>
-<span id="cb34-888"><a href="#cb34-888" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_classic</span>()</span>
-<span id="cb34-889"><a href="#cb34-889" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-890"><a href="#cb34-890" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-891"><a href="#cb34-891" aria-hidden="true" tabindex="-1"></a><span class="fu">### Sample sizes</span></span>
-<span id="cb34-892"><a href="#cb34-892" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-893"><a href="#cb34-893" aria-hidden="true" tabindex="-1"></a><span class="in">```{r dist-n}</span></span>
-<span id="cb34-894"><a href="#cb34-894" aria-hidden="true" tabindex="-1"></a>m00_dat <span class="sc">|&gt;</span></span>
-<span id="cb34-895"><a href="#cb34-895" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(n_total)) <span class="sc">|&gt;</span></span>
-<span id="cb34-896"><a href="#cb34-896" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> n_total)) <span class="sc">+</span></span>
-<span id="cb34-897"><a href="#cb34-897" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">50</span>, <span class="at">fill =</span> <span class="st">"goldenrod"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb34-898"><a href="#cb34-898" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">scale_x_log10</span>() <span class="sc">+</span></span>
-<span id="cb34-899"><a href="#cb34-899" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Total N (log10 scale)"</span>, <span class="at">y =</span> <span class="st">"Count"</span>,</span>
-<span id="cb34-900"><a href="#cb34-900" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">"Distribution of total sample sizes"</span>) <span class="sc">+</span></span>
-<span id="cb34-901"><a href="#cb34-901" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_classic</span>()</span>
-<span id="cb34-902"><a href="#cb34-902" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-903"><a href="#cb34-903" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-904"><a href="#cb34-904" aria-hidden="true" tabindex="-1"></a><span class="fu">## Save descriptive tables</span></span>
-<span id="cb34-905"><a href="#cb34-905" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-906"><a href="#cb34-906" aria-hidden="true" tabindex="-1"></a><span class="in">```{r save-tables}</span></span>
-<span id="cb34-907"><a href="#cb34-907" aria-hidden="true" tabindex="-1"></a>tab_overview <span class="ot">&lt;-</span> m00_dat <span class="sc">|&gt;</span></span>
-<span id="cb34-908"><a href="#cb34-908" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
-<span id="cb34-909"><a href="#cb34-909" aria-hidden="true" tabindex="-1"></a>    <span class="at">k_contrasts   =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(),</span>
-<span id="cb34-910"><a href="#cb34-910" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_studies     =</span> dplyr<span class="sc">::</span><span class="fu">n_distinct</span>(ref_id),</span>
-<span id="cb34-911"><a href="#cb34-911" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_systems     =</span> dplyr<span class="sc">::</span><span class="fu">n_distinct</span>(sys_id),</span>
-<span id="cb34-912"><a href="#cb34-912" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_species     =</span> dplyr<span class="sc">::</span><span class="fu">n_distinct</span>(canonical_lookup[<span class="fu">as.character</span>(sp_ncbi)]),</span>
-<span id="cb34-913"><a href="#cb34-913" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_allochronic =</span> <span class="fu">sum</span>(design <span class="sc">==</span> <span class="st">"Allochronic"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb34-914"><a href="#cb34-914" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_synchronic  =</span> <span class="fu">sum</span>(design <span class="sc">==</span> <span class="st">"Synchronic"</span>,  <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb34-915"><a href="#cb34-915" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb34-786"><a href="#cb34-786" aria-hidden="true" tabindex="-1"></a>Introductions contributed</span>
+<span id="cb34-787"><a href="#cb34-787" aria-hidden="true" tabindex="-1"></a><span class="in">`r pct_m00(m00_dat$disturbance == "Introduction")`</span> of contrasts, and most contrasts were synchronic (<span class="in">`r pct_m00(m00_dat$design == "Synchronic")`</span>)</span>
+<span id="cb34-788"><a href="#cb34-788" aria-hidden="true" tabindex="-1"></a>and phenotypic (<span class="in">`r pct_m00(m00_dat$genphen == "Phenotypic")`</span>). Size and</span>
+<span id="cb34-789"><a href="#cb34-789" aria-hidden="true" tabindex="-1"></a>other-morphology traits together accounted for</span>
+<span id="cb34-790"><a href="#cb34-790" aria-hidden="true" tabindex="-1"></a><span class="in">`r pct_m00(m00_dat$trait_type %in% c("size", "othermorphology"))`</span> of the</span>
+<span id="cb34-791"><a href="#cb34-791" aria-hidden="true" tabindex="-1"></a>analytical sample. The largest single pathway was allochronic, phenotypic size</span>
+<span id="cb34-792"><a href="#cb34-792" aria-hidden="true" tabindex="-1"></a>evidence under hunting or harvesting (<span class="in">`r top_pathway$n`</span> contrasts;</span>
+<span id="cb34-793"><a href="#cb34-793" aria-hidden="true" tabindex="-1"></a><span class="in">`r sprintf("%.1f%%", 100 * top_pathway$n / nrow(m00_dat))`</span>). The next four largest</span>
+<span id="cb34-794"><a href="#cb34-794" aria-hidden="true" tabindex="-1"></a>pathways all arose from synchronic comparisons of introduced systems.</span>
+<span id="cb34-795"><a href="#cb34-795" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-796"><a href="#cb34-796" aria-hidden="true" tabindex="-1"></a><span class="in">```{r by-genphen}</span></span>
+<span id="cb34-797"><a href="#cb34-797" aria-hidden="true" tabindex="-1"></a>m00_dat <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">count</span>(genphen, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb34-798"><a href="#cb34-798" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-799"><a href="#cb34-799" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-800"><a href="#cb34-800" aria-hidden="true" tabindex="-1"></a><span class="in">```{r by-env-change}</span></span>
+<span id="cb34-801"><a href="#cb34-801" aria-hidden="true" tabindex="-1"></a>m00_dat <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">count</span>(env_change, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb34-802"><a href="#cb34-802" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-803"><a href="#cb34-803" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-804"><a href="#cb34-804" aria-hidden="true" tabindex="-1"></a><span class="in">```{r by-data-type}</span></span>
+<span id="cb34-805"><a href="#cb34-805" aria-hidden="true" tabindex="-1"></a>m00_dat <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">count</span>(data_type, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb34-806"><a href="#cb34-806" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-807"><a href="#cb34-807" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-808"><a href="#cb34-808" aria-hidden="true" tabindex="-1"></a><span class="in">```{r by-transf-data}</span></span>
+<span id="cb34-809"><a href="#cb34-809" aria-hidden="true" tabindex="-1"></a>m00_dat <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">count</span>(transf_data, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb34-810"><a href="#cb34-810" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-811"><a href="#cb34-811" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-812"><a href="#cb34-812" aria-hidden="true" tabindex="-1"></a><span class="in">```{r by-data-scale}</span></span>
+<span id="cb34-813"><a href="#cb34-813" aria-hidden="true" tabindex="-1"></a>m00_dat <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">count</span>(data_scale, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb34-814"><a href="#cb34-814" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-815"><a href="#cb34-815" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-816"><a href="#cb34-816" aria-hidden="true" tabindex="-1"></a><span class="fu">## Donut summaries</span></span>
+<span id="cb34-817"><a href="#cb34-817" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-818"><a href="#cb34-818" aria-hidden="true" tabindex="-1"></a>Each donut counts the <span class="in">`r scales::comma(nrow(m00_dat))`</span> analysed contrasts.</span>
+<span id="cb34-819"><a href="#cb34-819" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-820"><a href="#cb34-820" aria-hidden="true" tabindex="-1"></a><span class="in">```{r donut-design-disturbance, fig.width=10, fig.height=5}</span></span>
+<span id="cb34-821"><a href="#cb34-821" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_count_donut</span>(m00_dat, <span class="st">"design"</span>, <span class="st">"Comparison design"</span>) <span class="sc">+</span></span>
+<span id="cb34-822"><a href="#cb34-822" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_count_donut</span>(m00_dat, <span class="st">"disturbance"</span>, <span class="st">"Disturbance context"</span>) <span class="sc">+</span></span>
+<span id="cb34-823"><a href="#cb34-823" aria-hidden="true" tabindex="-1"></a>  patchwork<span class="sc">::</span><span class="fu">plot_layout</span>(<span class="at">guides =</span> <span class="st">"keep"</span>) <span class="sc">&amp;</span></span>
+<span id="cb34-824"><a href="#cb34-824" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>, <span class="at">legend.text =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>))</span>
+<span id="cb34-825"><a href="#cb34-825" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-826"><a href="#cb34-826" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-827"><a href="#cb34-827" aria-hidden="true" tabindex="-1"></a><span class="in">```{r donut-trait-taxa, fig.width=10, fig.height=5}</span></span>
+<span id="cb34-828"><a href="#cb34-828" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_count_donut</span>(m00_dat, <span class="st">"trait_type"</span>, <span class="st">"Trait type"</span>) <span class="sc">+</span></span>
+<span id="cb34-829"><a href="#cb34-829" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_count_donut</span>(m00_dat, <span class="st">"taxa"</span>, <span class="st">"Taxonomic group"</span>) <span class="sc">+</span></span>
+<span id="cb34-830"><a href="#cb34-830" aria-hidden="true" tabindex="-1"></a>  patchwork<span class="sc">::</span><span class="fu">plot_layout</span>(<span class="at">guides =</span> <span class="st">"keep"</span>) <span class="sc">&amp;</span></span>
+<span id="cb34-831"><a href="#cb34-831" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>, <span class="at">legend.text =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>))</span>
+<span id="cb34-832"><a href="#cb34-832" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-833"><a href="#cb34-833" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-834"><a href="#cb34-834" aria-hidden="true" tabindex="-1"></a><span class="in">```{r donut-data, fig.width=10, fig.height=5}</span></span>
+<span id="cb34-835"><a href="#cb34-835" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_count_donut</span>(m00_dat, <span class="st">"genphen"</span>, <span class="st">"Phenotypic vs genetic data"</span>) <span class="sc">+</span></span>
+<span id="cb34-836"><a href="#cb34-836" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_count_donut</span>(m00_dat, <span class="st">"data_scale"</span>, <span class="st">"Measurement scale"</span>) <span class="sc">+</span></span>
+<span id="cb34-837"><a href="#cb34-837" aria-hidden="true" tabindex="-1"></a>  patchwork<span class="sc">::</span><span class="fu">plot_layout</span>(<span class="at">guides =</span> <span class="st">"keep"</span>) <span class="sc">&amp;</span></span>
+<span id="cb34-838"><a href="#cb34-838" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>, <span class="at">legend.text =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>))</span>
+<span id="cb34-839"><a href="#cb34-839" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-840"><a href="#cb34-840" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-841"><a href="#cb34-841" aria-hidden="true" tabindex="-1"></a><span class="fu">## Distributions</span></span>
+<span id="cb34-842"><a href="#cb34-842" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-843"><a href="#cb34-843" aria-hidden="true" tabindex="-1"></a><span class="fu">### lnM estimates</span></span>
+<span id="cb34-844"><a href="#cb34-844" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-845"><a href="#cb34-845" aria-hidden="true" tabindex="-1"></a><span class="in">```{r dist-yi}</span></span>
+<span id="cb34-846"><a href="#cb34-846" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(m00_dat, ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> yi_lnM_safe)) <span class="sc">+</span></span>
+<span id="cb34-847"><a href="#cb34-847" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">50</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb34-848"><a href="#cb34-848" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb34-849"><a href="#cb34-849" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"lnM (SAFE)"</span>, <span class="at">y =</span> <span class="st">"Count"</span>,</span>
+<span id="cb34-850"><a href="#cb34-850" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">"Distribution of lnM effect sizes"</span>) <span class="sc">+</span></span>
+<span id="cb34-851"><a href="#cb34-851" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_classic</span>()</span>
+<span id="cb34-852"><a href="#cb34-852" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-853"><a href="#cb34-853" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-854"><a href="#cb34-854" aria-hidden="true" tabindex="-1"></a><span class="fu">### Sampling variances</span></span>
+<span id="cb34-855"><a href="#cb34-855" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-856"><a href="#cb34-856" aria-hidden="true" tabindex="-1"></a><span class="in">```{r dist-vi}</span></span>
+<span id="cb34-857"><a href="#cb34-857" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(m00_dat, ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> (vi_lnM_safe))) <span class="sc">+</span></span>
+<span id="cb34-858"><a href="#cb34-858" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">50</span>, <span class="at">fill =</span> <span class="st">"coral"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb34-859"><a href="#cb34-859" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"sampling variance"</span>, <span class="at">y =</span> <span class="st">"Count"</span>,</span>
+<span id="cb34-860"><a href="#cb34-860" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">"Distribution of sampling variances"</span>) <span class="sc">+</span></span>
+<span id="cb34-861"><a href="#cb34-861" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_classic</span>()</span>
+<span id="cb34-862"><a href="#cb34-862" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-863"><a href="#cb34-863" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-864"><a href="#cb34-864" aria-hidden="true" tabindex="-1"></a><span class="fu">### Elapsed years</span></span>
+<span id="cb34-865"><a href="#cb34-865" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-866"><a href="#cb34-866" aria-hidden="true" tabindex="-1"></a><span class="in">```{r dist-years}</span></span>
+<span id="cb34-867"><a href="#cb34-867" aria-hidden="true" tabindex="-1"></a>m00_dat <span class="sc">|&gt;</span></span>
+<span id="cb34-868"><a href="#cb34-868" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(log10_years)) <span class="sc">|&gt;</span></span>
+<span id="cb34-869"><a href="#cb34-869" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> log10_years)) <span class="sc">+</span></span>
+<span id="cb34-870"><a href="#cb34-870" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">40</span>, <span class="at">fill =</span> <span class="st">"seagreen"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb34-871"><a href="#cb34-871" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"log10(years)"</span>, <span class="at">y =</span> <span class="st">"Count"</span>,</span>
+<span id="cb34-872"><a href="#cb34-872" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">"Distribution of elapsed time (years)"</span>) <span class="sc">+</span></span>
+<span id="cb34-873"><a href="#cb34-873" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_classic</span>()</span>
+<span id="cb34-874"><a href="#cb34-874" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-875"><a href="#cb34-875" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-876"><a href="#cb34-876" aria-hidden="true" tabindex="-1"></a><span class="fu">### Elapsed generations</span></span>
+<span id="cb34-877"><a href="#cb34-877" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-878"><a href="#cb34-878" aria-hidden="true" tabindex="-1"></a><span class="in">```{r dist-gen}</span></span>
+<span id="cb34-879"><a href="#cb34-879" aria-hidden="true" tabindex="-1"></a>m00_dat <span class="sc">|&gt;</span></span>
+<span id="cb34-880"><a href="#cb34-880" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(log10_generations)) <span class="sc">|&gt;</span></span>
+<span id="cb34-881"><a href="#cb34-881" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> log10_generations)) <span class="sc">+</span></span>
+<span id="cb34-882"><a href="#cb34-882" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">40</span>, <span class="at">fill =</span> <span class="st">"mediumpurple"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb34-883"><a href="#cb34-883" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"log10(generations)"</span>, <span class="at">y =</span> <span class="st">"Count"</span>,</span>
+<span id="cb34-884"><a href="#cb34-884" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">"Distribution of elapsed time (generations)"</span>) <span class="sc">+</span></span>
+<span id="cb34-885"><a href="#cb34-885" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_classic</span>()</span>
+<span id="cb34-886"><a href="#cb34-886" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-887"><a href="#cb34-887" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-888"><a href="#cb34-888" aria-hidden="true" tabindex="-1"></a><span class="fu">### Sample sizes</span></span>
+<span id="cb34-889"><a href="#cb34-889" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-890"><a href="#cb34-890" aria-hidden="true" tabindex="-1"></a><span class="in">```{r dist-n}</span></span>
+<span id="cb34-891"><a href="#cb34-891" aria-hidden="true" tabindex="-1"></a>m00_dat <span class="sc">|&gt;</span></span>
+<span id="cb34-892"><a href="#cb34-892" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(n_total)) <span class="sc">|&gt;</span></span>
+<span id="cb34-893"><a href="#cb34-893" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> n_total)) <span class="sc">+</span></span>
+<span id="cb34-894"><a href="#cb34-894" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">50</span>, <span class="at">fill =</span> <span class="st">"goldenrod"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb34-895"><a href="#cb34-895" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">scale_x_log10</span>() <span class="sc">+</span></span>
+<span id="cb34-896"><a href="#cb34-896" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Total N (log10 scale)"</span>, <span class="at">y =</span> <span class="st">"Count"</span>,</span>
+<span id="cb34-897"><a href="#cb34-897" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">"Distribution of total sample sizes"</span>) <span class="sc">+</span></span>
+<span id="cb34-898"><a href="#cb34-898" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_classic</span>()</span>
+<span id="cb34-899"><a href="#cb34-899" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-900"><a href="#cb34-900" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-901"><a href="#cb34-901" aria-hidden="true" tabindex="-1"></a><span class="fu">## Save descriptive tables</span></span>
+<span id="cb34-902"><a href="#cb34-902" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-903"><a href="#cb34-903" aria-hidden="true" tabindex="-1"></a><span class="in">```{r save-tables}</span></span>
+<span id="cb34-904"><a href="#cb34-904" aria-hidden="true" tabindex="-1"></a>tab_overview <span class="ot">&lt;-</span> m00_dat <span class="sc">|&gt;</span></span>
+<span id="cb34-905"><a href="#cb34-905" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
+<span id="cb34-906"><a href="#cb34-906" aria-hidden="true" tabindex="-1"></a>    <span class="at">k_contrasts   =</span> dplyr<span class="sc">::</span><span class="fu">n</span>(),</span>
+<span id="cb34-907"><a href="#cb34-907" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_studies     =</span> dplyr<span class="sc">::</span><span class="fu">n_distinct</span>(ref_id),</span>
+<span id="cb34-908"><a href="#cb34-908" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_systems     =</span> dplyr<span class="sc">::</span><span class="fu">n_distinct</span>(sys_id),</span>
+<span id="cb34-909"><a href="#cb34-909" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_species     =</span> dplyr<span class="sc">::</span><span class="fu">n_distinct</span>(canonical_lookup[<span class="fu">as.character</span>(sp_ncbi)]),</span>
+<span id="cb34-910"><a href="#cb34-910" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_allochronic =</span> <span class="fu">sum</span>(design <span class="sc">==</span> <span class="st">"Allochronic"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb34-911"><a href="#cb34-911" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_synchronic  =</span> <span class="fu">sum</span>(design <span class="sc">==</span> <span class="st">"Synchronic"</span>,  <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb34-912"><a href="#cb34-912" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb34-913"><a href="#cb34-913" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-914"><a href="#cb34-914" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(tab_overview,</span>
+<span id="cb34-915"><a href="#cb34-915" aria-hidden="true" tabindex="-1"></a>                 here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"tables"</span>, <span class="st">"descriptive_overview.csv"</span>))</span>
 <span id="cb34-916"><a href="#cb34-916" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-917"><a href="#cb34-917" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(tab_overview,</span>
-<span id="cb34-918"><a href="#cb34-918" aria-hidden="true" tabindex="-1"></a>                 here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"tables"</span>, <span class="st">"descriptive_overview.csv"</span>))</span>
-<span id="cb34-919"><a href="#cb34-919" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-920"><a href="#cb34-920" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (var <span class="cf">in</span> <span class="fu">c</span>(<span class="st">"disturbance"</span>, <span class="st">"design"</span>, <span class="st">"trait_type"</span>, <span class="st">"taxa"</span>,</span>
-<span id="cb34-921"><a href="#cb34-921" aria-hidden="true" tabindex="-1"></a>               <span class="st">"genphen"</span>, <span class="st">"env_change"</span>, <span class="st">"data_type"</span>, <span class="st">"transf_data"</span>, <span class="st">"data_scale"</span>)) {</span>
-<span id="cb34-922"><a href="#cb34-922" aria-hidden="true" tabindex="-1"></a>  tbl <span class="ot">&lt;-</span> m00_dat <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">count</span>(.data[[var]], <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb34-923"><a href="#cb34-923" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">write_csv</span>(</span>
-<span id="cb34-924"><a href="#cb34-924" aria-hidden="true" tabindex="-1"></a>    tbl,</span>
-<span id="cb34-925"><a href="#cb34-925" aria-hidden="true" tabindex="-1"></a>    here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"tables"</span>, <span class="fu">paste0</span>(<span class="st">"counts_by_"</span>, var, <span class="st">".csv"</span>))</span>
-<span id="cb34-926"><a href="#cb34-926" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb34-927"><a href="#cb34-927" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb34-928"><a href="#cb34-928" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-929"><a href="#cb34-929" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Descriptive tables saved to Rdata/tables/</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb34-930"><a href="#cb34-930" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-917"><a href="#cb34-917" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (var <span class="cf">in</span> <span class="fu">c</span>(<span class="st">"disturbance"</span>, <span class="st">"design"</span>, <span class="st">"trait_type"</span>, <span class="st">"taxa"</span>,</span>
+<span id="cb34-918"><a href="#cb34-918" aria-hidden="true" tabindex="-1"></a>               <span class="st">"genphen"</span>, <span class="st">"env_change"</span>, <span class="st">"data_type"</span>, <span class="st">"transf_data"</span>, <span class="st">"data_scale"</span>)) {</span>
+<span id="cb34-919"><a href="#cb34-919" aria-hidden="true" tabindex="-1"></a>  tbl <span class="ot">&lt;-</span> m00_dat <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">count</span>(.data[[var]], <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb34-920"><a href="#cb34-920" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">write_csv</span>(</span>
+<span id="cb34-921"><a href="#cb34-921" aria-hidden="true" tabindex="-1"></a>    tbl,</span>
+<span id="cb34-922"><a href="#cb34-922" aria-hidden="true" tabindex="-1"></a>    here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"tables"</span>, <span class="fu">paste0</span>(<span class="st">"counts_by_"</span>, var, <span class="st">".csv"</span>))</span>
+<span id="cb34-923"><a href="#cb34-923" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb34-924"><a href="#cb34-924" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb34-925"><a href="#cb34-925" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-926"><a href="#cb34-926" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Descriptive tables saved to Rdata/tables/</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb34-927"><a href="#cb34-927" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

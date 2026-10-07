@@ -140,7 +140,7 @@ analysed contrasts. The plots display the same category totals.
 m00_dat |> dplyr::count(disturbance, sort = TRUE)
 ```
 
-## Analytical coverage and dominant evidence pathways
+## Analytical coverage and evidence pathways
 
 The baseline analysis retained `r scales::comma(nrow(m00_dat))` contrasts from
 `r dplyr::n_distinct(m00_dat$ref_id)` references and
@@ -773,18 +773,15 @@ m00_pathways <- m00_dat |>
 top_pathway <- m00_pathways[1, ]
 ```
 
-Introductions supplied the broadest stream of evidence
-(`r pct_m00(m00_dat$disturbance == "Introduction")` of contrasts),
-with most contrasts being synchronic (`r pct_m00(m00_dat$design == "Synchronic")`)
+Introductions contributed
+`r pct_m00(m00_dat$disturbance == "Introduction")` of contrasts, and most contrasts were synchronic (`r pct_m00(m00_dat$design == "Synchronic")`)
 and phenotypic (`r pct_m00(m00_dat$genphen == "Phenotypic")`). Size and
 other-morphology traits together accounted for
 `r pct_m00(m00_dat$trait_type %in% c("size", "othermorphology"))` of the
 analytical sample. The largest single pathway was allochronic, phenotypic size
 evidence under hunting or harvesting (`r top_pathway$n` contrasts;
-`r sprintf("%.1f%%", 100 * top_pathway$n / nrow(m00_dat))`), while the next four largest
-pathways all arose from synchronic comparisons of introduced systems. Thus,
-coverage was substantial but concentrated in a small number of recurring
-design–trait–evidence combinations.
+`r sprintf("%.1f%%", 100 * top_pathway$n / nrow(m00_dat))`). The next four largest
+pathways all arose from synchronic comparisons of introduced systems.
 
 ```{r by-genphen}
 m00_dat |> dplyr::count(genphen, sort = TRUE)

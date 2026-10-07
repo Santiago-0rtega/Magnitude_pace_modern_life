@@ -649,7 +649,7 @@ window.Quarto = {
 <li><code>read_proceed()</code> - read the raw PROCEED v6.2 rates database.</li>
 <li><code>clean_proceed()</code> - coerce grouping/categorical variables to factors.</li>
 <li><code>require_lnm_vars()</code> - keep contrasts with the two-group summary statistics required for <span class="math inline">\(\ln M\)</span>: means, standard deviations, and sample sizes for both groups.</li>
-<li><code>filter_generations(max_gen = 300)</code> - retain contrasts with a known, positive elapsed-generation value no greater than 300; missing generation information is excluded because eligibility cannot be established.</li>
+<li><code>filter_generations(max_gen = 300)</code> - retain contrasts with a known, positive elapsed-generation value no greater than 300; missing generation information is excluded.</li>
 <li><code>add_derived_vars()</code> - add <code>n_total</code>, <code>log10_years</code>, <code>log10_generations</code>.</li>
 </ol>
 <div class="cell">
@@ -1275,7 +1275,7 @@ $ log10_generations &lt;dbl&gt; 2.089905, 2.089905, 2.089905, 2.089905, 2.089905
 <span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`read_proceed()`</span> - read the raw PROCEED v6.2 rates database.</span>
 <span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span><span class="in">`clean_proceed()`</span> - coerce grouping/categorical variables to factors.</span>
 <span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span><span class="in">`require_lnm_vars()`</span> - keep contrasts with the two-group summary statistics required for $\ln M$: means, standard deviations, and sample sizes for both groups.</span>
-<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span><span class="in">`filter_generations(max_gen = 300)`</span> - retain contrasts with a known, positive elapsed-generation value no greater than 300; missing generation information is excluded because eligibility cannot be established.</span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span><span class="in">`filter_generations(max_gen = 300)`</span> - retain contrasts with a known, positive elapsed-generation value no greater than 300; missing generation information is excluded.</span>
 <span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span><span class="in">`add_derived_vars()`</span> - add <span class="in">`n_total`</span>, <span class="in">`log10_years`</span>, <span class="in">`log10_generations`</span>.</span>
 <span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a><span class="in">```{r rebuild, eval=rebuild_clean_data}</span></span>

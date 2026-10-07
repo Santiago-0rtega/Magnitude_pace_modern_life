@@ -108,7 +108,7 @@ knitr::include_graphics(
 ```
 ### Editable plotting code
 
-The figure above is actually built by `Scripts/17_plot_orchard_from_epred_cache.R`, which reads the credible intervals for each trait-type level from `Rdata/summaries/emmeans_contrasts_cache.rds` (`emmeans::emmeans(fit, ~ trait_type, epred = TRUE, re_formula = NA)`, i.e. quantiles of the joint posterior of `Intercept + coefficient`). The self-contained variant below is kept for portability; its `get_level_estimates()` now uses the same joint-posterior-draws approach rather than adding the separately-computed `Q2.5`/`Q97.5` of the intercept and the coefficient, which would ignore their posterior covariance and roughly double the interval width.
+The figure above is actually built by `Scripts/17_plot_orchard_from_epred_cache.R`, which reads the credible intervals for each trait-type level from `Rdata/summaries/emmeans_contrasts_cache.rds` (`emmeans::emmeans(fit, ~ trait_type, epred = TRUE, re_formula = NA)`, i.e. quantiles of the joint posterior of `Intercept + coefficient`). The self-contained variant below is kept for portability; its `get_level_estimates()` uses the same joint-posterior-draws approach rather than the separately computed `Q2.5`/`Q97.5` of the intercept and the coefficient.
 
 ```{r build-orchard-m05, eval=FALSE}
 library(here)

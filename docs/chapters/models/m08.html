@@ -656,7 +656,7 @@ window.Quarto = {
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data2 =</span> <span class="fu">list</span>(<span class="at">A =</span> A, <span class="at">V =</span> V))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>Type of environmental change driving the divergence.</p>
+<p>Type of environmental change.</p>
 </section>
 <section id="model-summary" class="level2" data-number="A.2">
 <h2 data-number="A.2" class="anchored" data-anchor-id="model-summary"><span class="header-section-number">A.2</span> Model summary</h2>
@@ -905,7 +905,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 <section id="editable-plotting-code" class="level3" data-number="A.4.1">
 <h3 data-number="A.4.1" class="anchored" data-anchor-id="editable-plotting-code"><span class="header-section-number">A.4.1</span> Editable plotting code</h3>
-<p>The figure above is actually built by <code>Scripts/17_plot_orchard_from_epred_cache.R</code>, which reads the credible intervals for each env_change level from <code>Rdata/summaries/emmeans_contrasts_cache.rds</code> (<code>emmeans::emmeans(fit, ~ env_change, epred = TRUE, re_formula = NA)</code>, i.e.&nbsp;quantiles of the joint posterior of <code>Intercept + coefficient</code>). The self-contained variant below is kept for portability; its <code>get_level_estimates()</code> now uses the same joint-posterior-draws approach rather than adding the separately-computed <code>Q2.5</code>/<code>Q97.5</code> of the intercept and the coefficient, which would ignore their posterior covariance and roughly double the interval width.</p>
+<p>The figure above is actually built by <code>Scripts/17_plot_orchard_from_epred_cache.R</code>, which reads the credible intervals for each env_change level from <code>Rdata/summaries/emmeans_contrasts_cache.rds</code> (<code>emmeans::emmeans(fit, ~ env_change, epred = TRUE, re_formula = NA)</code>, i.e.&nbsp;quantiles of the joint posterior of <code>Intercept + coefficient</code>). The self-contained variant below is kept for portability; its <code>get_level_estimates()</code> uses the same joint-posterior-draws approach rather than the separately computed <code>Q2.5</code>/<code>Q97.5</code> of the intercept and the coefficient.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1679,7 +1679,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data2 =</span> <span class="fu">list</span>(<span class="at">A =</span> A, <span class="at">V =</span> V))</span>
 <span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>Type of environmental change driving the divergence.</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>Type of environmental change.</span>
 <span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model summary</span></span>
 <span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a></span>
@@ -1723,7 +1723,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a><span class="fu">### Editable plotting code</span></span>
 <span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a>The figure above is actually built by <span class="in">`Scripts/17_plot_orchard_from_epred_cache.R`</span>, which reads the credible intervals for each env_change level from <span class="in">`Rdata/summaries/emmeans_contrasts_cache.rds`</span> (<span class="in">`emmeans::emmeans(fit, ~ env_change, epred = TRUE, re_formula = NA)`</span>, i.e. quantiles of the joint posterior of <span class="in">`Intercept + coefficient`</span>). The self-contained variant below is kept for portability; its <span class="in">`get_level_estimates()`</span> now uses the same joint-posterior-draws approach rather than adding the separately-computed <span class="in">`Q2.5`</span>/<span class="in">`Q97.5`</span> of the intercept and the coefficient, which would ignore their posterior covariance and roughly double the interval width.</span>
+<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a>The figure above is actually built by <span class="in">`Scripts/17_plot_orchard_from_epred_cache.R`</span>, which reads the credible intervals for each env_change level from <span class="in">`Rdata/summaries/emmeans_contrasts_cache.rds`</span> (<span class="in">`emmeans::emmeans(fit, ~ env_change, epred = TRUE, re_formula = NA)`</span>, i.e. quantiles of the joint posterior of <span class="in">`Intercept + coefficient`</span>). The self-contained variant below is kept for portability; its <span class="in">`get_level_estimates()`</span> uses the same joint-posterior-draws approach rather than the separately computed <span class="in">`Q2.5`</span>/<span class="in">`Q97.5`</span> of the intercept and the coefficient.</span>
 <span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a><span class="in">```{r build-orchard-m08, eval=FALSE}</span></span>
 <span id="cb10-89"><a href="#cb10-89" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>

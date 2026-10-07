@@ -48,9 +48,8 @@ how the tree and matrix were built and which species names were retained.
 
 Species names in PROCEED were matched to the Open Tree of Life synthetic tree
 (Hinchliff et al. 2015) via the `rotl` package, retrieving the induced subtree
-for the matched taxa. Because PROCEED spans plant, invertebrate, and vertebrate
-species, name matching was not restricted to a single higher-level taxonomic
-context.
+for the matched taxa. PROCEED spans plant, invertebrate, and vertebrate species,
+and name matching was not restricted to a single higher-level taxonomic context.
 
 The tree's tip labels were then reconciled against the original PROCEED species
 names using a four-stage cascade implemented in `prepR4pcm`:
@@ -81,11 +80,10 @@ to Open Tree of Life and GNVerifier and is not done automatically on render.
 ## The `prepR4pcm` reconciliation functions {#prepr4pcm-source}
 
 The cascade above is implemented in the `prepR4pcm` package
-(`itchyshin/prepR4pcm`, v0.5.0.9000, commit `cca21b9`). Because those functions
-are the black box behind `build_or_read_phylogeny()`, the exported functions
-this chapter's pipeline actually calls — `pr_normalize_names()`,
+(`itchyshin/prepR4pcm`, v0.5.0.9000, commit `cca21b9`). The exported functions
+this chapter's pipeline calls — `pr_normalize_names()`,
 `pr_get_tree()`, `reconcile_tree()`, `reconcile_apply()`, `reconcile_mapping()`,
-and `pr_phylo_cor()` — are reproduced below for the record. The block is
+and `pr_phylo_cor()` — are reproduced below. The block is
 **not evaluated** (`eval=FALSE`): rendering this chapter reads the cached
 `.rds` reconciliation outputs (next section), it does not re-run the package.
 Internal helpers (prefixed `.pr_*`, together with `pr_run_cascade()`,
@@ -512,7 +510,7 @@ knitr::kable(
 
 These current species names could not be reconciled to a tree tip at any stage
 of the cached cascade (exact, normalized, synonym via GNVerifier, or fuzzy).
-Because primary models require the phylogenetic term, their contrasts are
+Their contrasts are
 excluded from the complete fitted row set before model fitting.
 
 ```{r unmatched-table}

@@ -981,7 +981,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </div>
 </div>
-<p>2 of 10 categorical comparisons contain at least one expected cell count below five. Their chi-square <em>p</em>-values should therefore be read cautiously; Cramér’s <em>V</em>, which is the primary overlap diagnostic, remains the focus.</p>
+<p>2 of 10 categorical comparisons contain at least one expected cell count below five. Their chi-square <em>p</em>-values are based on these small expected counts.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1033,7 +1033,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="continuouscategorical-associations" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="continuouscategorical-associations"><span class="header-section-number">5.4</span> Continuous–categorical associations</h2>
-<p>For each mixed pair, η² is the proportion of variation in the continuous moderator explained by the categorical grouping in a one-way model. Because η² is non-negative, the heatmap shows strength but not direction; group distributions should be consulted when direction matters.</p>
+<p>For each mixed pair, η² is the proportion of variation in the continuous moderator explained by the categorical grouping in a one-way model. Because η² is non-negative, the heatmap shows strength but not direction.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1935,7 +1935,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-205"><a href="#cb9-205" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb9-206"><a href="#cb9-206" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-207"><a href="#cb9-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-208"><a href="#cb9-208" aria-hidden="true" tabindex="-1"></a><span class="in">`r sum(categorical_results$min_expected &lt; 5)`</span> of <span class="in">`r nrow(categorical_results)`</span> categorical comparisons contain at least one expected cell count below five. Their chi-square *p*-values should therefore be read cautiously; Cramér's *V*, which is the primary overlap diagnostic, remains the focus.</span>
+<span id="cb9-208"><a href="#cb9-208" aria-hidden="true" tabindex="-1"></a><span class="in">`r sum(categorical_results$min_expected &lt; 5)`</span> of <span class="in">`r nrow(categorical_results)`</span> categorical comparisons contain at least one expected cell count below five. Their chi-square *p*-values are based on these small expected counts.</span>
 <span id="cb9-209"><a href="#cb9-209" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-210"><a href="#cb9-210" aria-hidden="true" tabindex="-1"></a><span class="in">```{r categorical-plot, fig.width=14, fig.height=10, fig.cap="Bias-corrected Cramér's V among categorical moderators. Stars denote Holm-adjusted significance: * p &lt; .05, ** p &lt; .01, *** p &lt; .001."}</span></span>
 <span id="cb9-211"><a href="#cb9-211" aria-hidden="true" tabindex="-1"></a>cat_levels <span class="ot">&lt;-</span> <span class="fu">unname</span>(categorical_vars)</span>
@@ -1977,7 +1977,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-247"><a href="#cb9-247" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-248"><a href="#cb9-248" aria-hidden="true" tabindex="-1"></a><span class="fu">## Continuous–categorical associations</span></span>
 <span id="cb9-249"><a href="#cb9-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-250"><a href="#cb9-250" aria-hidden="true" tabindex="-1"></a>For each mixed pair, η² is the proportion of variation in the continuous moderator explained by the categorical grouping in a one-way model. Because η² is non-negative, the heatmap shows strength but not direction; group distributions should be consulted when direction matters.</span>
+<span id="cb9-250"><a href="#cb9-250" aria-hidden="true" tabindex="-1"></a>For each mixed pair, η² is the proportion of variation in the continuous moderator explained by the categorical grouping in a one-way model. Because η² is non-negative, the heatmap shows strength but not direction.</span>
 <span id="cb9-251"><a href="#cb9-251" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-252"><a href="#cb9-252" aria-hidden="true" tabindex="-1"></a><span class="in">```{r mixed-analysis}</span></span>
 <span id="cb9-253"><a href="#cb9-253" aria-hidden="true" tabindex="-1"></a>mixed_grid <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">crossing</span>(</span>

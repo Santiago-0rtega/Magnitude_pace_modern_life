@@ -90,7 +90,7 @@ deviations from their finite-sample distributions. It transforms each draw with
 $MS_B^\ast > MS_W^\ast$ to $\ln M^\ast$, then saves the bias-corrected estimate
 and sampling variance.
 
-The book uses the cached SAFE results by default. Recomputing all contrasts is intentionally opt-in because the Monte Carlo step is slow.
+The book uses the cached SAFE results by default. Recomputing all contrasts is opt-in. The Monte Carlo step is slow.
 
 ## Load cleaned data
 

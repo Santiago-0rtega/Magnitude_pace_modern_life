@@ -13,7 +13,7 @@
 <meta name="author" content="Lucas Damian Gorné">
 <meta name="author" content="Andrew Hendry">
 <meta name="author" content="Shinichi Nakagawa">
-<meta name="dcterms.date" content="2026-10-06">
+<meta name="dcterms.date" content="2026-10-07">
 
 <title>Human disturbance and the magnitude and predictability of phenotypic divergence</title>
 <style>
@@ -626,7 +626,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 6, 2026</p>
+      <p class="date">October 7, 2026</p>
     </div>
   </div>
   
@@ -741,11 +741,11 @@ window.Quarto = {
 <li><code>(1 | gr(sp_ncbi, cov = A))</code> - phylogenetic relatedness among species.</li>
 <li><code>(1 | gr(es_id_model, cov = V))</code> - known sampling variance from SAFE estimates, using the brms known-variance trick with a <code>constant(1)</code> prior on the corresponding SD.</li>
 </ul>
-<p><code>sys_id</code> (study system) is reserved for sensitivity analyses because it is highly associated with <code>ref_id</code> and <code>sp_ncbi</code> and can make variance components hard to identify.</p>
+<p><code>sys_id</code> (study system) is used only in sensitivity analyses. It is highly associated with <code>ref_id</code> and <code>sp_ncbi</code>.</p>
 </section>
 <section id="saved-files-and-reproducibility" class="level2" data-number="0.7">
 <h2 data-number="0.7" class="anchored" data-anchor-id="saved-files-and-reproducibility"><span class="header-section-number">0.7</span> Saved files and reproducibility</h2>
-<p>Long computations are saved as <code>.rds</code> files in <code>Rdata/</code>. The book reads these files by default. This makes a normal render fast and prevents model fitting from starting by accident. To rebuild files, follow the full route in the <a href="./chapters/09_reproducibility.html">Reproducibility chapter</a>.</p>
+<p>Long computations are saved as <code>.rds</code> files in <code>Rdata/</code>. The book reads these files by default, so a normal render does not refit models. To rebuild files, follow the full route in the <a href="./chapters/09_reproducibility.html">Reproducibility chapter</a>.</p>
 <ul>
 <li><strong>Effect sizes:</strong> set <code>recompute_effect_sizes &lt;- TRUE</code> in <code>02_lnm_effect_sizes.qmd</code>.</li>
 <li><strong>Models:</strong> set <code>refit_models &lt;- TRUE</code> in <code>05_location_scale_model_grid.qmd</code>.</li>
@@ -1314,13 +1314,13 @@ window.Quarto = {
 <span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`(1 | gr(sp_ncbi, cov = A))`</span> - phylogenetic relatedness among species.</span>
 <span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`(1 | gr(es_id_model, cov = V))`</span> - known sampling variance from SAFE estimates, using the brms known-variance trick with a <span class="in">`constant(1)`</span> prior on the corresponding SD.</span>
 <span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a><span class="in">`sys_id`</span> (study system) is reserved for sensitivity analyses because it is highly associated with <span class="in">`ref_id`</span> and <span class="in">`sp_ncbi`</span> and can make variance components hard to identify.</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a><span class="in">`sys_id`</span> (study system) is used only in sensitivity analyses. It is highly associated with <span class="in">`ref_id`</span> and <span class="in">`sp_ncbi`</span>.</span>
 <span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a><span class="fu">## Saved files and reproducibility</span></span>
 <span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>Long computations are saved as <span class="in">`.rds`</span> files in <span class="in">`Rdata/`</span>. The book reads these</span>
-<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>files by default. This makes a normal render fast and prevents model fitting from</span>
-<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>starting by accident. To rebuild files, follow the full route in the</span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>files by default, so a normal render does not refit models. To rebuild files, follow the full</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>route in the</span>
 <span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Reproducibility chapter</span><span class="co">](chapters/09_reproducibility.qmd)</span>.</span>
 <span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Effect sizes:** set <span class="in">`recompute_effect_sizes &lt;- TRUE`</span> in <span class="in">`02_lnm_effect_sizes.qmd`</span>.</span>

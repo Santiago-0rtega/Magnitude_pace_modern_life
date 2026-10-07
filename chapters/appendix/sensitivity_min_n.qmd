@@ -13,8 +13,7 @@ sens_n40 <- sum(sens_dat$n_total >= 40, na.rm = TRUE)
 
 ## Recorded change
 
-Small samples can make `ln M` and its plug-in sampling variance less stable.
-Following protocol §3.7, we therefore retained only contrasts with total sample
+Following protocol §3.7, we retained only contrasts with total sample
 size $n_1 + n_2 \geq 40$.
 
 ::: {.callout-note title="What changed—and what did not"}
@@ -28,7 +27,7 @@ priors, and MCMC settings match the primary models.
 
 ## Model specification
 
-Models were fit on the labs server (`totoro`), not while rendering this
+Models were fit on a remote server, not while rendering this
 book. Each model uses 4 chains × 4,000 iterations (2,000 warmup),
 `adapt_delta = 0.97`, `max_treedepth = 15`, and the `cmdstanr` backend. This
 chapter reads cached summary tables only.

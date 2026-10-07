@@ -8,14 +8,11 @@ cache_dir <- here::here("Rdata", "epred_draws")
 cache     <- read_epred_cache("m11", cache_dir)
 ```
 
-## Why this is a sensitivity analysis
+## Classification as a sensitivity analysis
 
 `data_scale` distinguishes traits measured on an **interval scale** (an
 arbitrary zero) from those measured on a **ratio scale** (a meaningful zero).
-This distinction concerns the source measurement units and the behaviour of the
-effect-size calculation; it is not a biological moderator of divergence.
-Accordingly, m11 is excluded from the primary moderator set and retained as a
-separate sensitivity model.
+m11 is excluded from the primary moderator set and retained as a separate sensitivity model.
 
 ::: {.callout-note title="Coefficient coding"}
 The interval-scale category is the reference. The `data_scaleratio`
@@ -83,7 +80,7 @@ knitr::include_graphics(
 ```
 ### Editable plotting code
 
-The figure above is actually built by `Scripts/17_plot_orchard_from_epred_cache.R`, which reads the credible intervals for each data_scale level from `Rdata/summaries/emmeans_contrasts_cache.rds` (`emmeans::emmeans(fit, ~ data_scale, epred = TRUE, re_formula = NA)`, i.e. quantiles of the joint posterior of `Intercept + coefficient`). The self-contained variant below is kept for portability; its `get_level_estimates()` now uses the same joint-posterior-draws approach rather than adding the separately-computed `Q2.5`/`Q97.5` of the intercept and the coefficient, which would ignore their posterior covariance and roughly double the interval width.
+The figure above is actually built by `Scripts/17_plot_orchard_from_epred_cache.R`, which reads the credible intervals for each data_scale level from `Rdata/summaries/emmeans_contrasts_cache.rds` (`emmeans::emmeans(fit, ~ data_scale, epred = TRUE, re_formula = NA)`, i.e. quantiles of the joint posterior of `Intercept + coefficient`). The self-contained variant below is kept for portability; its `get_level_estimates()` uses the same joint-posterior-draws approach rather than the separately computed `Q2.5`/`Q97.5` of the intercept and the coefficient.
 
 ```{r build-orchard-m11, eval=FALSE}
 library(here)
