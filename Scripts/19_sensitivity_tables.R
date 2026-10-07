@@ -1,7 +1,7 @@
 # ─────────────────────────────────────────────────────────────────────────────
 # 19_sensitivity_tables.R
 # Read-side helpers for the sensitivity appendix chapters. They consume the
-# small CSVs synced from totoro:
+# small CSVs synced from remote-server:
 #   Rdata/tables/sensitivity/<variant>_{location,scale,diagnostics}.csv
 #   Rdata/tables/primary/primary_fixef.csv           (matched primary fits)
 # No brms fit is ever loaded at render.

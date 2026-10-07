@@ -6,7 +6,7 @@
 #   Rscript remote_precompute_small_study_brms_cache.R
 #   FORCE=1 Rscript remote_precompute_small_study_brms_cache.R  # rebuild all
 #
-# Heavy step (loads each ~400 MB fit + epreds); meant to run on totoro.
+# Heavy step (loads each ~400 MB fit + epreds); meant to run on remote-server.
 #
 # Only the two models meeting the convergence criteria in
 # remote_fit_one_small_study_brms.R are listed. Add n_se_sigma1 / n_v_sigmax

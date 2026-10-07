@@ -4,7 +4,7 @@ This repository contains the Quarto book and analysis code for the lnM reanalysi
 
 The book is the computational supplement to:
 
-> **Human disturbance and the magnitude of phenotypic divergence** — Santiago Ortega and collaborators.
+> **Human disturbance and the magnitude of phenotypic divergence** — authors removed for double-anonymous review.
 
 ---
 

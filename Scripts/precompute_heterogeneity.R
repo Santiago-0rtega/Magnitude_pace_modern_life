@@ -1,5 +1,5 @@
 # precompute_heterogeneity.R
-# Run ONCE on totoro (m00 is local + fast there). Computes the location-scale
+# Run ONCE on remote-server (m00 is local + fast there). Computes the location-scale
 # heterogeneity decomposition (I^2) for the intercept-only baseline model (m00)
 # following Nakagawa et al.'s location-scale meta-analysis framework
 # (https://itchyshin.github.io/location-scale_meta-analysis/), extended with the

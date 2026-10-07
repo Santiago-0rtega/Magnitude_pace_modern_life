@@ -2,11 +2,11 @@
 # Computes location (emmeans) and scale (sigma posterior draws) marginals +
 # pairwise contrasts for the leave-Oke-out m01 refit, using the SAME
 # functions/approach as precompute_emmeans_contrasts.R (used for every
-# primary categorical model). Run on totoro:
+# primary categorical model). Run on remote-server:
 #
 #   Rscript remote_emmeans_leave_oke_out.R
 
-setwd("/home/ortegara/Documents/PACE")
+setwd("/home/anonymous/Documents/PACE")
 suppressMessages({
   library(brms); library(emmeans); library(dplyr); library(tibble); library(readr)
 })

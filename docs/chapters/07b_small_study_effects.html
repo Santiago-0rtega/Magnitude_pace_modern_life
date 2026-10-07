@@ -341,7 +341,7 @@ window.Quarto = {
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Human disturbance and the magnitude and predictability of phenotypic divergence</a> 
         <div class="sidebar-tools-main tools-wide">
-    <a href="https://github.com/Santiago-0rtega/Magnitude_pace_modern_life" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    
     <a href="../Human-disturbance-and-the-magnitude-and-predictability-of-phenotypic-divergence.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
@@ -1188,7 +1188,7 @@ Note
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> Scripts/remote_precompute_small_study_brms_cache.R</span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Copy the caches into the book mirror</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> totoro:<span class="st">'~/Documents/PACE/outputs/epred_draws/small_study_*.rds'</span> Rdata/epred_draws/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> remote-server:<span class="st">'~/Documents/PACE/outputs/epred_draws/small_study_*.rds'</span> Rdata/epred_draws/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>To regenerate the REML cross-check locally:</p>
 <div class="cell">
 <details class="code-fold">
@@ -1718,7 +1718,7 @@ Note
 <span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(</span>
 <span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Small-study brms caches are missing: "</span>,</span>
 <span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(missing_caches, <span class="at">collapse =</span> <span class="st">", "</span>),</span>
-<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">". Fit on the labs server (totoro) with remote_run_small_study_brms_parallel.sh, build the "</span>,</span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">". Fit on the remote server with remote_run_small_study_brms_parallel.sh, build the "</span>,</span>
 <span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">"caches with remote_precompute_small_study_brms_cache.R, then copy them "</span>,</span>
 <span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">"into Rdata/epred_draws/."</span>,</span>
 <span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">call. =</span> <span class="cn">FALSE</span></span>
@@ -1991,7 +1991,7 @@ Note
 <span id="cb15-306"><a href="#cb15-306" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> Scripts/remote_precompute_small_study_brms_cache.R</span>
 <span id="cb15-307"><a href="#cb15-307" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-308"><a href="#cb15-308" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Copy the caches into the book mirror</span></span>
-<span id="cb15-309"><a href="#cb15-309" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> totoro:<span class="st">'~/Documents/PACE/outputs/epred_draws/small_study_*.rds'</span> Rdata/epred_draws/</span>
+<span id="cb15-309"><a href="#cb15-309" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> remote-server:<span class="st">'~/Documents/PACE/outputs/epred_draws/small_study_*.rds'</span> Rdata/epred_draws/</span>
 <span id="cb15-310"><a href="#cb15-310" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb15-311"><a href="#cb15-311" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-312"><a href="#cb15-312" aria-hidden="true" tabindex="-1"></a>To regenerate the REML cross-check locally:</span>

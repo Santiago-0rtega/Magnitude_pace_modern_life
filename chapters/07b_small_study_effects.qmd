@@ -33,7 +33,7 @@ if (length(missing_caches) > 0) {
   stop(
     "Small-study brms caches are missing: ",
     paste(missing_caches, collapse = ", "),
-    ". Fit on the labs server (totoro) with remote_run_small_study_brms_parallel.sh, build the ",
+    ". Fit on the remote server with remote_run_small_study_brms_parallel.sh, build the ",
     "caches with remote_precompute_small_study_brms_cache.R, then copy them ",
     "into Rdata/epred_draws/.",
     call. = FALSE
@@ -306,7 +306,7 @@ bash remote_run_small_study_brms_parallel.sh
 Rscript Scripts/remote_precompute_small_study_brms_cache.R
 
 # 3. Copy the caches into the book mirror
-scp totoro:'~/Documents/PACE/outputs/epred_draws/small_study_*.rds' Rdata/epred_draws/
+scp remote-server:'~/Documents/PACE/outputs/epred_draws/small_study_*.rds' Rdata/epred_draws/
 ```
 
 To regenerate the REML cross-check locally:

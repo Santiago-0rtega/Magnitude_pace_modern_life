@@ -6,7 +6,7 @@
 #   Rscript precompute_epred_draws.R          # build missing caches
 #   FORCE=1 Rscript precompute_epred_draws.R  # rebuild all
 #
-# Heavy step (loads each ~400 MB fit + epreds); meant to run on totoro.
+# Heavy step (loads each ~400 MB fit + epreds); meant to run on remote-server.
 
 setwd(here::here())
 source(here::here("Scripts", "01_paths.R"))
