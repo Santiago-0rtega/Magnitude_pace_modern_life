@@ -4,13 +4,13 @@
 # location-scale model) after excluding every Oke et al. 2020 contrast
 # (ref_id == "p209"), using the SAME formula, priors, and MCMC settings as
 # the primary m01 fit (chains/iter/warmup/adapt_delta/max_treedepth all match
-# default_mcmc_args). Run on totoro:
+# default_mcmc_args). Run on remote-server:
 #
 #   Rscript remote_fit_leave_oke_out.R
 #
 # Saves outputs/models/sensitivity/m01_ls_disturbance_leave_oke_out.rds
 
-setwd("/home/ortegara/Documents/PACE")
+setwd("/home/anonymous/Documents/PACE")
 library(here)
 for (f in c("00_packages", "01_paths", "05_phylogeny", "06_model_registry",
             "07_model_formulas", "08_fit_or_read_model", "09_model_summaries",

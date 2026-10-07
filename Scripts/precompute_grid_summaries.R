@@ -1,5 +1,5 @@
 # precompute_grid_summaries.R
-# Run ONCE on totoro (models are local + fast there). Loads each moderator-grid
+# Run ONCE on remote-server (models are local + fast there). Loads each moderator-grid
 # model, extracts fixed effects + diagnostics + status, and writes the small
 # tables that 05_location_scale_model_grid.qmd and 08_publication_figures.qmd
 # consume — so the BOOK never loads a 400 MB model.

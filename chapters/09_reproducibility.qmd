@@ -37,7 +37,7 @@ folder names. The code uses `here::here()` to find files from the project root.
 Download the repository from GitHub or clone it with Git:
 
 ```bash
-git clone https://github.com/Santiago-0rtega/Magnitude_pace_modern_life.git
+git clone ANONYMISED-REPOSITORY-URL
 cd Magnitude_pace_modern_life
 ```
 

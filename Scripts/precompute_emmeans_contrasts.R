@@ -1,5 +1,5 @@
 # precompute_emmeans_contrasts.R
-# Run ONCE on totoro (models are local + fast there). For each CATEGORICAL
+# Run ONCE on remote-server (models are local + fast there). For each CATEGORICAL
 # moderator model, compute estimated marginal means and all pairwise
 # level-vs-level contrasts, for BOTH the location part and the scale (sigma)
 # part, and save them as small structured tables the book can read without ever

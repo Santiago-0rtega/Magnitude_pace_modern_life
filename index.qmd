@@ -8,8 +8,7 @@ This computational supplement accompanies the manuscript:
 
 > **Human disturbance and the magnitude and predictability of phenotypic divergence.**
 >
-> Santiago Ortega, Eduardo S.A. Santos, Kiyoko Gotanda, Sarah Sanderson,
-> Lucas Damian Gorné, Andrew Hendry, and Shinichi Nakagawa.
+> Authors removed for double-anonymous review.
 
 It documents every analytical step, from data import to final figures, in a reproducible Quarto book. All code is written in R and all models are fitted with **brms** using the **cmdstanr** backend.
 

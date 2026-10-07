@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-cd /home/ortegara/Documents/PACE
+cd /home/anonymous/Documents/PACE
 
 stamp=$(date +%Y%m%d_%H%M%S)
 run_dir="logs/small_study_${stamp}"

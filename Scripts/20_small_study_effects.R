@@ -162,7 +162,7 @@ run_small_study_analysis <- function(
 # brms location–scale consumers
 # ══════════════════════════════════════════════════════════════════════════════
 # The primary small-study models are the brms location–scale fits produced on
-# totoro by remote_fit_one_small_study_brms.R. Chapters read the small draw
+# remote-server by remote_fit_one_small_study_brms.R. Chapters read the small draw
 # caches built by remote_precompute_small_study_brms_cache.R and never load the
 # ~400 MB fits. The metafor functions above are retained only for the
 # frequentist cross-check reported alongside them; rma.mv is homoscedastic, so
