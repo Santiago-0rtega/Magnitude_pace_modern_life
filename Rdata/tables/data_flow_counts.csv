@@ -1,0 +1,10 @@
+step_order,box,step,contrasts,references,species,species_basis,references_removed_entirely,note
+1,main,PROCEED v6.2 rates database (all records),9263,326,428,PROCEED sp_ncbi names,NA,
+2,excluded,"Mean, SD or n missing for one or both samples (require_lnm_vars)",1620,81,NA,,52,
+3,main,"Mean, SD and n reported for both samples",7643,274,289,PROCEED sp_ncbi names,NA,
+4,excluded,"Elapsed generations unknown, not positive, or > 300 (filter_generations)",393,27,NA,,18,unknown = 274; <= 0 = 0; > 300 = 119
+5,main,"Known, positive elapsed generations <= 300",7250,256,268,PROCEED sp_ncbi names,NA,
+6,excluded,SAFE lnM not estimable (within-sample SD of 0),13,6,NA,,0,zero SD in at least one sample = 13; n = 1 in a sample = 1
+7,main,Eligible contrasts (SAFE lnM estimated),7237,256,267,PROCEED sp_ncbi names,NA,
+8,excluded,Species name not resolved to the phylogeny,51,5,6,PROCEED sp_ncbi names,2,Drepanis coccinea; Neogale frenata; Neogale vison; Pelophylax lessonae/ridibundus; Peromyscus leucopus noveboracensis; Raphanus raphanistrum X Raphanus sativus
+9,main,Analysed in primary models (m00),7186,254,253,canonical tree-tip names,NA,min n1 + n2 = 5
