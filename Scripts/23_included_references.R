@@ -202,9 +202,6 @@ if (dir.exists(dirname(tex_path))) {
 }
 
 # ── 5. Report ─────────────────────────────────────────────────────────────────
-coauthors <- c("Ortega", "Santos", "Gotanda", "Sanderson", "Gorn\u00e9", "Gorne",
-               "Hendry", "Nakagawa")
-co_pat <- paste0("\\b(", paste(coauthors, collapse = "|"), ")\\b")
 dup_doi <- refs |>
   dplyr::filter(!is.na(doi_clean)) |>
   dplyr::group_by(doi_clean) |>
@@ -226,9 +223,6 @@ cat("Left as UTF-8:", paste(setdiff(left_utf8, replaced), collapse = " "), "\n")
 cat("\nEntries with U+FFFD repaired:\n")
 print(as.data.frame(refs |> dplyr::filter(str_detect(reference, fffd)) |>
                       dplyr::select(ref_id, reference_clean)))
-cat("\nEntries containing co-author surnames:\n")
-print(as.data.frame(refs |> dplyr::filter(str_detect(reference_clean, co_pat)) |>
-                      dplyr::select(ref_id, reference_clean, doi_clean)))
 cat("\nDOIs shared by more than one ref_id:\n")
 print(as.data.frame(dup_doi |> dplyr::select(ref_id, reference_clean, doi_clean)))
 cat("\nEntries without volume/page pattern (possibly incomplete):\n")
