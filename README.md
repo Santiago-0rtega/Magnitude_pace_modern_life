@@ -83,6 +83,9 @@ This repository contains a preregistered meta-analytic reanalysis of the PROCEED
 | `remote_fit_leave_oke_out.R`, `remote_emmeans_leave_oke_out.R` | Leave-one-reference-out refit of m01 and its marginal means and contrasts |
 | `remote_fit_one_small_study.R`, `remote_fit_one_small_study_brms.R`, `remote_precompute_small_study_brms_cache.R`, `remote_finalize_small_study.R` | Small-study-effects fits, caches and summary outputs |
 | `remote_refresh_recent_summaries.R` | Writes primary-fit fixed effects and diagnostics (`Rdata/tables/primary/`) |
+| `run_additive.R` | Fits one time-adjusted (additive) model, `<moderator> + <log10_years or log10_generations>` (arguments: moderator, time variable) |
+| `build_additive_assets.R` | Summaries (`additive_summaries.rds`) and diagnostics (`additive_diagnostics.csv`) for the time-adjusted models |
+| `rebuild_orchard_v2style.R` | Orchard figures for the time-adjusted models (`Figures/publication/orchard_additive/`) |
 
 `22_data_flow.R` and `23_included_references.R` can optionally write an extra copy of their output to a local manuscript folder named by the environment variable `PACE_MANUSCRIPT_DIR`; this is not needed for the book.
 
@@ -149,10 +152,12 @@ Output is written to `docs/` (open `docs/index.html`). The pre-render step `Rscr
 
 ## Software versions
 
-Model fitting (versions recorded in the fitted model objects): brms 2.23.0, cmdstanr 0.9.0, CmdStan 2.36.0, rstan 2.32.7, StanHeaders 2.32.10.
+Model fitting and SAFE effect sizes (computed on a Linux compute server; R version recorded in the saved `.rds` files, package versions in the fitted model objects): R 4.5.3, brms 2.23.0, cmdstanr 0.9.0, CmdStan 2.36.0, rstan 2.32.7, StanHeaders 2.32.10.
 
-Effect sizes, summaries and rendering: R 4.6.1, orchaRd 2.2.0, emmeans 2.0.3, rotl 3.1.1, prepR4pcm 1.0.0, ape 5.8.0 (phylogeny construction), ggplot2 4.0.3, ggbeeswarm 0.7.3, patchwork 1.3.2, posterior 1.7.0, tidybayes 3.0.7, metafor 5.0.1, Quarto 1.10.18.
+Summaries and book rendering (local environment): R 4.6.1, orchaRd 2.2.0, emmeans 2.0.3, rotl 3.1.1, prepR4pcm 1.0.0, ape 5.8.0 (phylogeny construction), ggplot2 4.0.3, ggbeeswarm 0.7.3, patchwork 1.3.2, posterior 1.7.0, tidybayes 3.0.7, metafor 5.0.1, Quarto 1.10.18.
 
 MCMC settings (`Scripts/08_fit_or_read_model.R`): 4 chains × 4,000 iterations (2,000 warm-up), `adapt_delta = 0.97`, `max_treedepth = 15`, seed 123.
+
+Model specification differences: the primary, sensitivity, leave-one-reference-out and small-study models use `brms` default priors (plus a standard deviation fixed at 1 for the known sampling-variance term) and a diagonal sampling covariance matrix (`Scripts/05_phylogeny.R`). The time-adjusted models (`Scripts/run_additive.R`) use normal(0, 1) priors on location and scale coefficients, normal(0, 0.5) priors on random-effect standard deviations, and a sampling covariance matrix from `metafor::vcalc()` with correlation 0.5 among contrasts from the same reference.
 
 Full R session information, the package inventory and the git commit hash of the rendered build are printed in the book chapter "Reproduce this analysis" (`chapters/09_reproducibility.qmd`). To identify the exact code version, cite the git commit of this README (`git rev-parse HEAD`).
