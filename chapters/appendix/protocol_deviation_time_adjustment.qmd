@@ -15,12 +15,18 @@ This adjusts each moderator's estimate for the average elapsed-time
 difference between its levels, without letting the time slope itself vary
 by level.
 
-**Unchanged:** the dataset, the moderator definitions, the `ref_id` and
-phylogenetic random effects, the priors, and the MCMC settings all match the
-primary single-moderator models.
+**Unchanged:** the dataset, the moderator definitions, the priors (`brms`
+default priors, with the standard deviation of the known sampling-variance
+term fixed at 1), the diagonal sampling covariance matrix, the `ref_id` and
+phylogenetic random effects, and the MCMC settings all match the primary
+single-moderator models. Only the added elapsed-time term differs.
 :::
 
 This produces eight models: four moderators × two elapsed-time scales.
+
+These models were refitted on 2026-10-10 with the primary-model specification.
+This refit supersedes an earlier fit of the same eight models that used
+different priors and a correlated sampling covariance matrix.
 
 ## Moderator–time relationships
 
@@ -79,24 +85,29 @@ make_time_panel(dat_es, "log10_generations", expression(log[10]("elapsed generat
 
 ## Model specification
 
-Models were fitted on a remote server, not while rendering this book, using the same
-priors and MCMC settings as the primary models: 4 chains × 4,000 iterations
-(2,000 warmup), `adapt_delta = 0.97`, `max_treedepth = 15`, `cmdstanr` backend.
+Models were fitted on a remote server, not while rendering this book, with
+`Scripts/remote_fit_one_additive.R` (arguments: moderator, elapsed-time
+variable). The script uses the same formula builder, prior builder, sampling
+covariance matrix and MCMC settings as the primary models: `brms` default
+priors with the standard deviation of `es_id_model` fixed at 1
+(`constant(1)`), a diagonal sampling covariance matrix `V` (`Scripts/05_phylogeny.R`),
+4 chains × 4,000 iterations (2,000 warmup), `adapt_delta = 0.97`,
+`max_treedepth = 15`, seed 123, `cmdstanr` backend.
 
 ```{r how-fit, eval=FALSE}
-loc_formula <- as.formula(paste0(
-  "yi_lnM_safe ~ ", moderator, " + ", timevar,
-  " + (1 | ref_id) + (1 | gr(sp_ncbi_canonical, cov = A))",
-  " + (1 | gr(es_id_model, cov = V))"
-))
-scl_formula <- as.formula(paste0("sigma ~ ", moderator, " + ", timevar))
+# From Scripts/remote_fit_one_additive.R
+phylo     <- prepare_phylo_and_data(dat_model, A_full, label = label)
+dat_model <- phylo$dat_model; A_mod <- phylo$A_mod; V <- phylo$V
 
-formula_add <- brms::bf(loc_formula, scl_formula)
-fit_add <- brms::brm(
-  formula = formula_add, data = dat_model, data2 = list(A = A_mod, V = V),
-  prior = priors_add, chains = 4, iter = 4000, warmup = 2000, cores = 4,
-  backend = "cmdstanr", control = list(adapt_delta = 0.97, max_treedepth = 15)
-)
+# Main effects only, no interaction, in both the location and scale components.
+formula <- build_ls_formula(paste(moderator, "+", timevar),
+                            has_phylogeny = phylo$has_phylo)
+priors  <- build_ls_priors(formula, dat_model, V, A = A_mod)
+
+fit <- fit_or_read_model(model_name,
+  fit_fun = function() fit_ls_model(dat_model, formula, priors, V, A_mod,
+                                     mcmc_args = default_mcmc_args),
+  model_dir = dir_out("models"), refit = TRUE)
 ```
 
 ## Convergence diagnostics
@@ -114,7 +125,32 @@ knitr::kable(
   digits = 3,
   caption = "Convergence diagnostics for the eight additive (moderator + time) models."
 )
+
+crit_fail <- with(diag_tbl, max_rhat > 1.01 | min_bulk_ess < 400 |
+                    min_tail_ess < 400 | n_divergent > 0)
+below_crit_text <- if (!any(crit_fail)) {
+  "All models meet these criteria."
+} else {
+  paste0(
+    "Models with at least one value outside these criteria: ",
+    paste(sprintf("`%s` (max Rhat %.3f, min bulk ESS %s, min tail ESS %s, %d divergent transitions)",
+                  diag_tbl$model_id[crit_fail], diag_tbl$max_rhat[crit_fail],
+                  round(diag_tbl$min_bulk_ess[crit_fail]),
+                  round(diag_tbl$min_tail_ess[crit_fail]),
+                  as.integer(diag_tbl$n_divergent[crit_fail])),
+          collapse = "; "),
+    "."
+  )
+}
 ```
+
+Across the `r nrow(diag_tbl)` models, the largest Rhat was
+`r sprintf("%.3f", max(diag_tbl$max_rhat))`, the smallest bulk ESS was
+`r format(round(min(diag_tbl$min_bulk_ess)), big.mark = ",")`, the smallest tail ESS was
+`r format(round(min(diag_tbl$min_tail_ess)), big.mark = ",")`, and the total number of
+divergent transitions was `r sum(diag_tbl$n_divergent)`. The convergence criteria used
+elsewhere in this book are max Rhat ≤ 1.01, bulk and tail ESS ≥ 400, and no divergent
+transitions. `r below_crit_text`
 
 ## Model summaries
 
@@ -240,13 +276,4 @@ knitr::include_graphics(here::here("Rdata", "figures", "publication",
                                    "genphen_plus_log10_generations_orchard_combined.png"))
 ```
 
-:::
-
-::: {.callout-warning title="Read the diagnostics table before the figures above"}
-The disturbance and trait_type models did not meet the convergence criteria
-used elsewhere in this book (max Rhat ≤ 1.01, bulk and tail ESS ≥ 400, and no
-divergent transitions) with either elapsed-time variable; the failures were
-most severe with `log10_generations`. Their summaries and
-figures are shown here for transparency, but should not be read as reliable
-estimates. The design and genphen models converged cleanly.
 :::

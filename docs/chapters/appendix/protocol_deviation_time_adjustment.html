@@ -597,10 +597,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-body-container callout-body">
 <p><strong>Changed:</strong> for each of the four primary moderators, we fitted an additive location-scale model that adds elapsed time (<code>log10_years</code>, and separately <code>log10_generations</code>) as a second main-effect term, with <strong>no interaction</strong>. This adjusts each moderator’s estimate for the average elapsed-time difference between its levels, without letting the time slope itself vary by level.</p>
-<p><strong>Unchanged:</strong> the dataset, the moderator definitions, the <code>ref_id</code> and phylogenetic random effects, the priors, and the MCMC settings all match the primary single-moderator models.</p>
+<p><strong>Unchanged:</strong> the dataset, the moderator definitions, the priors (<code>brms</code> default priors, with the standard deviation of the known sampling-variance term fixed at 1), the diagonal sampling covariance matrix, the <code>ref_id</code> and phylogenetic random effects, and the MCMC settings all match the primary single-moderator models. Only the added elapsed-time term differs.</p>
 </div>
 </div>
 <p>This produces eight models: four moderators × two elapsed-time scales.</p>
+<p>These models were refitted on 2026-10-10 with the primary-model specification. This refit supersedes an earlier fit of the same eight models that used different priors and a correlated sampling covariance matrix.</p>
 </section>
 <section id="moderatortime-relationships" class="level2" data-number="E.2">
 <h2 data-number="E.2" class="anchored" data-anchor-id="moderatortime-relationships"><span class="header-section-number">E.2</span> Moderator–time relationships</h2>
@@ -680,23 +681,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="model-specification" class="level2" data-number="E.3">
 <h2 data-number="E.3" class="anchored" data-anchor-id="model-specification"><span class="header-section-number">E.3</span> Model specification</h2>
-<p>Models were fitted on a remote server, not while rendering this book, using the same priors and MCMC settings as the primary models: 4 chains × 4,000 iterations (2,000 warmup), <code>adapt_delta = 0.97</code>, <code>max_treedepth = 15</code>, <code>cmdstanr</code> backend.</p>
+<p>Models were fitted on a remote server, not while rendering this book, with <code>Scripts/remote_fit_one_additive.R</code> (arguments: moderator, elapsed-time variable). The script uses the same formula builder, prior builder, sampling covariance matrix and MCMC settings as the primary models: <code>brms</code> default priors with the standard deviation of <code>es_id_model</code> fixed at 1 (<code>constant(1)</code>), a diagonal sampling covariance matrix <code>V</code> (<code>Scripts/05_phylogeny.R</code>), 4 chains × 4,000 iterations (2,000 warmup), <code>adapt_delta = 0.97</code>, <code>max_treedepth = 15</code>, seed 123, <code>cmdstanr</code> backend.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>loc_formula <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="fu">paste0</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"yi_lnM_safe ~ "</span>, moderator, <span class="st">" + "</span>, timevar,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">" + (1 | ref_id) + (1 | gr(sp_ncbi_canonical, cov = A))"</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">" + (1 | gr(es_id_model, cov = V))"</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>))</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>scl_formula <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="fu">paste0</span>(<span class="st">"sigma ~ "</span>, moderator, <span class="st">" + "</span>, timevar))</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>formula_add <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">bf</span>(loc_formula, scl_formula)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>fit_add <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">brm</span>(</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> formula_add, <span class="at">data =</span> dat_model, <span class="at">data2 =</span> <span class="fu">list</span>(<span class="at">A =</span> A_mod, <span class="at">V =</span> V),</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">prior =</span> priors_add, <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">iter =</span> <span class="dv">4000</span>, <span class="at">warmup =</span> <span class="dv">2000</span>, <span class="at">cores =</span> <span class="dv">4</span>,</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">backend =</span> <span class="st">"cmdstanr"</span>, <span class="at">control =</span> <span class="fu">list</span>(<span class="at">adapt_delta =</span> <span class="fl">0.97</span>, <span class="at">max_treedepth =</span> <span class="dv">15</span>)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># From Scripts/remote_fit_one_additive.R</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>phylo     <span class="ot">&lt;-</span> <span class="fu">prepare_phylo_and_data</span>(dat_model, A_full, <span class="at">label =</span> label)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>dat_model <span class="ot">&lt;-</span> phylo<span class="sc">$</span>dat_model; A_mod <span class="ot">&lt;-</span> phylo<span class="sc">$</span>A_mod; V <span class="ot">&lt;-</span> phylo<span class="sc">$</span>V</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Main effects only, no interaction, in both the location and scale components.</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>formula <span class="ot">&lt;-</span> <span class="fu">build_ls_formula</span>(<span class="fu">paste</span>(moderator, <span class="st">"+"</span>, timevar),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">has_phylogeny =</span> phylo<span class="sc">$</span>has_phylo)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>priors  <span class="ot">&lt;-</span> <span class="fu">build_ls_priors</span>(formula, dat_model, V, <span class="at">A =</span> A_mod)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">fit_or_read_model</span>(model_name,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">fit_fun =</span> <span class="cf">function</span>() <span class="fu">fit_ls_model</span>(dat_model, formula, priors, V, A_mod,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">mcmc_args =</span> default_mcmc_args),</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">model_dir =</span> <span class="fu">dir_out</span>(<span class="st">"models"</span>), <span class="at">refit =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -748,29 +749,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">disturbance_plus_log10_years</td>
 <td style="text-align: left;">disturbance</td>
 <td style="text-align: left;">log10_years</td>
-<td style="text-align: right;">1.040</td>
-<td style="text-align: right;">110.422</td>
-<td style="text-align: right;">85.168</td>
-<td style="text-align: right;">10</td>
+<td style="text-align: right;">1.005</td>
+<td style="text-align: right;">956.078</td>
+<td style="text-align: right;">1639.076</td>
+<td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">disturbance_plus_log10_generations</td>
 <td style="text-align: left;">disturbance</td>
 <td style="text-align: left;">log10_generations</td>
-<td style="text-align: right;">1.049</td>
-<td style="text-align: right;">83.722</td>
-<td style="text-align: right;">36.600</td>
-<td style="text-align: right;">35</td>
+<td style="text-align: right;">1.007</td>
+<td style="text-align: right;">845.520</td>
+<td style="text-align: right;">1633.319</td>
+<td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">design_plus_log10_years</td>
 <td style="text-align: left;">design</td>
 <td style="text-align: left;">log10_years</td>
-<td style="text-align: right;">1.004</td>
-<td style="text-align: right;">1957.105</td>
-<td style="text-align: right;">3304.621</td>
+<td style="text-align: right;">1.006</td>
+<td style="text-align: right;">1036.886</td>
+<td style="text-align: right;">1812.013</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -779,8 +780,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">design</td>
 <td style="text-align: left;">log10_generations</td>
 <td style="text-align: right;">1.004</td>
-<td style="text-align: right;">1708.873</td>
-<td style="text-align: right;">3037.805</td>
+<td style="text-align: right;">1136.716</td>
+<td style="text-align: right;">2449.895</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -788,9 +789,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">trait_type_plus_log10_years</td>
 <td style="text-align: left;">trait_type</td>
 <td style="text-align: left;">log10_years</td>
-<td style="text-align: right;">1.014</td>
-<td style="text-align: right;">266.470</td>
-<td style="text-align: right;">224.024</td>
+<td style="text-align: right;">1.006</td>
+<td style="text-align: right;">702.933</td>
+<td style="text-align: right;">1203.160</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -798,10 +799,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">trait_type_plus_log10_generations</td>
 <td style="text-align: left;">trait_type</td>
 <td style="text-align: left;">log10_generations</td>
-<td style="text-align: right;">1.066</td>
-<td style="text-align: right;">52.183</td>
-<td style="text-align: right;">81.764</td>
-<td style="text-align: right;">2</td>
+<td style="text-align: right;">1.007</td>
+<td style="text-align: right;">440.396</td>
+<td style="text-align: right;">385.209</td>
+<td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
@@ -809,8 +810,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">genphen</td>
 <td style="text-align: left;">log10_years</td>
 <td style="text-align: right;">1.005</td>
-<td style="text-align: right;">1436.436</td>
-<td style="text-align: right;">2809.353</td>
+<td style="text-align: right;">874.342</td>
+<td style="text-align: right;">1853.933</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
@@ -818,16 +819,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">genphen_plus_log10_generations</td>
 <td style="text-align: left;">genphen</td>
 <td style="text-align: left;">log10_generations</td>
-<td style="text-align: right;">1.005</td>
-<td style="text-align: right;">1276.362</td>
-<td style="text-align: right;">2639.275</td>
+<td style="text-align: right;">1.004</td>
+<td style="text-align: right;">695.667</td>
+<td style="text-align: right;">1560.730</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
 </tbody>
 </table>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>crit_fail <span class="ot">&lt;-</span> <span class="fu">with</span>(diag_tbl, max_rhat <span class="sc">&gt;</span> <span class="fl">1.01</span> <span class="sc">|</span> min_bulk_ess <span class="sc">&lt;</span> <span class="dv">400</span> <span class="sc">|</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                    min_tail_ess <span class="sc">&lt;</span> <span class="dv">400</span> <span class="sc">|</span> n_divergent <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>below_crit_text <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="sc">!</span><span class="fu">any</span>(crit_fail)) {</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"All models meet these criteria."</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Models with at least one value outside these criteria: "</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="fu">sprintf</span>(<span class="st">"`%s` (max Rhat %.3f, min bulk ESS %s, min tail ESS %s, %d divergent transitions)"</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                  diag_tbl<span class="sc">$</span>model_id[crit_fail], diag_tbl<span class="sc">$</span>max_rhat[crit_fail],</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">round</span>(diag_tbl<span class="sc">$</span>min_bulk_ess[crit_fail]),</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">round</span>(diag_tbl<span class="sc">$</span>min_tail_ess[crit_fail]),</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">as.integer</span>(diag_tbl<span class="sc">$</span>n_divergent[crit_fail])),</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>          <span class="at">collapse =</span> <span class="st">"; "</span>),</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"."</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
+<p>Across the 8 models, the largest Rhat was 1.007, the smallest bulk ESS was 440, the smallest tail ESS was 385, and the total number of divergent transitions was 0. The convergence criteria used elsewhere in this book are max Rhat ≤ 1.01, bulk and tail ESS ≥ 400, and no divergent transitions. Models with at least one value outside these criteria: <code>trait_type_plus_log10_generations</code> (max Rhat 1.007, min bulk ESS 440, min tail ESS 385, 0 divergent transitions).</p>
 </section>
 <section id="model-summaries" class="level2" data-number="E.5">
 <h2 data-number="E.5" class="anchored" data-anchor-id="model-summaries"><span class="header-section-number">E.5</span> Model summaries</h2>
@@ -839,9 +860,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: gaussian 
   Links: mu = identity; sigma = log 
-Formula: yi_lnM_safe ~ disturbance + log10_years + (1 | ref_id) + (1 | gr(sp_ncbi_canonical, cov = A)) + (1 | gr(es_id_model, cov = V)) 
+Formula: yi_lnM_safe ~ disturbance + log10_years + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)) 
          sigma ~ disturbance + log10_years
-   Data: dat_model (Number of observations: 7186) 
+   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7186) 
   Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
          total post-warmup draws = 8000
 
@@ -852,47 +873,47 @@ sd(Intercept)     1.00      0.00     1.00     1.00   NA       NA       NA
 
 ~ref_id (Number of levels: 254) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.81      0.05     0.72     0.90 1.00     1839     3475
+sd(Intercept)     0.77      0.04     0.69     0.85 1.00     1769     3716
 
-~sp_ncbi_canonical (Number of levels: 253) 
+~sp_ncbi (Number of levels: 253) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.82      0.13     0.60     1.10 1.01     1052     1969
+sd(Intercept)     0.70      0.17     0.38     1.06 1.00      956     1925
 
 Regression Coefficients:
                                          Estimate Est.Error l-95% CI u-95% CI
-Intercept                                   -0.19      0.48    -1.11     0.76
-sigma_Intercept                             -1.46      0.14    -1.76    -1.20
-disturbanceHunt_harv                        -0.13      0.13    -0.39     0.13
-disturbanceIntroduction                      0.06      0.16    -0.26     0.37
-disturbanceLandscapechange                   0.11      0.19    -0.27     0.50
-disturbanceOther                            -0.17      0.13    -0.44     0.08
-disturbancePollution                         0.02      0.27    -0.51     0.54
-disturbanceResponsetointroductions           0.02      0.26    -0.49     0.53
-log10_years                                  0.07      0.02     0.02     0.12
-sigma_disturbanceHunt_harv                   0.65      0.14     0.40     0.94
-sigma_disturbanceIntroduction                0.22      0.13    -0.03     0.50
-sigma_disturbanceLandscapechange            -1.07      0.37    -2.04    -0.50
-sigma_disturbanceOther                       0.32      0.14     0.08     0.60
-sigma_disturbancePollution                   0.15      0.21    -0.29     0.54
-sigma_disturbanceResponsetointroductions     0.50      0.15     0.21     0.81
-sigma_log10_years                            0.01      0.03    -0.05     0.08
+Intercept                                   -0.90      0.44    -1.74    -0.01
+sigma_Intercept                             -0.54      0.10    -0.73    -0.35
+disturbanceHunt_harv                        -0.31      0.18    -0.68     0.03
+disturbanceIntroduction                     -0.11      0.20    -0.52     0.28
+disturbanceLandscapechange                   0.23      0.24    -0.23     0.69
+disturbanceOther                            -0.31      0.18    -0.66     0.03
+disturbancePollution                         0.15      0.29    -0.41     0.71
+disturbanceResponsetointroductions           0.02      0.30    -0.58     0.60
+log10_years                                  0.29      0.04     0.22     0.37
+sigma_disturbanceHunt_harv                   0.29      0.09     0.11     0.48
+sigma_disturbanceIntroduction                0.03      0.09    -0.14     0.21
+sigma_disturbanceLandscapechange            -0.54      0.16    -0.87    -0.24
+sigma_disturbanceOther                       0.09      0.09    -0.08     0.28
+sigma_disturbancePollution                  -0.18      0.16    -0.50     0.13
+sigma_disturbanceResponsetointroductions     0.26      0.12     0.03     0.48
+sigma_log10_years                           -0.10      0.03    -0.16    -0.04
                                          Rhat Bulk_ESS Tail_ESS
-Intercept                                1.00     2065     3343
-sigma_Intercept                          1.00      734     1112
-disturbanceHunt_harv                     1.00     1470     2611
-disturbanceIntroduction                  1.00     1453     2387
-disturbanceLandscapechange               1.00     1475     2471
-disturbanceOther                         1.00     1415     2457
-disturbancePollution                     1.00     1816     3099
-disturbanceResponsetointroductions       1.00     1774     3323
-log10_years                              1.00     3715     5906
-sigma_disturbanceHunt_harv               1.00      704     1144
-sigma_disturbanceIntroduction            1.00      676     1137
-sigma_disturbanceLandscapechange         1.04      110       85
-sigma_disturbanceOther                   1.00      728     1126
-sigma_disturbancePollution               1.00      744     1253
-sigma_disturbanceResponsetointroductions 1.00      827     1490
-sigma_log10_years                        1.00     2178     4061
+Intercept                                1.00     2643     3468
+sigma_Intercept                          1.00     1745     3259
+disturbanceHunt_harv                     1.00     1854     3064
+disturbanceIntroduction                  1.00     1689     2893
+disturbanceLandscapechange               1.00     1899     2964
+disturbanceOther                         1.00     1852     2831
+disturbancePollution                     1.00     1935     3264
+disturbanceResponsetointroductions       1.00     2045     3808
+log10_years                              1.00     6115     6246
+sigma_disturbanceHunt_harv               1.00     1718     3329
+sigma_disturbanceIntroduction            1.00     1559     3346
+sigma_disturbanceLandscapechange         1.00     1014     1639
+sigma_disturbanceOther                   1.00     1731     3429
+sigma_disturbancePollution               1.00     1450     2826
+sigma_disturbanceResponsetointroductions 1.00     2050     4065
+sigma_log10_years                        1.00     3419     5415
 
 Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -905,9 +926,9 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: gaussian 
   Links: mu = identity; sigma = log 
-Formula: yi_lnM_safe ~ disturbance + log10_generations + (1 | ref_id) + (1 | gr(sp_ncbi_canonical, cov = A)) + (1 | gr(es_id_model, cov = V)) 
+Formula: yi_lnM_safe ~ disturbance + log10_generations + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)) 
          sigma ~ disturbance + log10_generations
-   Data: dat_model (Number of observations: 7186) 
+   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7186) 
   Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
          total post-warmup draws = 8000
 
@@ -918,47 +939,47 @@ sd(Intercept)     1.00      0.00     1.00     1.00   NA       NA       NA
 
 ~ref_id (Number of levels: 254) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.80      0.05     0.72     0.90 1.00     2356     4305
+sd(Intercept)     0.76      0.04     0.68     0.85 1.01     1759     2873
 
-~sp_ncbi_canonical (Number of levels: 253) 
+~sp_ncbi (Number of levels: 253) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.86      0.13     0.63     1.12 1.00     1329     3104
+sd(Intercept)     0.81      0.17     0.51     1.17 1.00      878     1871
 
 Regression Coefficients:
                                          Estimate Est.Error l-95% CI u-95% CI
-Intercept                                   -0.18      0.47    -1.12     0.74
-sigma_Intercept                             -1.14      0.14    -1.44    -0.88
-disturbanceHunt_harv                        -0.12      0.12    -0.36     0.13
-disturbanceIntroduction                      0.03      0.16    -0.27     0.34
-disturbanceLandscapechange                   0.12      0.19    -0.24     0.49
-disturbanceOther                            -0.17      0.12    -0.41     0.07
-disturbancePollution                         0.01      0.27    -0.51     0.54
-disturbanceResponsetointroductions           0.01      0.26    -0.49     0.52
-log10_generations                            0.09      0.03     0.04     0.14
-sigma_disturbanceHunt_harv                   0.43      0.14     0.17     0.73
-sigma_disturbanceIntroduction                0.32      0.14     0.07     0.62
-sigma_disturbanceLandscapechange            -1.30      0.42    -2.26    -0.60
-sigma_disturbanceOther                       0.19      0.14    -0.07     0.48
-sigma_disturbancePollution                   0.08      0.22    -0.36     0.49
-sigma_disturbanceResponsetointroductions     0.53      0.16     0.23     0.84
-sigma_log10_generations                     -0.22      0.03    -0.27    -0.16
+Intercept                                   -0.82      0.49    -1.76     0.16
+sigma_Intercept                             -0.53      0.09    -0.71    -0.35
+disturbanceHunt_harv                        -0.31      0.18    -0.65     0.04
+disturbanceIntroduction                     -0.13      0.20    -0.52     0.26
+disturbanceLandscapechange                   0.21      0.23    -0.24     0.68
+disturbanceOther                            -0.32      0.17    -0.65     0.02
+disturbancePollution                         0.12      0.29    -0.47     0.69
+disturbanceResponsetointroductions           0.02      0.31    -0.60     0.61
+log10_generations                            0.28      0.04     0.21     0.36
+sigma_disturbanceHunt_harv                   0.23      0.10     0.03     0.42
+sigma_disturbanceIntroduction                0.05      0.09    -0.12     0.23
+sigma_disturbanceLandscapechange            -0.54      0.16    -0.85    -0.24
+sigma_disturbanceOther                       0.06      0.09    -0.12     0.24
+sigma_disturbancePollution                  -0.21      0.16    -0.53     0.09
+sigma_disturbanceResponsetointroductions     0.28      0.12     0.05     0.51
+sigma_log10_generations                     -0.11      0.02    -0.16    -0.07
                                          Rhat Bulk_ESS Tail_ESS
-Intercept                                1.00     2700     3593
-sigma_Intercept                          1.01      612     1193
-disturbanceHunt_harv                     1.00     1691     3056
-disturbanceIntroduction                  1.00     1609     3050
-disturbanceLandscapechange               1.00     1844     3149
-disturbanceOther                         1.00     1639     3188
-disturbancePollution                     1.00     2269     3279
-disturbanceResponsetointroductions       1.00     2544     4024
-log10_generations                        1.00     4925     5951
-sigma_disturbanceHunt_harv               1.01      637     1174
-sigma_disturbanceIntroduction            1.01      614     1111
-sigma_disturbanceLandscapechange         1.05       85       37
-sigma_disturbanceOther                   1.01      641     1234
-sigma_disturbancePollution               1.00      667     1515
-sigma_disturbanceResponsetointroductions 1.01      697     1329
-sigma_log10_generations                  1.00     2584     4478
+Intercept                                1.00     1942     3644
+sigma_Intercept                          1.00     1408     2559
+disturbanceHunt_harv                     1.00     1587     2939
+disturbanceIntroduction                  1.01     1398     2585
+disturbanceLandscapechange               1.00     1593     2658
+disturbanceOther                         1.00     1581     2591
+disturbancePollution                     1.00     1432     2308
+disturbanceResponsetointroductions       1.00     1766     2880
+log10_generations                        1.00     4115     5310
+sigma_disturbanceHunt_harv               1.00     1453     2798
+sigma_disturbanceIntroduction            1.01     1410     2664
+sigma_disturbanceLandscapechange         1.00      846     1633
+sigma_disturbanceOther                   1.00     1430     2649
+sigma_disturbancePollution               1.00     1288     2446
+sigma_disturbanceResponsetointroductions 1.00     1866     3321
+sigma_log10_generations                  1.00     3528     4980
 
 Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -971,9 +992,9 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: gaussian 
   Links: mu = identity; sigma = log 
-Formula: yi_lnM_safe ~ design + log10_years + (1 | ref_id) + (1 | gr(sp_ncbi_canonical, cov = A)) + (1 | gr(es_id_model, cov = V)) 
+Formula: yi_lnM_safe ~ design + log10_years + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)) 
          sigma ~ design + log10_years
-   Data: dat_model (Number of observations: 7186) 
+   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7186) 
   Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
          total post-warmup draws = 8000
 
@@ -984,27 +1005,27 @@ sd(Intercept)     1.00      0.00     1.00     1.00   NA       NA       NA
 
 ~ref_id (Number of levels: 254) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.80      0.05     0.72     0.89 1.00     3146     4656
+sd(Intercept)     0.76      0.04     0.68     0.84 1.00     1954     3549
 
-~sp_ncbi_canonical (Number of levels: 253) 
+~sp_ncbi (Number of levels: 253) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.78      0.12     0.57     1.04 1.00     2309     4313
+sd(Intercept)     0.70      0.17     0.38     1.05 1.00     1037     1812
 
 Regression Coefficients:
                        Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
-Intercept                 -0.33      0.42    -1.16     0.50 1.00     5057
-sigma_Intercept           -0.96      0.04    -1.04    -0.87 1.00     3397
-designSynchronic           0.21      0.07     0.08     0.35 1.00     6786
-log10_years                0.07      0.02     0.03     0.12 1.00    11088
-sigma_designSynchronic    -0.23      0.03    -0.30    -0.16 1.00     3061
-sigma_log10_years         -0.01      0.03    -0.08     0.06 1.00     2713
+Intercept                 -1.07      0.41    -1.87    -0.23 1.00     2994
+sigma_Intercept           -0.37      0.04    -0.45    -0.30 1.00     4296
+designSynchronic           0.12      0.09    -0.06     0.30 1.00     3694
+log10_years                0.28      0.04     0.21     0.36 1.00     6410
+sigma_designSynchronic    -0.13      0.03    -0.20    -0.07 1.00     3570
+sigma_log10_years         -0.10      0.03    -0.16    -0.04 1.00     3427
                        Tail_ESS
-Intercept                  5140
-sigma_Intercept            5603
-designSynchronic           6418
-log10_years                6732
-sigma_designSynchronic     5562
-sigma_log10_years          5552
+Intercept                  3829
+sigma_Intercept            5924
+designSynchronic           4843
+log10_years                6121
+sigma_designSynchronic     4937
+sigma_log10_years          5573
 
 Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -1017,9 +1038,9 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: gaussian 
   Links: mu = identity; sigma = log 
-Formula: yi_lnM_safe ~ design + log10_generations + (1 | ref_id) + (1 | gr(sp_ncbi_canonical, cov = A)) + (1 | gr(es_id_model, cov = V)) 
+Formula: yi_lnM_safe ~ design + log10_generations + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)) 
          sigma ~ design + log10_generations
-   Data: dat_model (Number of observations: 7186) 
+   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7186) 
   Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
          total post-warmup draws = 8000
 
@@ -1030,27 +1051,27 @@ sd(Intercept)     1.00      0.00     1.00     1.00   NA       NA       NA
 
 ~ref_id (Number of levels: 254) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.79      0.04     0.71     0.88 1.00     2974     4901
+sd(Intercept)     0.75      0.04     0.67     0.84 1.00     1837     3128
 
-~sp_ncbi_canonical (Number of levels: 253) 
+~sp_ncbi (Number of levels: 253) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.83      0.12     0.62     1.09 1.00     1878     3448
+sd(Intercept)     0.81      0.18     0.50     1.18 1.00     1137     2450
 
 Regression Coefficients:
                         Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
-Intercept                  -0.33      0.46    -1.24     0.56 1.00     3540
-sigma_Intercept            -0.82      0.03    -0.87    -0.77 1.00     5352
-designSynchronic            0.18      0.07     0.04     0.31 1.00     4783
-log10_generations           0.09      0.03     0.04     0.14 1.00     8432
-sigma_designSynchronic      0.06      0.04    -0.02     0.14 1.00     2379
-sigma_log10_generations    -0.25      0.03    -0.30    -0.20 1.00     2398
+Intercept                  -0.98      0.46    -1.89    -0.06 1.00     2559
+sigma_Intercept            -0.40      0.03    -0.45    -0.35 1.00     4768
+designSynchronic            0.11      0.09    -0.07     0.29 1.00     3057
+log10_generations           0.27      0.04     0.20     0.35 1.00     5834
+sigma_designSynchronic     -0.06      0.04    -0.13     0.02 1.00     2847
+sigma_log10_generations    -0.12      0.02    -0.17    -0.08 1.00     2808
                         Tail_ESS
-Intercept                   4541
-sigma_Intercept             6453
-designSynchronic            5512
-log10_generations           6341
-sigma_designSynchronic      4274
-sigma_log10_generations     4084
+Intercept                   4032
+sigma_Intercept             6151
+designSynchronic            5090
+log10_generations           5965
+sigma_designSynchronic      4844
+sigma_log10_generations     4968
 
 Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -1063,9 +1084,9 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: gaussian 
   Links: mu = identity; sigma = log 
-Formula: yi_lnM_safe ~ trait_type + log10_years + (1 | ref_id) + (1 | gr(sp_ncbi_canonical, cov = A)) + (1 | gr(es_id_model, cov = V)) 
+Formula: yi_lnM_safe ~ trait_type + log10_years + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)) 
          sigma ~ trait_type + log10_years
-   Data: dat_model (Number of observations: 7186) 
+   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7186) 
   Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
          total post-warmup draws = 8000
 
@@ -1076,51 +1097,51 @@ sd(Intercept)     1.00      0.00     1.00     1.00   NA       NA       NA
 
 ~ref_id (Number of levels: 254) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.80      0.05     0.72     0.89 1.00     3305     4961
+sd(Intercept)     0.75      0.04     0.67     0.84 1.00     1592     3624
 
-~sp_ncbi_canonical (Number of levels: 253) 
+~sp_ncbi (Number of levels: 253) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.81      0.11     0.61     1.06 1.00     2012     3831
+sd(Intercept)     0.83      0.17     0.53     1.19 1.00      703     1698
 
 Regression Coefficients:
                                 Estimate Est.Error l-95% CI u-95% CI Rhat
-Intercept                          -0.52      0.51    -1.54     0.49 1.00
-sigma_Intercept                    -1.04      0.26    -1.58    -0.54 1.00
-trait_typegrowth                    0.34      0.25    -0.14     0.83 1.00
-trait_typeotherLH                   0.43      0.25    -0.04     0.91 1.00
-trait_typeothermorphology           0.35      0.25    -0.12     0.84 1.00
-trait_typephenology                 0.26      0.27    -0.26     0.78 1.00
-trait_typephysio                    0.24      0.25    -0.22     0.73 1.00
-trait_typeresponse                  0.47      0.27    -0.06     1.01 1.00
-trait_typesize                      0.36      0.25    -0.11     0.84 1.00
-log10_years                         0.08      0.02     0.04     0.13 1.00
-sigma_trait_typegrowth             -1.15      0.40    -2.04    -0.44 1.01
-sigma_trait_typeotherLH             0.18      0.26    -0.32     0.71 1.00
-sigma_trait_typeothermorphology    -0.93      0.26    -1.43    -0.41 1.00
-sigma_trait_typephenology           0.21      0.29    -0.35     0.79 1.00
-sigma_trait_typephysio             -0.22      0.28    -0.76     0.31 1.00
-sigma_trait_typeresponse            0.03      0.36    -0.68     0.70 1.00
-sigma_trait_typesize                0.21      0.26    -0.29     0.73 1.00
-sigma_log10_years                  -0.06      0.03    -0.11     0.00 1.00
+Intercept                          -1.78      0.60    -2.97    -0.59 1.00
+sigma_Intercept                    -0.24      0.25    -0.72     0.27 1.00
+trait_typegrowth                    0.82      0.40     0.06     1.60 1.00
+trait_typeotherLH                   0.91      0.40     0.15     1.68 1.00
+trait_typeothermorphology           0.79      0.39     0.02     1.55 1.00
+trait_typephenology                 0.83      0.42     0.03     1.63 1.00
+trait_typephysio                    0.69      0.40    -0.06     1.46 1.00
+trait_typeresponse                  1.17      0.43     0.34     1.98 1.00
+trait_typesize                      0.84      0.39     0.09     1.61 1.00
+log10_years                         0.28      0.04     0.21     0.36 1.00
+sigma_trait_typegrowth             -0.98      0.30    -1.59    -0.43 1.00
+sigma_trait_typeotherLH            -0.14      0.25    -0.64     0.34 1.00
+sigma_trait_typeothermorphology    -0.50      0.25    -0.99    -0.02 1.00
+sigma_trait_typephenology          -0.38      0.28    -0.94     0.15 1.01
+sigma_trait_typephysio             -0.65      0.26    -1.17    -0.14 1.00
+sigma_trait_typeresponse           -0.51      0.38    -1.30     0.20 1.00
+sigma_trait_typesize               -0.05      0.25    -0.55     0.43 1.00
+sigma_log10_years                  -0.10      0.03    -0.16    -0.05 1.00
                                 Bulk_ESS Tail_ESS
-Intercept                           3469     4643
-sigma_Intercept                     1896     2985
-trait_typegrowth                    2192     3870
-trait_typeotherLH                   2194     3790
-trait_typeothermorphology           2187     3954
-trait_typephenology                 2393     3882
-trait_typephysio                    2199     3810
-trait_typeresponse                  2516     4573
-trait_typesize                      2207     4027
-log10_years                         7671     7136
-sigma_trait_typegrowth               266      224
-sigma_trait_typeotherLH             1903     3127
-sigma_trait_typeothermorphology     1871     2889
-sigma_trait_typephenology           1798     3130
-sigma_trait_typephysio              1538     2948
-sigma_trait_typeresponse            2052     3614
-sigma_trait_typesize                1912     3115
-sigma_log10_years                   3187     5182
+Intercept                           1424     2647
+sigma_Intercept                     1180     2549
+trait_typegrowth                    1014     1653
+trait_typeotherLH                   1001     1774
+trait_typeothermorphology            993     1769
+trait_typephenology                 1036     1740
+trait_typephysio                    1003     1675
+trait_typeresponse                  1106     2092
+trait_typesize                       991     1701
+log10_years                         4580     5212
+sigma_trait_typegrowth               765     1203
+sigma_trait_typeotherLH             1213     2646
+sigma_trait_typeothermorphology     1164     2581
+sigma_trait_typephenology           1224     2759
+sigma_trait_typephysio              1194     2565
+sigma_trait_typeresponse            1196     1814
+sigma_trait_typesize                1179     2643
+sigma_log10_years                   3283     5645
 
 Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -1133,9 +1154,9 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: gaussian 
   Links: mu = identity; sigma = log 
-Formula: yi_lnM_safe ~ trait_type + log10_generations + (1 | ref_id) + (1 | gr(sp_ncbi_canonical, cov = A)) + (1 | gr(es_id_model, cov = V)) 
+Formula: yi_lnM_safe ~ trait_type + log10_generations + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)) 
          sigma ~ trait_type + log10_generations
-   Data: dat_model (Number of observations: 7186) 
+   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7186) 
   Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
          total post-warmup draws = 8000
 
@@ -1146,51 +1167,51 @@ sd(Intercept)     1.00      0.00     1.00     1.00   NA       NA       NA
 
 ~ref_id (Number of levels: 254) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.79      0.05     0.71     0.89 1.00     3608     4495
+sd(Intercept)     0.75      0.04     0.66     0.83 1.00     2694     3712
 
-~sp_ncbi_canonical (Number of levels: 253) 
+~sp_ncbi (Number of levels: 253) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.83      0.12     0.62     1.08 1.00     2083     4012
+sd(Intercept)     0.87      0.16     0.57     1.22 1.00     1285     2082
 
 Regression Coefficients:
                                 Estimate Est.Error l-95% CI u-95% CI Rhat
-Intercept                          -0.53      0.52    -1.54     0.48 1.00
-sigma_Intercept                    -0.96      0.26    -1.48    -0.45 1.00
-trait_typegrowth                    0.34      0.25    -0.15     0.83 1.00
-trait_typeotherLH                   0.43      0.25    -0.06     0.92 1.00
-trait_typeothermorphology           0.35      0.25    -0.14     0.84 1.00
-trait_typephenology                 0.25      0.27    -0.29     0.79 1.00
-trait_typephysio                    0.25      0.25    -0.24     0.74 1.00
-trait_typeresponse                  0.48      0.28    -0.07     1.01 1.00
-trait_typesize                      0.36      0.25    -0.13     0.85 1.00
-log10_generations                   0.10      0.02     0.05     0.15 1.00
-sigma_trait_typegrowth             -1.16      0.44    -2.19    -0.42 1.07
-sigma_trait_typeotherLH             0.22      0.26    -0.30     0.74 1.00
-sigma_trait_typeothermorphology    -0.88      0.26    -1.39    -0.36 1.00
-sigma_trait_typephenology           0.19      0.29    -0.39     0.75 1.00
-sigma_trait_typephysio             -0.23      0.28    -0.78     0.32 1.00
-sigma_trait_typeresponse            0.03      0.35    -0.67     0.71 1.00
-sigma_trait_typesize                0.16      0.26    -0.36     0.67 1.00
-sigma_log10_generations            -0.12      0.02    -0.16    -0.08 1.00
+Intercept                          -1.75      0.63    -2.97    -0.52 1.00
+sigma_Intercept                    -0.31      0.25    -0.80     0.19 1.00
+trait_typegrowth                    0.88      0.40     0.09     1.64 1.00
+trait_typeotherLH                   0.96      0.40     0.17     1.72 1.00
+trait_typeothermorphology           0.83      0.39     0.04     1.58 1.00
+trait_typephenology                 0.88      0.42     0.02     1.70 1.00
+trait_typephysio                    0.75      0.40    -0.05     1.51 1.00
+trait_typeresponse                  1.22      0.43     0.34     2.04 1.00
+trait_typesize                      0.89      0.40     0.10     1.64 1.00
+log10_generations                   0.27      0.04     0.20     0.34 1.00
+sigma_trait_typegrowth             -0.95      0.33    -1.64    -0.35 1.01
+sigma_trait_typeotherLH            -0.11      0.25    -0.61     0.38 1.00
+sigma_trait_typeothermorphology    -0.46      0.25    -0.96     0.04 1.00
+sigma_trait_typephenology          -0.37      0.28    -0.95     0.19 1.00
+sigma_trait_typephysio             -0.65      0.27    -1.19    -0.13 1.00
+sigma_trait_typeresponse           -0.50      0.37    -1.26     0.20 1.00
+sigma_trait_typesize               -0.04      0.25    -0.54     0.44 1.00
+sigma_log10_generations            -0.07      0.02    -0.11    -0.03 1.00
                                 Bulk_ESS Tail_ESS
-Intercept                           4355     4686
-sigma_Intercept                     1829     3128
-trait_typegrowth                    2488     3329
-trait_typeotherLH                   2506     3550
-trait_typeothermorphology           2516     3243
-trait_typephenology                 2774     4161
-trait_typephysio                    2544     3348
-trait_typeresponse                  2851     4436
-trait_typesize                      2510     3443
-log10_generations                   8633     6936
-sigma_trait_typegrowth                52       82
-sigma_trait_typeotherLH             1799     3020
-sigma_trait_typeothermorphology     1816     3061
-sigma_trait_typephenology           1953     3599
-sigma_trait_typephysio              1570     2973
-sigma_trait_typeresponse            2374     3853
-sigma_trait_typesize                1827     3026
-sigma_log10_generations             3048     5066
+Intercept                           2559     3275
+sigma_Intercept                     2333     3328
+trait_typegrowth                    1938     3204
+trait_typeotherLH                   1925     3113
+trait_typeothermorphology           1942     3166
+trait_typephenology                 2036     3316
+trait_typephysio                    1917     3304
+trait_typeresponse                  2174     3269
+trait_typesize                      1939     3262
+log10_generations                   7414     6211
+sigma_trait_typegrowth               440      385
+sigma_trait_typeotherLH             2287     3309
+sigma_trait_typeothermorphology     2334     3533
+sigma_trait_typephenology           2194     3296
+sigma_trait_typephysio              1799     3149
+sigma_trait_typeresponse            1928     3060
+sigma_trait_typesize                2312     3308
+sigma_log10_generations             3747     5622
 
 Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -1203,9 +1224,9 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: gaussian 
   Links: mu = identity; sigma = log 
-Formula: yi_lnM_safe ~ genphen + log10_years + (1 | ref_id) + (1 | gr(sp_ncbi_canonical, cov = A)) + (1 | gr(es_id_model, cov = V)) 
+Formula: yi_lnM_safe ~ genphen + log10_years + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)) 
          sigma ~ genphen + log10_years
-   Data: dat_model (Number of observations: 7186) 
+   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7186) 
   Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
          total post-warmup draws = 8000
 
@@ -1216,27 +1237,27 @@ sd(Intercept)     1.00      0.00     1.00     1.00   NA       NA       NA
 
 ~ref_id (Number of levels: 254) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.81      0.05     0.72     0.90 1.00     2639     4821
+sd(Intercept)     0.76      0.04     0.68     0.85 1.00     2204     3447
 
-~sp_ncbi_canonical (Number of levels: 253) 
+~sp_ncbi (Number of levels: 253) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.78      0.12     0.58     1.04 1.00     2097     3989
+sd(Intercept)     0.70      0.17     0.38     1.05 1.01      874     1854
 
 Regression Coefficients:
                         Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
-Intercept                  -0.17      0.44    -1.03     0.69 1.00     4016
-sigma_Intercept            -1.30      0.05    -1.41    -1.20 1.00     2259
-genphenPhenotypic          -0.07      0.05    -0.17     0.03 1.00     5692
-log10_years                 0.08      0.03     0.03     0.13 1.00     8923
-sigma_genphenPhenotypic     0.40      0.03     0.33     0.47 1.00     1962
-sigma_log10_years          -0.07      0.03    -0.13    -0.02 1.00     3141
+Intercept                  -0.88      0.40    -1.69    -0.07 1.00     3733
+sigma_Intercept            -0.63      0.05    -0.73    -0.54 1.00     3384
+genphenPhenotypic          -0.19      0.07    -0.34    -0.05 1.00     4701
+log10_years                 0.29      0.04     0.21     0.36 1.00     6989
+sigma_genphenPhenotypic     0.30      0.03     0.24     0.36 1.00     2592
+sigma_log10_years          -0.12      0.03    -0.17    -0.07 1.00     3968
                         Tail_ESS
-Intercept                   4886
-sigma_Intercept             3929
-genphenPhenotypic           5864
-log10_years                 6492
-sigma_genphenPhenotypic     3593
-sigma_log10_years           4798
+Intercept                   4405
+sigma_Intercept             5410
+genphenPhenotypic           5592
+log10_years                 6713
+sigma_genphenPhenotypic     4772
+sigma_log10_years           5513
 
 Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -1249,9 +1270,9 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: gaussian 
   Links: mu = identity; sigma = log 
-Formula: yi_lnM_safe ~ genphen + log10_generations + (1 | ref_id) + (1 | gr(sp_ncbi_canonical, cov = A)) + (1 | gr(es_id_model, cov = V)) 
+Formula: yi_lnM_safe ~ genphen + log10_generations + (1 | ref_id) + (1 | gr(sp_ncbi, cov = A)) + (1 | gr(es_id_model, cov = V)) 
          sigma ~ genphen + log10_generations
-   Data: dat_model (Number of observations: 7186) 
+   Data: structure(list(es_id = c("es0313", "es0314", "es03 (Number of observations: 7186) 
   Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
          total post-warmup draws = 8000
 
@@ -1262,27 +1283,27 @@ sd(Intercept)     1.00      0.00     1.00     1.00   NA       NA       NA
 
 ~ref_id (Number of levels: 254) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.80      0.05     0.71     0.89 1.00     3029     4567
+sd(Intercept)     0.75      0.04     0.67     0.84 1.00     1790     3182
 
-~sp_ncbi_canonical (Number of levels: 253) 
+~sp_ncbi (Number of levels: 253) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.80      0.12     0.60     1.05 1.00     2234     3087
+sd(Intercept)     0.77      0.18     0.44     1.16 1.00      696     1561
 
 Regression Coefficients:
                         Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
-Intercept                  -0.19      0.44    -1.04     0.66 1.00     4031
-sigma_Intercept            -1.13      0.04    -1.21    -1.05 1.00     2209
-genphenPhenotypic          -0.06      0.05    -0.15     0.04 1.00     5633
-log10_generations           0.10      0.03     0.05     0.15 1.00     8539
-sigma_genphenPhenotypic     0.34      0.04     0.27     0.41 1.00     1849
-sigma_log10_generations    -0.18      0.02    -0.22    -0.15 1.00     3851
+Intercept                  -0.80      0.45    -1.70     0.07 1.00     2344
+sigma_Intercept            -0.65      0.04    -0.73    -0.58 1.00     2535
+genphenPhenotypic          -0.18      0.07    -0.32    -0.05 1.00     3876
+log10_generations           0.27      0.04     0.19     0.34 1.00     5482
+sigma_genphenPhenotypic     0.28      0.03     0.22     0.34 1.00     2269
+sigma_log10_generations    -0.11      0.02    -0.15    -0.08 1.00     3514
                         Tail_ESS
-Intercept                   5230
-sigma_Intercept             4065
-genphenPhenotypic           5602
-log10_generations           7022
-sigma_genphenPhenotypic     3283
-sigma_log10_generations     5865
+Intercept                   3700
+sigma_Intercept             5111
+genphenPhenotypic           5931
+log10_generations           6301
+sigma_genphenPhenotypic     4482
+sigma_log10_generations     4978
 
 Draws were sampled using sample(hmc). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -1303,9 +1324,9 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"disturbance_plus_log10_years_orchard_combined.png"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"disturbance_plus_log10_years_orchard_combined.png"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1318,9 +1339,9 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"disturbance_plus_log10_generations_orchard_combined.png"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"disturbance_plus_log10_generations_orchard_combined.png"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1335,9 +1356,9 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"design_plus_log10_years_orchard_combined.png"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"design_plus_log10_years_orchard_combined.png"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1350,9 +1371,9 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"design_plus_log10_generations_orchard_combined.png"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"design_plus_log10_generations_orchard_combined.png"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1367,9 +1388,9 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"trait_type_plus_log10_years_orchard_combined.png"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"trait_type_plus_log10_years_orchard_combined.png"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1382,9 +1403,9 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"trait_type_plus_log10_generations_orchard_combined.png"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"trait_type_plus_log10_generations_orchard_combined.png"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1399,9 +1420,9 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"genphen_plus_log10_years_orchard_combined.png"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"genphen_plus_log10_years_orchard_combined.png"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1414,9 +1435,9 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"genphen_plus_log10_generations_orchard_combined.png"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"genphen_plus_log10_generations_orchard_combined.png"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1427,19 +1448,6 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="callout callout-style-default callout-warning callout-titled" title="Read the diagnostics table before the figures above">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Read the diagnostics table before the figures above
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The disturbance and trait_type models did not meet the convergence criteria used elsewhere in this book (max Rhat ≤ 1.01, bulk and tail ESS ≥ 400, and no divergent transitions) with either elapsed-time variable; the failures were most severe with <code>log10_generations</code>. Their summaries and figures are shown here for transparency, but should not be read as reliable estimates. The design and genphen models converged cleanly.</p>
 </div>
 </div>
 
@@ -1927,258 +1935,285 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Protocol deviation — moderators adjusted for elapsed time"</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## Recorded change</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>This chapter was **not** part of the pre-registered protocol. It refits the primary moderators</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>(<span class="in">`disturbance`</span>, <span class="in">`design`</span>, <span class="in">`trait_type`</span>, <span class="in">`genphen`</span>) with elapsed time added as an additive covariate.</span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="What changed—and what did not"}</span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>**Changed:** for each of the four primary moderators, we fitted an additive</span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>location-scale model that adds elapsed time (<span class="in">`log10_years`</span>, and separately</span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="in">`log10_generations`</span>) as a second main-effect term, with **no interaction**.</span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>This adjusts each moderator's estimate for the average elapsed-time</span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>difference between its levels, without letting the time slope itself vary</span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>by level.</span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>**Unchanged:** the dataset, the moderator definitions, the <span class="in">`ref_id`</span> and</span>
-<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>phylogenetic random effects, the priors, and the MCMC settings all match the</span>
-<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>primary single-moderator models.</span>
-<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>This produces eight models: four moderators × two elapsed-time scales.</span>
-<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a><span class="fu">## Moderator–time relationships</span></span>
-<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>The plots below show how elapsed time is</span>
-<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>distributed across the levels of each moderator.</span>
-<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup}</span></span>
-<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Scripts"</span>, <span class="st">"00_packages.R"</span>))</span>
-<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a>dat_es <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"effect_sizes"</span>, <span class="st">"proceed_lnm_safe.rds"</span>))</span>
-<span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a>moderator_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">disturbance =</span> <span class="st">"Disturbance context"</span>,</span>
-<span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a>  <span class="at">design      =</span> <span class="st">"Comparison design"</span>,</span>
-<span id="cb22-38"><a href="#cb22-38" aria-hidden="true" tabindex="-1"></a>  <span class="at">trait_type  =</span> <span class="st">"Trait type"</span>,</span>
-<span id="cb22-39"><a href="#cb22-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">genphen     =</span> <span class="st">"Phenotypic vs. genetic"</span></span>
-<span id="cb22-40"><a href="#cb22-40" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb22-41"><a href="#cb22-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-42"><a href="#cb22-42" aria-hidden="true" tabindex="-1"></a>theme_deviation <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">base_size =</span> <span class="dv">13</span>) {</span>
-<span id="cb22-43"><a href="#cb22-43" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_classic</span>(<span class="at">base_size =</span> base_size) <span class="sc">+</span></span>
-<span id="cb22-44"><a href="#cb22-44" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">theme</span>(</span>
-<span id="cb22-45"><a href="#cb22-45" aria-hidden="true" tabindex="-1"></a>      <span class="at">strip.background =</span> ggplot2<span class="sc">::</span><span class="fu">element_blank</span>(),</span>
-<span id="cb22-46"><a href="#cb22-46" aria-hidden="true" tabindex="-1"></a>      <span class="at">strip.text        =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb22-47"><a href="#cb22-47" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.text.x       =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">30</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
-<span id="cb22-48"><a href="#cb22-48" aria-hidden="true" tabindex="-1"></a>      <span class="at">panel.grid.major.y =</span> ggplot2<span class="sc">::</span><span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"grey92"</span>),</span>
-<span id="cb22-49"><a href="#cb22-49" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.title        =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>)</span>
-<span id="cb22-50"><a href="#cb22-50" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb22-51"><a href="#cb22-51" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb22-52"><a href="#cb22-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-53"><a href="#cb22-53" aria-hidden="true" tabindex="-1"></a>make_time_panel <span class="ot">&lt;-</span> <span class="cf">function</span>(dat, timevar, timelabel) {</span>
-<span id="cb22-54"><a href="#cb22-54" aria-hidden="true" tabindex="-1"></a>  long_dat <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_dfr</span>(<span class="fu">names</span>(moderator_labels), <span class="cf">function</span>(m) {</span>
-<span id="cb22-55"><a href="#cb22-55" aria-hidden="true" tabindex="-1"></a>    dat <span class="sc">|&gt;</span></span>
-<span id="cb22-56"><a href="#cb22-56" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(.data[[m]]), <span class="sc">!</span><span class="fu">is.na</span>(.data[[timevar]])) <span class="sc">|&gt;</span></span>
-<span id="cb22-57"><a href="#cb22-57" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">transmute</span>(</span>
-<span id="cb22-58"><a href="#cb22-58" aria-hidden="true" tabindex="-1"></a>        <span class="at">moderator_label =</span> moderator_labels[[m]],</span>
-<span id="cb22-59"><a href="#cb22-59" aria-hidden="true" tabindex="-1"></a>        <span class="at">level =</span> <span class="fu">as.character</span>(.data[[m]]),</span>
-<span id="cb22-60"><a href="#cb22-60" aria-hidden="true" tabindex="-1"></a>        <span class="at">time_value =</span> .data[[timevar]]</span>
-<span id="cb22-61"><a href="#cb22-61" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb22-62"><a href="#cb22-62" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb22-63"><a href="#cb22-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-64"><a href="#cb22-64" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(long_dat, ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> level, <span class="at">y =</span> time_value)) <span class="sc">+</span></span>
-<span id="cb22-65"><a href="#cb22-65" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"grey85"</span>, <span class="at">outlier.alpha =</span> <span class="fl">0.35</span>, <span class="at">width =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb22-66"><a href="#cb22-66" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">facet_wrap</span>(<span class="sc">~</span>moderator_label, <span class="at">scales =</span> <span class="st">"free_x"</span>, <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb22-67"><a href="#cb22-67" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> timelabel) <span class="sc">+</span></span>
-<span id="cb22-68"><a href="#cb22-68" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_deviation</span>()</span>
-<span id="cb22-69"><a href="#cb22-69" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb22-70"><a href="#cb22-70" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-71"><a href="#cb22-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-72"><a href="#cb22-72" aria-hidden="true" tabindex="-1"></a><span class="in">```{r plot-years, fig.width=11, fig.height=8, fig.cap="Elapsed years (log10 scale) across the levels of each primary moderator."}</span></span>
-<span id="cb22-73"><a href="#cb22-73" aria-hidden="true" tabindex="-1"></a><span class="fu">make_time_panel</span>(dat_es, <span class="st">"log10_years"</span>, <span class="fu">expression</span>(log[<span class="dv">10</span>](<span class="st">"elapsed years"</span>)))</span>
-<span id="cb22-74"><a href="#cb22-74" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-75"><a href="#cb22-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-76"><a href="#cb22-76" aria-hidden="true" tabindex="-1"></a><span class="in">```{r plot-generations, fig.width=11, fig.height=8, fig.cap="Elapsed generations (log10 scale) across the levels of each primary moderator."}</span></span>
-<span id="cb22-77"><a href="#cb22-77" aria-hidden="true" tabindex="-1"></a><span class="fu">make_time_panel</span>(dat_es, <span class="st">"log10_generations"</span>, <span class="fu">expression</span>(log[<span class="dv">10</span>](<span class="st">"elapsed generations"</span>)))</span>
-<span id="cb22-78"><a href="#cb22-78" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-79"><a href="#cb22-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-80"><a href="#cb22-80" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model specification</span></span>
-<span id="cb22-81"><a href="#cb22-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-82"><a href="#cb22-82" aria-hidden="true" tabindex="-1"></a>Models were fitted on a remote server, not while rendering this book, using the same</span>
-<span id="cb22-83"><a href="#cb22-83" aria-hidden="true" tabindex="-1"></a>priors and MCMC settings as the primary models: 4 chains × 4,000 iterations</span>
-<span id="cb22-84"><a href="#cb22-84" aria-hidden="true" tabindex="-1"></a>(2,000 warmup), <span class="in">`adapt_delta = 0.97`</span>, <span class="in">`max_treedepth = 15`</span>, <span class="in">`cmdstanr`</span> backend.</span>
-<span id="cb22-85"><a href="#cb22-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-86"><a href="#cb22-86" aria-hidden="true" tabindex="-1"></a><span class="in">```{r how-fit, eval=FALSE}</span></span>
-<span id="cb22-87"><a href="#cb22-87" aria-hidden="true" tabindex="-1"></a>loc_formula <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="fu">paste0</span>(</span>
-<span id="cb22-88"><a href="#cb22-88" aria-hidden="true" tabindex="-1"></a>  <span class="st">"yi_lnM_safe ~ "</span>, moderator, <span class="st">" + "</span>, timevar,</span>
-<span id="cb22-89"><a href="#cb22-89" aria-hidden="true" tabindex="-1"></a>  <span class="st">" + (1 | ref_id) + (1 | gr(sp_ncbi_canonical, cov = A))"</span>,</span>
-<span id="cb22-90"><a href="#cb22-90" aria-hidden="true" tabindex="-1"></a>  <span class="st">" + (1 | gr(es_id_model, cov = V))"</span></span>
-<span id="cb22-91"><a href="#cb22-91" aria-hidden="true" tabindex="-1"></a>))</span>
-<span id="cb22-92"><a href="#cb22-92" aria-hidden="true" tabindex="-1"></a>scl_formula <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="fu">paste0</span>(<span class="st">"sigma ~ "</span>, moderator, <span class="st">" + "</span>, timevar))</span>
-<span id="cb22-93"><a href="#cb22-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-94"><a href="#cb22-94" aria-hidden="true" tabindex="-1"></a>formula_add <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">bf</span>(loc_formula, scl_formula)</span>
-<span id="cb22-95"><a href="#cb22-95" aria-hidden="true" tabindex="-1"></a>fit_add <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">brm</span>(</span>
-<span id="cb22-96"><a href="#cb22-96" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> formula_add, <span class="at">data =</span> dat_model, <span class="at">data2 =</span> <span class="fu">list</span>(<span class="at">A =</span> A_mod, <span class="at">V =</span> V),</span>
-<span id="cb22-97"><a href="#cb22-97" aria-hidden="true" tabindex="-1"></a>  <span class="at">prior =</span> priors_add, <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">iter =</span> <span class="dv">4000</span>, <span class="at">warmup =</span> <span class="dv">2000</span>, <span class="at">cores =</span> <span class="dv">4</span>,</span>
-<span id="cb22-98"><a href="#cb22-98" aria-hidden="true" tabindex="-1"></a>  <span class="at">backend =</span> <span class="st">"cmdstanr"</span>, <span class="at">control =</span> <span class="fu">list</span>(<span class="at">adapt_delta =</span> <span class="fl">0.97</span>, <span class="at">max_treedepth =</span> <span class="dv">15</span>)</span>
-<span id="cb22-99"><a href="#cb22-99" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb22-100"><a href="#cb22-100" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-101"><a href="#cb22-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-102"><a href="#cb22-102" aria-hidden="true" tabindex="-1"></a><span class="fu">## Convergence diagnostics</span></span>
-<span id="cb22-103"><a href="#cb22-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-104"><a href="#cb22-104" aria-hidden="true" tabindex="-1"></a><span class="in">```{r diagnostics}</span></span>
-<span id="cb22-105"><a href="#cb22-105" aria-hidden="true" tabindex="-1"></a>diag_tbl <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
-<span id="cb22-106"><a href="#cb22-106" aria-hidden="true" tabindex="-1"></a>  here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"tables"</span>, <span class="st">"additive_diagnostics.csv"</span>),</span>
-<span id="cb22-107"><a href="#cb22-107" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
-<span id="cb22-108"><a href="#cb22-108" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb22-109"><a href="#cb22-109" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb22-110"><a href="#cb22-110" aria-hidden="true" tabindex="-1"></a>  diag_tbl,</span>
-<span id="cb22-111"><a href="#cb22-111" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Model"</span>, <span class="st">"Moderator"</span>, <span class="st">"Elapsed-time variable"</span>, <span class="st">"Max Rhat"</span>,</span>
-<span id="cb22-112"><a href="#cb22-112" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Min Bulk ESS"</span>, <span class="st">"Min Tail ESS"</span>, <span class="st">"Divergent transitions"</span>,</span>
-<span id="cb22-113"><a href="#cb22-113" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Max-treedepth hits"</span>),</span>
-<span id="cb22-114"><a href="#cb22-114" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">3</span>,</span>
-<span id="cb22-115"><a href="#cb22-115" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Convergence diagnostics for the eight additive (moderator + time) models."</span></span>
-<span id="cb22-116"><a href="#cb22-116" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb22-117"><a href="#cb22-117" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-118"><a href="#cb22-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-119"><a href="#cb22-119" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model summaries</span></span>
-<span id="cb22-120"><a href="#cb22-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-121"><a href="#cb22-121" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summaries-setup, include=FALSE}</span></span>
-<span id="cb22-122"><a href="#cb22-122" aria-hidden="true" tabindex="-1"></a>additive_summaries <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"summaries"</span>, <span class="st">"additive_summaries.rds"</span>))</span>
-<span id="cb22-123"><a href="#cb22-123" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-124"><a href="#cb22-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-125"><a href="#cb22-125" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
-<span id="cb22-126"><a href="#cb22-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-127"><a href="#cb22-127" aria-hidden="true" tabindex="-1"></a><span class="fu">### disturbance + years</span></span>
-<span id="cb22-128"><a href="#cb22-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-129"><a href="#cb22-129" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summary-disturbance-years, echo=FALSE}</span></span>
-<span id="cb22-130"><a href="#cb22-130" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(additive_summaries[[<span class="st">"disturbance_plus_log10_years"</span>]])</span>
-<span id="cb22-131"><a href="#cb22-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-132"><a href="#cb22-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-133"><a href="#cb22-133" aria-hidden="true" tabindex="-1"></a><span class="fu">### disturbance + generations</span></span>
-<span id="cb22-134"><a href="#cb22-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-135"><a href="#cb22-135" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summary-disturbance-generations, echo=FALSE}</span></span>
-<span id="cb22-136"><a href="#cb22-136" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(additive_summaries[[<span class="st">"disturbance_plus_log10_generations"</span>]])</span>
-<span id="cb22-137"><a href="#cb22-137" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-138"><a href="#cb22-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-139"><a href="#cb22-139" aria-hidden="true" tabindex="-1"></a><span class="fu">### design + years</span></span>
-<span id="cb22-140"><a href="#cb22-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-141"><a href="#cb22-141" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summary-design-years, echo=FALSE}</span></span>
-<span id="cb22-142"><a href="#cb22-142" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(additive_summaries[[<span class="st">"design_plus_log10_years"</span>]])</span>
-<span id="cb22-143"><a href="#cb22-143" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-144"><a href="#cb22-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-145"><a href="#cb22-145" aria-hidden="true" tabindex="-1"></a><span class="fu">### design + generations</span></span>
-<span id="cb22-146"><a href="#cb22-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-147"><a href="#cb22-147" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summary-design-generations, echo=FALSE}</span></span>
-<span id="cb22-148"><a href="#cb22-148" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(additive_summaries[[<span class="st">"design_plus_log10_generations"</span>]])</span>
-<span id="cb22-149"><a href="#cb22-149" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-150"><a href="#cb22-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-151"><a href="#cb22-151" aria-hidden="true" tabindex="-1"></a><span class="fu">### trait_type + years</span></span>
-<span id="cb22-152"><a href="#cb22-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-153"><a href="#cb22-153" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summary-trait-years, echo=FALSE}</span></span>
-<span id="cb22-154"><a href="#cb22-154" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(additive_summaries[[<span class="st">"trait_type_plus_log10_years"</span>]])</span>
-<span id="cb22-155"><a href="#cb22-155" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-156"><a href="#cb22-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-157"><a href="#cb22-157" aria-hidden="true" tabindex="-1"></a><span class="fu">### trait_type + generations</span></span>
-<span id="cb22-158"><a href="#cb22-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-159"><a href="#cb22-159" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summary-trait-generations, echo=FALSE}</span></span>
-<span id="cb22-160"><a href="#cb22-160" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(additive_summaries[[<span class="st">"trait_type_plus_log10_generations"</span>]])</span>
-<span id="cb22-161"><a href="#cb22-161" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-162"><a href="#cb22-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-163"><a href="#cb22-163" aria-hidden="true" tabindex="-1"></a><span class="fu">### genphen + years</span></span>
-<span id="cb22-164"><a href="#cb22-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-165"><a href="#cb22-165" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summary-genphen-years, echo=FALSE}</span></span>
-<span id="cb22-166"><a href="#cb22-166" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(additive_summaries[[<span class="st">"genphen_plus_log10_years"</span>]])</span>
-<span id="cb22-167"><a href="#cb22-167" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-168"><a href="#cb22-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-169"><a href="#cb22-169" aria-hidden="true" tabindex="-1"></a><span class="fu">### genphen + generations</span></span>
-<span id="cb22-170"><a href="#cb22-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-171"><a href="#cb22-171" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summary-genphen-generations, echo=FALSE}</span></span>
-<span id="cb22-172"><a href="#cb22-172" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(additive_summaries[[<span class="st">"genphen_plus_log10_generations"</span>]])</span>
-<span id="cb22-173"><a href="#cb22-173" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-174"><a href="#cb22-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-175"><a href="#cb22-175" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb22-176"><a href="#cb22-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-177"><a href="#cb22-177" aria-hidden="true" tabindex="-1"></a><span class="fu">## Orchard-style figures</span></span>
-<span id="cb22-178"><a href="#cb22-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-179"><a href="#cb22-179" aria-hidden="true" tabindex="-1"></a>Each figure shows the focal moderator's location (top) and scale (bottom)</span>
-<span id="cb22-180"><a href="#cb22-180" aria-hidden="true" tabindex="-1"></a>estimates from its additive model, with elapsed time held at its dataset</span>
-<span id="cb22-181"><a href="#cb22-181" aria-hidden="true" tabindex="-1"></a>mean. Points and beeswarm markers are on the same scale as the primary</span>
-<span id="cb22-182"><a href="#cb22-182" aria-hidden="true" tabindex="-1"></a>single-moderator orchard figures (see the model chapters); only the added</span>
-<span id="cb22-183"><a href="#cb22-183" aria-hidden="true" tabindex="-1"></a>time term differs.</span>
-<span id="cb22-184"><a href="#cb22-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-185"><a href="#cb22-185" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
-<span id="cb22-186"><a href="#cb22-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-187"><a href="#cb22-187" aria-hidden="true" tabindex="-1"></a><span class="fu">### Disturbance</span></span>
-<span id="cb22-188"><a href="#cb22-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-189"><a href="#cb22-189" aria-hidden="true" tabindex="-1"></a><span class="in">```{r orchard-disturbance-years, fig.width=13, fig.height=12}</span></span>
-<span id="cb22-190"><a href="#cb22-190" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
-<span id="cb22-191"><a href="#cb22-191" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
-<span id="cb22-192"><a href="#cb22-192" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"disturbance_plus_log10_years_orchard_combined.png"</span>))</span>
-<span id="cb22-193"><a href="#cb22-193" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-194"><a href="#cb22-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-195"><a href="#cb22-195" aria-hidden="true" tabindex="-1"></a><span class="in">```{r orchard-disturbance-generations, fig.width=13, fig.height=12}</span></span>
-<span id="cb22-196"><a href="#cb22-196" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
-<span id="cb22-197"><a href="#cb22-197" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
-<span id="cb22-198"><a href="#cb22-198" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"disturbance_plus_log10_generations_orchard_combined.png"</span>))</span>
-<span id="cb22-199"><a href="#cb22-199" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-200"><a href="#cb22-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-201"><a href="#cb22-201" aria-hidden="true" tabindex="-1"></a><span class="fu">### Design</span></span>
-<span id="cb22-202"><a href="#cb22-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-203"><a href="#cb22-203" aria-hidden="true" tabindex="-1"></a><span class="in">```{r orchard-design-years, fig.width=9, fig.height=10}</span></span>
-<span id="cb22-204"><a href="#cb22-204" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
-<span id="cb22-205"><a href="#cb22-205" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
-<span id="cb22-206"><a href="#cb22-206" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"design_plus_log10_years_orchard_combined.png"</span>))</span>
-<span id="cb22-207"><a href="#cb22-207" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-208"><a href="#cb22-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-209"><a href="#cb22-209" aria-hidden="true" tabindex="-1"></a><span class="in">```{r orchard-design-generations, fig.width=9, fig.height=10}</span></span>
-<span id="cb22-210"><a href="#cb22-210" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
-<span id="cb22-211"><a href="#cb22-211" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
-<span id="cb22-212"><a href="#cb22-212" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"design_plus_log10_generations_orchard_combined.png"</span>))</span>
-<span id="cb22-213"><a href="#cb22-213" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-214"><a href="#cb22-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-215"><a href="#cb22-215" aria-hidden="true" tabindex="-1"></a><span class="fu">### Trait type</span></span>
-<span id="cb22-216"><a href="#cb22-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-217"><a href="#cb22-217" aria-hidden="true" tabindex="-1"></a><span class="in">```{r orchard-trait-years, fig.width=13, fig.height=12}</span></span>
-<span id="cb22-218"><a href="#cb22-218" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
-<span id="cb22-219"><a href="#cb22-219" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
-<span id="cb22-220"><a href="#cb22-220" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"trait_type_plus_log10_years_orchard_combined.png"</span>))</span>
-<span id="cb22-221"><a href="#cb22-221" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-222"><a href="#cb22-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-223"><a href="#cb22-223" aria-hidden="true" tabindex="-1"></a><span class="in">```{r orchard-trait-generations, fig.width=13, fig.height=12}</span></span>
-<span id="cb22-224"><a href="#cb22-224" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
-<span id="cb22-225"><a href="#cb22-225" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
-<span id="cb22-226"><a href="#cb22-226" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"trait_type_plus_log10_generations_orchard_combined.png"</span>))</span>
-<span id="cb22-227"><a href="#cb22-227" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-228"><a href="#cb22-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-229"><a href="#cb22-229" aria-hidden="true" tabindex="-1"></a><span class="fu">### Genphen</span></span>
-<span id="cb22-230"><a href="#cb22-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-231"><a href="#cb22-231" aria-hidden="true" tabindex="-1"></a><span class="in">```{r orchard-genphen-years, fig.width=9, fig.height=10}</span></span>
-<span id="cb22-232"><a href="#cb22-232" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
-<span id="cb22-233"><a href="#cb22-233" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
-<span id="cb22-234"><a href="#cb22-234" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"genphen_plus_log10_years_orchard_combined.png"</span>))</span>
-<span id="cb22-235"><a href="#cb22-235" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-236"><a href="#cb22-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-237"><a href="#cb22-237" aria-hidden="true" tabindex="-1"></a><span class="in">```{r orchard-genphen-generations, fig.width=9, fig.height=10}</span></span>
-<span id="cb22-238"><a href="#cb22-238" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
-<span id="cb22-239"><a href="#cb22-239" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
-<span id="cb22-240"><a href="#cb22-240" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"genphen_plus_log10_generations_orchard_combined.png"</span>))</span>
-<span id="cb22-241"><a href="#cb22-241" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-242"><a href="#cb22-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-243"><a href="#cb22-243" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb22-244"><a href="#cb22-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-245"><a href="#cb22-245" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning title="Read the diagnostics table before the figures above"}</span>
-<span id="cb22-246"><a href="#cb22-246" aria-hidden="true" tabindex="-1"></a>The disturbance and trait_type models did not meet the convergence criteria</span>
-<span id="cb22-247"><a href="#cb22-247" aria-hidden="true" tabindex="-1"></a>used elsewhere in this book (max Rhat ≤ 1.01, bulk and tail ESS ≥ 400, and no</span>
-<span id="cb22-248"><a href="#cb22-248" aria-hidden="true" tabindex="-1"></a>divergent transitions) with either elapsed-time variable; the failures were</span>
-<span id="cb22-249"><a href="#cb22-249" aria-hidden="true" tabindex="-1"></a>most severe with <span class="in">`log10_generations`</span>. Their summaries and</span>
-<span id="cb22-250"><a href="#cb22-250" aria-hidden="true" tabindex="-1"></a>figures are shown here for transparency, but should not be read as reliable</span>
-<span id="cb22-251"><a href="#cb22-251" aria-hidden="true" tabindex="-1"></a>estimates. The design and genphen models converged cleanly.</span>
-<span id="cb22-252"><a href="#cb22-252" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Protocol deviation — moderators adjusted for elapsed time"</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## Recorded change</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>This chapter was **not** part of the pre-registered protocol. It refits the primary moderators</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>(<span class="in">`disturbance`</span>, <span class="in">`design`</span>, <span class="in">`trait_type`</span>, <span class="in">`genphen`</span>) with elapsed time added as an additive covariate.</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>::: {.callout-note title="What changed—and what did not"}</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>**Changed:** for each of the four primary moderators, we fitted an additive</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>location-scale model that adds elapsed time (<span class="in">`log10_years`</span>, and separately</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="in">`log10_generations`</span>) as a second main-effect term, with **no interaction**.</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>This adjusts each moderator's estimate for the average elapsed-time</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>difference between its levels, without letting the time slope itself vary</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>by level.</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>**Unchanged:** the dataset, the moderator definitions, the priors (<span class="in">`brms`</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>default priors, with the standard deviation of the known sampling-variance</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>term fixed at 1), the diagonal sampling covariance matrix, the <span class="in">`ref_id`</span> and</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>phylogenetic random effects, and the MCMC settings all match the primary</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>single-moderator models. Only the added elapsed-time term differs.</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>This produces eight models: four moderators × two elapsed-time scales.</span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>These models were refitted on 2026-10-10 with the primary-model specification.</span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>This refit supersedes an earlier fit of the same eight models that used</span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>different priors and a correlated sampling covariance matrix.</span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## Moderator–time relationships</span></span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>The plots below show how elapsed time is</span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a>distributed across the levels of each moderator.</span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup}</span></span>
+<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Scripts"</span>, <span class="st">"00_packages.R"</span>))</span>
+<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a>dat_es <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"effect_sizes"</span>, <span class="st">"proceed_lnm_safe.rds"</span>))</span>
+<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a>moderator_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a>  <span class="at">disturbance =</span> <span class="st">"Disturbance context"</span>,</span>
+<span id="cb23-43"><a href="#cb23-43" aria-hidden="true" tabindex="-1"></a>  <span class="at">design      =</span> <span class="st">"Comparison design"</span>,</span>
+<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a>  <span class="at">trait_type  =</span> <span class="st">"Trait type"</span>,</span>
+<span id="cb23-45"><a href="#cb23-45" aria-hidden="true" tabindex="-1"></a>  <span class="at">genphen     =</span> <span class="st">"Phenotypic vs. genetic"</span></span>
+<span id="cb23-46"><a href="#cb23-46" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-47"><a href="#cb23-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-48"><a href="#cb23-48" aria-hidden="true" tabindex="-1"></a>theme_deviation <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">base_size =</span> <span class="dv">13</span>) {</span>
+<span id="cb23-49"><a href="#cb23-49" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_classic</span>(<span class="at">base_size =</span> base_size) <span class="sc">+</span></span>
+<span id="cb23-50"><a href="#cb23-50" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">theme</span>(</span>
+<span id="cb23-51"><a href="#cb23-51" aria-hidden="true" tabindex="-1"></a>      <span class="at">strip.background =</span> ggplot2<span class="sc">::</span><span class="fu">element_blank</span>(),</span>
+<span id="cb23-52"><a href="#cb23-52" aria-hidden="true" tabindex="-1"></a>      <span class="at">strip.text        =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb23-53"><a href="#cb23-53" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.text.x       =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">30</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
+<span id="cb23-54"><a href="#cb23-54" aria-hidden="true" tabindex="-1"></a>      <span class="at">panel.grid.major.y =</span> ggplot2<span class="sc">::</span><span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"grey92"</span>),</span>
+<span id="cb23-55"><a href="#cb23-55" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.title        =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>)</span>
+<span id="cb23-56"><a href="#cb23-56" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb23-57"><a href="#cb23-57" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb23-58"><a href="#cb23-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-59"><a href="#cb23-59" aria-hidden="true" tabindex="-1"></a>make_time_panel <span class="ot">&lt;-</span> <span class="cf">function</span>(dat, timevar, timelabel) {</span>
+<span id="cb23-60"><a href="#cb23-60" aria-hidden="true" tabindex="-1"></a>  long_dat <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_dfr</span>(<span class="fu">names</span>(moderator_labels), <span class="cf">function</span>(m) {</span>
+<span id="cb23-61"><a href="#cb23-61" aria-hidden="true" tabindex="-1"></a>    dat <span class="sc">|&gt;</span></span>
+<span id="cb23-62"><a href="#cb23-62" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(.data[[m]]), <span class="sc">!</span><span class="fu">is.na</span>(.data[[timevar]])) <span class="sc">|&gt;</span></span>
+<span id="cb23-63"><a href="#cb23-63" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">transmute</span>(</span>
+<span id="cb23-64"><a href="#cb23-64" aria-hidden="true" tabindex="-1"></a>        <span class="at">moderator_label =</span> moderator_labels[[m]],</span>
+<span id="cb23-65"><a href="#cb23-65" aria-hidden="true" tabindex="-1"></a>        <span class="at">level =</span> <span class="fu">as.character</span>(.data[[m]]),</span>
+<span id="cb23-66"><a href="#cb23-66" aria-hidden="true" tabindex="-1"></a>        <span class="at">time_value =</span> .data[[timevar]]</span>
+<span id="cb23-67"><a href="#cb23-67" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb23-68"><a href="#cb23-68" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb23-69"><a href="#cb23-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-70"><a href="#cb23-70" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(long_dat, ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> level, <span class="at">y =</span> time_value)) <span class="sc">+</span></span>
+<span id="cb23-71"><a href="#cb23-71" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"grey85"</span>, <span class="at">outlier.alpha =</span> <span class="fl">0.35</span>, <span class="at">width =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb23-72"><a href="#cb23-72" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">facet_wrap</span>(<span class="sc">~</span>moderator_label, <span class="at">scales =</span> <span class="st">"free_x"</span>, <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb23-73"><a href="#cb23-73" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> timelabel) <span class="sc">+</span></span>
+<span id="cb23-74"><a href="#cb23-74" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_deviation</span>()</span>
+<span id="cb23-75"><a href="#cb23-75" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb23-76"><a href="#cb23-76" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-77"><a href="#cb23-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-78"><a href="#cb23-78" aria-hidden="true" tabindex="-1"></a><span class="in">```{r plot-years, fig.width=11, fig.height=8, fig.cap="Elapsed years (log10 scale) across the levels of each primary moderator."}</span></span>
+<span id="cb23-79"><a href="#cb23-79" aria-hidden="true" tabindex="-1"></a><span class="fu">make_time_panel</span>(dat_es, <span class="st">"log10_years"</span>, <span class="fu">expression</span>(log[<span class="dv">10</span>](<span class="st">"elapsed years"</span>)))</span>
+<span id="cb23-80"><a href="#cb23-80" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-81"><a href="#cb23-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-82"><a href="#cb23-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{r plot-generations, fig.width=11, fig.height=8, fig.cap="Elapsed generations (log10 scale) across the levels of each primary moderator."}</span></span>
+<span id="cb23-83"><a href="#cb23-83" aria-hidden="true" tabindex="-1"></a><span class="fu">make_time_panel</span>(dat_es, <span class="st">"log10_generations"</span>, <span class="fu">expression</span>(log[<span class="dv">10</span>](<span class="st">"elapsed generations"</span>)))</span>
+<span id="cb23-84"><a href="#cb23-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-85"><a href="#cb23-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-86"><a href="#cb23-86" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model specification</span></span>
+<span id="cb23-87"><a href="#cb23-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-88"><a href="#cb23-88" aria-hidden="true" tabindex="-1"></a>Models were fitted on a remote server, not while rendering this book, with</span>
+<span id="cb23-89"><a href="#cb23-89" aria-hidden="true" tabindex="-1"></a><span class="in">`Scripts/remote_fit_one_additive.R`</span> (arguments: moderator, elapsed-time</span>
+<span id="cb23-90"><a href="#cb23-90" aria-hidden="true" tabindex="-1"></a>variable). The script uses the same formula builder, prior builder, sampling</span>
+<span id="cb23-91"><a href="#cb23-91" aria-hidden="true" tabindex="-1"></a>covariance matrix and MCMC settings as the primary models: <span class="in">`brms`</span> default</span>
+<span id="cb23-92"><a href="#cb23-92" aria-hidden="true" tabindex="-1"></a>priors with the standard deviation of <span class="in">`es_id_model`</span> fixed at 1</span>
+<span id="cb23-93"><a href="#cb23-93" aria-hidden="true" tabindex="-1"></a>(<span class="in">`constant(1)`</span>), a diagonal sampling covariance matrix <span class="in">`V`</span> (<span class="in">`Scripts/05_phylogeny.R`</span>),</span>
+<span id="cb23-94"><a href="#cb23-94" aria-hidden="true" tabindex="-1"></a>4 chains × 4,000 iterations (2,000 warmup), <span class="in">`adapt_delta = 0.97`</span>,</span>
+<span id="cb23-95"><a href="#cb23-95" aria-hidden="true" tabindex="-1"></a><span class="in">`max_treedepth = 15`</span>, seed 123, <span class="in">`cmdstanr`</span> backend.</span>
+<span id="cb23-96"><a href="#cb23-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-97"><a href="#cb23-97" aria-hidden="true" tabindex="-1"></a><span class="in">```{r how-fit, eval=FALSE}</span></span>
+<span id="cb23-98"><a href="#cb23-98" aria-hidden="true" tabindex="-1"></a><span class="co"># From Scripts/remote_fit_one_additive.R</span></span>
+<span id="cb23-99"><a href="#cb23-99" aria-hidden="true" tabindex="-1"></a>phylo     <span class="ot">&lt;-</span> <span class="fu">prepare_phylo_and_data</span>(dat_model, A_full, <span class="at">label =</span> label)</span>
+<span id="cb23-100"><a href="#cb23-100" aria-hidden="true" tabindex="-1"></a>dat_model <span class="ot">&lt;-</span> phylo<span class="sc">$</span>dat_model; A_mod <span class="ot">&lt;-</span> phylo<span class="sc">$</span>A_mod; V <span class="ot">&lt;-</span> phylo<span class="sc">$</span>V</span>
+<span id="cb23-101"><a href="#cb23-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-102"><a href="#cb23-102" aria-hidden="true" tabindex="-1"></a><span class="co"># Main effects only, no interaction, in both the location and scale components.</span></span>
+<span id="cb23-103"><a href="#cb23-103" aria-hidden="true" tabindex="-1"></a>formula <span class="ot">&lt;-</span> <span class="fu">build_ls_formula</span>(<span class="fu">paste</span>(moderator, <span class="st">"+"</span>, timevar),</span>
+<span id="cb23-104"><a href="#cb23-104" aria-hidden="true" tabindex="-1"></a>                            <span class="at">has_phylogeny =</span> phylo<span class="sc">$</span>has_phylo)</span>
+<span id="cb23-105"><a href="#cb23-105" aria-hidden="true" tabindex="-1"></a>priors  <span class="ot">&lt;-</span> <span class="fu">build_ls_priors</span>(formula, dat_model, V, <span class="at">A =</span> A_mod)</span>
+<span id="cb23-106"><a href="#cb23-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-107"><a href="#cb23-107" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">fit_or_read_model</span>(model_name,</span>
+<span id="cb23-108"><a href="#cb23-108" aria-hidden="true" tabindex="-1"></a>  <span class="at">fit_fun =</span> <span class="cf">function</span>() <span class="fu">fit_ls_model</span>(dat_model, formula, priors, V, A_mod,</span>
+<span id="cb23-109"><a href="#cb23-109" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">mcmc_args =</span> default_mcmc_args),</span>
+<span id="cb23-110"><a href="#cb23-110" aria-hidden="true" tabindex="-1"></a>  <span class="at">model_dir =</span> <span class="fu">dir_out</span>(<span class="st">"models"</span>), <span class="at">refit =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-111"><a href="#cb23-111" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-112"><a href="#cb23-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-113"><a href="#cb23-113" aria-hidden="true" tabindex="-1"></a><span class="fu">## Convergence diagnostics</span></span>
+<span id="cb23-114"><a href="#cb23-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-115"><a href="#cb23-115" aria-hidden="true" tabindex="-1"></a><span class="in">```{r diagnostics}</span></span>
+<span id="cb23-116"><a href="#cb23-116" aria-hidden="true" tabindex="-1"></a>diag_tbl <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb23-117"><a href="#cb23-117" aria-hidden="true" tabindex="-1"></a>  here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"tables"</span>, <span class="st">"additive_diagnostics.csv"</span>),</span>
+<span id="cb23-118"><a href="#cb23-118" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb23-119"><a href="#cb23-119" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-120"><a href="#cb23-120" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb23-121"><a href="#cb23-121" aria-hidden="true" tabindex="-1"></a>  diag_tbl,</span>
+<span id="cb23-122"><a href="#cb23-122" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Model"</span>, <span class="st">"Moderator"</span>, <span class="st">"Elapsed-time variable"</span>, <span class="st">"Max Rhat"</span>,</span>
+<span id="cb23-123"><a href="#cb23-123" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Min Bulk ESS"</span>, <span class="st">"Min Tail ESS"</span>, <span class="st">"Divergent transitions"</span>,</span>
+<span id="cb23-124"><a href="#cb23-124" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Max-treedepth hits"</span>),</span>
+<span id="cb23-125"><a href="#cb23-125" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">3</span>,</span>
+<span id="cb23-126"><a href="#cb23-126" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Convergence diagnostics for the eight additive (moderator + time) models."</span></span>
+<span id="cb23-127"><a href="#cb23-127" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-128"><a href="#cb23-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-129"><a href="#cb23-129" aria-hidden="true" tabindex="-1"></a>crit_fail <span class="ot">&lt;-</span> <span class="fu">with</span>(diag_tbl, max_rhat <span class="sc">&gt;</span> <span class="fl">1.01</span> <span class="sc">|</span> min_bulk_ess <span class="sc">&lt;</span> <span class="dv">400</span> <span class="sc">|</span></span>
+<span id="cb23-130"><a href="#cb23-130" aria-hidden="true" tabindex="-1"></a>                    min_tail_ess <span class="sc">&lt;</span> <span class="dv">400</span> <span class="sc">|</span> n_divergent <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb23-131"><a href="#cb23-131" aria-hidden="true" tabindex="-1"></a>below_crit_text <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="sc">!</span><span class="fu">any</span>(crit_fail)) {</span>
+<span id="cb23-132"><a href="#cb23-132" aria-hidden="true" tabindex="-1"></a>  <span class="st">"All models meet these criteria."</span></span>
+<span id="cb23-133"><a href="#cb23-133" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb23-134"><a href="#cb23-134" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(</span>
+<span id="cb23-135"><a href="#cb23-135" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Models with at least one value outside these criteria: "</span>,</span>
+<span id="cb23-136"><a href="#cb23-136" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="fu">sprintf</span>(<span class="st">"`%s` (max Rhat %.3f, min bulk ESS %s, min tail ESS %s, %d divergent transitions)"</span>,</span>
+<span id="cb23-137"><a href="#cb23-137" aria-hidden="true" tabindex="-1"></a>                  diag_tbl<span class="sc">$</span>model_id[crit_fail], diag_tbl<span class="sc">$</span>max_rhat[crit_fail],</span>
+<span id="cb23-138"><a href="#cb23-138" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">round</span>(diag_tbl<span class="sc">$</span>min_bulk_ess[crit_fail]),</span>
+<span id="cb23-139"><a href="#cb23-139" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">round</span>(diag_tbl<span class="sc">$</span>min_tail_ess[crit_fail]),</span>
+<span id="cb23-140"><a href="#cb23-140" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">as.integer</span>(diag_tbl<span class="sc">$</span>n_divergent[crit_fail])),</span>
+<span id="cb23-141"><a href="#cb23-141" aria-hidden="true" tabindex="-1"></a>          <span class="at">collapse =</span> <span class="st">"; "</span>),</span>
+<span id="cb23-142"><a href="#cb23-142" aria-hidden="true" tabindex="-1"></a>    <span class="st">"."</span></span>
+<span id="cb23-143"><a href="#cb23-143" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb23-144"><a href="#cb23-144" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb23-145"><a href="#cb23-145" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-146"><a href="#cb23-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-147"><a href="#cb23-147" aria-hidden="true" tabindex="-1"></a>Across the <span class="in">`r nrow(diag_tbl)`</span> models, the largest Rhat was</span>
+<span id="cb23-148"><a href="#cb23-148" aria-hidden="true" tabindex="-1"></a><span class="in">`r sprintf("%.3f", max(diag_tbl$max_rhat))`</span>, the smallest bulk ESS was</span>
+<span id="cb23-149"><a href="#cb23-149" aria-hidden="true" tabindex="-1"></a><span class="in">`r format(round(min(diag_tbl$min_bulk_ess)), big.mark = ",")`</span>, the smallest tail ESS was</span>
+<span id="cb23-150"><a href="#cb23-150" aria-hidden="true" tabindex="-1"></a><span class="in">`r format(round(min(diag_tbl$min_tail_ess)), big.mark = ",")`</span>, and the total number of</span>
+<span id="cb23-151"><a href="#cb23-151" aria-hidden="true" tabindex="-1"></a>divergent transitions was <span class="in">`r sum(diag_tbl$n_divergent)`</span>. The convergence criteria used</span>
+<span id="cb23-152"><a href="#cb23-152" aria-hidden="true" tabindex="-1"></a>elsewhere in this book are max Rhat ≤ 1.01, bulk and tail ESS ≥ 400, and no divergent</span>
+<span id="cb23-153"><a href="#cb23-153" aria-hidden="true" tabindex="-1"></a>transitions. <span class="in">`r below_crit_text`</span></span>
+<span id="cb23-154"><a href="#cb23-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-155"><a href="#cb23-155" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model summaries</span></span>
+<span id="cb23-156"><a href="#cb23-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-157"><a href="#cb23-157" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summaries-setup, include=FALSE}</span></span>
+<span id="cb23-158"><a href="#cb23-158" aria-hidden="true" tabindex="-1"></a>additive_summaries <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"summaries"</span>, <span class="st">"additive_summaries.rds"</span>))</span>
+<span id="cb23-159"><a href="#cb23-159" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-160"><a href="#cb23-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-161"><a href="#cb23-161" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
+<span id="cb23-162"><a href="#cb23-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-163"><a href="#cb23-163" aria-hidden="true" tabindex="-1"></a><span class="fu">### disturbance + years</span></span>
+<span id="cb23-164"><a href="#cb23-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-165"><a href="#cb23-165" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summary-disturbance-years, echo=FALSE}</span></span>
+<span id="cb23-166"><a href="#cb23-166" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(additive_summaries[[<span class="st">"disturbance_plus_log10_years"</span>]])</span>
+<span id="cb23-167"><a href="#cb23-167" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-168"><a href="#cb23-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-169"><a href="#cb23-169" aria-hidden="true" tabindex="-1"></a><span class="fu">### disturbance + generations</span></span>
+<span id="cb23-170"><a href="#cb23-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-171"><a href="#cb23-171" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summary-disturbance-generations, echo=FALSE}</span></span>
+<span id="cb23-172"><a href="#cb23-172" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(additive_summaries[[<span class="st">"disturbance_plus_log10_generations"</span>]])</span>
+<span id="cb23-173"><a href="#cb23-173" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-174"><a href="#cb23-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-175"><a href="#cb23-175" aria-hidden="true" tabindex="-1"></a><span class="fu">### design + years</span></span>
+<span id="cb23-176"><a href="#cb23-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-177"><a href="#cb23-177" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summary-design-years, echo=FALSE}</span></span>
+<span id="cb23-178"><a href="#cb23-178" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(additive_summaries[[<span class="st">"design_plus_log10_years"</span>]])</span>
+<span id="cb23-179"><a href="#cb23-179" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-180"><a href="#cb23-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-181"><a href="#cb23-181" aria-hidden="true" tabindex="-1"></a><span class="fu">### design + generations</span></span>
+<span id="cb23-182"><a href="#cb23-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-183"><a href="#cb23-183" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summary-design-generations, echo=FALSE}</span></span>
+<span id="cb23-184"><a href="#cb23-184" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(additive_summaries[[<span class="st">"design_plus_log10_generations"</span>]])</span>
+<span id="cb23-185"><a href="#cb23-185" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-186"><a href="#cb23-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-187"><a href="#cb23-187" aria-hidden="true" tabindex="-1"></a><span class="fu">### trait_type + years</span></span>
+<span id="cb23-188"><a href="#cb23-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-189"><a href="#cb23-189" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summary-trait-years, echo=FALSE}</span></span>
+<span id="cb23-190"><a href="#cb23-190" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(additive_summaries[[<span class="st">"trait_type_plus_log10_years"</span>]])</span>
+<span id="cb23-191"><a href="#cb23-191" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-192"><a href="#cb23-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-193"><a href="#cb23-193" aria-hidden="true" tabindex="-1"></a><span class="fu">### trait_type + generations</span></span>
+<span id="cb23-194"><a href="#cb23-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-195"><a href="#cb23-195" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summary-trait-generations, echo=FALSE}</span></span>
+<span id="cb23-196"><a href="#cb23-196" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(additive_summaries[[<span class="st">"trait_type_plus_log10_generations"</span>]])</span>
+<span id="cb23-197"><a href="#cb23-197" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-198"><a href="#cb23-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-199"><a href="#cb23-199" aria-hidden="true" tabindex="-1"></a><span class="fu">### genphen + years</span></span>
+<span id="cb23-200"><a href="#cb23-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-201"><a href="#cb23-201" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summary-genphen-years, echo=FALSE}</span></span>
+<span id="cb23-202"><a href="#cb23-202" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(additive_summaries[[<span class="st">"genphen_plus_log10_years"</span>]])</span>
+<span id="cb23-203"><a href="#cb23-203" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-204"><a href="#cb23-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-205"><a href="#cb23-205" aria-hidden="true" tabindex="-1"></a><span class="fu">### genphen + generations</span></span>
+<span id="cb23-206"><a href="#cb23-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-207"><a href="#cb23-207" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summary-genphen-generations, echo=FALSE}</span></span>
+<span id="cb23-208"><a href="#cb23-208" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(additive_summaries[[<span class="st">"genphen_plus_log10_generations"</span>]])</span>
+<span id="cb23-209"><a href="#cb23-209" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-210"><a href="#cb23-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-211"><a href="#cb23-211" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb23-212"><a href="#cb23-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-213"><a href="#cb23-213" aria-hidden="true" tabindex="-1"></a><span class="fu">## Orchard-style figures</span></span>
+<span id="cb23-214"><a href="#cb23-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-215"><a href="#cb23-215" aria-hidden="true" tabindex="-1"></a>Each figure shows the focal moderator's location (top) and scale (bottom)</span>
+<span id="cb23-216"><a href="#cb23-216" aria-hidden="true" tabindex="-1"></a>estimates from its additive model, with elapsed time held at its dataset</span>
+<span id="cb23-217"><a href="#cb23-217" aria-hidden="true" tabindex="-1"></a>mean. Points and beeswarm markers are on the same scale as the primary</span>
+<span id="cb23-218"><a href="#cb23-218" aria-hidden="true" tabindex="-1"></a>single-moderator orchard figures (see the model chapters); only the added</span>
+<span id="cb23-219"><a href="#cb23-219" aria-hidden="true" tabindex="-1"></a>time term differs.</span>
+<span id="cb23-220"><a href="#cb23-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-221"><a href="#cb23-221" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
+<span id="cb23-222"><a href="#cb23-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-223"><a href="#cb23-223" aria-hidden="true" tabindex="-1"></a><span class="fu">### Disturbance</span></span>
+<span id="cb23-224"><a href="#cb23-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-225"><a href="#cb23-225" aria-hidden="true" tabindex="-1"></a><span class="in">```{r orchard-disturbance-years, fig.width=13, fig.height=12}</span></span>
+<span id="cb23-226"><a href="#cb23-226" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
+<span id="cb23-227"><a href="#cb23-227" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
+<span id="cb23-228"><a href="#cb23-228" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"disturbance_plus_log10_years_orchard_combined.png"</span>))</span>
+<span id="cb23-229"><a href="#cb23-229" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-230"><a href="#cb23-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-231"><a href="#cb23-231" aria-hidden="true" tabindex="-1"></a><span class="in">```{r orchard-disturbance-generations, fig.width=13, fig.height=12}</span></span>
+<span id="cb23-232"><a href="#cb23-232" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
+<span id="cb23-233"><a href="#cb23-233" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
+<span id="cb23-234"><a href="#cb23-234" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"disturbance_plus_log10_generations_orchard_combined.png"</span>))</span>
+<span id="cb23-235"><a href="#cb23-235" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-236"><a href="#cb23-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-237"><a href="#cb23-237" aria-hidden="true" tabindex="-1"></a><span class="fu">### Design</span></span>
+<span id="cb23-238"><a href="#cb23-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-239"><a href="#cb23-239" aria-hidden="true" tabindex="-1"></a><span class="in">```{r orchard-design-years, fig.width=9, fig.height=10}</span></span>
+<span id="cb23-240"><a href="#cb23-240" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
+<span id="cb23-241"><a href="#cb23-241" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
+<span id="cb23-242"><a href="#cb23-242" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"design_plus_log10_years_orchard_combined.png"</span>))</span>
+<span id="cb23-243"><a href="#cb23-243" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-244"><a href="#cb23-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-245"><a href="#cb23-245" aria-hidden="true" tabindex="-1"></a><span class="in">```{r orchard-design-generations, fig.width=9, fig.height=10}</span></span>
+<span id="cb23-246"><a href="#cb23-246" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
+<span id="cb23-247"><a href="#cb23-247" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
+<span id="cb23-248"><a href="#cb23-248" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"design_plus_log10_generations_orchard_combined.png"</span>))</span>
+<span id="cb23-249"><a href="#cb23-249" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-250"><a href="#cb23-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-251"><a href="#cb23-251" aria-hidden="true" tabindex="-1"></a><span class="fu">### Trait type</span></span>
+<span id="cb23-252"><a href="#cb23-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-253"><a href="#cb23-253" aria-hidden="true" tabindex="-1"></a><span class="in">```{r orchard-trait-years, fig.width=13, fig.height=12}</span></span>
+<span id="cb23-254"><a href="#cb23-254" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
+<span id="cb23-255"><a href="#cb23-255" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
+<span id="cb23-256"><a href="#cb23-256" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"trait_type_plus_log10_years_orchard_combined.png"</span>))</span>
+<span id="cb23-257"><a href="#cb23-257" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-258"><a href="#cb23-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-259"><a href="#cb23-259" aria-hidden="true" tabindex="-1"></a><span class="in">```{r orchard-trait-generations, fig.width=13, fig.height=12}</span></span>
+<span id="cb23-260"><a href="#cb23-260" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
+<span id="cb23-261"><a href="#cb23-261" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
+<span id="cb23-262"><a href="#cb23-262" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"trait_type_plus_log10_generations_orchard_combined.png"</span>))</span>
+<span id="cb23-263"><a href="#cb23-263" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-264"><a href="#cb23-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-265"><a href="#cb23-265" aria-hidden="true" tabindex="-1"></a><span class="fu">### Genphen</span></span>
+<span id="cb23-266"><a href="#cb23-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-267"><a href="#cb23-267" aria-hidden="true" tabindex="-1"></a><span class="in">```{r orchard-genphen-years, fig.width=9, fig.height=10}</span></span>
+<span id="cb23-268"><a href="#cb23-268" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
+<span id="cb23-269"><a href="#cb23-269" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
+<span id="cb23-270"><a href="#cb23-270" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"genphen_plus_log10_years_orchard_combined.png"</span>))</span>
+<span id="cb23-271"><a href="#cb23-271" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-272"><a href="#cb23-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-273"><a href="#cb23-273" aria-hidden="true" tabindex="-1"></a><span class="in">```{r orchard-genphen-generations, fig.width=9, fig.height=10}</span></span>
+<span id="cb23-274"><a href="#cb23-274" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Rdata"</span>, <span class="st">"figures"</span>, <span class="st">"publication"</span>,</span>
+<span id="cb23-275"><a href="#cb23-275" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"orchard_additive"</span>,</span>
+<span id="cb23-276"><a href="#cb23-276" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"genphen_plus_log10_generations_orchard_combined.png"</span>))</span>
+<span id="cb23-277"><a href="#cb23-277" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-278"><a href="#cb23-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-279"><a href="#cb23-279" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
