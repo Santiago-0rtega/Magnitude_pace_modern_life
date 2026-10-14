@@ -70,6 +70,7 @@ This repository contains a preregistered meta-analytic reanalysis of the PROCEED
 | `21_validate_summary_artifacts.R` | Pre-render check that summary caches, prediction caches and orchard figures are present and current |
 | `22_data_flow.R` | Data-selection counts and figure (ESM Fig. S7); writes `Figures/data_flow.pdf` and `Rdata/tables/data_flow_counts.csv` |
 | `23_included_references.R` | List of included source references (ESM S8); writes `Rdata/tables/included_references.csv` |
+| `24_esm_tables.R` | Supplementary tables S2–S4 (marginal means with counts per level; pairwise contrasts; time-adjusted models); writes `Rdata/tables/esm_table_S*.csv` |
 | `run_m00_intercept_only.R` | Fits the intercept-only model m00 |
 | `run_model_grid.R`, `run_model_grid_m07plus.R` | Fit the moderator grid (all models; from m07 onwards) |
 | `run_sensitivity.R`, `aggregate_sensitivity.R` | Fit the three sensitivity variants per moderator; combine per-model outputs |
@@ -86,8 +87,9 @@ This repository contains a preregistered meta-analytic reanalysis of the PROCEED
 | `remote_fit_one_additive.R` | Fits one time-adjusted model with the primary specification (arguments: moderator, time variable) |
 | `build_additive_assets.R` | Summaries (`additive_summaries.rds`) and diagnostics (`additive_diagnostics.csv`) for the time-adjusted models |
 | `rebuild_orchard_v2style.R` | Orchard figures for the time-adjusted models (`Figures/publication/orchard_additive/`) |
+| `remote_additive_contrasts.R` | Elapsed-time slopes and pairwise contrasts from the time-adjusted model draws (`additive_contrasts.csv`) |
 
-`22_data_flow.R` and `23_included_references.R` can optionally write an extra copy of their output to a local manuscript folder named by the environment variable `PACE_MANUSCRIPT_DIR`; this is not needed for the book.
+`22_data_flow.R`, `23_included_references.R` and `24_esm_tables.R` can optionally write an extra copy of their output to a local manuscript folder named by the environment variable `PACE_MANUSCRIPT_DIR`; this is not needed for the book.
 
 ## How to reproduce
 
